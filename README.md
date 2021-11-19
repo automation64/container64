@@ -15,21 +15,28 @@
 
 Collection of OCI compliant container creation files.
 
-| Image | OS  | Base Image | Source | Content |
-| ----- | --- | ---------- | ------ | ------- |
-|       |     |            |        |         |
+| Image:Tag                        | OS     | Base Image                       | Content                   | Source File                                                                 |
+| -------------------------------- | ------ | -------------------------------- | ------------------------- | --------------------------------------------------------------------------- |
+| `ubuntu-21.4-systemd-full:0.1.0` | ubuntu | `docker.io/library/ubuntu:21.04` | Full SystemD installation | [ubuntu-21.4-systemd-full](dockerfiles/ubuntu-21.4-systemd-full/Dockerfile) |
 
 ## Deployment
 
-### OS Compatibility
+### Podman
 
-### Prerequisites
-
-### Installation
+`podman pull ghcr.io/serdigital64/<IMAGE>`
 
 ## Usage
 
+### Podman
+
+`podman run ghcr.io/serdigital64/<IMAGE> <COMMAND>`
+
 ## Source Code
+
+Each image has a dedicated directory for storing the source file and additional artifacts.
+Image directories are grouped based on the file format:
+
+- [dockerfiles](dockerfiles/)
 
 ### Repositories
 
