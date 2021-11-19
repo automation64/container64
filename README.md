@@ -17,6 +17,7 @@ Collection of OCI compliant container creation files.
 
 | Image:Tag                        | OS     | Base Image                       | Content                   | Source File                                                                 |
 | -------------------------------- | ------ | -------------------------------- | ------------------------- | --------------------------------------------------------------------------- |
+| `ubuntu-20.4-systemd-full:0.1.0` | ubuntu | `docker.io/library/ubuntu:20.04` | Full SystemD installation | [ubuntu-20.4-systemd-full](dockerfiles/ubuntu-20.4-systemd-full/Dockerfile) |
 | `ubuntu-21.4-systemd-full:0.1.0` | ubuntu | `docker.io/library/ubuntu:21.04` | Full SystemD installation | [ubuntu-21.4-systemd-full](dockerfiles/ubuntu-21.4-systemd-full/Dockerfile) |
 
 ## Deployment
@@ -33,7 +34,7 @@ Collection of OCI compliant container creation files.
 
 ## Source Code
 
-Each image has a dedicated directory for storing the source file and additional artifacts.
+Each image has a dedicated directory for storing the source file (Dockerfile) and additional artifacts.
 Image directories are grouped based on the file format:
 
 - [dockerfiles](dockerfiles/)
