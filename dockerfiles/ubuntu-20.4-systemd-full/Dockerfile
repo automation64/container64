@@ -1,4 +1,4 @@
-FROM docker.io/library/ubuntu:21.04
+FROM docker.io/library/ubuntu:20.04
 LABEL \
     container64.os-name="ubuntu" \
     container64.os-version="20.4" \
