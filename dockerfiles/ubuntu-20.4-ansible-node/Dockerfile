@@ -26,7 +26,7 @@ ENV APP_SYSTEMD_PACKAGES="systemd systemd-timesyncd"
 RUN apt-get -y install $APP_SYSTEMD_PREREQS1 $APP_SYSTEMD_PREREQS2 $APP_SYSTEMD_PREREQS3 $APP_SYSTEMD_PACKAGES
 
 # Define requirements for application: SUDO
-ENV APP_SUDO_PREREQS="lsb-base"
+ENV APP_SUDO_PREREQS=""
 
 # Define packages for application: SUDO
 ENV APP_SUDO_PACKAGES="sudo"
