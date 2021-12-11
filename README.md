@@ -15,15 +15,35 @@
 
 Collection of OCI compliant container creation files.
 
-| Image:Tag                          | OS          | Base Image                          | Packages               | Purpose              | Source File                                                                        |
-| ---------------------------------- | ----------- | ----------------------------------- | ---------------------- | -------------------- | ---------------------------------------------------------------------------------- |
-| `ubuntu-20.4-ansible-node:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    | SystemD, Sudo, Python3 | Ansible node testing | [ubuntu-20.4-ansible-node](src/dockerfile/ubuntu-20.4-ansible-node/Dockerfile)     |
-| `ubuntu-21.4-ansible-node:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    | SystemD, Sudo, Python3 | Ansible node testing | [ubuntu-21.4-ansible-node](src/dockerfile/ubuntu-21.4-ansible-node/Dockerfile)     |
-| `debian-10-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:buster`   | SystemD, Sudo, Python3 | Ansible node testing | [debian-10-ansible-node](src/dockerfile/debian-10-ansible-node/Dockerfile)         |
-| `debian-11-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:bullseye` | SystemD, Sudo, Python3 | Ansible node testing | [debian-11-ansible-node](src/dockerfile/debian-11-ansible-node/Dockerfile)         |
-| `oraclelinux-8-ansible-node:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   | SystemD, Sudo, Python3 | Ansible node testing | [oraclelinux-8-ansible-node](src/dockerfile/oraclelinux-8-ansible-node/Dockerfile) |
-| `fedora-33-ansible-node:0.1.0`     | fedora      | `docker.io/library/fedora:33`       | SystemD, Sudo, Python3 | Ansible node testing | [fedora-33-ansible-node](src/dockerfile/fedora-33-ansible-node/Dockerfile)         |
-| `centos-8-ansible-node:0.1.0`      | centos      | `docker.io/library/centos:8`        | SystemD, Sudo, Python3 | Ansible node testing | [centos-8-ansible-node](src/dockerfile/centos-8-ansible-node/Dockerfile)           |
+### Container collection: Ansible Node
+
+- Purpose: Ansible node testing
+- Packages: SystemD, Sudo, Python3
+
+| Image:Tag                          | OS          | Base Image                          | Source File                                                                        |
+| ---------------------------------- | ----------- | ----------------------------------- | ---------------------------------------------------------------------------------- |
+| `ubuntu-20.4-ansible-node:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    | [ubuntu-20.4-ansible-node](src/dockerfile/ubuntu-20.4-ansible-node/Dockerfile)     |
+| `ubuntu-21.4-ansible-node:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    | [ubuntu-21.4-ansible-node](src/dockerfile/ubuntu-21.4-ansible-node/Dockerfile)     |
+| `debian-10-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:buster`   | [debian-10-ansible-node](src/dockerfile/debian-10-ansible-node/Dockerfile)         |
+| `debian-11-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:bullseye` | [debian-11-ansible-node](src/dockerfile/debian-11-ansible-node/Dockerfile)         |
+| `oraclelinux-8-ansible-node:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   | [oraclelinux-8-ansible-node](src/dockerfile/oraclelinux-8-ansible-node/Dockerfile) |
+| `fedora-33-ansible-node:0.1.0`     | fedora      | `docker.io/library/fedora:33`       | [fedora-33-ansible-node](src/dockerfile/fedora-33-ansible-node/Dockerfile)         |
+| `centos-8-ansible-node:0.1.0`      | centos      | `docker.io/library/centos:8`        | [centos-8-ansible-node](src/dockerfile/centos-8-ansible-node/Dockerfile)           |
+
+### Container collection: Bash Test
+
+- Purpose: Ansible node testing
+- Packages: SystemD, Sudo, Python3
+
+| Image:Tag                        | OS          | Base Image                          | Source File                                                                    |
+| -------------------------------- | ----------- | ----------------------------------- | ------------------------------------------------------------------------------ |
+| `ubuntu-20.4-basth-test:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    | [ubuntu-20.4-basth-test](src/dockerfile/ubuntu-20.4-basth-test/Dockerfile)     |
+| `ubuntu-21.4-basth-test:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    | [ubuntu-21.4-basth-test](src/dockerfile/ubuntu-21.4-basth-test/Dockerfile)     |
+| `debian-10-basth-test:0.1.0`     | debian      | `docker.io/library/debian:buster`   | [debian-10-basth-test](src/dockerfile/debian-10-basth-test/Dockerfile)         |
+| `debian-11-basth-test:0.1.0`     | debian      | `docker.io/library/debian:bullseye` | [debian-11-basth-test](src/dockerfile/debian-11-basth-test/Dockerfile)         |
+| `oraclelinux-8-basth-test:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   | [oraclelinux-8-basth-test](src/dockerfile/oraclelinux-8-basth-test/Dockerfile) |
+| `fedora-33-basth-test:0.1.0`     | fedora      | `docker.io/library/fedora:33`       | [fedora-33-basth-test](src/dockerfile/fedora-33-basth-test/Dockerfile)         |
+| `centos-8-basth-test:0.1.0`      | centos      | `docker.io/library/centos:8`        | [centos-8-basth-test](src/dockerfile/centos-8-basth-test/Dockerfile)           |
 
 ## Deployment
 
