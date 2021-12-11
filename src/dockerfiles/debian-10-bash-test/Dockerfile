@@ -11,10 +11,23 @@ LABEL \
 # Prepare package installer
 ENV container="docker"
 
-#ADD https://raw.githubusercontent.com/serdigital64/bashlib64/main/bashlib64.bash /64
-COPY cmd /
+# Download BashLib64
+ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader/cmd /
 
-RUN /cmd bl64_msg_show_info 'hello_world'
+# Download Bats-Core
+ADD https://github.com/bats-core/bats-core/archive/refs/tags/v1.5.0.tar.gz /opt/
 
-# Final command
-CMD ["/lib/systemd/systemd"]
+# Install bats-core
+RUN \
+    /bin/chmod 700 /cmd && \
+    /cmd bl64_arc_open_tar /opt/v1.5.0.tar.gz /opt && \
+    /bin/mkdir /test
+
+# Cleanup
+RUN /cmd bl64_os_cleanup_full
+
+# Test is a volume where all your bats-core tests are
+CMD [ "/test" ]
+
+# Run bats-core against /test
+ENTRYPOINT [ "/opt/bats-core-1.5.0/bin/bats" ]
