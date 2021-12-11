@@ -24,7 +24,11 @@ function container64_build_podman_build() {
   bl64_check_file "$dockerfile" || return 1
 
   cd "${DEVCNT64_SRC}/dockerfiles/${container}"
-  "$DEVCNT64_BUILD_CMD_PODMAN" build -t "${container}:${version}" .
+  "$DEVCNT64_BUILD_CMD_PODMAN" \
+  	build \
+  	--no-cache \
+	-t "${container}:${version}" \
+	.
   status=$?
 
   return $status
