@@ -32,8 +32,8 @@ Collection of OCI compliant container creation files.
 
 ### Container collection: Bash Test
 
-- Purpose: Ansible node testing
-- Packages: SystemD, Sudo, Python3
+- Purpose: Bash scripts testing
+- Packages: Bash, Bats Core
 
 | Image:Tag                        | OS          | Base Image                          | Source File                                                                    |
 | -------------------------------- | ----------- | ----------------------------------- | ------------------------------------------------------------------------------ |
