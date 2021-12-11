@@ -17,9 +17,14 @@ ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader
 # Download Bats-Core
 ADD https://github.com/bats-core/bats-core/archive/refs/tags/v1.5.0.tar.gz /opt/
 
-# Install bats-core
+# Install tar
 RUN \
     /bin/chmod 700 /cmd && \
+    /cmd bl64_pkg_prepare && \
+    /cmd bl64_pkg_install tar
+
+# Install bats-core
+RUN \
     /cmd bl64_arc_open_tar /opt/v1.5.0.tar.gz /opt && \
     /bin/mkdir /test
 
