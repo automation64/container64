@@ -17,11 +17,18 @@ ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader
 # Download Bats-Core
 ADD https://github.com/bats-core/bats-core/archive/refs/tags/v1.5.0.tar.gz /opt/
 
-# Install bats-core
+# Install tools
 RUN \
-    /bin/chmod 700 /cmd && \
-    /cmd bl64_arc_open_tar /opt/v1.5.0.tar.gz /opt && \
-    /bin/mkdir /test
+    /bin/chmod 755 /cmd && \
+    /cmd bl64_pkg_prepare && \
+    /cmd bl64_pkg_install sudo
+
+# Install test environment
+RUN \
+    /usr/sbin/useradd -m test && \
+    /cmd bl64_sudo_add_root test && \
+    /bin/mkdir /test && \
+    /cmd bl64_arc_open_tar /opt/v1.5.0.tar.gz /opt
 
 # Cleanup
 RUN /cmd bl64_os_cleanup_full
@@ -30,4 +37,5 @@ RUN /cmd bl64_os_cleanup_full
 CMD [ "/test" ]
 
 # Run bats-core against /test
+USER test
 ENTRYPOINT [ "/opt/bats-core-1.5.0/bin/bats" ]
