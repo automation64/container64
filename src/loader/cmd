@@ -795,4 +795,5 @@ esac
 bl64_os_set_command
 bl64_os_set_alias
 bl64_sudo_set_alias
-:
+
+"$@"
