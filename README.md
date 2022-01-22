@@ -28,6 +28,7 @@
 | `debian-11-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:bullseye` |
 | `oraclelinux-8-ansible-node:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `fedora-33-ansible-node:0.1.0`     | fedora      | `docker.io/library/fedora:33`       |
+| `fedora-35-ansible-node:0.1.0`     | fedora      | `docker.io/library/fedora:35`       |
 | `centos-8-ansible-node:0.1.0`      | centos      | `docker.io/library/centos:8`        |
 
 ### Container collection: Bash Test
@@ -43,6 +44,7 @@
 | `debian-11-basth-test:0.1.0`     | debian      | `docker.io/library/debian:bullseye` |
 | `oraclelinux-8-basth-test:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `fedora-33-basth-test:0.1.0`     | fedora      | `docker.io/library/fedora:33`       |
+| `fedora-35-basth-test:0.1.0`     | fedora      | `docker.io/library/fedora:35`       |
 | `centos-8-basth-test:0.1.0`      | centos      | `docker.io/library/centos:8`        |
 
 ## Usage

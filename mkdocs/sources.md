@@ -42,10 +42,22 @@
 {% include "../src/dockerfiles/fedora-33-ansible-node/Dockerfile" %}
 ```
 
+## fedora-35-ansible-node
+
+```terraform
+{% include "../src/dockerfiles/fedora-35-ansible-node/Dockerfile" %}
+```
+
 ## fedora-33-bash-test
 
 ```terraform
 {% include "../src/dockerfiles/fedora-33-bash-test/Dockerfile" %}
+```
+
+## fedora-35-bash-test
+
+```terraform
+{% include "../src/dockerfiles/fedora-35-bash-test/Dockerfile" %}
 ```
 
 ## oraclelinux-8-ansible-node
