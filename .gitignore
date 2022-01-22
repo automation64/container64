@@ -4,3 +4,4 @@
 .vscode/*
 *.code-workspace
 build/
+.secrets
