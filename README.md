@@ -36,16 +36,16 @@
 - Purpose: Bash scripts testing
 - Packages: Bash, Bats Core, Bash Core plugins
 
-| Image:Tag                        | OS          | Base Image                          |
-| -------------------------------- | ----------- | ----------------------------------- |
-| `ubuntu-20.4-basth-test:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
-| `ubuntu-21.4-basth-test:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
-| `debian-10-basth-test:0.1.0`     | debian      | `docker.io/library/debian:buster`   |
-| `debian-11-basth-test:0.1.0`     | debian      | `docker.io/library/debian:bullseye` |
-| `oraclelinux-8-basth-test:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `fedora-33-basth-test:0.1.0`     | fedora      | `docker.io/library/fedora:33`       |
-| `fedora-35-basth-test:0.2.0`     | fedora      | `docker.io/library/fedora:35`       |
-| `centos-8-basth-test:0.1.0`      | centos      | `docker.io/library/centos:8`        |
+| Image:Tag                       | OS          | Base Image                          |
+| ------------------------------- | ----------- | ----------------------------------- |
+| `ubuntu-20.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
+| `ubuntu-21.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| `debian-10-bash-test:0.2.0`     | debian      | `docker.io/library/debian:buster`   |
+| `debian-11-bash-test:0.2.0`     | debian      | `docker.io/library/debian:bullseye` |
+| `oraclelinux-8-bash-test:0.2.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `fedora-33-bash-test:0.2.0`     | fedora      | `docker.io/library/fedora:33`       |
+| `fedora-35-bash-test:0.2.0`     | fedora      | `docker.io/library/fedora:35`       |
+| `centos-8-bash-test:0.2.0`      | centos      | `docker.io/library/centos:8`        |
 
 ## Usage
 
