@@ -42,7 +42,8 @@ function devcnt64_build_podman_build() {
   "$DEVCNT64_BUILD_CMD_PODMAN" \
     build \
     --no-cache \
-    -t "${container}:${version}" \
+    --rm \
+    --tag "${container}:${version}" \
     .
 
 }
@@ -103,7 +104,7 @@ while getopts ':upc:e:h' devcnt64_build_option; do
     ;;
   u)
     devcnt64_build_command='devcnt64_build_image_publish'
-    devcnt64_run_tests_command_tag=''
+    devcnt64_run_tests_command_tag='publish local images to external registry'
     ;;
   c) devcnt64_build_container="$OPTARG" ;;
   e) devcnt64_build_version="$OPTARG" ;;
