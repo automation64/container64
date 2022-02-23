@@ -38,6 +38,7 @@
 
 | Image:Tag                       | OS          | Base Image                          |
 | ------------------------------- | ----------- | ----------------------------------- |
+| `alpine-3-bash-test:0.1.0`      | alpine      | `docker.io/library/alpine:3`        |
 | `ubuntu-20.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 | `debian-10-bash-test:0.2.0`     | debian      | `docker.io/library/debian:buster`   |
