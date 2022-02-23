@@ -9,16 +9,10 @@
 #######################################
 
 # shellcheck disable=SC1091
-source './.env' || exit 1
+[[ -z "$DEVCNT64_BIN" ]] && echo "Error: prepare the dev environment before executing this file" && exit 1
 source "${DEVCNT64_BIN}/bashlib64.bash" || exit 1
 
-readonly DEVCNT64_BUILD_CMD_PODMAN='/usr/bin/podman'
-readonly DEVCNT64_BUILD_REGISTRY='ghcr.io/serdigital64'
-
 function devcnt64_build_podman_login() {
-
-  # shellcheck disable=1090
-  source "$DEVCNT64_SECRETS"
 
   "$DEVCNT64_BUILD_CMD_PODMAN" \
     login \
@@ -87,6 +81,9 @@ function devcnt64_build_help() {
 #
 # Main
 #
+
+readonly DEVCNT64_BUILD_CMD_PODMAN='/usr/bin/podman'
+readonly DEVCNT64_BUILD_REGISTRY='ghcr.io/serdigital64'
 
 declare devcnt64_run_tests_status=1
 declare devcnt64_build_command=''
