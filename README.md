@@ -50,21 +50,53 @@
 
 ## Usage
 
-### Podman
-
 Run a command inside the container:
 
-`podman run ghcr.io/serdigital64/<IMAGE> <COMMAND>`
+```shell
+# Using docker:
+docker run ghcr.io/serdigital64/<IMAGE> <COMMAND>
+# Using podman:
+podman run ghcr.io/serdigital64/<IMAGE> <COMMAND>
+```
 
 ## Deployment
 
-### Podman
-
 Download the image to the local registry:
 
-`podman pull ghcr.io/serdigital64/<IMAGE>`
+```shell
+# Using docker:
+docker pull ghcr.io/serdigital64/<IMAGE>
+# Using podman:
+podman pull ghcr.io/serdigital64/<IMAGE>`
+```
 
 ## Development
+
+### Environment
+
+- Prepare dev tools
+  - Install GIT
+  - Install Docker or Podman
+- Clone GIT repository
+
+  ```shell
+  git clone https://github.com/serdigital64/container64.git
+  ```
+
+- Adjust environment variables to reflect your configuration:
+
+  ```shell
+  # Copy environment definition files from templates:
+  cp dot.local .local
+  cp dot.secrets .secrets
+  # Review and update content for both files
+  ```
+
+- Initialize dev environment variables
+
+  ```shell
+  source bin/devcnt-set
+  ```
 
 ### Repositories
 
