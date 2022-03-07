@@ -8,5 +8,14 @@
 #
 
 # Project base location. Adjust to your local GIT repo
-DEVCNT64_ROOT="${HOME}/git/container64"
-export DEVCNT64_ROOT
+DEVCNT_ROOT="${HOME}/git/container64"
+export DEVCNT_ROOT
+
+DEVCNT_CMD_PODMAN='/usr/bin/podman'
+export DEVCNT_CMD_PODMAN
+
+DEVCNT_CMD_DOCKER='/usr/bin/docker'
+export DEVCNT_CMD_DOCKER
+
+DEVCNT_REGISTRY='ghcr.io/serdigital64'
+export DEVCNT_REGISTRY

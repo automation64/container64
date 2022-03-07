@@ -1,0 +1,157 @@
+#!/bin/bash
+#######################################
+# Build containers in dev environment
+#
+# Author: serdigital64 (https://github.com/serdigital64)
+# License: GPL-3.0-or-later (https://www.gnu.org/licenses/gpl-3.0.txt)
+# Repository: https://github.com/serdigital64/container64
+# Version: 1.9.0
+#######################################
+
+# shellcheck disable=SC1091
+[[ -z "$DEVCNT_BIN" ]] && echo "Error: prepare the dev environment before executing this file" && exit 1
+source "${DEVCNT_BIN}/bashlib64.bash" || exit 1
+
+function devcnt_build_podman_login() {
+
+  if [[ "$engine" == 'podman' ]]; then
+    "$DEVCNT_CMD_PODMAN" \
+      login \
+      --username "$DEVCNT_GITHUB_USER" \
+      --password "$DEVCNT_GITHUB_TOKEN" \
+      "$DEVCNT_REGISTRY"
+  else
+    "$DEVCNT_CMD_PODMAN" \
+      login \
+      --username "$DEVCNT_GITHUB_USER" \
+      --password "$DEVCNT_GITHUB_TOKEN" \
+      "$DEVCNT_REGISTRY"
+  fi
+
+}
+
+function devcnt_build_build() {
+
+  local engine="$1"
+  local container="$2"
+  local version="${2:-0.1.0}"
+  local dockerfile="${DEVCNT_SRC}/dockerfiles/${container}/Dockerfile"
+
+  bl64_check_file "$dockerfile" || return 1
+
+  cd "${DEVCNT_SRC}/dockerfiles/${container}" || return 1
+
+  if [[ "$engine" == 'podman' ]]; then
+    "$DEVCNT_CMD_PODMAN" \
+      build \
+      --no-cache \
+      --rm \
+      --tag "${container}:${version}" \
+      .
+  else
+    "$DEVCNT_CMD_DOCKER" \
+      build \
+      --no-cache \
+      --rm \
+      --tag "${container}:${version}" \
+      .
+  fi
+
+}
+
+function devcnt_build_publish() {
+
+  local engine="$1"
+  local container="$2"
+  local version="${2:-0.1.0}"
+  local dockerfile="${DEVCNT_SRC}/dockerfiles/${container}/Dockerfile"
+
+  bl64_check_file "$dockerfile" || return 1
+
+  devcnt_build_login "$engine" || return 1
+
+  if [[ "$engine" == 'podman' ]]; then
+    "$DEVCNT_CMD_PODMAN" \
+      push \
+      "${container}" \
+      "${DEVCNT_REGISTRY}/${container}:${version}"
+  else
+    "$DEVCNT_CMD_DOCKER" \
+      push \
+      "${container}" \
+      "${DEVCNT_REGISTRY}/${container}:${version}"
+  fi
+
+}
+
+function devcnt_build_check() {
+
+  bl64_check_export 'DEVCNT_REGISTRY' || return 1
+  if [[ "$devcnt_build_engine" == 'podman' ]]; then
+    bl64_check_command "$DEVCNT_CMD_PODMAN" || return 1
+  else
+    bl64_check_command "$DEVCNT_CMD_DOCKER" || return 1
+  fi
+
+}
+
+function devcnt_build_help() {
+
+  bl64_msg_show_usage \
+    '<-b|-u> [-p|-d] -c Container -e Version' \
+    'Build containers in dev environment' \
+    '
+  -b          : Build container
+  -u          : Publish container to public registry
+    ' '
+  -p          : Use podman
+  -d          : Use docker
+    ' '
+  -c Container: container name
+  -e Version  : container version
+    '
+
+}
+
+#
+# Main
+#
+
+declare devcnt_run_tests_status=1
+declare devcnt_run_tests_command_tag=''
+declare devcnt_build_command=''
+declare devcnt_build_option=''
+declare devcnt_build_container=''
+declare devcnt_build_version=''
+declare devcnt_build_engine=''
+
+(($# == 0)) && devcnt_build_help && exit 1
+while getopts ':bupdc:e:h' devcnt_build_option; do
+  case "$devcnt_build_option" in
+  b)
+    devcnt_build_command='devcnt_build_build'
+    devcnt_run_tests_command_tag='build container'
+    ;;
+  u)
+    devcnt_build_command='devcnt_build_publish'
+    devcnt_run_tests_command_tag='publish images to external registry'
+    ;;
+  p) devcnt_build_engine='podman' ;;
+  d) devcnt_build_engine='docker' ;;
+  c) devcnt_build_container="$OPTARG" ;;
+  e) devcnt_build_version="$OPTARG" ;;
+  h) devcnt_build_help && exit ;;
+  \?) devcnt_build_help && exit 1 ;;
+  esac
+done
+[[ -z "$devcnt_build_command" ]] && devcnt_build_help && exit 1
+devcnt_build_check || exit 1
+
+bl64_msg_show_batch_start "$devcnt_run_tests_command_tag"
+case "$devcnt_build_command" in
+'devcnt_build_build' | 'devcnt_build_publish') "$devcnt_build_command" "$devcnt_build_engine" "$devcnt_build_container" "$devcnt_build_version" ;;
+esac
+devcnt_run_tests_status=$?
+
+bl64_msg_show_batch_finish $devcnt_run_tests_status "$devcnt_run_tests_command_tag"
+exit $devcnt_run_tests_status
