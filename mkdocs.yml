@@ -7,8 +7,8 @@ site_url: "https://serdigital64.github.io/container64"
 repo_url: "https://github.com/serdigital64/container64"
 
 copyright: "GPL-3.0-or-later"
-docs_dir: "mkdocs"
-site_dir: "docs"
+docs_dir: "docs"
+site_dir: "build/site"
 strict: false
 
 extra:
@@ -83,6 +83,9 @@ markdown_extensions:
       use_pygments: true
       linenums: true
       linenums_style: "table"
+  - mdx_truly_sane_lists:
+      nested_indent: 2
+      truly_sane: true
 
 nav:
   - Home: "index.md"
