@@ -38,14 +38,15 @@
 
 | Image:Tag                       | OS          | Base Image                          |
 | ------------------------------- | ----------- | ----------------------------------- |
-| `alpine-3-bash-test:0.1.0`      | alpine      | `docker.io/library/alpine:3`        |
 | `almalinux-8-bash-test:0.1.0`   | alpine      | `docker.io/library/almalinux:8.5`   |
+| `alpine-3-bash-test:0.1.0`      | alpine      | `docker.io/library/alpine:3`        |
 | `centos-8-bash-test:0.2.0`      | centos      | `docker.io/library/centos:8`        |
 | `debian-10-bash-test:0.2.0`     | debian      | `docker.io/library/debian:buster`   |
 | `debian-11-bash-test:0.2.0`     | debian      | `docker.io/library/debian:bullseye` |
 | `fedora-33-bash-test:0.2.0`     | fedora      | `docker.io/library/fedora:33`       |
 | `fedora-35-bash-test:0.2.0`     | fedora      | `docker.io/library/fedora:35`       |
 | `oraclelinux-8-bash-test:0.2.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `rhel-8-bash-test:0.1.0`        | ubuntu      | `docker.io/redhat/ubi8:8.5`         |
 | `ubuntu-20.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 
