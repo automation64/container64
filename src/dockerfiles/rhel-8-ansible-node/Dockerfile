@@ -1,10 +1,10 @@
 # Base image
-FROM docker.io/library/oraclelinux:8
+FROM docker.io/redhat/ubi8:8.5
 
 # Image Metadata
 LABEL \
-    container64.os-name="oraclelinux" \
-    container64.os-version="8.0" \
+    container64.os-name="rhel" \
+    container64.os-version="8.5" \
     container64.image-version="0.2.0" \
     container64.image-content="systemd,sudo,python3"
 

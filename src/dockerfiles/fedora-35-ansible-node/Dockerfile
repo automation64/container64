@@ -5,38 +5,38 @@ FROM docker.io/library/fedora:35
 LABEL \
     container64.os-name="fedora" \
     container64.os-version="35.0" \
-    container64.image-version="0.1.0" \
+    container64.image-version="0.2.0" \
     container64.image-content="systemd,sudo,python3"
 
-# Prepare package installer
+# Prepare environment
 ENV container="docker"
+COPY loader/bashlib64.bash /cmd
+ARG BL64_LIB_CMD="1"
+RUN /bin/chmod 0755 /cmd
 
-# Download BashLib64
-ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader/cmd /
-
-# Install tools
+# Install packages
+ARG CNT64_SYSTEMD_PREREQS="acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
+ARG CNT64_SYSTEMD_PACKAGES="systemd systemd-pam systemd-rpm-macros systemd-networkd"
+ARG CNT64_SUDO_PREREQS=""
+ARG CNT64_SUDO_PACKAGES=""
+ARG CNT64_PYTHON3_PREREQS=""
+ARG CNT64_PYTHON3_PACKAGES=""
 RUN \
-    /bin/chmod 755 /cmd && \
-    /cmd bl64_pkg_prepare
-
-# Define requirements for application: SYSTEMD
-ENV APP_SYSTEMD_PREREQS1="acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils"
-ENV APP_SYSTEMD_PREREQS2="kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
-
-# Define packages for application: SYSTEMD
-ENV APP_SYSTEMD_PACKAGES="systemd systemd-pam systemd-rpm-macros systemd-networkd"
-
-# Install packages for the application: SYSTEMD
-RUN /cmd bl64_pkg_install \
-    $APP_SYSTEMD_PREREQS1 \
-    $APP_SYSTEMD_PREREQS2 \
-    $APP_SYSTEMD_PACKAGES
+    /cmd bl64_pkg_deploy \
+        ${CNT64_SYSTEMD_PREREQS} \
+        ${CNT64_SYSTEMD_PACKAGES} \
+        ${CNT64_SUDO_PREREQS} \
+        ${CNT64_SUDO_PACKAGES} \
+        ${CNT64_PYTHON3_PREREQS} \
+        ${CNT64_PYTHON3_PACKAGES}
 
 # Configure subsystem: systemd
 RUN systemctl set-default multi-user.target
 
 # Cleanup
-RUN /cmd bl64_os_cleanup_full
+RUN \
+    /cmd bl64_os_cleanup_full && \
+    rm /cmd
 
 # Final command
 CMD ["/lib/systemd/systemd"]
