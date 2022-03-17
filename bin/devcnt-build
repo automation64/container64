@@ -35,11 +35,11 @@ function devcnt_build_build() {
   local engine="$1"
   local container="$2"
   local version="${2:-0.1.0}"
-  local dockerfile="${DEVCNT_SRC}/dockerfiles/${container}/Dockerfile"
+  local dockerfile="dockerfiles/${container}/Dockerfile"
 
-  bl64_check_file "$dockerfile" || return 1
+  bl64_check_file "${DEVCNT_SRC}/${dockerfile}" || return 1
 
-  cd "${DEVCNT_SRC}/dockerfiles/${container}" || return 1
+  cd "${DEVCNT_SRC}" || return 1
 
   if [[ "$engine" == 'podman' ]]; then
     "$DEVCNT_CMD_PODMAN" \
@@ -47,6 +47,7 @@ function devcnt_build_build() {
       --no-cache \
       --rm \
       --tag "${container}:${version}" \
+      --file "$dockerfile" \
       .
   else
     "$DEVCNT_CMD_DOCKER" \
@@ -54,6 +55,7 @@ function devcnt_build_build() {
       --no-cache \
       --rm \
       --tag "${container}:${version}" \
+      --file "$dockerfile" \
       .
   fi
 
