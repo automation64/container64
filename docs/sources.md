@@ -1,5 +1,17 @@
 # Images
 
+## almalinux-8-bash-test
+
+```terraform
+{% include "../src/dockerfiles/almalinux-8-bash-test/Dockerfile" %}
+```
+
+## alpine-3-bash-test
+
+```terraform
+{% include "../src/dockerfiles/alpine-3-bash-test/Dockerfile" %}
+```
+
 ## centos-8-ansible-node
 
 ```terraform
@@ -70,6 +82,12 @@
 
 ```terraform
 {% include "../src/dockerfiles/oraclelinux-8-bash-test/Dockerfile" %}
+```
+
+## rhel-8-bash-test
+
+```terraform
+{% include "../src/dockerfiles/rhel-8-bash-test/Dockerfile" %}
 ```
 
 ## ubuntu-20.4-ansible-node
