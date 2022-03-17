@@ -16,6 +16,3 @@ export DEVCNT_CMD_PODMAN
 
 DEVCNT_CMD_DOCKER='/usr/bin/docker'
 export DEVCNT_CMD_DOCKER
-
-DEVCNT_REGISTRY='ghcr.io/serdigital64'
-export DEVCNT_REGISTRY
