@@ -5,7 +5,7 @@ FROM docker.io/library/fedora:33
 LABEL \
     container64.os-name="fedora" \
     container64.os-version="33.0" \
-    container64.image-version="0.2.0" \
+    container64.image-version="0.3.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins"
 
@@ -13,7 +13,7 @@ LABEL \
 ENV container="docker"
 
 # Download BashLib64
-ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader/cmd /
+COPY loader/bashlib64.bash /cmd
 
 # Prepare environment
 ARG BL64_LIB_CMD="1"
@@ -50,7 +50,9 @@ ARG CNT64_BATSCORE_COMPONENT_NAME="bats-file"
 RUN /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME}.git ${CNT64_BATSCORE_COMPONENT_PATH} 'master'
 
 # Cleanup
-RUN /cmd bl64_os_cleanup_full
+RUN \
+    /cmd bl64_os_cleanup_full && \
+    rm /cmd
 
 # Run bats-core against /test
 CMD [ "/test" ]

@@ -20,34 +20,37 @@
 - Purpose: Ansible node testing
 - Packages: SystemD, Sudo, Python3
 
-| Image:Tag                          | OS          | Base Image                          |
-| ---------------------------------- | ----------- | ----------------------------------- |
-| `centos-8-ansible-node:0.1.0`      | centos      | `docker.io/library/centos:8`        |
-| `debian-10-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:buster`   |
-| `debian-11-ansible-node:0.1.0`     | debian      | `docker.io/library/debian:bullseye` |
-| `fedora-33-ansible-node:0.1.0`     | fedora      | `docker.io/library/fedora:33`       |
-| `fedora-35-ansible-node:0.1.0`     | fedora      | `docker.io/library/fedora:35`       |
-| `oraclelinux-8-ansible-node:0.1.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `ubuntu-20.4-ansible-node:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
-| `ubuntu-21.4-ansible-node:0.1.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| Image                        | OS          | Base Image                          |
+| ---------------------------- | ----------- | ----------------------------------- |
+| `almalinux-8-ansible-node`   | almalinux   | `docker.io/library/almalinux:8.5`   |
+| `centos-8-ansible-node`      | centos      | `docker.io/library/centos:8`        |
+| `debian-10-ansible-node`     | debian      | `docker.io/library/debian:buster`   |
+| `debian-11-ansible-node`     | debian      | `docker.io/library/debian:bullseye` |
+| `fedora-33-ansible-node`     | fedora      | `docker.io/library/fedora:33`       |
+| `fedora-35-ansible-node`     | fedora      | `docker.io/library/fedora:35`       |
+| `oraclelinux-8-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:8.5`         |
+| `ubuntu-20.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
+| `ubuntu-21.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 
 ### Container collection: Bash Test
 
 - Purpose: Bash scripts testing
 - Packages: Bash, Bats Core, Bash Core plugins
 
-| Image:Tag                       | OS          | Base Image                          |
-| ------------------------------- | ----------- | ----------------------------------- |
-| `alpine-3-bash-test:0.1.0`      | alpine      | `docker.io/library/alpine:3`        |
-| `almalinux-8-bash-test:0.1.0`   | alpine      | `docker.io/library/almalinux:8.5`   |
-| `centos-8-bash-test:0.2.0`      | centos      | `docker.io/library/centos:8`        |
-| `debian-10-bash-test:0.2.0`     | debian      | `docker.io/library/debian:buster`   |
-| `debian-11-bash-test:0.2.0`     | debian      | `docker.io/library/debian:bullseye` |
-| `fedora-33-bash-test:0.2.0`     | fedora      | `docker.io/library/fedora:33`       |
-| `fedora-35-bash-test:0.2.0`     | fedora      | `docker.io/library/fedora:35`       |
-| `oraclelinux-8-bash-test:0.2.0` | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `ubuntu-20.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
-| `ubuntu-21.4-bash-test:0.2.0`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| Image                     | OS          | Base Image                          |
+| ------------------------- | ----------- | ----------------------------------- |
+| `almalinux-8-bash-test`   | almalinux   | `docker.io/library/almalinux:8.5`   |
+| `alpine-3-bash-test`      | alpine      | `docker.io/library/alpine:3`        |
+| `centos-8-bash-test`      | centos      | `docker.io/library/centos:8`        |
+| `debian-10-bash-test`     | debian      | `docker.io/library/debian:buster`   |
+| `debian-11-bash-test`     | debian      | `docker.io/library/debian:bullseye` |
+| `fedora-33-bash-test`     | fedora      | `docker.io/library/fedora:33`       |
+| `fedora-35-bash-test`     | fedora      | `docker.io/library/fedora:35`       |
+| `oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8:8.5`         |
+| `ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
+| `ubuntu-21.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 
 ## Usage
 
