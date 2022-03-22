@@ -19,9 +19,10 @@ COPY loader/bashlib64.bash /cmd
 ARG BL64_LIB_CMD="1"
 ARG CNT64_BATSCORE_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
+ARG CNT64_HELPERS="sudo git"
 RUN \
     /bin/chmod 755 /cmd && \
-    /cmd bl64_pkg_deploy sudo git
+    /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \
     /usr/sbin/useradd -m ${CNT64_BATSCORE_USER} && \
