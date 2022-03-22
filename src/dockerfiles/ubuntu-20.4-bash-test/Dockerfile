@@ -13,7 +13,7 @@ LABEL \
 ENV container="docker"
 
 # Download BashLib64
-ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader/cmd /
+COPY loader/bashlib64.bash /cmd
 
 # Prepare environment
 ARG BL64_LIB_CMD="1"
