@@ -5,7 +5,7 @@ FROM docker.io/library/debian:buster
 LABEL \
     container64.os-name="debian" \
     container64.os-version="10.0" \
-    container64.image-version="0.3.0" \
+    container64.image-version="0.4.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins"
 
@@ -13,15 +13,16 @@ LABEL \
 ENV container="docker"
 
 # Download BashLib64
-ADD https://raw.githubusercontent.com/serdigital64/container64/master/src/loader/cmd /
+COPY loader/bashlib64.bash /cmd
 
 # Prepare environment
 ARG BL64_LIB_CMD="1"
 ARG CNT64_BATSCORE_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
+ARG CNT64_HELPERS="sudo git wget curl gawk"
 RUN \
     /bin/chmod 755 /cmd && \
-    /cmd bl64_pkg_deploy sudo git
+    /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \
     /usr/sbin/useradd -m ${CNT64_BATSCORE_USER} && \
