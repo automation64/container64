@@ -1,5 +1,4 @@
 # Base image
-#FROM docker.io/library/centos:8
 FROM quay.io/centos/centos:8
 
 # Image Metadata
@@ -23,6 +22,7 @@ ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git diffutils hostname"
 RUN \
     /bin/chmod 755 /cmd && \
+    dnf --assumeyes --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos && \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \
