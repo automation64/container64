@@ -1,11 +1,11 @@
 # Base image
-FROM quay.io/centos/centos:8
+FROM docker.io/library/fedora:34
 
 # Image Metadata
 LABEL \
-    container64.os-name="centos" \
-    container64.os-version="8.0" \
-    container64.image-version="0.3.0" \
+    container64.os-name="fedora" \
+    container64.os-version="34.0" \
+    container64.image-version="0.4.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins"
 
@@ -22,7 +22,6 @@ ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git diffutils hostname"
 RUN \
     /bin/chmod 755 /cmd && \
-    dnf --assumeyes --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos && \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \
