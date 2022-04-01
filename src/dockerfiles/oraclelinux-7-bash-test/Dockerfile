@@ -1,11 +1,11 @@
 # Base image
-FROM quay.io/centos/centos:8
+FROM docker.io/library/oraclelinux:7
 
 # Image Metadata
 LABEL \
-    container64.os-name="centos" \
-    container64.os-version="8.0" \
-    container64.image-version="0.3.0" \
+    container64.os-name="oraclelinux" \
+    container64.os-version="7.0" \
+    container64.image-version="0.1.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins"
 
@@ -19,10 +19,9 @@ COPY loader/bashlib64.bash /cmd
 ARG BL64_LIB_CMD="1"
 ARG CNT64_BATSCORE_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
-ARG CNT64_HELPERS="sudo git diffutils hostname"
+ARG CNT64_HELPERS="sudo git tar hostname"
 RUN \
     /bin/chmod 755 /cmd && \
-    dnf --assumeyes --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos && \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \

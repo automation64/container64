@@ -42,11 +42,16 @@
 | ------------------------- | ----------- | ----------------------------------- |
 | `almalinux-8-bash-test`   | almalinux   | `docker.io/library/almalinux:8.5`   |
 | `alpine-3-bash-test`      | alpine      | `docker.io/library/alpine:3`        |
-| `centos-8-bash-test`      | centos      | `docker.io/library/centos:8`        |
+| `centos-7-bash-test`      | centos      | `quay.io/centos/centos:centos7`     |
+| `centos-8-bash-test`      | centos      | `quay.io/centos/centos:8`           |
+| `centos-9-bash-test`      | centos      | `quay.io/centos/centos:stream9`     |
+| `debian-9-bash-test`      | debian      | `docker.io/library/debian:stretch`  |
 | `debian-10-bash-test`     | debian      | `docker.io/library/debian:buster`   |
 | `debian-11-bash-test`     | debian      | `docker.io/library/debian:bullseye` |
 | `fedora-33-bash-test`     | fedora      | `docker.io/library/fedora:33`       |
+| `fedora-34-bash-test`     | fedora      | `docker.io/library/fedora:34`       |
 | `fedora-35-bash-test`     | fedora      | `docker.io/library/fedora:35`       |
+| `oraclelinux-7-bash-test` | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8:8.5`         |
 | `ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
