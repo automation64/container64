@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/library/centos:8
+FROM quay.io/centos/centos:8
 
 # Image Metadata
 LABEL \
@@ -22,6 +22,7 @@ ARG CNT64_SUDO_PACKAGES="sudo"
 ARG CNT64_PYTHON3_PREREQS="platform-python-pip python3-pip python3-setuptools"
 ARG CNT64_PYTHON3_PACKAGES="python36"
 RUN \
+    dnf --assumeyes --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos && \
     /cmd bl64_pkg_deploy \
         ${CNT64_SYSTEMD_PREREQS} \
         ${CNT64_SYSTEMD_PACKAGES} \

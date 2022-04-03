@@ -5,7 +5,7 @@ FROM docker.io/library/debian:bullseye
 LABEL \
     container64.os-name="debian" \
     container64.os-version="11.0" \
-    container64.image-version="0.1.0" \
+    container64.image-version="0.2.0" \
     container64.image-content="systemd,sudo,python3"
 
 # Prepare environment
