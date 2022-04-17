@@ -5,9 +5,9 @@ FROM docker.io/library/alpine:3
 LABEL \
     container64.os-name="alpine" \
     container64.os-version="3" \
-    container64.image-version="0.2.0" \
+    container64.image-version="0.3.0" \
     container64.image-content="bash,bats-core" \
-    org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins"
+    org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins, OS utilities"
 
 # Prepare package installer
 ENV container="docker"
@@ -23,15 +23,15 @@ COPY loader/bashlib64.bash /cmd
 ARG BL64_LIB_CMD="1"
 ARG CNT64_BATSCORE_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
-ARG CNT64_HELPERS="sudo git mawk gawk"
+ARG CNT64_HELPERS="sudo git mawk gawk curl python3 py3-pip"
 RUN \
     /bin/chmod 755 /cmd && \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \
     /cmd bl64_iam_user_add ${CNT64_BATSCORE_USER} && \
-    /cmd bl64_sudo_add_root ${CNT64_BATSCORE_USER} && \
-    /cmd bl64_os_mkdir_full ${CNT64_BATSCORE_VOLUME}
+    /cmd bl64_rbac_add_root ${CNT64_BATSCORE_USER} && \
+    /cmd bl64_fs_mkdir_full ${CNT64_BATSCORE_VOLUME}
 
 # Install Bats-Core
 ARG CNT64_BATSCORE_REPO="https://github.com/bats-core"
@@ -41,7 +41,7 @@ ARG CNT64_BATSCORE_HELPERS="${CNT64_BATSCORE_COMPONENT_PATH}/${CNT64_BATSCORE_CO
 
 RUN \
     /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME}.git ${CNT64_BATSCORE_COMPONENT_PATH} 'master' && \
-    /cmd bl64_os_mkdir_full $CNT64_BATSCORE_HELPERS
+    /cmd bl64_fs_mkdir_full $CNT64_BATSCORE_HELPERS
 
 # Install plugins
 ARG CNT64_BATSCORE_COMPONENT_PATH="$CNT64_BATSCORE_HELPERS"
@@ -56,7 +56,7 @@ RUN /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NA
 
 # Cleanup
 RUN \
-    /cmd bl64_os_cleanup_full && \
+    /cmd bl64_fs_cleanup_full && \
     rm /cmd
 
 # Run bats-core against /test
