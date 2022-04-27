@@ -5,7 +5,7 @@
 # Author: serdigital64 (https://github.com/serdigital64)
 # License: GPL-3.0-or-later (https://www.gnu.org/licenses/gpl-3.0.txt)
 # Repository: https://github.com/serdigital64/bashlib64
-# Version: 1.23.0
+# Version: 1.26.0
 #######################################
 
 # Ensure pipeline exit status is failed when any cmd fails
@@ -137,6 +137,21 @@ export BL64_DBG_TARGET_LIB_ALL='8'
 readonly _BL64_DBG_TXT_FUNCTION_START='function tracing started'
 readonly _BL64_DBG_TXT_FUNCTION_STOP='function tracing stopped'
 readonly _BL64_DBG_TXT_SHELL_VAR='shell variable'
+
+readonly _BL64_DBG_TXT_BASH="Bash / Interpreter path"
+readonly _BL64_DBG_TXT_BASHOPTS="Bash / Options"
+readonly _BL64_DBG_TXT_TMPDIR="Bash / Temporary path"
+readonly _BL64_DBG_TXT_BASH_VERSION="Bash / Version"
+readonly _BL64_DBG_TXT_OSTYPE="Bash / Detected OS"
+readonly _BL64_DBG_TXT_LC_ALL="Shell / Locale setting"
+readonly _BL64_DBG_TXT_HOME="Shell / Home directory"
+readonly _BL64_DBG_TXT_PATH="Shell / Search path"
+readonly _BL64_DBG_TXT_HOSTNAME="Shell / Hostname"
+readonly _BL64_DBG_TXT_EUID="Script / User ID"
+readonly _BL64_DBG_TXT_UID="Script / Effective User ID"
+readonly _BL64_DBG_TXT_BASH_ARGV="Script / Arguments"
+readonly _BL64_DBG_TXT_STATUS="Script / Latest exit status"
+readonly _BL64_DBG_TXT_BASH_LINENO="Script / Last executed function"
 
 declare -rig BL64_FS_ERROR_MISSING_PARAMETER=50
 declare -rig BL64_FS_ERROR_MERGE_FILE=51
@@ -352,17 +367,19 @@ export BL64_RXTX_ALIAS_CURL
 export BL64_RXTX_ALIAS_WGET
 
 export BL64_RXTX_SET_CURL_VERBOSE
-export BL64_RXTX_SET_WGET_VERBOSE
 export BL64_RXTX_SET_CURL_OUTPUT
+export BL64_RXTX_SET_CURL_SILENT
+export BL64_RXTX_SET_CURL_REDIRECT
+export BL64_RXTX_SET_CURL_SECURE
+export BL64_RXTX_SET_WGET_VERBOSE
 export BL64_RXTX_SET_WGET_OUTPUT
+export BL64_RXTX_SET_WGET_SECURE
 
 declare -rig BL64_RXTX_ERROR_BACKUP=197
 declare -rig BL64_RXTX_ERROR_RESTORE=198
 declare -rig BL64_RXTX_ERROR_TEMPORARY_REPO=199
-declare -rig BL64_RXTX_ERROR_MISSING_PARAMETER=200
 declare -rig BL64_RXTX_ERROR_MISSING_COMMAND=201
 
-readonly _BL64_RXTX_TXT_MISSING_PARAMETER='required parameter is missing'
 readonly _BL64_RXTX_TXT_MISSING_COMMAND='no web transfer command was found on the system'
 readonly _BL64_RXTX_TXT_EXISTING_DESTINATION='destination path is not empty. No action taken.'
 readonly _BL64_RXTX_TXT_CREATION_PROBLEM='unable to create temporary git repo'
@@ -408,7 +425,7 @@ readonly _BL64_XSV_TXT_SOURCE_NOT_FOUND='source file not found'
 function bl64_arc_open_tar() {
   local source="$1"
   local destination="$2"
-  local status=0
+  local -i status=0
 
   if [[ -z "$source" || -z "$destination" ]]; then
     bl64_msg_show_error "$_BL64_ARC_TXT_MISSING_PARAMETER (source,destination)"
@@ -475,11 +492,11 @@ function bl64_check_command() {
     return $BL64_CHECK_ERROR_FILE_NOT_FOUND
   fi
   if [[ ! -f "$path" ]]; then
-    bl64_msg_show_error "${message} (${path})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] ${message} (${path})"
     return $BL64_CHECK_ERROR_FILE_NOT_FOUND
   fi
   if [[ ! -x "$path" ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_COMMAND_NOT_EXECUTABLE (${path})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_COMMAND_NOT_EXECUTABLE (${path})"
     return $BL64_CHECK_ERROR_FILE_NOT_EXECUTE
   fi
   return 0
@@ -491,11 +508,11 @@ function bl64_check_file() {
 
   bl64_check_parameter 'path' || return $?
   if [[ ! -f "$path" ]]; then
-    bl64_msg_show_error "${message} (${path})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] ${message} (${path})"
     return $BL64_CHECK_ERROR_FILE_NOT_FOUND
   fi
   if [[ ! -r "$path" ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_FILE_NOT_READABLE (${path})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_FILE_NOT_READABLE (${path})"
     return $BL64_CHECK_ERROR_FILE_NOT_READ
   fi
   return 0
@@ -507,11 +524,11 @@ function bl64_check_directory() {
 
   bl64_check_parameter 'path' || return $?
   if [[ ! -d "$path" ]]; then
-    bl64_msg_show_error "${message} (${path})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] ${message} (${path})"
     return $BL64_CHECK_ERROR_DIRECTORY_NOT_FOUND
   fi
   if [[ ! -r "$path" || ! -x "$path" ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_DIRECTORY_NOT_READABLE (${path})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_DIRECTORY_NOT_READABLE (${path})"
     return $BL64_CHECK_ERROR_DIRECTORY_NOT_READ
   fi
   return 0
@@ -522,12 +539,12 @@ function bl64_check_parameter() {
   local description="${2:-parameter $parameter}"
 
   if [[ -z "$parameter" ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_MISSING_PARAMETER (parameter name)"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_MISSING_PARAMETER (parameter name)"
     return $BL64_CHECK_ERROR_MISSING_PARAMETER
   fi
 
   if eval "[[ -z \"\$${parameter}\" || \"\$${parameter}\" == '${BL64_LIB_DEFAULT}' ]]"; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_MISSING_PARAMETER (${description})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_MISSING_PARAMETER (${description})"
     return $BL64_CHECK_ERROR_PARAMETER_EMPTY
   fi
   return 0
@@ -540,12 +557,12 @@ function bl64_check_export() {
   bl64_check_parameter 'export_name' || return $?
 
   if [[ ! -v "$export_name" ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_EXPORT_SET (${description})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_EXPORT_SET (${description})"
     return $BL64_CHECK_ERROR_EXPORT_SET
   fi
 
   if eval "[[ -z \$${export_name} ]]"; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_EXPORT_EMPTY (${description})"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_EXPORT_EMPTY (${description})"
     return $BL64_CHECK_ERROR_EXPORT_EMPTY
   fi
   return 0
@@ -557,7 +574,7 @@ function bl64_check_path_relative() {
 
   bl64_check_parameter 'path' || return $?
   if [[ "$path" == '/' || "$path" == /* ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_PATH_NOT_RELATIVE ($path)"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_PATH_NOT_RELATIVE ($path)"
     return $BL64_CHECK_ERROR_PATH_NOT_RELATIVE
   fi
   return 0
@@ -569,7 +586,7 @@ function bl64_check_path_absolute() {
 
   bl64_check_parameter 'path' || return $?
   if [[ "$path" != '/' && "$path" != /* ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_PATH_NOT_RELATIVE ($path)"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_PATH_NOT_RELATIVE ($path)"
     return $BL64_CHECK_ERROR_PATH_NOT_ABSOLUTE
   fi
   return 0
@@ -578,7 +595,7 @@ function bl64_check_path_absolute() {
 function bl64_check_privilege_root() {
   bl64_dbg_lib_show_vars 'EUID'
   if [[ "$EUID" != '0' ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_PRIVILEGE_IS_NOT_ROOT (EUID: $EUID)"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_PRIVILEGE_IS_NOT_ROOT (EUID: $EUID)"
     return $BL64_CHECK_ERROR_PRIVILEGE_IS_NOT_ROOT
   fi
   return 0
@@ -587,7 +604,7 @@ function bl64_check_privilege_root() {
 function bl64_check_privilege_not_root() {
   bl64_dbg_lib_show_vars 'EUID'
   if [[ "$EUID" == '0' ]]; then
-    bl64_msg_show_error "$_BL64_CHECK_TXT_PRIVILEGE_IS_ROOT"
+    bl64_msg_show_error "[${FUNCNAME[1]}] $_BL64_CHECK_TXT_PRIVILEGE_IS_ROOT"
     return $BL64_CHECK_ERROR_PRIVILEGE_IS_ROOT
   fi
   return 0
@@ -602,12 +619,38 @@ function bl64_check_overwrite() {
 
   if [[ "$overwrite" == "$BL64_LIB_VAR_OFF" ]]; then
     if [[ -e "$path" ]]; then
-      bl64_msg_show_error "${message} (${path})"
+      bl64_msg_show_error "[${FUNCNAME[1]}] ${message} (${path})"
       return $BL64_CHECK_ERROR_OVERWRITE_NOT_PERMITED
     fi
   fi
 
   return 0
+}
+
+function bl64_dbg_runtime_show() {
+  local -i last_status=$?
+
+  [[ "$BL64_LIB_DEBUG" != "$BL64_DBG_TARGET_APP_TASK" && "$BL64_LIB_DEBUG" != "$BL64_DBG_TARGET_APP_ALL" ]] &&
+    return 0
+
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASH}: [${BASH}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASHOPTS}: [${BASHOPTS:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_TMPDIR}: [${TMPDIR:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASH_VERSION}: [${BASH_VERSION}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_OSTYPE}: [${OSTYPE:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_LC_ALL}: [${LC_ALL:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_HOME}: [${HOME:-EMPTY}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_PATH}: [${PATH:-EMPTY}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_HOSTNAME}: [${HOSTNAME:-EMPTY}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_EUID}: [${EUID}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_UID}: [${UID}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASH_ARGV}: [${BASH_ARGV[*]:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_STATUS}: [${last_status}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASH_LINENO}(1): [${BASH_LINENO[1]:-}:${FUNCNAME[1]:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASH_LINENO}(2): [${BASH_LINENO[2]:-}:${FUNCNAME[2]:-NONE}]"
+  bl64_msg_show_debug "${_BL64_DBG_TXT_BASH_LINENO}(3): [${BASH_LINENO[3]:-}:${FUNCNAME[3]:-NONE}]"
+
+  return $last_status
 }
 
 function bl64_dbg_app_trace_stop() {
@@ -683,9 +726,9 @@ function bl64_dbg_app_show_vars() {
 }
 
 function bl64_fs_create_dir() {
-  local mode="${1:-"$BL64_LIB_DEFAULT"}"
-  local user="${2:-"$BL64_LIB_DEFAULT"}"
-  local group="${3:-"$BL64_LIB_DEFAULT"}"
+  local mode="${1:-${BL64_LIB_DEFAULT}}"
+  local user="${2:-${BL64_LIB_DEFAULT}}"
+  local group="${3:-${BL64_LIB_DEFAULT}}"
   local path=''
 
   bl64_dbg_lib_show_info "parameters:[${*}]"
@@ -698,8 +741,9 @@ function bl64_fs_create_dir() {
 
   for path in "$@"; do
 
-    bl64_check_path_absolute "$path" &&
-      bl64_fs_mkdir "$path" || return $?
+    bl64_check_path_absolute "$path" || return $?
+    [[ -d "$path" ]] && continue
+    bl64_fs_mkdir "$path" || return $?
 
     if [[ "$mode" != "$BL64_LIB_DEFAULT" ]]; then
       bl64_fs_chmod "$mode" "$path" || return $?
@@ -715,10 +759,10 @@ function bl64_fs_create_dir() {
 }
 
 function bl64_fs_copy_files() {
-  local mode="${1:-"$BL64_LIB_DEFAULT"}"
-  local user="${2:-"$BL64_LIB_DEFAULT"}"
-  local group="${3:-"$BL64_LIB_DEFAULT"}"
-  local destination="${4:-"$BL64_LIB_DEFAULT"}"
+  local mode="${1:-${BL64_LIB_DEFAULT}}"
+  local user="${2:-${BL64_LIB_DEFAULT}}"
+  local group="${3:-${BL64_LIB_DEFAULT}}"
+  local destination="${4:-${BL64_LIB_DEFAULT}}"
   local path=''
   local target=''
 
@@ -754,15 +798,15 @@ function bl64_fs_copy_files() {
 }
 
 function bl64_fs_merge_files() {
-  local mode="${1:-"$BL64_LIB_DEFAULT"}"
-  local user="${2:-"$BL64_LIB_DEFAULT"}"
-  local group="${3:-"$BL64_LIB_DEFAULT"}"
-  local destination="${4:-"$BL64_LIB_DEFAULT"}"
+  local mode="${1:-${BL64_LIB_DEFAULT}}"
+  local user="${2:-${BL64_LIB_DEFAULT}}"
+  local group="${3:-${BL64_LIB_DEFAULT}}"
+  local destination="${4:-${BL64_LIB_DEFAULT}}"
   local path=''
   local -i status_cat=0
   local -i status_file=0
 
-  bl64_check_parameter "$destination" || return $?
+  bl64_check_parameter 'destination' || return $?
   bl64_check_overwrite "$destination" || return $?
 
   bl64_dbg_lib_show_info "parameters:[${*}]"
@@ -1269,11 +1313,11 @@ function bl64_msg_setup() {
 }
 
 function bl64_msg_show_usage() {
-  local usage="${1:-$BL64_LIB_DEFAULT}"
-  local description="${2:-$BL64_LIB_DEFAULT}"
-  local commands="${3:-$BL64_LIB_DEFAULT}"
-  local flags="${4:-$BL64_LIB_DEFAULT}"
-  local parameters="${5:-$BL64_LIB_DEFAULT}"
+  local usage="${1:-${BL64_LIB_DEFAULT}}"
+  local description="${2:-${BL64_LIB_DEFAULT}}"
+  local commands="${3:-${BL64_LIB_DEFAULT}}"
+  local flags="${4:-${BL64_LIB_DEFAULT}}"
+  local parameters="${5:-${BL64_LIB_DEFAULT}}"
 
   printf '\n%s: %s %s\n\n' "$_BL64_MSG_TXT_USAGE" "$BL64_SCRIPT_NAME" "$usage"
 
@@ -1297,19 +1341,19 @@ function bl64_msg_show_usage() {
 }
 
 function bl64_msg_show_error() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   _bl64_msg_show "$_BL64_MSG_TXT_ERROR" "$message" >&2
 }
 
 function bl64_msg_show_warning() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   _bl64_msg_show "$_BL64_MSG_TXT_WARNING" "$message" >&2
 }
 
 function bl64_msg_show_info() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   [[ "$BL64_LIB_VERBOSE" == "$BL64_LIB_VAR_OFF" ]] && return 0
 
@@ -1317,7 +1361,7 @@ function bl64_msg_show_info() {
 }
 
 function bl64_msg_show_task() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   [[ "$BL64_LIB_VERBOSE" == "$BL64_LIB_VAR_OFF" ]] && return 0
 
@@ -1325,13 +1369,13 @@ function bl64_msg_show_task() {
 }
 
 function bl64_msg_show_debug() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   _bl64_msg_show "$_BL64_MSG_TXT_DEBUG" "$message" >&2
 }
 
 function bl64_msg_show_text() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   [[ "$BL64_LIB_VERBOSE" == "$BL64_LIB_VAR_OFF" ]] && return 0
 
@@ -1339,7 +1383,7 @@ function bl64_msg_show_text() {
 }
 
 function bl64_msg_show_batch_start() {
-  local message="${1-$BL64_LIB_DEFAULT}"
+  local message="${1-${BL64_LIB_DEFAULT}}"
 
   [[ "$BL64_LIB_VERBOSE" == "$BL64_LIB_VAR_OFF" ]] && return 0
 
@@ -1348,7 +1392,7 @@ function bl64_msg_show_batch_start() {
 
 function bl64_msg_show_batch_finish() {
   local status="$1"
-  local message="${2-$BL64_LIB_DEFAULT}"
+  local message="${2-${BL64_LIB_DEFAULT}}"
 
   [[ "$BL64_LIB_VERBOSE" == "$BL64_LIB_VAR_OFF" ]] && return 0
 
@@ -1360,7 +1404,7 @@ function bl64_msg_show_batch_finish() {
 }
 
 function bl64_msg_show_unsupported() {
-  local target="${1:-"${FUNCNAME[1]}"}"
+  local target="${1:-${FUNCNAME[1]}}"
 
   bl64_msg_show_error "${_BL64_MSG_TXT_INCOMPATIBLE} (os: ${BL64_OS_DISTRO} / target: ${target})"
 }
@@ -1993,7 +2037,7 @@ function bl64_rbac_add_root() {
 
 function bl64_rbac_check_sudoers() {
   local sudoers="$1"
-  local status=0
+  local -i status=0
 
   bl64_check_privilege_root || return $?
   bl64_check_command "$BL64_RBAC_CMD_VISUDO" || return $BL64_RBAC_ERROR_MISSING_VISUDO
@@ -2092,41 +2136,6 @@ function bl64_rnd_get_alphanumeric() {
   printf '%s' "$output"
 }
 
-function _bl64_rxtx_backup() {
-
-  local destination="$1"
-  local backup="${destination}${_BL64_RXTX_BACKUP_POSTFIX}"
-  local status=0
-
-  if [[ -e "$destination" ]]; then
-    bl64_fs_mv "$destination" "$backup"
-    status=$?
-  fi
-
-  ((status != 0)) && status=$BL64_RXTX_ERROR_BACKUP
-  return $status
-}
-
-function _bl64_rxtx_restore() {
-  local destination="$1"
-  local result="$2"
-  local backup="${destination}${_BL64_RXTX_BACKUP_POSTFIX}"
-  local status=0
-
-  if [[ "$result" == "$BL64_LIB_VAR_OK" ]]; then
-    [[ -e "$backup" ]] && bl64_fs_rm_full "$backup"
-    return $BL64_LIB_VAR_OK
-  fi
-
-  [[ -e "$destination" ]] && bl64_fs_rm_full "$destination"
-
-  bl64_fs_mv "$backup" "$destination"
-  status=$?
-
-  ((status != 0)) && status=$BL64_RXTX_ERROR_RESTORE
-  return $status
-}
-
 function bl64_rxtx_set_command() {
   case "$BL64_OS_DISTRO" in
   ${BL64_OS_UB}-* | ${BL64_OS_DEB}-* | ${BL64_OS_FD}-* | ${BL64_OS_CNT}-* | ${BL64_OS_RHEL}-* | ${BL64_OS_ALM}-* | ${BL64_OS_OL}-* | ${BL64_OS_ALP}-* | ${BL64_OS_MCOS}-*)
@@ -2137,72 +2146,80 @@ function bl64_rxtx_set_command() {
   esac
 }
 
-function bl64_rxtx_set_alias() {
+function bl64_rxtx_set_options() {
   case "$BL64_OS_DISTRO" in
   ${BL64_OS_UB}-* | ${BL64_OS_DEB}-11.* | ${BL64_OS_FD}-*)
-    BL64_RXTX_ALIAS_CURL="$BL64_RXTX_CMD_CURL --no-progress-meter  --config /dev/null"
-    BL64_RXTX_ALIAS_WGET="$BL64_RXTX_CMD_WGET --no-config"
     BL64_RXTX_SET_CURL_VERBOSE='--verbose'
-    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
+    BL64_RXTX_SET_CURL_SILENT='--silent --no-progress-meter'
     BL64_RXTX_SET_CURL_OUTPUT='--output'
+    BL64_RXTX_SET_CURL_SECURE='--config /dev/null'
+    BL64_RXTX_SET_CURL_REDIRECT='--location'
+    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
     BL64_RXTX_SET_WGET_OUTPUT='--output-document'
+    BL64_RXTX_SET_WGET_SECURE='--no-config'
     ;;
   ${BL64_OS_CNT}-* | ${BL64_OS_RHEL}-* | ${BL64_OS_ALM}-* | ${BL64_OS_OL}-* | ${BL64_OS_DEB}-9.* | ${BL64_OS_DEB}-10.*)
-    BL64_RXTX_ALIAS_CURL="$BL64_RXTX_CMD_CURL --config /dev/null"
-    BL64_RXTX_ALIAS_WGET="$BL64_RXTX_CMD_WGET --no-config"
     BL64_RXTX_SET_CURL_VERBOSE='--verbose'
-    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
+    BL64_RXTX_SET_CURL_SILENT='--silent'
     BL64_RXTX_SET_CURL_OUTPUT='--output'
+    BL64_RXTX_SET_CURL_SECURE='--config /dev/null'
+    BL64_RXTX_SET_CURL_REDIRECT='--location'
+    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
     BL64_RXTX_SET_WGET_OUTPUT='--output-document'
+    BL64_RXTX_SET_WGET_SECURE='--no-config'
     ;;
   ${BL64_OS_ALP}-*)
-    BL64_RXTX_ALIAS_CURL="$BL64_RXTX_CMD_CURL"
-    BL64_RXTX_ALIAS_WGET="$BL64_RXTX_CMD_WGET"
     BL64_RXTX_SET_CURL_VERBOSE='--verbose'
-    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
+    BL64_RXTX_SET_CURL_SILENT='--silent'
     BL64_RXTX_SET_CURL_OUTPUT='--output'
+    BL64_RXTX_SET_CURL_SECURE='--config /dev/null'
+    BL64_RXTX_SET_CURL_REDIRECT='--location'
+    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
     BL64_RXTX_SET_WGET_OUTPUT='-O'
+    BL64_RXTX_SET_WGET_SECURE=' '
     ;;
   ${BL64_OS_MCOS}-*)
-    BL64_RXTX_ALIAS_CURL="$BL64_RXTX_CMD_CURL --no-progress-meter  --config /dev/null"
-    BL64_RXTX_ALIAS_WGET="$BL64_RXTX_CMD_WGET --no-config"
     BL64_RXTX_SET_CURL_VERBOSE='--verbose'
-    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
+    BL64_RXTX_SET_CURL_SILENT='--silent --no-progress-meter'
     BL64_RXTX_SET_CURL_OUTPUT='--output'
+    BL64_RXTX_SET_CURL_SECURE='--config /dev/null'
+    BL64_RXTX_SET_CURL_REDIRECT='--location'
+    BL64_RXTX_SET_WGET_VERBOSE='--verbose'
     BL64_RXTX_SET_WGET_OUTPUT='--output-document'
+    BL64_RXTX_SET_WGET_SECURE='--no-config'
     ;;
   *) bl64_msg_show_unsupported ;;
   esac
 }
 
+function bl64_rxtx_set_alias() {
+  BL64_RXTX_ALIAS_CURL="$BL64_RXTX_CMD_CURL ${BL64_RXTX_SET_CURL_SECURE}"
+  BL64_RXTX_ALIAS_WGET="$BL64_RXTX_CMD_WGET ${BL64_RXTX_SET_WGET_SECURE}"
+}
+
 function bl64_rxtx_web_get_file() {
   local source="$1"
   local destination="$2"
-  local replace="${3:-$BL64_LIB_VAR_OFF}"
-  local verbose=''
-  local status=0
+  local replace="${3:-${BL64_LIB_VAR_OFF}}"
+  local mode="${4:-${BL64_LIB_DEFAULT}}"
+  local verbose="$BL64_RXTX_SET_CURL_SILENT"
+  local -i status=0
 
-  if [[ -z "$source" ]]; then
-    bl64_msg_show_error "$_BL64_RXTX_TXT_MISSING_PARAMETER (source url)"
-    return $BL64_RXTX_ERROR_MISSING_PARAMETER
-  fi
-
-  if [[ -z "$destination" ]]; then
-    bl64_msg_show_error "$_BL64_RXTX_TXT_MISSING_PARAMETER (source url)"
-    return $BL64_RXTX_ERROR_MISSING_PARAMETER
-  fi
+  bl64_check_parameter 'source' || return $?
+  bl64_check_parameter 'destination' || return $?
 
   [[ "$replace" == "$BL64_LIB_VAR_OFF" && -e "$destination" ]] && return 0
   _bl64_rxtx_backup "$destination" >/dev/null || return $?
 
   if [[ -x "$BL64_RXTX_CMD_CURL" ]]; then
-    [[ "$BL64_LIB_DEBUG" == "$BL64_DBG_TARGET_CMD" ]] && verbose="$BL64_RXTX_SET_CURL_VERBOSE"
+    [[ "$BL64_LIB_DEBUG" == "$BL64_DBG_TARGET_LIB_CMD" ]] && verbose="$BL64_RXTX_SET_CURL_VERBOSE"
     $BL64_RXTX_ALIAS_CURL $verbose \
+      $BL64_RXTX_SET_CURL_REDIRECT \
       $BL64_RXTX_SET_CURL_OUTPUT "$destination" \
       "$source"
     status=$?
   elif [[ -x "$BL64_RXTX_CMD_WGET" ]]; then
-    [[ "$BL64_LIB_DEBUG" == "$BL64_DBG_TARGET_CMD" ]] && verbose="$BL64_RXTX_SET_WGET_VERBOSE"
+    [[ "$BL64_LIB_DEBUG" == "$BL64_DBG_TARGET_LIB_CMD" ]] && verbose="$BL64_RXTX_SET_WGET_VERBOSE"
     $BL64_RXTX_ALIAS_WGET $verbose \
       $BL64_RXTX_SET_WGET_OUTPUT "$destination" \
       "$source"
@@ -2211,20 +2228,24 @@ function bl64_rxtx_web_get_file() {
     bl64_msg_show_error "$_BL64_RXTX_TXT_MISSING_COMMAND (wget or curl)" &&
       return $BL64_RXTX_ERROR_MISSING_COMMAND
   fi
+
+  if [[ "$status" == '0' && "$mode" != "$BL64_LIB_DEFAULT" ]]; then
+    bl64_fs_chmod "$mode" "$destination"
+    status=$?
+  fi
+
   _bl64_rxtx_restore "$destination" "$status" >/dev/null || return $?
 
   return $status
 }
 
 function bl64_rxtx_git_get_dir() {
-  bl64_dbg_lib_trace_start
   local source_url="${1}"
   local source_path="${2}"
   local destination="${3}"
-  local replace="${4:-$BL64_LIB_VAR_OFF}"
+  local replace="${4:-${BL64_LIB_VAR_OFF}}"
   local branch="${5:-main}"
-  local status=0
-  bl64_dbg_lib_trace_stop
+  local -i status=0
 
   bl64_check_parameter 'source_url' 'git repository' &&
     bl64_check_parameter 'source_path' 'source path' &&
@@ -2261,7 +2282,7 @@ function _bl64_rxtx_git_get_dir_root() {
   local source_url="${1}"
   local destination="${2}"
   local branch="${3:-main}"
-  local status=0
+  local -i status=0
   local repo=''
   local git_name=''
   local transition=''
@@ -2288,7 +2309,7 @@ function _bl64_rxtx_git_get_dir_sub() {
   local source_path="${2}"
   local destination="${3}"
   local branch="${4:-main}"
-  local status=0
+  local -i status=0
   local repo=''
   local target=''
   local source=''
@@ -2309,6 +2330,41 @@ function _bl64_rxtx_git_get_dir_sub() {
   status=$?
 
   [[ -d "$repo" ]] && bl64_fs_rm_full "$repo" >/dev/null
+  return $status
+}
+
+function _bl64_rxtx_backup() {
+
+  local destination="$1"
+  local backup="${destination}${_BL64_RXTX_BACKUP_POSTFIX}"
+  local -i status=0
+
+  if [[ -e "$destination" ]]; then
+    bl64_fs_mv "$destination" "$backup"
+    status=$?
+  fi
+
+  ((status != 0)) && status=$BL64_RXTX_ERROR_BACKUP
+  return $status
+}
+
+function _bl64_rxtx_restore() {
+  local destination="$1"
+  local result="$2"
+  local backup="${destination}${_BL64_RXTX_BACKUP_POSTFIX}"
+  local -i status=0
+
+  if [[ "$result" == "$BL64_LIB_VAR_OK" ]]; then
+    [[ -e "$backup" ]] && bl64_fs_rm_full "$backup"
+    return $BL64_LIB_VAR_OK
+  fi
+
+  [[ -e "$destination" ]] && bl64_fs_rm_full "$destination"
+
+  bl64_fs_mv "$backup" "$destination"
+  status=$?
+
+  ((status != 0)) && status=$BL64_RXTX_ERROR_RESTORE
   return $status
 }
 
@@ -2368,7 +2424,7 @@ function bl64_vcs_git_sparse() {
   local branch="${3:-main}"
   local pattern="${4}"
   local item=''
-  local status=0
+  local -i status=0
   bl64_dbg_lib_trace_stop
 
   bl64_check_command "$BL64_VCS_CMD_GIT" || return $BL64_VCS_ERROR_MISSING_COMMAND
@@ -2512,11 +2568,12 @@ else
   bl64_vcs_set_command
   bl64_vcs_set_alias
   bl64_rxtx_set_command
+  bl64_rxtx_set_options
   bl64_rxtx_set_alias
   bl64_py_set_command
   bl64_py_set_options
 
-  [[ "$BL64_LIB_DEBUG" == "$BL64_DBG_TARGET_APP_ALL" ]] && set -x
+  trap 'bl64_dbg_runtime_show' EXIT
 
   if [[ "$BL64_LIB_CMD" == "$BL64_LIB_VAR_ON" ]]; then
     "$@"
