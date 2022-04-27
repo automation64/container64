@@ -57,6 +57,15 @@
 | `ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 
+### Container collection: Terraform test
+
+- Purpose: Terraform code testing
+- Packages: TFSec
+
+| Image                          | OS          | Base Image                        |
+| ------------------------------ | ----------- | --------------------------------- |
+| `oraclelinux-8-terraform-test` | oraclelinux | `docker.io/library/oraclelinux:8` |
+
 ## Usage
 
 Run a command inside the container:
@@ -70,7 +79,15 @@ podman run ghcr.io/serdigital64/<IMAGE> <COMMAND>
 
 ## Deployment
 
-Download the image to the local registry:
+### Requirements
+
+- Container engine
+  - docker or podman
+- Bash
+
+### Installation
+
+Download the target image to the local registry:
 
 ```shell
 # Using docker:
@@ -79,44 +96,12 @@ docker pull ghcr.io/serdigital64/<IMAGE>
 podman pull ghcr.io/serdigital64/<IMAGE>`
 ```
 
-## Development
-
-### Environment
-
-- Prepare dev tools
-  - Install GIT
-  - Install Docker or Podman
-- Clone GIT repository
-
-  ```shell
-  git clone https://github.com/serdigital64/container64.git
-  ```
-
-- Adjust environment variables to reflect your configuration:
-
-  ```shell
-  # Copy environment definition files from templates:
-  cp dot.local .local
-  cp dot.secrets .secrets
-  # Review and update content for both files
-  ```
-
-- Initialize dev environment variables
-
-  ```shell
-  source bin/devcnt-set
-  ```
-
-### Repositories
-
-- Project GIT repository: [https://github.com/serdigital64/container64](https://github.com/serdigital64/container64)
-- Project Documentation: [https://serdigital64.github.io/container64/](https://serdigital64.github.io/container64/)
-
 ### Contributing
 
 Help on implementing new features and maintaining the code base is welcomed.
 
-[Contributor Covenant Code of Conduct](https://serdigital64.github.io/container64/cod/)
+- [Guidelines](CONTRIBUTING.md)
+- [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## License
 

@@ -108,6 +108,12 @@
 {% include "../src/dockerfiles/oraclelinux-8-ansible-node/Dockerfile" %}
 ```
 
+## oraclelinux-8-terraform-test
+
+```terraform
+{% include "../src/dockerfiles/oraclelinux-8-terraform-test/Dockerfile" %}
+```
+
 ## oraclelinux-7-bash-test
 
 ```terraform
