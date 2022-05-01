@@ -13,7 +13,7 @@
 
 ## Overview
 
-**Container64** is project for building and sharing OCI compliant container images that can be used for testing infrastructure management tools.
+**Container64** is project for building and sharing OCI compliant container images for testing infrastructure management tools.
 
 ### Container collection: Ansible Node
 
@@ -65,6 +65,15 @@
 | Image                          | OS          | Base Image                        |
 | ------------------------------ | ----------- | --------------------------------- |
 | `oraclelinux-8-terraform-test` | oraclelinux | `docker.io/library/oraclelinux:8` |
+
+### Container collection: Bash Linter
+
+- Purpose: Unix Shell scripts linting
+- Packages: ShellCheck, OS utilities
+
+| Image                 | OS     | Base Image                   |
+| --------------------- | ------ | ---------------------------- |
+| `alpine-3-shell-lint` | alpine | `docker.io/library/alpine:3` |
 
 ## Usage
 
