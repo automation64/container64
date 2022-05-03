@@ -2,113 +2,70 @@
 ###[ embedded-bashlib64-end ]#####################
 #
 
-function cntbuild_build_login() {
+#
+# Globals
+#
 
-  if [[ "$engine" == 'podman' ]]; then
-    "$DEVCNT_CMD_PODMAN" \
-      login \
-      --username "$DEVCNT_GITHUB_USER" \
-      --password "$DEVCNT_GITHUB_TOKEN" \
-      "$DEVCNT_REGISTRY"
-  else
-    "$DEVCNT_CMD_PODMAN" \
-      login \
-      --username "$DEVCNT_GITHUB_USER" \
-      --password "$DEVCNT_GITHUB_TOKEN" \
-      "$DEVCNT_REGISTRY"
-  fi
+export CNTBUILD_LOGIN_USER
+export CNTBUILD_LOGIN_PASSWORD
+export CNTBUILD_LOGIN_URL
+
+#
+# Functions
+#
+
+function cntbuild_build() {
+  bl64_dbg_app_show_function
+  local container="$1"
+  local version="$2"
+  local context="$3"
+
+  bl64_check_parameter 'container' &&
+    bl64_check_parameter 'context' ||
+    return $?
+
+  bl64_cnt_build "$context" "dockerfiles/${container}/Dockerfile" "${container}:${version}"
+}
+
+function cntbuild_publish() {
+  bl64_dbg_app_show_function
+  local container="$1"
+  local version="${2:-0.1.0}"
+
+  bl64_check_export 'CNTBUILD_LOGIN_USER' &&
+    bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
+    bl64_check_export 'CNTBUILD_LOGIN_URL' ||
+    return $?
+
+  bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_LOGIN_URL" &&
+    bl64_cnt_push "${container}:${version}" "${CNTBUILD_LOGIN_URL}/${container}:${version}"
 
 }
 
-function cntbuild_build_build() {
-
-  local engine="$1"
-  local debug="$2"
-  local container="$3"
-  local version="${4:-0.1.0}"
-  local dockerfile="dockerfiles/${container}/Dockerfile"
-
-  bl64_check_file "${DEVCNT_SRC}/${dockerfile}" || return 1
-
-  cd "${DEVCNT_SRC}" || return 1
-
-  if [[ "$engine" == 'podman' ]]; then
-    "$DEVCNT_CMD_PODMAN" \
-      --log-level="$debug" \
-      build \
-      --no-cache \
-      --rm \
-      --tag "${container}:${version}" \
-      --file "$dockerfile" \
-      .
-  else
-    "$DEVCNT_CMD_DOCKER" \
-      --log-level="$debug" \
-      build \
-      --no-cache \
-      --rm \
-      --tag "${container}:${version}" \
-      --file "$dockerfile" \
-      .
-  fi
-
+function cntbuild_setup_globals() {
+  cntbuild_context="$(pwd)/src"
 }
 
-function cntbuild_build_publish() {
-
-  local engine="$1"
-  local debug="$2"
-  local container="$3"
-  local version="${4:-0.1.0}"
-  local dockerfile="dockerfiles/${container}/Dockerfile"
-
-  bl64_check_file "${DEVCNT_SRC}/${dockerfile}" || return 1
-
-  cntbuild_build_login "$engine" || return 1
-
-  if [[ "$engine" == 'podman' ]]; then
-    "$DEVCNT_CMD_PODMAN" \
-      --log-level="$debug" \
-      push \
-      "localhost/${container}:${version}" \
-      "${DEVCNT_REGISTRY}/${container}:${version}"
-  else
-    "$DEVCNT_CMD_DOCKER" \
-      --log-level="$debug" \
-      push \
-      "${DEVCNT_REGISTRY}/${container}:${version}"
-  fi
-
+function cntbuild_check_requirements() {
+  [[ -z "$cntbuild_command" ]] && cntbuild_help && return 1
+  return 0
 }
 
-function cntbuild_build_check() {
-
-  bl64_check_export 'DEVCNT_REGISTRY' || return 1
-  if [[ "$cntbuild_engine" == 'podman' ]]; then
-    bl64_check_command "$DEVCNT_CMD_PODMAN" || return 1
-  else
-    bl64_check_command "$DEVCNT_CMD_DOCKER" || return 1
-  fi
-
-}
-
-function cntbuild_build_help() {
+function cntbuild_help() {
 
   bl64_msg_show_usage \
-    '<-b|-u> [-p|-d] [-g] <-c Container> <-e Version> [-h]' \
+    '<-b|-u> <-c Container> [-e Version] [-o Context] [-h]' \
     'Build containers in dev environment' \
     '
   -b          : Build container
   -u          : Publish container to public registry
     ' '
-  -p          : Use podman
-  -d          : Use docker
-  -g          : Enable debug
   -h          : Show help
-    ' '
-  -c Container: container name
-  -e Version  : container version
-    '
+    ' "
+  -c Container: Container name: Format: base directory where the Dockerfile is
+  -e Version  : Container version. Format: tag. Default: ${cntbuild_version}
+  -o Context  : Build context. Format: full path. Default: ${cntbuild_context}
+  "
 
 }
 
@@ -121,38 +78,34 @@ declare cntbuild_command_tag=''
 declare cntbuild_command=''
 declare cntbuild_option=''
 declare cntbuild_container=''
-declare cntbuild_version=''
-declare cntbuild_engine=''
-declare cntbuild_debug='info'
+declare cntbuild_version='0.1.0'
+declare cntbuild_context=''
 
-(($# == 0)) && cntbuild_build_help && exit 1
-while getopts ':bugpdc:e:h' cntbuild_option; do
+cntbuild_setup_globals
+(($# == 0)) && cntbuild_help && exit 1
+while getopts ':buc:e:o:h' cntbuild_option; do
   case "$cntbuild_option" in
   b)
-    cntbuild_command='cntbuild_build_build'
+    cntbuild_command='cntbuild_build'
     cntbuild_command_tag='build container'
     ;;
   u)
-    cntbuild_command='cntbuild_build_publish'
+    cntbuild_command='cntbuild_publish'
     cntbuild_command_tag='publish images to external registry'
     ;;
-  p) cntbuild_engine='podman' ;;
-  d) cntbuild_engine='docker' ;;
-  g) cntbuild_debug='debug' ;;
   c) cntbuild_container="$OPTARG" ;;
   e) cntbuild_version="$OPTARG" ;;
-  h) cntbuild_build_help && exit ;;
-  \?) cntbuild_build_help && exit 1 ;;
+  o) cntbuild_context="$OPTARG" ;;
+  h | \? | *) cntbuild_help && exit 1 ;;
   esac
 done
-[[ -z "$cntbuild_command" ]] && cntbuild_build_help && exit 1
-cntbuild_build_check || exit 1
+cntbuild_check_requirements || exit 1
 
 bl64_msg_show_batch_start "$cntbuild_command_tag"
 case "$cntbuild_command" in
-'cntbuild_build_build' | 'cntbuild_build_publish')
-  "$cntbuild_command" "$cntbuild_engine" "$cntbuild_debug" "$cntbuild_container" "$cntbuild_version"
-  ;;
+'cntbuild_build') "$cntbuild_command" "$cntbuild_container" "$cntbuild_version" "$cntbuild_context" ;;
+'cntbuild_publish') "$cntbuild_command" "$cntbuild_container" "$cntbuild_version" ;;
+*) bl64_check_show_undefined "$cntbuild_command" ;;
 esac
 cntbuild_status=$?
 
