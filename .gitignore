@@ -16,6 +16,7 @@ build/*
 
 # Dev libs. Dynamic content update at dev time
 lib/*
+src/loader/*
 
 # Secrets
 .secrets
