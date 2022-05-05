@@ -1,8 +1,6 @@
 # Contributing
 
-## Development
-
-### Environment
+## Prepare Development Environment
 
 - Prepare dev tools
   - Install GIT
@@ -27,6 +25,23 @@
   ```shell
   source bin/devcnt-set
   ```
+
+- Download the latest version of [BashLib64](https://github.com/serdigital64/bashlib64) to: `lib/` and 'src/loader'
+
+## Update source code
+
+- Add/Edit source code in: `src/dockerfiles`
+- Build container image
+
+```shell
+./cntbuild -b -c CONTAINER_NAME -e TAG
+```
+
+- Publish container image
+
+```shell
+./cntbuild -u -c CONTAINER_NAME -e TAG
+```
 
 ## Repositories
 

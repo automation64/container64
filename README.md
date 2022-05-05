@@ -105,7 +105,7 @@ docker pull ghcr.io/serdigital64/<IMAGE>
 podman pull ghcr.io/serdigital64/<IMAGE>`
 ```
 
-### Contributing
+## Contributing
 
 Help on implementing new features and maintaining the code base is welcomed.
 
@@ -116,6 +116,6 @@ Help on implementing new features and maintaining the code base is welcomed.
 
 [GPL-3.0-or-later](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-### Author
+## Author
 
 - [SerDigital64](https://github.com/serdigital64)
