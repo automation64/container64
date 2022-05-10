@@ -12,6 +12,7 @@ LABEL \
 ENV container="docker"
 COPY loader/bashlib64.bash /cmd
 ARG BL64_LIB_CMD="1"
+ARG BL64_LIB_VERBOSE="2"
 RUN /bin/chmod 0755 /cmd
 
 # Install packages
