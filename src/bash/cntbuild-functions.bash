@@ -49,7 +49,9 @@ function cntbuild_publish() {
     return $?
 
   bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_LOGIN_URL" &&
-    bl64_cnt_push "${container}:${version}" "${CNTBUILD_LOGIN_URL}/${container}:${version}"
+    bl64_cnt_tag "${container}:${version}" "${container}:latest" &&
+    bl64_cnt_push "${container}:${version}" "${CNTBUILD_LOGIN_URL}/${container}:${version}" &&
+    bl64_cnt_push "${container}:latest" "${CNTBUILD_LOGIN_URL}/${container}:latest"
 
 }
 
