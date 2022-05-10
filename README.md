@@ -60,7 +60,7 @@
 ### Container collection: Terraform test
 
 - Purpose: Terraform code testing
-- Packages: TFSec
+- Packages: TFSec, TFLint, Terraform
 
 | Image                          | OS          | Base Image                        |
 | ------------------------------ | ----------- | --------------------------------- |

@@ -3,12 +3,14 @@
 source bin/devcnt-set || exit 1
 source "$DEVCNT_LIB_BASHLIB64"
 
-bl64_fs_rm_file "$DEVCNT_BUILD_PROD"
+bl64_fs_rm_file "$DEVCNT_BUILD_DEV"
 bl64_fs_merge_files \
   '0755' \
   "$BL64_LIB_DEFAULT" \
   "$BL64_LIB_DEFAULT" \
-  "$DEVCNT_BUILD_PROD" \
-  "$DEVCNT_SRC/bash/cntbuild.header" \
+  "$DEVCNT_BUILD_DEV" \
+  "$DEVCNT_SRC/bash/${DEVCNT_APP_NAME}-header.bash" \
   "$DEVCNT_LIB_BASHLIB64" \
-  "$DEVCNT_SRC/bash/cntbuild.bash"
+  "$DEVCNT_SRC/bash/${DEVCNT_APP_NAME}-functions.bash" \
+  "$DEVCNT_SRC/bash/${DEVCNT_APP_NAME}-env.bash" \
+  "$DEVCNT_SRC/bash/${DEVCNT_APP_NAME}-main.bash"

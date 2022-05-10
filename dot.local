@@ -10,12 +10,3 @@
 # Project base location. Adjust to your local GIT repo
 DEVCNT_ROOT="${HOME}/git/container64"
 export DEVCNT_ROOT
-
-DEVCNT_CMD_PODMAN='/usr/bin/podman'
-export DEVCNT_CMD_PODMAN
-
-DEVCNT_CMD_DOCKER='/usr/bin/docker'
-export DEVCNT_CMD_DOCKER
-
-VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3.9'
-export VIRTUALENVWRAPPER_PYTHON
