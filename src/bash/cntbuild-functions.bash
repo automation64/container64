@@ -2,6 +2,18 @@
 # Functions
 #
 
+function cntbuild_list() {
+  bl64_dbg_app_show_function
+  local context="$1"
+
+  bl64_check_parameter 'context' &&
+    bl64_check_directory "${context}/dockerfiles" || return $?
+
+  cd "${context}/dockerfiles"
+
+  printf '%s\n' *
+}
+
 function cntbuild_build() {
   bl64_dbg_app_show_function
   local container="$1"
@@ -13,6 +25,17 @@ function cntbuild_build() {
     return $?
 
   bl64_cnt_build "$context" "dockerfiles/${container}/Dockerfile" "${container}:${version}"
+}
+
+function cntbuild_open() {
+  bl64_dbg_app_show_function
+  local container="$1"
+  local version="$2"
+
+  bl64_check_parameter 'container' ||
+    return $?
+
+  bl64_cnt_run_sh "${container}:${version}"
 }
 
 function cntbuild_publish() {
@@ -31,7 +54,7 @@ function cntbuild_publish() {
 }
 
 function cntbuild_setup_globals() {
-  cntbuild_context="$(pwd)/src"
+  :
 }
 
 function cntbuild_check_requirements() {
@@ -42,18 +65,19 @@ function cntbuild_check_requirements() {
 function cntbuild_help() {
 
   bl64_msg_show_usage \
-    '<-b|-u> <-c Container> [-e Version] [-o Context] [-h]' \
+    '<-b|-u|-l|-n> [-c Container] [-e Version] [-o Context] [-h]' \
     'Build containers in dev environment' \
     '
   -b          : Build container
   -u          : Publish container to public registry
+  -l          : List container sources
+  -n          : Open local container
     ' '
   -h          : Show help
     ' "
-  -c Container: Container name: Format: base directory where the Dockerfile is
-  -e Version  : Container version. Format: tag. Default: ${cntbuild_version}
-  -o Context  : Build context. Format: full path. Default: ${cntbuild_context}
+  -c Container: Container name: Format: base directory where the Dockerfile is. Required for -b, -l, -n
+  -e Version  : Container version. Format: tag. Default: 0.1.0
+  -o Context  : Build context. Format: full path. Default: PWD/src
   "
 
 }
-
