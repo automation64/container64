@@ -1,9 +1,9 @@
 # Base image
-FROM docker.io/redhat/rocky:8.5
+FROM docker.io/rockylinux:8.5
 
 # Image Metadata
 LABEL \
-    container64.os-name="rocky" \
+    container64.os-name="rockylinux" \
     container64.os-version="8.5" \
     container64.image-version="0.1.0" \
     container64.image-content="bash,bats-core" \
