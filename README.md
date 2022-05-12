@@ -22,14 +22,15 @@
 
 | Image                        | OS          | Base Image                          |
 | ---------------------------- | ----------- | ----------------------------------- |
-| `almalinux-8-ansible-node`   | almalinux   | `docker.io/library/almalinux:8.5`   |
+| `almalinux-8-ansible-node`   | almalinux   | `docker.io/library/almalinux:8`     |
 | `centos-8-ansible-node`      | centos      | `docker.io/library/centos:8`        |
 | `debian-10-ansible-node`     | debian      | `docker.io/library/debian:buster`   |
 | `debian-11-ansible-node`     | debian      | `docker.io/library/debian:bullseye` |
 | `fedora-33-ansible-node`     | fedora      | `docker.io/library/fedora:33`       |
 | `fedora-35-ansible-node`     | fedora      | `docker.io/library/fedora:35`       |
 | `oraclelinux-8-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:8.5`         |
+| `rockylinux-8-ansible-node`  | rhel        | `docker.io/rockylinux:8`            |
+| `rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:latest`      |
 | `ubuntu-20.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 
@@ -40,7 +41,7 @@
 
 | Image                     | OS          | Base Image                          |
 | ------------------------- | ----------- | ----------------------------------- |
-| `almalinux-8-bash-test`   | almalinux   | `docker.io/library/almalinux:8.5`   |
+| `almalinux-8-bash-test`   | almalinux   | `docker.io/library/almalinux:8`     |
 | `alpine-3-bash-test`      | alpine      | `docker.io/library/alpine:3`        |
 | `centos-7-bash-test`      | centos      | `quay.io/centos/centos:centos7`     |
 | `centos-8-bash-test`      | centos      | `quay.io/centos/centos:8`           |
@@ -53,9 +54,11 @@
 | `fedora-35-bash-test`     | fedora      | `docker.io/library/fedora:35`       |
 | `oraclelinux-7-bash-test` | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8:8.5`         |
+| `rockylinux-8-bash-test`  | rockylinux  | `docker.io/rockylinux:8`            |
+| `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8:latest`      |
 | `ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| `ubuntu-22.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
 
 ### Container collection: Terraform test
 

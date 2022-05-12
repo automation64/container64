@@ -22,7 +22,7 @@ COPY loader/bashlib64.bash /cmd
 # Prepare environment
 ARG BL64_LIB_CMD="1"
 ARG BL64_LIB_VERBOSE="2"
-ARG CNT64_BATSCORE_USER="test"
+ARG CNT64_TEST_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git mawk gawk curl python3 py3-pip"
 RUN \
@@ -30,8 +30,8 @@ RUN \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS}
 
 RUN \
-    /cmd bl64_iam_user_add ${CNT64_BATSCORE_USER} && \
-    /cmd bl64_rbac_add_root ${CNT64_BATSCORE_USER} && \
+    /cmd bl64_iam_user_add ${CNT64_TEST_USER} && \
+    /cmd bl64_rbac_add_root ${CNT64_TEST_USER} && \
     /cmd bl64_fs_mkdir_full ${CNT64_BATSCORE_VOLUME}
 
 # Install Bats-Core
@@ -62,5 +62,5 @@ RUN \
 
 # Run bats-core against /test
 CMD [ "/test" ]
-USER ${CNT64_BATSCORE_USER}
+USER ${CNT64_TEST_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]

@@ -4,8 +4,8 @@ FROM docker.io/library/oraclelinux:8
 # Image Metadata
 LABEL \
     container64.os-name="oraclelinux" \
-    container64.os-version="8.0" \
-    container64.image-version="0.5.0" \
+    container64.os-version="8" \
+    container64.image-version="0.6.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins, OS utilities"
 
@@ -18,14 +18,14 @@ COPY loader/bashlib64.bash /cmd
 # Prepare environment
 ARG BL64_LIB_CMD="1"
 ARG BL64_LIB_VERBOSE="2"
-ARG CNT64_BATSCORE_USER="test"
+ARG CNT64_TEST_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
-ARG CNT64_HELPERS="sudo git tar hostname wget python3 python3-pip python3-setuptools"
+ARG CNT64_HELPERS="sudo git tar hostname wget python3 python3-pip python3-setuptools unzip"
 RUN \
     /bin/chmod 755 /cmd && \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS} && \
-    /cmd bl64_iam_user_add ${CNT64_BATSCORE_USER} && \
-    /cmd bl64_rbac_add_root ${CNT64_BATSCORE_USER} && \
+    /cmd bl64_iam_user_add ${CNT64_TEST_USER} && \
+    /cmd bl64_rbac_add_root ${CNT64_TEST_USER} && \
     /cmd bl64_fs_mkdir_full ${CNT64_BATSCORE_VOLUME}
 
 # Install Bats-Core
@@ -56,5 +56,5 @@ RUN \
 
 # Run bats-core against /test
 CMD [ "/test" ]
-USER ${CNT64_BATSCORE_USER}
+USER ${CNT64_TEST_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
