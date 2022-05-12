@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/redhat/ubi8:8
+FROM docker.io/redhat/ubi8:latest
 
 # Image Metadata
 LABEL \
