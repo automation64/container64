@@ -1,11 +1,11 @@
 # Base image
-FROM docker.io/library/debian:bullseye
+FROM docker.io/rockylinux:8
 
 # Image Metadata
 LABEL \
-    container64.os-name="debian" \
-    container64.os-version="11.0" \
-    container64.image-version="0.3.0" \
+    container64.os-name="oraclelinux" \
+    container64.os-version="8" \
+    container64.image-version="0.1.0" \
     container64.image-content="systemd,sudo,python3"
 
 # Prepare environment
@@ -17,12 +17,12 @@ ARG BL64_LIB_CMD="1"
 ARG BL64_LIB_VERBOSE="2"
 ARG CNT64_TEST_USER="test"
 
-ARG CNT64_SYSTEMD_PREREQS="dbus dmsetup"
-ARG CNT64_SYSTEMD_PACKAGES="systemd systemd-timesyncd"
+ARG CNT64_SYSTEMD_PREREQS="kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
+ARG CNT64_SYSTEMD_PACKAGES="systemd systemd-libs systemd-pam systemd-udev"
 ARG CNT64_SUDO_PREREQS=""
 ARG CNT64_SUDO_PACKAGES="sudo"
-ARG CNT64_PYTHON3_PREREQS="ca-certificates media-types openssl readline-common"
-ARG CNT64_PYTHON3_PACKAGES="python3 python3-minimal python3.9 python3.9-minimal"
+ARG CNT64_PYTHON3_PREREQS="platform-python-pip python3-pip python3-setuptools"
+ARG CNT64_PYTHON3_PACKAGES="python36"
 
 RUN /bin/chmod 0755 /cmd && \
     /cmd bl64_pkg_deploy \
