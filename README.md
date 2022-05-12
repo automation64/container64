@@ -53,9 +53,11 @@
 | `fedora-35-bash-test`     | fedora      | `docker.io/library/fedora:35`       |
 | `oraclelinux-7-bash-test` | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `rockylinux-8-bash-test`  | rockylinux  | `docker.io/rockylinux:8.5`          |
 | `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8:8.5`         |
 | `ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| `ubuntu-22.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
 
 ### Container collection: Terraform test
 
