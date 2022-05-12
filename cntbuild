@@ -4617,7 +4617,7 @@ function bl64_pkg_prepare() {
 }
 
 #######################################
-# Install packages
+# Provision components
 #
 # * Assume yes
 # * Avoid installing docs (man) when possible
@@ -4877,7 +4877,7 @@ function bl64_py_pip_usr_prepare() {
 }
 
 #######################################
-# Install packages for local-user
+# Provision components for local-user
 #
 # * Assume yes
 #
