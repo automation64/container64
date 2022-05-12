@@ -1,10 +1,10 @@
 # Base image
-FROM docker.io/rockylinux:8.5
+FROM docker.io/rockylinux:8
 
 # Image Metadata
 LABEL \
     container64.os-name="rockylinux" \
-    container64.os-version="8.5" \
+    container64.os-version="8" \
     container64.image-version="0.1.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins, OS utilities"

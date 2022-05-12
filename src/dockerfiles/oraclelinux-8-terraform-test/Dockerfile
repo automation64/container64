@@ -4,7 +4,7 @@ FROM docker.io/library/oraclelinux:8
 # Image Metadata
 LABEL \
     container64.os-name="oraclelinux" \
-    container64.os-version="8.0" \
+    container64.os-version="8" \
     container64.image-version="0.1.0" \
     container64.image-content="tfsec" \
     org.opencontainers.image.description="Purpose: Terraform scripts testing - Packages: TFSec, TFLint, Terraform"

@@ -4,7 +4,7 @@ FROM docker.io/library/oraclelinux:8
 # Image Metadata
 LABEL \
     container64.os-name="oraclelinux" \
-    container64.os-version="8.0" \
+    container64.os-version="8" \
     container64.image-version="0.6.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins, OS utilities"
