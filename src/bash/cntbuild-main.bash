@@ -36,8 +36,9 @@ while getopts ':bulnc:e:o:h' cntbuild_option; do
   *) cntbuild_help && exit 1 ;;
   esac
 done
-cntbuild_setup_globals
-cntbuild_check_requirements || exit 1
+cntbuild_setup_globals &&
+  cntbuild_check_requirements &&
+  bl64_cnt_setup || exit
 
 bl64_msg_show_batch_start "$cntbuild_command_tag"
 case "$cntbuild_command" in
