@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
+# shellcheck source=SCRIPTDIR/devcnt-set
 source bin/devcnt-set || exit 1
+# shellcheck source=SCRIPTDIR/../lib/bashlib64.bash
 source "$DEVCNT_LIB_BASHLIB64"
 
-bl64_fs_rm_file "$DEVCNT_BUILD_DEV"
+# shellcheck disable=SC2154
 bl64_fs_merge_files \
   '0755' \
   "$BL64_LIB_DEFAULT" \
   "$BL64_LIB_DEFAULT" \
+  "$BL64_LIB_VAR_ON" \
   "$DEVCNT_BUILD_DEV" \
   "$DEVCNT_SRC/bash/${DEVCNT_APP_NAME}-header.bash" \
   "$DEVCNT_LIB_BASHLIB64" \
