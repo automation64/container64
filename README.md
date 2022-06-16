@@ -13,7 +13,7 @@
 
 ## Overview
 
-**Container64** is project for building and sharing OCI compliant container images for testing infrastructure management tools.
+**Container64** is an OCI compliant container images repository for testing infrastructure management tools.
 
 ### Container collection: Ansible Node
 
@@ -28,6 +28,7 @@
 | `debian-11-ansible-node`     | debian      | `docker.io/library/debian:bullseye` |
 | `fedora-33-ansible-node`     | fedora      | `docker.io/library/fedora:33`       |
 | `fedora-35-ansible-node`     | fedora      | `docker.io/library/fedora:35`       |
+| `fedora-36-ansible-node`     | fedora      | `docker.io/library/fedora:36`       |
 | `oraclelinux-8-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `rockylinux-8-ansible-node`  | rhel        | `docker.io/rockylinux:8`            |
 | `rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:latest`      |
@@ -52,6 +53,7 @@
 | `fedora-33-bash-test`     | fedora      | `docker.io/library/fedora:33`       |
 | `fedora-34-bash-test`     | fedora      | `docker.io/library/fedora:34`       |
 | `fedora-35-bash-test`     | fedora      | `docker.io/library/fedora:35`       |
+| `fedora-36-bash-test`     | fedora      | `docker.io/library/fedora:36`       |
 | `oraclelinux-7-bash-test` | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `rockylinux-8-bash-test`  | rockylinux  | `docker.io/rockylinux:8`            |
@@ -112,8 +114,8 @@ podman pull ghcr.io/serdigital64/<IMAGE>`
 
 Help on implementing new features and maintaining the code base is welcomed.
 
-- [Guidelines](CONTRIBUTING.md)
-- [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md)
+- [Guidelines](https://github.com/serdigital64/container64/blob/master/CONTRIBUTING.md)
+- [Contributor Covenant Code of Conduct](https://github.com/serdigital64/container64/blob/master/CODE_OF_CONDUCT.md)
 
 ## License
 
