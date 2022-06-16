@@ -5,7 +5,7 @@ FROM docker.io/library/fedora:36
 LABEL \
     container64.os-name="fedora" \
     container64.os-version="36.0" \
-    container64.image-version="0.3.0" \
+    container64.image-version="0.1.0" \
     container64.image-content="systemd,sudo,python3"
 
 # Prepare environment

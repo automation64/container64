@@ -5,7 +5,7 @@ FROM docker.io/library/fedora:36
 LABEL \
     container64.os-name="fedora" \
     container64.os-version="36.0" \
-    container64.image-version="0.7.0" \
+    container64.image-version="0.1.0" \
     container64.image-content="bash,bats-core" \
     org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins, OS utilities"
 
