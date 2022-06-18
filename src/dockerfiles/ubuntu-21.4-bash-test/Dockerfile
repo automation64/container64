@@ -1,5 +1,8 @@
-# Base image
-FROM docker.io/library/ubuntu:21.04
+#
+# Base Image
+#
+
+FROM docker.io/library/ubuntu:21.04 AS base
 
 # Image Metadata
 LABEL \
@@ -18,6 +21,7 @@ COPY loader/bashlib64.bash /cmd
 # Prepare environment
 ARG BL64_LIB_CMD="1"
 ARG BL64_LIB_VERBOSE="2"
+ARG BL64_LIB_UMASK="u=rwx,g=rx,o=rx"
 ARG CNT64_TEST_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git wget curl gawk python3 python3-pip python3-venv unzip"
@@ -26,35 +30,42 @@ RUN \
     /cmd bl64_pkg_deploy ${CNT64_HELPERS} && \
     /cmd bl64_iam_user_add ${CNT64_TEST_USER} && \
     /cmd bl64_rbac_add_root ${CNT64_TEST_USER} && \
-    /cmd bl64_fs_mkdir_full ${CNT64_BATSCORE_VOLUME}
+    /cmd bl64_fs_mkdir_full ${CNT64_BATSCORE_VOLUME} && \
+    /cmd bl64_fs_cleanup_full
+
+#
+# Install BatsCore
+#
+
+FROM base AS batscore
+
+ARG BL64_LIB_CMD="1"
+ARG BL64_LIB_VERBOSE="2"
+ARG BL64_LIB_UMASK="u=rwx,g=rx,o=rx"
 
 # Install Bats-Core
 ARG CNT64_BATSCORE_REPO="https://github.com/bats-core"
-ARG CNT64_BATSCORE_COMPONENT_NAME="bats-core"
-ARG CNT64_BATSCORE_COMPONENT_PATH="/opt"
-ARG CNT64_BATSCORE_HELPERS="${CNT64_BATSCORE_COMPONENT_PATH}/${CNT64_BATSCORE_COMPONENT_NAME}/test_helper"
+ARG CNT64_BATSCORE_NAME="bats-core"
+ARG CNT64_BATSCORE_PATH="/opt/${CNT64_BATSCORE_NAME}"
+ARG CNT64_BATSCORE_HELPERS="${CNT64_BATSCORE_PATH}/test_helper"
 
 RUN \
-    /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME}.git ${CNT64_BATSCORE_COMPONENT_PATH} 'master' && \
-    /cmd bl64_fs_mkdir_full $CNT64_BATSCORE_HELPERS
+    /cmd bl64_rxtx_git_get_dir "${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_NAME}" . "${CNT64_BATSCORE_PATH}" '0' 'master' && \
+    /cmd bl64_fs_mkdir_full ${CNT64_BATSCORE_HELPERS} && \
+    /cmd bl64_rxtx_git_get_dir "${CNT64_BATSCORE_REPO}/bats-support" . "${CNT64_BATSCORE_HELPERS}/bats-support" '0' 'master' && \
+    /cmd bl64_rxtx_git_get_dir "${CNT64_BATSCORE_REPO}/bats-assert" . "${CNT64_BATSCORE_HELPERS}/bats-assert" '0' 'master' && \
+    /cmd bl64_rxtx_git_get_dir "${CNT64_BATSCORE_REPO}/bats-file" . "${CNT64_BATSCORE_HELPERS}/bats-file" '0' 'master'
 
-# Install plugins
-ARG CNT64_BATSCORE_COMPONENT_PATH="$CNT64_BATSCORE_HELPERS"
-ARG CNT64_BATSCORE_COMPONENT_NAME="bats-support"
-RUN /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME}.git ${CNT64_BATSCORE_COMPONENT_PATH} 'master'
+#
+# Build final image
+#
 
-ARG CNT64_BATSCORE_COMPONENT_NAME="bats-assert"
-RUN /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME}.git ${CNT64_BATSCORE_COMPONENT_PATH} 'master'
+FROM base AS final
 
-ARG CNT64_BATSCORE_COMPONENT_NAME="bats-file"
-RUN /cmd bl64_vcs_git_clone ${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME}.git ${CNT64_BATSCORE_COMPONENT_PATH} 'master'
+ARG CNT64_TEST_USER="test"
 
-# Cleanup
-RUN \
-    /cmd bl64_fs_cleanup_full && \
-    rm /cmd
+COPY --from=batscore /opt/bats-core /opt/bats-core/
 
-# Run bats-core against /test
 CMD [ "/test" ]
 USER ${CNT64_TEST_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
