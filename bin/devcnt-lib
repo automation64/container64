@@ -13,4 +13,6 @@ source ./bin/devcnt-set || exit 1
 
 echo 'Download bash library: BashLib64'
 cd "$DEVCNT_LIB" &&
-  curl -O https://raw.githubusercontent.com/serdigital64/bashlib64/main/bashlib64.bash || exit 1
+  curl -O https://raw.githubusercontent.com/serdigital64/bashlib64/main/bashlib64.bash &&
+  cp bashlib64.bash "$DEVCNT_LOADER" ||
+  exit 1
