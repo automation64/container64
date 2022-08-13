@@ -14,7 +14,6 @@ COPY loader/bashlib64.bash /cmd
 
 # Provision components
 ARG BL64_LIB_CMD="1"
-ARG BL64_LIB_VERBOSE="2"
 ARG CNT64_TEST_USER="test"
 
 ARG CNT64_SYSTEMD_PREREQS="dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs"

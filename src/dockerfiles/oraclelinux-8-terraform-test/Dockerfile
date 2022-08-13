@@ -17,7 +17,6 @@ COPY loader/bashlib64.bash /cmd
 
 # Prepare environment
 ARG BL64_LIB_CMD="1"
-ARG BL64_LIB_VERBOSE="2"
 ARG CNT64_HELPERS="unzip"
 ARG CNT64_TEST_USER="test"
 ARG CNT64_SRC_TFSEC="https://github.com/aquasecurity/tfsec/releases/download/v1.19.0/tfsec-linux-amd64"

@@ -16,7 +16,6 @@ COPY loader/bashlib64.bash /cmd
 
 # Build image
 ARG BL64_LIB_CMD="1"
-ARG BL64_LIB_VERBOSE="2"
 ARG CNT64_LINT_USER="linter"
 ARG CNT64_LINT_VOLUME="/src"
 ARG CNT64_PACKAGES="shellcheck"
