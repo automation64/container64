@@ -7,8 +7,9 @@ declare cntbuild_command_tag=''
 declare cntbuild_command=''
 declare cntbuild_option=''
 declare cntbuild_container=''
-declare cntbuild_version='0.1.0'
-declare cntbuild_context="$(pwd)/src"
+declare cntbuild_tag='0.1.0'
+declare cntbuild_context=''
+cntbuild_context="$(pwd)/src"
 
 (($# == 0)) && cntbuild_help && exit 1
 while getopts ':bulnc:e:o:h' cntbuild_option; do
@@ -30,7 +31,7 @@ while getopts ':bulnc:e:o:h' cntbuild_option; do
     cntbuild_command_tag='open local container image'
     ;;
   c) cntbuild_container="$OPTARG" ;;
-  e) cntbuild_version="$OPTARG" ;;
+  e) cntbuild_tag="$OPTARG" ;;
   o) cntbuild_context="$OPTARG" ;;
   h) cntbuild_help && exit 0 ;;
   *) cntbuild_help && exit 1 ;;
@@ -42,8 +43,8 @@ cntbuild_setup_globals &&
 
 bl64_msg_show_batch_start "$cntbuild_command_tag"
 case "$cntbuild_command" in
-'cntbuild_build') "$cntbuild_command" "$cntbuild_container" "$cntbuild_version" "$cntbuild_context" ;;
-'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_version" ;;
+'cntbuild_build') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" "$cntbuild_context" ;;
+'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" ;;
 'cntbuild_list') "$cntbuild_command" "$cntbuild_context" ;;
 *) bl64_check_show_undefined "$cntbuild_command" ;;
 esac

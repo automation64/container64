@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+source "$CNT64_SYSADMIN_LIB/bashlib64.bash" || exit 1
+
+bl64_msg_all_enable_verbose
+
+bl64_pkg_deploy ${CNT64_TOOLS} &&
+  bl64_iam_user_add "${CNT64_SYSADMIN_USER}" "$CNT64_SYSADMIN_HOME" &&
+  bl64_rbac_add_root "${CNT64_SYSADMIN_USER}" &&
+  bl64_msg_show_task 'Register directory structure' &&
+  printf "
+export TOOLBOX64_OWNER='%s'\n
+export TOOLBOX64_HOME='%s'\n
+export TOOLBOX64_TMP='%s'\n
+export TOOLBOX64_LIB='%s'\n
+export TOOLBOX64_BIN='%s'\n
+export TOOLBOX64_VAR='%s'\n
+" \
+    "$CNT64_SYSADMIN_USER" \
+    "$CNT64_SYSADMIN_HOME" \
+    "$CNT64_SYSADMIN_TMP" \
+    "$CNT64_SYSADMIN_LIB" \
+    "$CNT64_SYSADMIN_BIN" \
+    "$CNT64_SYSADMIN_VAR" \
+    >"$CNT64_SYSADMIN_ENV" &&
+  bl64_msg_show_task 'Fix file ownership' &&
+  bl64_fs_chown_dir \
+    "${CNT64_SYSADMIN_USER}:${CNT64_SYSADMIN_USER}" \
+    "$CNT64_SYSADMIN_HOME" \
+    "$CNT64_SYSADMIN_ENV" ||
+  exit 1
+
+bl64_fs_cleanup_full
+exit 0
