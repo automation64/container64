@@ -4,7 +4,7 @@ source "/toolbox64.env" &&
 
 declare source='mongodb-org-5.0.repo'
 declare repo='/etc/yum.repos.d/mongodb-org-5.0.repo'
-declare packages='mongodb-org-tools'
+declare packages='mongodb-org-tools mongodb-mongosh'
 declare process='Install MongoDB Shell 5 CLI'
 
 bl64_msg_all_enable_verbose
