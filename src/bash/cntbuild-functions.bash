@@ -9,6 +9,7 @@ function cntbuild_list() {
   bl64_check_parameter 'context' &&
     bl64_check_directory "${context}/dockerfiles" || return $?
 
+  # shellcheck disable=SC2164
   cd "${context}/dockerfiles"
 
   printf '%s\n' *
@@ -17,31 +18,31 @@ function cntbuild_list() {
 function cntbuild_build() {
   bl64_dbg_app_show_function
   local container="$1"
-  local version="$2"
+  local tag="$2"
   local context="$3"
 
   bl64_check_parameter 'container' &&
     bl64_check_parameter 'context' ||
     return $?
 
-  bl64_cnt_build "$context" "dockerfiles/${container}/Dockerfile" "${container}:${version}"
+  bl64_cnt_build "$context" "dockerfiles/${container}/Dockerfile" "${container}:${tag}"
 }
 
 function cntbuild_open() {
   bl64_dbg_app_show_function
   local container="$1"
-  local version="$2"
+  local tag="$2"
 
   bl64_check_parameter 'container' ||
     return $?
 
-  bl64_cnt_run_sh "${container}:${version}"
+  bl64_cnt_run_sh "${container}:${tag}"
 }
 
 function cntbuild_publish() {
   bl64_dbg_app_show_function
   local container="$1"
-  local version="${2:-0.1.0}"
+  local tag="$2"
 
   bl64_check_export 'CNTBUILD_LOGIN_USER' &&
     bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
@@ -49,8 +50,8 @@ function cntbuild_publish() {
     return $?
 
   bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_LOGIN_URL" &&
-    bl64_cnt_tag "${container}:${version}" "${container}:latest" &&
-    bl64_cnt_push "${container}:${version}" "${CNTBUILD_LOGIN_URL}/${container}:${version}" &&
+    bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
+    bl64_cnt_push "${container}:${tag}" "${CNTBUILD_LOGIN_URL}/${container}:${tag}" &&
     bl64_cnt_push "${container}:latest" "${CNTBUILD_LOGIN_URL}/${container}:latest"
 
 }
@@ -67,7 +68,7 @@ function cntbuild_check_requirements() {
 function cntbuild_help() {
 
   bl64_msg_show_usage \
-    '<-b|-u|-l|-n> [-c Container] [-e Version] [-o Context] [-h]' \
+    '<-b|-u|-l|-n> [-c Container] [-e Tag] [-o Context] [-h]' \
     'Build containers in dev environment' \
     '
   -b          : Build container
@@ -78,7 +79,7 @@ function cntbuild_help() {
   -h          : Show help
     ' "
   -c Container: Container name: Format: base directory where the Dockerfile is. Required for -b, -l, -n
-  -e Version  : Container version. Format: tag. Default: 0.1.0
+  -e Tag      : Container tag. Format: tag. Default: 0.1.0
   -o Context  : Build context. Format: full path. Default: PWD/src
   "
 
