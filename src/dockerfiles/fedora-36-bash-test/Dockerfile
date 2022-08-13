@@ -17,7 +17,6 @@ COPY loader/bashlib64.bash /cmd
 
 # Prepare environment
 ARG BL64_LIB_CMD="1"
-ARG BL64_LIB_VERBOSE="2"
 ARG BL64_LIB_UMASK="u=rwx,g=rx,o=rx"
 ARG CNT64_TEST_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
