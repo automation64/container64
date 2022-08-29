@@ -5,7 +5,7 @@ FROM docker.io/library/oraclelinux:8
 LABEL \
     container64.os-name="oraclelinux" \
     container64.os-version="8" \
-    container64.image-version="0.1.0" \
+    container64.image-version="0.2.0" \
     container64.image-content="toolbox" \
     org.opencontainers.image.description="Purpose: provide common OS management tools for administration/setup/troubleshooting tasks"
 
@@ -23,7 +23,7 @@ ARG CNT64_SYSADMIN_TMP="/sa/tmp"
 ARG CNT64_SYSADMIN_LIB="/sa/lib"
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
 ARG CNT64_SYSADMIN_VAR="/sa/var"
-ARG CNT64_TOOLS="sudo git tar hostname wget python3 python3-pip python3-setuptools unzip"
+ARG CNT64_TOOLS="sudo git tar hostname wget unzip bzip2 diffutils python3 python3-pip python3-setuptools"
 
 # Create base structure
 RUN \
