@@ -2,24 +2,25 @@
 source "/toolbox64.env" &&
   source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
-declare source='mongodb-org-5.0.repo'
-declare repo='/etc/yum.repos.d/mongodb-org-5.0.repo'
+#
+# Variables
+#
+declare repository_name='mongodb-org-5.0'
+declare repository_url='https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/'
+declare repository_key='https://www.mongodb.org/static/pgp/server-5.0.asc'
 declare packages='mongodb-org-tools mongodb-mongosh'
 declare process='Install MongoDB Shell 5 CLI'
+declare -i status=0
+
+#
+# Main
+#
 
 bl64_msg_all_enable_verbose
-bl64_check_privilege_root || exit $?
-
 bl64_msg_show_batch_start "$process"
 
-bl64_msg_show_task "Enable package repository (${source})"
-echo '[mongodb-org-5.0]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc
-' >"$repo" && \
+bl64_pkg_repository_add "$repository_name" "$repository_url" "$repository_key"
 bl64_pkg_deploy $packages
 
-bl64_msg_show_batch_finish "$?" "$process"
+bl64_msg_show_batch_finish "$status" "$process"
+exit $status
