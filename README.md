@@ -23,6 +23,7 @@
 | Image                             | OS          | Base Image                                          |
 | --------------------------------- | ----------- | --------------------------------------------------- |
 | `oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                   |
+| `oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
 | `oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
 | `oraclelinux-8-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
 | `oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
