@@ -25,9 +25,10 @@ declare -i status=1
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$process"
 
+package_installer_bin="${TOOLBOX64_TMP}/${package_installer_bin}"
 bl64_rxtx_web_get_file "${package_url}/${package_source}" "${TOOLBOX64_TMP}/${package_source}" &&
   bl64_arc_open_zip "${TOOLBOX64_TMP}/${package_source}" "${TOOLBOX64_TMP}" &&
-  bl64_check_command "${TOOLBOX64_TMP}/${package_installer_bin}"
+  bl64_check_command "$package_installer_bin"
 status=$?
 
 if ((status == 0)); then
