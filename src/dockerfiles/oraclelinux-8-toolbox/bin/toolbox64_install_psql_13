@@ -2,17 +2,26 @@
 source "/toolbox64.env" &&
   source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
+#
+# Variables
+#
+
 declare source='postgresql:13'
 declare packages='postgresql'
 declare process='Install PostgreSQL 13 CLI'
+declare -i status=0
+
+#
+# Main
+#
 
 bl64_msg_all_enable_verbose
-bl64_check_privilege_root || exit $?
-
 bl64_msg_show_batch_start "$process"
 
 bl64_msg_show_task "Enable package repository (${source})"
-"$BL64_PKG_CMD_DNF" --assumeyes module enable "$source" &&
+bl64_pkg_run_dnf --assumeyes module enable "$source" &&
   bl64_pkg_deploy $packages
+status=$?
 
-bl64_msg_show_batch_finish "$?" "$process"
+bl64_msg_show_batch_finish "$status" "$process"
+exit $status
