@@ -13,7 +13,7 @@ LABEL \
 ENV container="docker"
 
 # Provision setup script
-COPY dockerfiles/oraclelinux-8-toolbox/image-setup /image-setup
+COPY helper-toolbox64/image-setup /image-setup
 
 # Define environment
 ARG CNT64_SYSADMIN_USER="sysadmin"
@@ -37,7 +37,7 @@ RUN \
 
 # Copy provisioning scripts
 COPY loader/bashlib64.bash ${CNT64_SYSADMIN_LIB}
-COPY dockerfiles/oraclelinux-8-toolbox/bin/* ${CNT64_SYSADMIN_BIN}
+COPY helper-toolbox64/bin/* ${CNT64_SYSADMIN_BIN}
 
 # Install tools
 RUN /image-setup

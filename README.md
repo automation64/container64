@@ -65,6 +65,7 @@
 | `rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:latest`      |
 | `ubuntu-20.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| `ubuntu-22.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
 
 ### Container collection: Bash Testing
 
@@ -87,8 +88,10 @@
 | `fedora-36-bash-test`     | fedora      | `docker.io/library/fedora:36`       |
 | `oraclelinux-7-bash-test` | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `oraclelinux-9-bash-test` | oraclelinux | `docker.io/library/oraclelinux:9`   |
 | `rockylinux-8-bash-test`  | rockylinux  | `docker.io/rockylinux:8`            |
-| `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8:latest`      |
+| `rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8`             |
+| `rhel-9-bash-test`        | rhel        | `docker.io/redhat/ubi9`             |
 | `ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ubuntu-21.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 | `ubuntu-22.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
