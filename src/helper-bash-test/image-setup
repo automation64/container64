@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+source '/bashlib64.bash' || exit 1
+
+#
+# Variables
+#
+
+CNT64_BATSCORE_COMPONENT_NAME_CORE="bats-core"
+CNT64_BATSCORE_COMPONENT_NAME_SUPPORT="bats-support"
+CNT64_BATSCORE_COMPONENT_NAME_ASSERT="bats-assert"
+CNT64_BATSCORE_COMPONENT_NAME_FILE="bats-file"
+CNT64_BATSCORE_COMPONENT_PATH_HELPERS="${CNT64_BATSCORE_COMPONENT_PATH}/${CNT64_BATSCORE_COMPONENT_NAME_CORE}/test_helper"
+
+#
+# Main
+#
+
+bl64_msg_all_enable_verbose
+
+bl64_msg_show_task 'Prepare test environment'
+bl64_pkg_deploy ${CNT64_HELPERS} &&
+  bl64_iam_user_add "${CNT64_TEST_USER}" &&
+  bl64_rbac_add_root "${CNT64_TEST_USER}" &&
+  bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
+  bl64_fs_mkdir_full "${CNT64_BATSCORE_VOLUME}" ||
+  exit $?
+
+bl64_msg_show_task 'Deploy batscore'
+bl64_vcs_git_clone "${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME_CORE}.git" "${CNT64_BATSCORE_COMPONENT_PATH}" 'master' &&
+  bl64_fs_mkdir_full "${CNT64_BATSCORE_COMPONENT_PATH_HELPERS}" &&
+  bl64_vcs_git_clone "${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME_SUPPORT}.git" "${CNT64_BATSCORE_COMPONENT_PATH_HELPERS}" 'master' &&
+  bl64_vcs_git_clone "${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME_ASSERT}.git" "${CNT64_BATSCORE_COMPONENT_PATH_HELPERS}" 'master' &&
+  bl64_vcs_git_clone "${CNT64_BATSCORE_REPO}/${CNT64_BATSCORE_COMPONENT_NAME_FILE}.git" "${CNT64_BATSCORE_COMPONENT_PATH_HELPERS}" 'master' ||
+  exit $?
+
+bl64_fs_cleanup_full
+exit 0
