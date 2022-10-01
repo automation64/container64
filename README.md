@@ -61,6 +61,7 @@
 | `fedora-35-ansible-node`     | fedora      | `docker.io/library/fedora:35`       |
 | `fedora-36-ansible-node`     | fedora      | `docker.io/library/fedora:36`       |
 | `oraclelinux-8-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `oraclelinux-9-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:9`   |
 | `rockylinux-8-ansible-node`  | rhel        | `docker.io/rockylinux:8`            |
 | `rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:latest`      |
 | `ubuntu-20.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
