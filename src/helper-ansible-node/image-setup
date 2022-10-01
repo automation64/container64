@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+source "$CNT64_SYSADMIN_LIB/bashlib64.bash" || exit 1
+
+#
+# Main
+#
+
+bl64_msg_all_enable_verbose
+
+bl64_pkg_deploy \
+  ${CNT64_SYSTEMD_PREREQS} \
+  ${CNT64_SYSTEMD_PACKAGES} \
+  ${CNT64_SUDO_PREREQS} \
+  ${CNT64_SUDO_PACKAGES} \
+  ${CNT64_PYTHON3_PREREQS} \
+  ${CNT64_PYTHON3_PACKAGES} ||
+  exit $?
+
+bl64_iam_user_add "${CNT64_TEST_USER}" &&
+  bl64_rbac_add_root "${CNT64_TEST_USER}" ||
+  exit $?
+
+bl64_msg_show_task 'Configure systemctl multi-user'
+systemctl set-default multi-user.target
+
+bl64_fs_cleanup_full
+exit 0
