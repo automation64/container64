@@ -9,6 +9,7 @@
 
   ```shell
   git clone https://github.com/serdigital64/container64.git
+  git flow init
   ```
 
 - Adjust environment variables to reflect your configuration:
@@ -20,10 +21,10 @@
   # Review and update content for both files
   ```
 
-- Initialize dev environment variables
+- Initialize dev environment
 
   ```shell
-  source bin/devcnt-set
+  ./bin/devcnt-lib
   ```
 
 - Download the latest version of [BashLib64](https://github.com/serdigital64/bashlib64) to: `lib/` and 'src/loader'
