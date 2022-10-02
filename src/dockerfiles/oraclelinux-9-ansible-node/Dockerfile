@@ -11,10 +11,6 @@ LABEL \
 # Prepare environment
 ENV container="docker"
 
-# Provision setup script
-COPY loader/bashlib64.bash /bashlib64.bash
-COPY helper-ansible-node/image-setup /image-setup
-
 # Define environment
 ARG CNT64_TEST_USER="test"
 ARG CNT64_SYSTEMD_PREREQS="xkeyboard-config diffutils kbd"
@@ -23,9 +19,12 @@ ARG CNT64_SUDO_PREREQS=""
 ARG CNT64_SUDO_PACKAGES="sudo"
 ARG CNT64_PYTHON3_PREREQS="platform-python-pip python3-pip python3-setuptools"
 ARG CNT64_PYTHON3_PACKAGES="python39"
+ARG CNT64_HELPER_ANSIBLE='/toolbox64_install_ansible'
 
-# Copy provisioning scripts
-COPY loader/bashlib64.bash ${CNT64_SYSADMIN_LIB}
+# Provision setup script
+COPY loader/bashlib64.bash /
+COPY helper-ansible-node/image-setup /
+COPY helper-toolbox64/bin/${CNT64_HELPER_ANSIBLE} /
 
 # Setup image
 RUN \

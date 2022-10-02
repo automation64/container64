@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-source "$CNT64_SYSADMIN_LIB/bashlib64.bash" || exit 1
+
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
 # Main
@@ -7,6 +9,7 @@ source "$CNT64_SYSADMIN_LIB/bashlib64.bash" || exit 1
 
 bl64_msg_all_enable_verbose
 
+# shellcheck disable=SC2086
 bl64_pkg_deploy \
   ${CNT64_SYSTEMD_PREREQS} \
   ${CNT64_SYSTEMD_PACKAGES} \
@@ -20,8 +23,13 @@ bl64_iam_user_add "${CNT64_TEST_USER}" &&
   bl64_rbac_add_root "${CNT64_TEST_USER}" ||
   exit $?
 
+bl64_fs_run_chmod '0755' "$CNT64_HELPER_ANSIBLE" &&
+  bl64_rbac_run_command "${CNT64_TEST_USER}" "$CNT64_HELPER_ANSIBLE" ||
+  exit $?
+
 bl64_msg_show_task 'Configure systemctl multi-user'
 systemctl set-default multi-user.target
 
 bl64_fs_cleanup_full
+bl64_fs_rm_file "$CNT64_HELPER_ANSIBLE"
 exit 0
