@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
+
+#
+# Variables
+#
+
+declare packages='ansible'
+declare process='Install Ansible'
+declare -i status=0
+
+#
+# Main
+#
+
+bl64_os_match 'OL' || exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$process"
+
+bl64_py_setup &&
+  bl64_py_pip_usr_deploy $packages
+status=$?
+
+bl64_msg_show_batch_finish "$status" "$process"
+exit $status
