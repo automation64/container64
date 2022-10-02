@@ -5,6 +5,8 @@ source "$CNT64_SYSADMIN_LIB/bashlib64.bash" || exit 1
 # Main
 #
 
+bl64_os_match 'OL' || exit $?
+
 bl64_msg_all_enable_verbose
 
 bl64_pkg_deploy ${CNT64_TOOLS} &&
