@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-source '/bashlib64.bash' || exit 1
+
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
 # Variables

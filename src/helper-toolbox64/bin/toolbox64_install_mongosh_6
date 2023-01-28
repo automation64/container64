@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-source "/toolbox64.env" &&
-  source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
+
+# shellcheck disable=SC1091
+source "/toolbox64.env"  || exit 1
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
 # Variables
 #
 
 declare repository_name='mongodb-org-6.0'
+# shellcheck disable=SC2016
 declare repository_url='https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/6.0/x86_64/'
 declare repository_key='https://www.mongodb.org/static/pgp/server-6.0.asc'
 declare packages='mongodb-org-tools mongodb-mongosh'
@@ -23,6 +27,7 @@ bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$process"
 
 bl64_pkg_repository_add "$repository_name" "$repository_url" "$repository_key"
+# shellcheck disable=SC2086
 bl64_pkg_deploy $packages
 status=$?
 

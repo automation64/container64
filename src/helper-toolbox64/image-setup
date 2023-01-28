@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-source "$CNT64_SYSADMIN_LIB/bashlib64.bash" || exit 1
+
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
 # Main
@@ -9,6 +11,7 @@ bl64_os_match 'OL' || exit $?
 
 bl64_msg_all_enable_verbose
 
+# shellcheck disable=SC2086
 bl64_pkg_deploy ${CNT64_TOOLS} &&
   bl64_iam_user_add "${CNT64_SYSADMIN_USER}" "$CNT64_SYSADMIN_HOME" &&
   bl64_rbac_add_root "${CNT64_SYSADMIN_USER}" ||

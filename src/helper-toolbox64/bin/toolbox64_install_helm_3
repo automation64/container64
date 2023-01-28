@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-source "/toolbox64.env" &&
-  source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
+
+# shellcheck disable=SC1091
+source "/toolbox64.env"  || exit 1
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
 # Variables
@@ -26,6 +29,7 @@ bl64_os_match 'OL' || exit $?
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$process"
 
+# shellcheck disable=SC2154
 package_installer="${TOOLBOX64_TMP}/${package_installer}"
 package_installer_bin="${TOOLBOX64_TMP}/${package_installer_bin}"
 bl64_rxtx_web_get_file "${package_url}/${package_source}" "${TOOLBOX64_TMP}/${package_source}" #&&
