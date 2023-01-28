@@ -20,6 +20,7 @@ CNT64_BATSCORE_COMPONENT_PATH_HELPERS="${CNT64_BATSCORE_COMPONENT_PATH}/${CNT64_
 bl64_msg_all_enable_verbose
 
 bl64_msg_show_task 'Prepare test environment'
+# shellcheck disable=SC2086
 bl64_pkg_deploy ${CNT64_HELPERS} &&
   bl64_iam_user_add "${CNT64_TEST_USER}" &&
   bl64_rbac_add_root "${CNT64_TEST_USER}" &&
