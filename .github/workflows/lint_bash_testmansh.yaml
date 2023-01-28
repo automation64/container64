@@ -1,0 +1,32 @@
+name: "Lint / Bash / TestManSH"
+
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  lint_shellcheck:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/devcnt-lib"
+
+      - name: "Build app"
+        run: "./bin/devcnt-build"
+
+      - name: "Run ShellCheck on cntbuild"
+        run: "bash lib/testmansh -t -c build/cntbuild"
+
+      - name: "Run ShellCheck on helpers"
+        run: "bash lib/testmansh -t -c src/helper-ansible-node"
+
+      - name: "Run ShellCheck on helpers"
+        run: "bash lib/testmansh -t -c src/helper-ansible-test"
+
+      - name: "Run ShellCheck on helpers"
+        run: "bash lib/testmansh -t -c src/helper-ansible-toolbox64"
