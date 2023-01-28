@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
 source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
