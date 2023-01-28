@@ -23,11 +23,11 @@ jobs:
       - name: "Run ShellCheck on cntbuild"
         run: "bash lib/testmansh -t -c build/cntbuild"
 
-      - name: "Run ShellCheck on helpers"
+      - name: "Run ShellCheck on helper-ansible-node"
         run: "bash lib/testmansh -t -c src/helper-ansible-node"
 
-      - name: "Run ShellCheck on helpers"
-        run: "bash lib/testmansh -t -c src/helper-ansible-test"
+      - name: "Run ShellCheck on helper-bash-test"
+        run: "bash lib/testmansh -t -c src/helper-bash-test"
 
-      - name: "Run ShellCheck on helpers"
-        run: "bash lib/testmansh -t -c src/helper-ansible-toolbox64"
+      - name: "Run ShellCheck on helper-toolbox64"
+        run: "bash lib/testmansh -t -c src/helper-toolbox64"
