@@ -17,6 +17,9 @@ CNT64_BATSCORE_COMPONENT_PATH_HELPERS="${CNT64_BATSCORE_COMPONENT_PATH}/${CNT64_
 # Main
 #
 
+bl64_pkg_setup ||
+  exit 1
+
 bl64_msg_all_enable_verbose
 
 bl64_msg_show_task 'Prepare test environment'
