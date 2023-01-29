@@ -5,7 +5,7 @@ FROM docker.io/library/oraclelinux:9
 LABEL \
     container64.os-name="oraclelinux" \
     container64.os-version="9" \
-    container64.image-version="0.1.0" \
+    container64.image-version="0.2.0" \
     container64.image-content="toolbox" \
     org.opencontainers.image.description="Purpose: provide common OS management tools for administration/setup/troubleshooting tasks"
 
