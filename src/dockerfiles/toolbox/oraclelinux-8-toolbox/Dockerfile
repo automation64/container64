@@ -29,7 +29,7 @@ RUN \
 
 # Copy provisioning scripts
 COPY loader/bashlib64.bash ${CNT64_SYSADMIN_LIB}
-COPY helper-toolbox64/bin/* ${CNT64_SYSADMIN_BIN}
+COPY helper-toolbox64/bin/* ${CNT64_SYSADMIN_BIN}/
 
 # Install tools
 RUN /image-setup
