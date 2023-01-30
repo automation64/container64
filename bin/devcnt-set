@@ -20,6 +20,8 @@ elif test -n "$GITHUB_WORKSPACE"; then
   echo 'Load GitHub environment variables'
   # shellcheck disable=SC2155
   export DEVCNT_ROOT="$GITHUB_WORKSPACE"
+  export CNTBUILD_LOGIN_PASSWORD="$GITHUB_TOKEN"
+  export CNTBUILD_LOGIN_USER="$GITHUB_ACTOR"
 fi
 
 if test -f ./.secrets; then
