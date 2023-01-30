@@ -1,3 +1,4 @@
+---
 name: "Lint / Bash / TestManSH"
 
 on:
@@ -6,7 +7,7 @@ on:
       - "feature/*"
 
 jobs:
-  lint_shellcheck:
+  lint-shellcheck:
     runs-on: "ubuntu-latest"
     steps:
 
@@ -20,13 +21,14 @@ jobs:
         run: "./bin/devcnt-build"
 
       - name: "Run ShellCheck on cntbuild"
-        run: "bash lib/testmansh -t -c build/cntbuild"
+        run: ./lib/testmansh -t -c build/cntbuild"
 
       - name: "Run ShellCheck on helper-ansible-node"
-        run: "bash lib/testmansh -t -c src/helper-ansible-node"
+        run: ./lib/testmansh -t -c src/helper-ansible-node"
 
       - name: "Run ShellCheck on helper-bash-test"
-        run: "bash lib/testmansh -t -c src/helper-bash-test"
+        run: ./lib/testmansh -t -c src/helper-bash-test"
 
       - name: "Run ShellCheck on helper-toolbox64"
-        run: "bash lib/testmansh -t -c src/helper-toolbox64"
+        run: ./lib/testmansh -t -c src/helper-toolbox64"
+...
