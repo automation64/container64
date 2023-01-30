@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# shellcheck source=SCRIPTDIR/devcnt-set
+source bin/devcnt-set || exit 1
+# shellcheck source=SCRIPTDIR/../lib/bashlib64.bash
+source "$DEVCNT_LIB_BASHLIB64"
+
+#
+# Main
+#
+
+declare container_name=''
+
+bl64_msg_show_phase "Build toolbox containers"
+for container_name in $DEVCNT_IMAGES_TOOLBOX; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild \
+    -b \
+    -c "$container_name" ||
+    exit 1
+done
