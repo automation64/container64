@@ -10,7 +10,3 @@
 # Project base location. Adjust to your local GIT repo
 DEVCNT_ROOT="${HOME}/git/container64"
 export DEVCNT_ROOT
-
-# Container image names
-DEVCNT_IMAGES_TOOLBOX='toolbox/oraclelinux-9-toolbox'
-export DEVCNT_IMAGES_TOOLBOX
