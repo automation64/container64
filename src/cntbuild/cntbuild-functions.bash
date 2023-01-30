@@ -36,11 +36,13 @@ function cntbuild_build() {
     IFS=$'\n'
     for labels_record in $(<"${labels_file}"); do
       unset IFS
+      # shellcheck disable=SC2004
       command_line[${labels_index}]="--label='$labels_record'"
       labels_index=$((labels_index + 1))
 
       # Extract the container version if provided
       if [[ "$labels_record" =~ org.opencontainers.image.version=.* ]]; then
+        # shellcheck disable=SC2206
         IFS='=' label_version=($labels_record)
         tag=${label_version[1]}
       fi
