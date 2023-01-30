@@ -17,7 +17,7 @@
 #
 # Author: serdigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/serdigital64/bashlib64
-# Version: 8.1.1
+# Version: 8.2.0
 #
 # Copyright 2022 SerDigital64@gmail.com
 #
@@ -7472,7 +7472,7 @@ function bl64_cnt_set_command() {
 #######################################
 # BashLib64 / Module / Functions / Interact with container engines
 #
-# Version: 1.6.0
+# Version: 1.7.0
 #######################################
 
 #######################################
@@ -7627,7 +7627,7 @@ function bl64_cnt_run_sh() {
 # * Attaches tty
 #
 # Arguments:
-#   $@: arguments are passes as-is
+#   $@: arguments are passed as-is
 # Outputs:
 #   STDOUT: command output
 #   STDERR: command stderr
@@ -7770,9 +7770,10 @@ function bl64_cnt_run_docker() {
 # Builds a container source
 #
 # Arguments:
-#   $1: build context. Format: full path
+#   $1: ui context. Format: full path
 #   $2: dockerfile path. Format: relative to the build context
 #   $3: tag to be applied to the resulting source. Format: docker tag
+#   $@: arguments are passed as-is to the command
 # Outputs:
 #   STDOUT: command output
 #   STDERR: command stderr
@@ -7790,13 +7791,18 @@ function bl64_cnt_build() {
     bl64_check_file "${context}/${file}" ||
     return $?
 
+  # Remove used parameters
+  shift
+  shift
+  shift
+
   # shellcheck disable=SC2164
   cd "${context}"
 
   if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_build "$file" "$tag"
+    bl64_cnt_docker_build "$file" "$tag" "$@"
   elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_build "$file" "$tag"
+    bl64_cnt_podman_build "$file" "$tag" "$@"
   fi
 }
 
@@ -7804,9 +7810,9 @@ function bl64_cnt_build() {
 # Command wrapper: docker build
 #
 # Arguments:
-#   $1: context
-#   $2: file
-#   $3: tag
+#   $1: file
+#   $2: tag
+#   $@: arguments are passed as-is to the command
 # Outputs:
 #   STDOUT: command output
 #   STDERR: command stderr
@@ -7819,22 +7825,26 @@ function bl64_cnt_docker_build() {
   local file="$1"
   local tag="$2"
 
+  # Remove used parameters
+  shift
+  shift
+
   bl64_cnt_run_docker \
     build \
     --no-cache \
     --rm \
     --tag "$tag" \
     --file "$file" \
-    .
+    "$@" .
 }
 
 #######################################
 # Command wrapper: podman build
 #
 # Arguments:
-#   $1: context
-#   $2: file
-#   $3: tag
+#   $1: file
+#   $2: tag
+#   $@: arguments are passed as-is to the command
 # Outputs:
 #   STDOUT: command output
 #   STDERR: command stderr
@@ -7847,13 +7857,17 @@ function bl64_cnt_podman_build() {
   local file="$1"
   local tag="$2"
 
+  # Remove used parameters
+  shift
+  shift
+
   bl64_cnt_run_podman \
     build \
     --no-cache \
     --rm \
     --tag "$tag" \
     --file "$file" \
-    .
+    "$@" .
 }
 
 #######################################
@@ -8097,7 +8111,7 @@ function bl64_cnt_podman_tag() {
 # Runs a container image
 #
 # Arguments:
-#   $@: arguments are passes as-is
+#   $@: arguments are passed as-is
 # Outputs:
 #   STDOUT: command output
 #   STDERR: command stderr
@@ -9912,7 +9926,7 @@ function bl64_log_warning() {
 #######################################
 # BashLib64 / Module / Setup / Interact with MongoDB
 #
-# Version: 1.1.0
+# Version: 1.1.1
 #######################################
 
 #######################################
@@ -9945,6 +9959,7 @@ function bl64_mdb_setup() {
     bl64_mdb_set_runtime &&
     BL64_MDB_MODULE="$BL64_LIB_VAR_ON"
 
+  bl64_check_alert_module_setup 'mdb'
 }
 
 #######################################
@@ -10266,13 +10281,11 @@ function bl64_mdb_run_mongoexport() {
 #######################################
 # BashLib64 / Module / Setup / Manage native OS packages
 #
-# Version: 1.5.0
+# Version: 1.5.1
 #######################################
 
 #######################################
 # Setup the bashlib64 module
-#
-# * Warning: bootstrap function
 #
 # Arguments:
 #   None
@@ -10290,6 +10303,15 @@ function bl64_pkg_setup() {
     bl64_pkg_set_paths &&
     bl64_pkg_set_alias &&
     bl64_pkg_set_options &&
+    case "$BL64_OS_DISTRO" in
+    ${BL64_OS_FD}-*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
+    ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
+    ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
+    ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*) bl64_check_command "$BL64_PKG_CMD_YUM" ;;
+    ${BL64_OS_UB}-* | ${BL64_OS_DEB}-*) bl64_check_command "$BL64_PKG_CMD_APT" ;;
+    ${BL64_OS_ALP}-*) bl64_check_command "$BL64_PKG_CMD_APK" ;;
+    ${BL64_OS_MCOS}-*) bl64_check_command "$BL64_PKG_CMD_BRW" ;;
+    esac &&
     BL64_PKG_MODULE="$BL64_LIB_VAR_ON"
 
   bl64_check_alert_module_setup 'pkg'
@@ -10509,7 +10531,7 @@ function bl64_pkg_set_paths() {
 #######################################
 # BashLib64 / Module / Functions / Manage native OS packages
 #
-# Version: 2.2.1
+# Version: 2.2.2
 #######################################
 
 #######################################
@@ -10839,7 +10861,8 @@ function bl64_pkg_run_dnf() {
   local verbose=''
 
   bl64_check_parameters_none "$#" &&
-    bl64_check_privilege_root ||
+    bl64_check_privilege_root &&
+    bl64_check_module 'BL64_PKG_MODULE' ||
     return $?
 
   if bl64_dbg_lib_command_enabled; then
@@ -10872,7 +10895,8 @@ function bl64_pkg_run_yum() {
   local verbose=''
 
   bl64_check_parameters_none "$#" &&
-    bl64_check_privilege_root ||
+    bl64_check_privilege_root &&
+    bl64_check_module 'BL64_PKG_MODULE' ||
     return $?
 
   if bl64_dbg_lib_command_enabled; then
@@ -10905,7 +10929,8 @@ function bl64_pkg_run_apt() {
   local verbose=''
 
   bl64_check_parameters_none "$#" &&
-    bl64_check_privilege_root ||
+    bl64_check_privilege_root &&
+    bl64_check_module 'BL64_PKG_MODULE' ||
     return $?
 
   bl64_pkg_blank_apt
@@ -10969,7 +10994,8 @@ function bl64_pkg_run_apk() {
   local verbose=''
 
   bl64_check_parameters_none "$#" &&
-    bl64_check_privilege_root ||
+    bl64_check_privilege_root &&
+    bl64_check_module 'BL64_PKG_MODULE' ||
     return $?
 
   if bl64_dbg_lib_command_enabled; then
@@ -11002,7 +11028,8 @@ function bl64_pkg_run_brew() {
   local verbose=''
 
   bl64_check_parameters_none "$#" &&
-    bl64_check_privilege_root ||
+    bl64_check_privilege_root &&
+    bl64_check_module 'BL64_PKG_MODULE' ||
     return $?
 
   if bl64_dbg_lib_command_enabled; then
@@ -11845,10 +11872,10 @@ function cntbuild_list() {
   local context="$1"
 
   bl64_check_parameter 'context' &&
-    bl64_check_directory "${context}/dockerfiles" || return $?
+    bl64_check_directory "${context}/${CNTBUILD_DOCKERFILE_SOURCES}" || return $?
 
   # shellcheck disable=SC2164
-  cd "${context}/dockerfiles"
+  cd "${context}/${CNTBUILD_DOCKERFILE_SOURCES}"
 
   printf '%s\n' *
 }
@@ -11858,12 +11885,35 @@ function cntbuild_build() {
   local container="$1"
   local tag="$2"
   local context="$3"
+  local labels_file="${context}/${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_METADATA_FILE}"
+  local -a command_line
+  local -a label_version
+  local -i labels_index=0
+  local labels_record=''
 
   bl64_check_parameter 'container' &&
     bl64_check_parameter 'context' ||
     return $?
 
-  bl64_cnt_build "$context" "dockerfiles/${container}/Dockerfile" "${container}:${tag}"
+  # Determine if standard labels are provided
+  if [[ -f "$labels_file" ]]; then
+    # Load each label and add to the command line
+    IFS=$'\n'
+    for labels_record in $(<"${labels_file}"); do
+      unset IFS
+      command_line[${labels_index}]="--label='$labels_record'"
+      labels_index=$((labels_index + 1))
+
+      # Extract the container version if provided
+      if [[ "$labels_record" =~ org.opencontainers.image.version=.* ]]; then
+        IFS='=' label_version=($labels_record)
+        tag=${label_version[1]}
+      fi
+
+    done
+  fi
+
+  bl64_cnt_build "$context" "${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_DOCKERFILE_NAME}" "${container}:${tag}" "${command_line[@]}"
 }
 
 function cntbuild_open() {
@@ -11930,9 +11980,19 @@ function cntbuild_help() {
 # Globals
 #
 
+# Registry credentials
 export CNTBUILD_LOGIN_USER
 export CNTBUILD_LOGIN_PASSWORD
 export CNTBUILD_LOGIN_URL
+
+# Metadata filename
+export CNTBUILD_METADATA_FILE='Metadata.label'
+
+# Dockerfiles sources directory name
+export CNTBUILD_DOCKERFILE_SOURCES='dockerfiles'
+
+# Dockerfile name
+export CNTBUILD_DOCKERFILE_NAME='Dockerfile'
 #
 # Main
 #

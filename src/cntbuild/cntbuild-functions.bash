@@ -7,10 +7,10 @@ function cntbuild_list() {
   local context="$1"
 
   bl64_check_parameter 'context' &&
-    bl64_check_directory "${context}/dockerfiles" || return $?
+    bl64_check_directory "${context}/${CNTBUILD_DOCKERFILE_SOURCES}" || return $?
 
   # shellcheck disable=SC2164
-  cd "${context}/dockerfiles"
+  cd "${context}/${CNTBUILD_DOCKERFILE_SOURCES}"
 
   printf '%s\n' *
 }
@@ -20,12 +20,35 @@ function cntbuild_build() {
   local container="$1"
   local tag="$2"
   local context="$3"
+  local labels_file="${context}/${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_METADATA_FILE}"
+  local -a command_line
+  local -a label_version
+  local -i labels_index=0
+  local labels_record=''
 
   bl64_check_parameter 'container' &&
     bl64_check_parameter 'context' ||
     return $?
 
-  bl64_cnt_build "$context" "dockerfiles/${container}/Dockerfile" "${container}:${tag}"
+  # Determine if standard labels are provided
+  if [[ -f "$labels_file" ]]; then
+    # Load each label and add to the command line
+    IFS=$'\n'
+    for labels_record in $(<"${labels_file}"); do
+      unset IFS
+      command_line[${labels_index}]="--label='$labels_record'"
+      labels_index=$((labels_index + 1))
+
+      # Extract the container version if provided
+      if [[ "$labels_record" =~ org.opencontainers.image.version=.* ]]; then
+        IFS='=' label_version=($labels_record)
+        tag=${label_version[1]}
+      fi
+
+    done
+  fi
+
+  bl64_cnt_build "$context" "${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_DOCKERFILE_NAME}" "${container}:${tag}" "${command_line[@]}"
 }
 
 function cntbuild_open() {
