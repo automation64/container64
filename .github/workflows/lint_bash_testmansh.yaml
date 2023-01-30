@@ -5,9 +5,11 @@ on:
   push:
     branches:
       - "feature/*"
+      - "develop"
+      - "master"
 
 jobs:
-  lint-shellcheck:
+  lint-bash-testmansh:
     runs-on: "ubuntu-latest"
     steps:
 
@@ -20,15 +22,15 @@ jobs:
       - name: "Build app"
         run: "./bin/devcnt-build"
 
-      - name: "Run ShellCheck on cntbuild"
-        run: ./lib/testmansh -t -c build/cntbuild"
+      - name: "Run Bash linter on cntbuild"
+        run: "./lib/testmansh -t -c build/cntbuild"
 
-      - name: "Run ShellCheck on helper-ansible-node"
-        run: ./lib/testmansh -t -c src/helper-ansible-node"
+      - name: "Run Bash linter on helper-ansible-node"
+        run: "./lib/testmansh -t -c src/helper-ansible-node"
 
-      - name: "Run ShellCheck on helper-bash-test"
-        run: ./lib/testmansh -t -c src/helper-bash-test"
+      - name: "Run Bash linter on helper-bash-test"
+        run: "./lib/testmansh -t -c src/helper-bash-test"
 
-      - name: "Run ShellCheck on helper-toolbox64"
-        run: ./lib/testmansh -t -c src/helper-toolbox64"
+      - name: "Run Bash linter on helper-toolbox64"
+        run: "./lib/testmansh -t -c src/helper-toolbox64"
 ...
