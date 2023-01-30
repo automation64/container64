@@ -5,7 +5,7 @@ source bin/devcnt-set || exit 1
 # shellcheck source=SCRIPTDIR/../lib/bashlib64.bash
 source "$DEVCNT_LIB_BASHLIB64"
 
-bl64_msg_show_text "Build app (${DEVCNT_BUILD_DEV})"
+bl64_msg_show_task "Build app (${DEVCNT_BUILD_DEV})"
 # shellcheck disable=SC2154
 bl64_fs_merge_files \
   '0755' \
