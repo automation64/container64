@@ -43,8 +43,7 @@ cntbuild_setup_globals &&
 
 bl64_msg_show_batch_start "$cntbuild_command_tag"
 case "$cntbuild_command" in
-'cntbuild_build') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" "$cntbuild_context" ;;
-'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" ;;
+'cntbuild_build' | 'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" "$cntbuild_context" ;;
 'cntbuild_list') "$cntbuild_command" "$cntbuild_context" ;;
 *) bl64_check_show_undefined "$cntbuild_command" ;;
 esac

@@ -22,7 +22,7 @@ function cntbuild_build() {
   local context="$3"
   local labels_file="${context}/${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_METADATA_FILE}"
   local -a command_line
-  local -a label_version
+  local -a labels_version
   local -i labels_index=0
   local labels_record=''
 
@@ -43,8 +43,8 @@ function cntbuild_build() {
       # Extract the container version if provided
       if [[ "$labels_record" =~ org.opencontainers.image.version=.* ]]; then
         # shellcheck disable=SC2206
-        IFS='=' label_version=($labels_record)
-        tag=${label_version[1]}
+        IFS='=' labels_version=($labels_record)
+        tag=${labels_version[1]}
       fi
 
     done
@@ -57,9 +57,14 @@ function cntbuild_open() {
   bl64_dbg_app_show_function
   local container="$1"
   local tag="$2"
+  local context="$3"
+  local version=''
 
   bl64_check_parameter 'container' ||
     return $?
+
+  version="$(cntbuild_get_version "$container" "$context")" || return $?
+  [[ -n "$version" ]] && tag="$version"
 
   bl64_cnt_run_sh "${container}:${tag}"
 }
@@ -68,11 +73,16 @@ function cntbuild_publish() {
   bl64_dbg_app_show_function
   local container="$1"
   local tag="$2"
+  local context="$3"
+  local version=''
 
   bl64_check_export 'CNTBUILD_LOGIN_USER' &&
     bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
     bl64_check_export 'CNTBUILD_LOGIN_URL' ||
     return $?
+
+  version="$(cntbuild_get_version "$container" "$context")" || return $?
+  [[ -n "$version" ]] && tag="$version"
 
   bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_LOGIN_URL" &&
     bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
@@ -88,6 +98,30 @@ function cntbuild_setup_globals() {
 function cntbuild_check_requirements() {
   [[ -z "$cntbuild_command" ]] && cntbuild_help && return 1
   return 0
+}
+
+function cntbuild_get_version() {
+  local container="$1"
+  local context="$2"
+  local labels_file="${context}/${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_METADATA_FILE}"
+  local -a labels_version
+  local -i labels_index=0
+  local labels_record=''
+
+  if [[ -f "$labels_file" ]]; then
+    IFS=$'\n'
+    for labels_record in $(<"${labels_file}"); do
+      unset IFS
+      labels_index=$((labels_index + 1))
+      if [[ "$labels_record" =~ org.opencontainers.image.version=.* ]]; then
+        # shellcheck disable=SC2206
+        IFS='=' labels_version=($labels_record)
+        echo "${labels_version[1]}"
+        break
+      fi
+    done
+  fi
+
 }
 
 function cntbuild_help() {
