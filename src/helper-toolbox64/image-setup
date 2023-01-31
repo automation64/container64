@@ -7,29 +7,32 @@ source "${CNT64_SYSADMIN_LIB}/bashlib64.bash" || exit 1
 # Main
 #
 
+declare cnt64_tools='sudo git tar hostname wget unzip bzip2 diffutils python3 python3-pip python3-setuptools'
+declare cnt64_sysadmin_env="/toolbox64.env"
+
 bl64_os_match 'OL' &&
   bl64_pkg_setup ||
   exit $?
 
 bl64_msg_all_enable_verbose
 # shellcheck disable=SC2086
-bl64_pkg_deploy ${CNT64_TOOLS} &&
+bl64_pkg_deploy ${cnt64_tools} &&
   bl64_iam_user_add "${CNT64_SYSADMIN_USER}" "$CNT64_SYSADMIN_HOME" &&
   bl64_rbac_add_root "${CNT64_SYSADMIN_USER}" ||
   exit $?
 
 bl64_msg_show_task 'Register directory structure'
-bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$CNT64_SYSADMIN_USER" >"$CNT64_SYSADMIN_ENV" &&
-  bl64_bsh_env_export_variable 'TOOLBOX64_HOME' "$CNT64_SYSADMIN_HOME" >>"$CNT64_SYSADMIN_ENV" &&
-  bl64_bsh_env_export_variable 'TOOLBOX64_TMP' "$CNT64_SYSADMIN_TMP" >>"$CNT64_SYSADMIN_ENV" &&
-  bl64_bsh_env_export_variable 'TOOLBOX64_LIB' "$CNT64_SYSADMIN_LIB" >>"$CNT64_SYSADMIN_ENV" &&
-  bl64_bsh_env_export_variable 'TOOLBOX64_BIN' "$CNT64_SYSADMIN_BIN" >>"$CNT64_SYSADMIN_ENV" &&
-  bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$CNT64_SYSADMIN_VAR" >>"$CNT64_SYSADMIN_ENV" &&
+bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$CNT64_SYSADMIN_USER" >"$cnt64_sysadmin_env" &&
+  bl64_bsh_env_export_variable 'TOOLBOX64_HOME' "$CNT64_SYSADMIN_HOME" >>"$cnt64_sysadmin_env" &&
+  bl64_bsh_env_export_variable 'TOOLBOX64_TMP' "$CNT64_SYSADMIN_TMP" >>"$cnt64_sysadmin_env" &&
+  bl64_bsh_env_export_variable 'TOOLBOX64_LIB' "$CNT64_SYSADMIN_LIB" >>"$cnt64_sysadmin_env" &&
+  bl64_bsh_env_export_variable 'TOOLBOX64_BIN' "$CNT64_SYSADMIN_BIN" >>"$cnt64_sysadmin_env" &&
+  bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$CNT64_SYSADMIN_VAR" >>"$cnt64_sysadmin_env" &&
   bl64_msg_show_task 'Fix file ownership' &&
   bl64_fs_chown_dir \
     "${CNT64_SYSADMIN_USER}:${CNT64_SYSADMIN_USER}" \
     "$CNT64_SYSADMIN_HOME" \
-    "$CNT64_SYSADMIN_ENV" ||
+    "$cnt64_sysadmin_env" ||
   exit 1
 
 bl64_fs_cleanup_full
