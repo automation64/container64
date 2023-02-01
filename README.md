@@ -20,16 +20,17 @@
 - Purpose: Linux systems administration
 - Packages: common os management tools
 
-| Image                             | OS          | Base Image                                          |
-| --------------------------------- | ----------- | --------------------------------------------------- |
-| `oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                   |
-| `oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                   |
-| `oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
-| `oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/oraclelinux-9-toolbox:latest` |
-| `oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/oraclelinux-9-cloud:latest`   |
-| `oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
-| `oraclelinux-8-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
-| `oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/oraclelinux-8-toolbox:latest` |
+| Image                                     | OS          | Base Image                                                  |
+| ----------------------------------------- | ----------- | ----------------------------------------------------------- |
+| `toolbox/oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                           |
+| `toolbox/oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                           |
+| `toolbox/oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-8-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
 
 ### Container collection: Bash Linter
 
@@ -45,9 +46,9 @@
 - Purpose: Terraform code testing
 - Packages: TFSec, TFLint, Terraform
 
-| Image                          | OS          | Base Image                        |
-| ------------------------------ | ----------- | --------------------------------- |
-| `oraclelinux-8-terraform-test` | oraclelinux | `docker.io/library/oraclelinux:8` |
+| Image                          | OS          | Base Image                               |
+| ------------------------------ | ----------- | ---------------------------------------- |
+| `oraclelinux-9-terraform-test` | oraclelinux | `oraclelinux-9-toolbox-terraform:latest` |
 
 ### Container collection: Ansible Node Testing
 
