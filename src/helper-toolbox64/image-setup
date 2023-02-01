@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 
-# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash
 source "${CNT64_SYSADMIN_LIB}/bashlib64.bash" || exit 1
+
+#
+# Globals
+#
+
+export CNT64_SYSADMIN_USER
+export CNT64_SYSADMIN_HOME
+export CNT64_SYSADMIN_TMP
+export CNT64_SYSADMIN_LIB
+export CNT64_SYSADMIN_BIN
+export CNT64_SYSADMIN_VAR
 
 #
 # Main
@@ -11,6 +22,7 @@ declare cnt64_tools='sudo git tar hostname wget unzip bzip2 diffutils python3 py
 declare cnt64_sysadmin_env="/toolbox64.env"
 
 bl64_os_match 'OL' &&
+  bl64_check_privilege_root &&
   bl64_pkg_setup ||
   exit $?
 

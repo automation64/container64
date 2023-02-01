@@ -17,7 +17,7 @@ ARG CNT64_SYSADMIN_USER="sysadmin"
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
 
 # Install tools
-RUN sudo ${CNT64_SYSADMIN_BIN}/toolbox64_install_psql_13
+RUN sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_psql_13
 
 USER ${CNT64_SYSADMIN_USER}
 ENTRYPOINT [ "/bin/bash" ]

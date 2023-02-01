@@ -15,6 +15,7 @@ declare process='Install PostgreSQL 13 CLI'
 declare -i status=0
 
 bl64_os_match 'OL' &&
+  bl64_check_privilege_root &&
   bl64_pkg_setup ||
   exit $?
 
