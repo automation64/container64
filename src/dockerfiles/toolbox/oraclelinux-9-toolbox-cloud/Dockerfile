@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/serdigital64/oraclelinux-9-toolbox:latest
+FROM ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest
 
 # Prepare package installer
 ENV container="docker"
