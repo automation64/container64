@@ -14,26 +14,20 @@ declare container_name=''
 bl64_msg_show_phase "Build toolbox containers - level 0"
 for container_name in $DEVCNT_IMAGES_TOOLBOX_L0; do
   bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild \
-    -b \
-    -c "$container_name" ||
+  ./cntbuild -b -c "$container_name" ||
     exit 1
 done
 
 bl64_msg_show_phase "Build toolbox containers - level 1"
 for container_name in $DEVCNT_IMAGES_TOOLBOX_L1; do
   bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild \
-    -b \
-    -c "$container_name" ||
+  ./cntbuild -b -c "$container_name" ||
     exit 1
 done
 
 bl64_msg_show_phase "Build toolbox containers - level 2"
 for container_name in $DEVCNT_IMAGES_TOOLBOX_L2; do
   bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild \
-    -b \
-    -c "$container_name" ||
+  ./cntbuild -b -c "$container_name" ||
     exit 1
 done
