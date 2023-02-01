@@ -48,8 +48,7 @@ if ((status == 0)); then
       --bin-dir "$aws_bin" \
       --update &&
     bl64_check_command "$aws_cli" &&
-    bl64_msg_show_info "AWS CLI files installed under: ${aws_root}"
-    bl64_msg_show_info "AWS CLI binaty file: ${aws_cli}"
+    bl64_msg_show_info "Application file: ${aws_cli}"
   status=$?
 fi
 

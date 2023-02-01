@@ -15,7 +15,7 @@ declare package_installer_bin="${package_installer}/helm"
 declare package_source='helm-v3.11.0-linux-amd64.tar.gz'
 declare package_url='https://get.helm.sh'
 declare app_mode='0755'
-declare app_root='/opt/helm'
+declare app_root='/usr/local'
 declare app_bin="${app_root}/bin"
 declare app_cli="${app_bin}/helm"
 declare -i status=1
@@ -44,7 +44,7 @@ if ((status == 0)); then
     bl64_fs_copy_files "$app_mode" "$BL64_LIB_DEFAULT" "$BL64_LIB_DEFAULT" "$app_bin" "$package_installer_bin" &&
     bl64_check_command "$app_cli" &&
     bl64_msg_show_info "Application files installed under: ${app_root}"
-  bl64_msg_show_info "Application binaty file: ${app_cli}"
+  bl64_msg_show_info "Application file: ${app_cli}"
   status=$?
 fi
 

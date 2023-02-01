@@ -6,8 +6,9 @@ source "/toolbox64.env"  || exit 1
 source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
-# Variables
+# Main
 #
+
 declare repository_name='mongodb-org-5.0'
 # shellcheck disable=SC2016
 declare repository_url='https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/'
@@ -15,10 +16,6 @@ declare repository_key='https://www.mongodb.org/static/pgp/server-5.0.asc'
 declare packages='mongodb-org-tools mongodb-mongosh'
 declare process='Install MongoDB Shell 5 CLI'
 declare -i status=0
-
-#
-# Main
-#
 
 bl64_os_match 'OL' &&
   bl64_pkg_setup ||

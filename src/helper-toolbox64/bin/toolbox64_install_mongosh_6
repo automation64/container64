@@ -6,7 +6,7 @@ source "/toolbox64.env"  || exit 1
 source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
-# Variables
+# Main
 #
 
 declare repository_name='mongodb-org-6.0'
@@ -16,10 +16,6 @@ declare repository_key='https://www.mongodb.org/static/pgp/server-6.0.asc'
 declare packages='mongodb-org-tools mongodb-mongosh'
 declare process='Install MongoDB Shell 6 CLI'
 declare -i status=0
-
-#
-# Main
-#
 
 bl64_os_match 'OL' &&
   bl64_pkg_setup ||

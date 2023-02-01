@@ -6,17 +6,13 @@ source "/toolbox64.env"  || exit 1
 source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 
 #
-# Variables
+# Main
 #
 
 declare source='postgresql:13'
 declare packages='postgresql'
 declare process='Install PostgreSQL 13 CLI'
 declare -i status=0
-
-#
-# Main
-#
 
 bl64_os_match 'OL' &&
   bl64_pkg_setup ||

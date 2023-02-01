@@ -31,8 +31,7 @@ function hlp_tb64_install_terraform() {
     bl64_msg_show_task 'deploy application' &&
     bl64_arc_open_zip "$package_installer" "${APP_BIN}" &&
     bl64_check_command "$app_cli" &&
-    bl64_msg_show_info "Application files installed under: ${APP_ROOT}" &&
-    bl64_msg_show_info "Application binaty file: ${app_cli}"
+    bl64_msg_show_info "Application file: ${app_cli}"
 }
 
 function hlp_tb64_install_tfsec() {
@@ -47,8 +46,7 @@ function hlp_tb64_install_tfsec() {
   bl64_rxtx_web_get_file "${package_url}/${package_source}" "$app_cli" '0' "$APP_MODE" &&
     bl64_msg_show_task 'deploy application' &&
     bl64_check_command "$app_cli" &&
-    bl64_msg_show_info "Application files installed under: ${APP_ROOT}" &&
-    bl64_msg_show_info "Application binaty file: ${app_cli}"
+    bl64_msg_show_info "Application file: ${app_cli}"
 }
 
 function hlp_tb64_install_tflintc() {
@@ -64,8 +62,7 @@ function hlp_tb64_install_tflintc() {
     bl64_msg_show_task 'deploy application' &&
     bl64_arc_open_zip "$package_installer" "${APP_BIN}" &&
     bl64_check_command "$app_cli" &&
-    bl64_msg_show_info "Application files installed under: ${APP_ROOT}" &&
-    bl64_msg_show_info "Application binaty file: ${app_cli}"
+    bl64_msg_show_info "Application file: ${app_cli}"
 }
 
 #
