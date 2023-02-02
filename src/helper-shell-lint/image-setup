@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck source=SCRIPTDIR/../loader/bashlib64.bash
-source '/bashlib64.bash' || exit 1
+source '/bashlib64.bash' || exit $?
 
 #
 # Globals
@@ -19,7 +19,7 @@ declare cnt64_tools='shellcheck'
 bl64_os_match "$BL64_OS_ALP" &&
   bl64_check_privilege_root &&
   bl64_pkg_setup ||
-  exit 1
+  exit $?
 
 bl64_msg_all_enable_verbose
 # shellcheck disable=SC2086

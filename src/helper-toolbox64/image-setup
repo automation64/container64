@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck source=SCRIPTDIR/../loader/bashlib64.bash
-source "${CNT64_SYSADMIN_LIB}/bashlib64.bash" || exit 1
+source "${CNT64_SYSADMIN_LIB}/bashlib64.bash" || exit $?
 
 #
 # Globals
@@ -45,7 +45,7 @@ bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$CNT64_SYSADMIN_USER" >"$cnt64_s
     "${CNT64_SYSADMIN_USER}:${CNT64_SYSADMIN_USER}" \
     "$CNT64_SYSADMIN_HOME" \
     "$cnt64_sysadmin_env" ||
-  exit 1
+  exit $?
 
 bl64_fs_cleanup_full
 exit 0

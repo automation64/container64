@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
-source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit $?
 
 #
 # Variables
@@ -18,7 +18,7 @@ CNT64_BATSCORE_COMPONENT_PATH_HELPERS="${CNT64_BATSCORE_COMPONENT_PATH}/${CNT64_
 #
 
 bl64_pkg_setup ||
-  exit 1
+  exit $?
 
 bl64_msg_all_enable_verbose
 
