@@ -9,7 +9,7 @@ source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
 # Globals
 #
 
-#export CNT64_TEST_USER
+export CNT64_TEST_USER
 
 #
 # Main
