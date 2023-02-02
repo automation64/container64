@@ -28,7 +28,7 @@ bl64_os_match 'OL' &&
 
 bl64_msg_all_enable_verbose
 # shellcheck disable=SC2086
-bl64_pkg_deploy ${cnt64_tools} &&
+bl64_pkg_deploy $cnt64_tools &&
   bl64_iam_user_add "${CNT64_SYSADMIN_USER}" "$CNT64_SYSADMIN_HOME" &&
   bl64_rbac_add_root "${CNT64_SYSADMIN_USER}" ||
   exit $?
