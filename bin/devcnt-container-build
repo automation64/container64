@@ -11,6 +11,14 @@ source "$DEVCNT_LIB_BASHLIB64"
 
 declare container_name=''
 
+bl64_msg_show_phase "Build shell-lint containers - level 0"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_SHELL_LINT_L0; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" ||
+    exit 1
+done
+
 bl64_msg_show_phase "Build toolbox containers - level 0"
 # shellcheck disable=SC2086
 for container_name in $DEVCNT_IMAGES_TOOLBOX_L0; do
@@ -37,7 +45,7 @@ done
 
 bl64_msg_show_phase "Build terraform-test containers - level 3"
 # shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_TERRAFORM_L3; do
+for container_name in $DEVCNT_IMAGES_TERRAFORM_TEST_L3; do
   bl64_msg_show_task "Build container image: ${container_name}"
   ./cntbuild -b -c "$container_name" ||
     exit 1
