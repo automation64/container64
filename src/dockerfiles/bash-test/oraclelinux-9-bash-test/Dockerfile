@@ -1,33 +1,37 @@
 # Base image
 FROM docker.io/library/oraclelinux:9
 
-# Image Metadata
-LABEL \
-    container64.os-name="oraclelinux" \
-    container64.os-version="9" \
-    container64.image-version="0.1.0" \
-    container64.image-content="bash,bats-core" \
-    org.opencontainers.image.description="Purpose: Bash scripts testing - Packages: Bash, Bats Core, Bash Core plugins, OS utilities"
-
 # Prepare package installer
 ENV container="docker"
 
-# Provision setup script
-COPY loader/bashlib64.bash /bashlib64.bash
-COPY helper-bash-test/image-setup /image-setup
-
 # Define environment
+ARG CNT64_SYSADMIN_BIN="/sa/bin"
 ARG CNT64_TEST_USER="test"
 ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git tar hostname wget python3 python3-pip python3-setuptools unzip"
-ARG CNT64_BATSCORE_REPO="https://github.com/bats-core"
-ARG CNT64_BATSCORE_COMPONENT_PATH="/opt"
 
-# Install tools
+# Copy image setup script
+COPY loader/bashlib64.bash /bashlib64.bash
+COPY helper-bash-test/image-setup /image-setup
+COPY helper-toolbox64/bootstrap /bootstrap
+
+# Setup image / bootstrap
 RUN \
-    chmod 700 /image-setup && \
+    chmod 700 /bootstrap /image-setup && \
+    /bootstrap && \
+    rm /bootstrap
+
+# Setup image
+RUN \
     /image-setup && \
     rm /image-setup /bashlib64.bash
+
+# Copy optional provisioning scripts
+COPY helper-toolbox64/bin/* ${CNT64_SYSADMIN_BIN}/
+
+# Setup image / bats-core
+RUN \
+    ${CNT64_SYSADMIN_BIN}/toolbox64_install_batscore
 
 # Run bats-core against /test
 CMD [ "/test" ]
