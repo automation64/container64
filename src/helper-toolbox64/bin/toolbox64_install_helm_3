@@ -6,7 +6,7 @@ source "/toolbox64.env" || exit $?
 source "${TOOLBOX64_LIB}/bashlib64.bash" || exit $?
 
 #
-# Variables
+# Main
 #
 
 declare process='Install Helm 3'
@@ -19,10 +19,6 @@ declare app_root='/usr/local'
 declare app_bin="${app_root}/bin"
 declare app_cli="${app_bin}/helm"
 declare -i status=1
-
-#
-# Main
-#
 
 bl64_arc_setup &&
   bl64_check_privilege_root &&
@@ -44,8 +40,7 @@ if ((status == 0)); then
   bl64_fs_create_dir "$app_mode" "$BL64_LIB_DEFAULT" "$BL64_LIB_DEFAULT" "$app_root" "$app_bin" &&
     bl64_fs_copy_files "$app_mode" "$BL64_LIB_DEFAULT" "$BL64_LIB_DEFAULT" "$app_bin" "$package_installer_bin" &&
     bl64_check_command "$app_cli" &&
-    bl64_msg_show_info "Application files installed under: ${app_root}"
-  bl64_msg_show_info "Application file: ${app_cli}"
+    bl64_msg_show_info "Application file: ${app_cli}"
   status=$?
 fi
 

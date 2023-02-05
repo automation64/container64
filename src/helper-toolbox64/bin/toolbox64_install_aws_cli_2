@@ -6,7 +6,7 @@ source "/toolbox64.env"  || exit $?
 source "${TOOLBOX64_LIB}/bashlib64.bash" || exit $?
 
 #
-# Variables
+# Main
 #
 
 declare process='Install AWS CLI 2'
@@ -20,10 +20,6 @@ declare aws_bin='/opt/aws/bin'
 declare aws_cli='/opt/aws/bin/aws'
 declare aws_versions='/opt/aws/versions'
 declare -i status=1
-
-#
-# Main
-#
 
 bl64_arc_setup &&
   bl64_check_privilege_root &&
