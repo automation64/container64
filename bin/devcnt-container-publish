@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+# shellcheck source=SCRIPTDIR/devcnt-set
+source bin/devcnt-set || exit $?
+# shellcheck source=SCRIPTDIR/../lib/bashlib64.bash
+source "$DEVCNT_LIB_BASHLIB64"
+
+#
+# Main
+#
+
+declare container_name=''
+
+
+bl64_msg_show_phase "Publish shell-lint - level 0"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_SHELL_LINT_L0; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" &&
+    bl64_msg_show_task "Publish container image: ${container_name}" &&
+    ./cntbuild -u -c "$container_name" ||
+    exit $?
+done
+
+bl64_msg_show_phase "Publish toolbox containers - level 0"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_TOOLBOX_L0; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" &&
+    bl64_msg_show_task "Publish container image: ${container_name}" &&
+    ./cntbuild -u -c "$container_name" ||
+    exit $?
+done
+
+bl64_msg_show_phase "Publish toolbox containers - level 1"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_TOOLBOX_L1; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" &&
+    bl64_msg_show_task "Publish container image: ${container_name}" &&
+    ./cntbuild -u -c "$container_name" ||
+    exit $?
+done
+
+bl64_msg_show_phase "Publish toolbox containers - level 2"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_TOOLBOX_L2; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" &&
+    bl64_msg_show_task "Publish container image: ${container_name}" &&
+    ./cntbuild -u -c "$container_name" ||
+    exit $?
+done
+
+bl64_msg_show_phase "Publish terraform-test containers - level 3"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_TERRAFORM_TEST_L3; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" &&
+    bl64_msg_show_task "Publish container image: ${container_name}" &&
+    ./cntbuild -u -c "$container_name" ||
+    exit $?
+done
+
+bl64_msg_show_phase "Publish bash-test containers - level 0"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_BASH_TEST_L0; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" &&
+    bl64_msg_show_task "Publish container image: ${container_name}" &&
+    ./cntbuild -u -c "$container_name" ||
+    exit $?
+done

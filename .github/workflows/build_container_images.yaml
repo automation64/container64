@@ -1,0 +1,24 @@
+---
+name: "Build / Container / Images"
+
+on:
+  push:
+    branches:
+      - "feature/*"
+      - "develop"
+      - "master"
+
+jobs:
+  build-container-images-toolbox:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/devcnt-lib"
+
+      - name: "Build container images"
+        run: "./bin/devcnt-container-build"
+...

@@ -4,6 +4,7 @@
 
 - Prepare dev tools
   - Install GIT
+  - Install GIT-Flow
   - Install Docker or Podman
 - Clone GIT repository
 
@@ -26,8 +27,6 @@
   ```shell
   ./bin/devcnt-lib
   ```
-
-- Download the latest version of [BashLib64](https://github.com/serdigital64/bashlib64) to: `lib/` and 'src/loader'
 
 ## Update source code
 

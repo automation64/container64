@@ -1,0 +1,36 @@
+---
+name: "Lint / Bash / TestManSH"
+
+on:
+  push:
+    branches:
+      - "feature/*"
+      - "develop"
+      - "master"
+
+jobs:
+  lint-bash-testmansh:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/devcnt-lib"
+
+      - name: "Build app"
+        run: "./bin/devcnt-build"
+
+      - name: "Run Bash linter on cntbuild"
+        run: "./lib/testmansh -t -c build/cntbuild"
+
+      - name: "Run Bash linter on helper-ansible-node"
+        run: "./lib/testmansh -t -c src/helper-ansible-node"
+
+      - name: "Run Bash linter on helper-bash-test"
+        run: "./lib/testmansh -t -c src/helper-bash-test"
+
+      - name: "Run Bash linter on helper-toolbox64"
+        run: "./lib/testmansh -t -c src/helper-toolbox64"
+...
