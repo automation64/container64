@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox64.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "$TOOLBOX64_BASHLIB64" || exit $?
+
+#
+# Globals
+#
+
+export TOOLBOX64_TMP
+declare APP_MODE='0755'
+declare APP_ROOT='/usr/local'
+declare APP_BIN="${APP_ROOT}/bin"
+
+#
+# Functions
+#
+
+function tb64_tf1_install_terraform() {
+  local package_source='terraform_1.1.9_linux_amd64.zip'
+  local package_installer="${TOOLBOX64_TMP}/${package_source}"
+  local package_url='https://releases.hashicorp.com/terraform/1.1.9'
+  local app_cli="${APP_BIN}/terraform"
+
+  bl64_msg_show_phase 'provision Terraform CLI'
+  bl64_msg_show_task "download package (${package_source})"
+
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "$package_installer" &&
+    bl64_msg_show_task 'deploy application' &&
+    bl64_arc_open_zip "$package_installer" "${APP_BIN}" &&
+    bl64_check_command "$app_cli" &&
+    bl64_msg_show_info "Application file: ${app_cli}"
+}
+
+function tb64_tf1_install_tfsec() {
+  local package_source='tfsec-linux-amd64'
+  local package_installer="${TOOLBOX64_TMP}/${package_source}"
+  local package_url='https://github.com/aquasecurity/tfsec/releases/download/v1.19.0'
+  local app_cli="${APP_BIN}/tfsec"
+
+  bl64_msg_show_phase 'provision TFSec CLI'
+  bl64_msg_show_task "download package (${package_source})"
+
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "$app_cli" '0' "$APP_MODE" &&
+    bl64_msg_show_task 'deploy application' &&
+    bl64_check_command "$app_cli" &&
+    bl64_msg_show_info "Application file: ${app_cli}"
+}
+
+function tb64_tf1_install_tflintc() {
+  local package_source='tflint_linux_amd64.zip'
+  local package_installer="${TOOLBOX64_TMP}/${package_source}"
+  local package_url='https://github.com/terraform-linters/tflint/releases/download/v0.36.2'
+  local app_cli="${APP_BIN}/tflint"
+
+  bl64_msg_show_phase 'provision TFLint CLI'
+  bl64_msg_show_task "download package (${package_source})"
+
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "$package_installer" &&
+    bl64_msg_show_task 'deploy application' &&
+    bl64_arc_open_zip "$package_installer" "${APP_BIN}" &&
+    bl64_check_command "$app_cli" &&
+    bl64_msg_show_info "Application file: ${app_cli}"
+}
+
+#
+# Main
+#
+
+declare process='Install Terraform 1'
+declare -i status=1
+
+bl64_arc_setup &&
+  bl64_check_privilege_root &&
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$process"
+
+tb64_tf1_install_terraform &&
+  tb64_tf1_install_tfsec &&
+  tb64_tf1_install_tflintc
+status=$?
+
+bl64_fs_cleanup_full
+bl64_msg_show_batch_finish "$status" "$process"
+exit $status

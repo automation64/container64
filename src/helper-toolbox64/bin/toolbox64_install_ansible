@@ -1,28 +1,38 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC1091
+source "/toolbox64.env" || exit $?
 # shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
-source "${TOOLBOX64_LIB}/bashlib64.bash" || exit 1
+source "$TOOLBOX64_BASHLIB64" || exit $?
 
 #
-# Variables
+# Functions
 #
 
-declare packages='ansible'
-declare process='Install Ansible'
-declare -i status=0
+function tb64_ans_provision() {
+  local packages='ansible'
+
+  # shellcheck disable=SC2086
+  bl64_py_pip_usr_deploy $packages
+}
 
 #
 # Main
 #
 
-bl64_os_match 'OL' || exit $?
+declare tb64_ans_process='Install Ansible'
+declare -i tb64_ans_status=0
+
+bl64_check_privilege_root &&
+  bl64_py_setup ||
+  exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$process"
+bl64_msg_show_batch_start "$tb64_ans_process"
 
-bl64_py_setup &&
-  bl64_py_pip_usr_deploy $packages
-status=$?
+tb64_ans_provision
+tb64_ans_status=$?
 
-bl64_msg_show_batch_finish "$status" "$process"
-exit $status
+bl64_fs_cleanup_full
+bl64_msg_show_batch_finish "$tb64_ans_status" "$tb64_ans_process"
+exit $tb64_ans_status
