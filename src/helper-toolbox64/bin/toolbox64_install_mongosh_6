@@ -3,19 +3,31 @@
 # shellcheck disable=SC1091
 source "/toolbox64.env"  || exit $?
 # shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
-source "${TOOLBOX64_LIB}/bashlib64.bash" || exit $?
+source "$TOOLBOX64_BASHLIB64" || exit $?
+
+#
+# Functions
+#
+
+tb64_mg6_provision() {
+  local repository_name='mongodb-org-6.0'
+  local repository_url='https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/6.0/x86_64/'
+  local repository_key='https://www.mongodb.org/static/pgp/server-6.0.asc'
+  local packages='mongodb-org-tools mongodb-mongosh'
+
+  bl64_msg_show_task 'deploy application'
+  bl64_pkg_repository_add "$repository_name" "$repository_url" "$repository_key"
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy $packages
+
+}
 
 #
 # Main
 #
 
-declare repository_name='mongodb-org-6.0'
-# shellcheck disable=SC2016
-declare repository_url='https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/6.0/x86_64/'
-declare repository_key='https://www.mongodb.org/static/pgp/server-6.0.asc'
-declare packages='mongodb-org-tools mongodb-mongosh'
 declare process='Install MongoDB Shell 6 CLI'
-declare -i status=0
+declare -i tb64_mg6_status=0
 
 bl64_os_match "$BL64_OS_OL" &&
   bl64_check_privilege_root &&
@@ -25,10 +37,8 @@ bl64_os_match "$BL64_OS_OL" &&
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$process"
 
-bl64_pkg_repository_add "$repository_name" "$repository_url" "$repository_key"
-# shellcheck disable=SC2086
-bl64_pkg_deploy $packages
-status=$?
+tb64_mg6_provision
+tb64_mg6_status=$?
 
-bl64_msg_show_batch_finish "$status" "$process"
-exit $status
+bl64_msg_show_batch_finish "$tb64_mg6_status" "$process"
+exit $tb64_mg6_status
