@@ -3,7 +3,7 @@
 # Set development environment variables
 #
 # * Source this script from the project's root directory
-# * Template Version: v1.1.0
+# * Template Version: v1.2.0
 #
 
 test -f ./.env
@@ -22,6 +22,10 @@ elif test -n "$GITHUB_WORKSPACE"; then
   export DEVCNT_ROOT="$GITHUB_WORKSPACE"
   export CNTBUILD_LOGIN_PASSWORD="$GITHUB_TOKEN"
   export CNTBUILD_LOGIN_USER="$GITHUB_ACTOR"
+fi
+
+if test -z "$DEVCNT_ROOT"; then
+  echo "Error: unable to identify current repository location. Check that the variable DEVCS_ROOT is correctly set" && return 1
 fi
 
 if test -f ./.secrets; then
