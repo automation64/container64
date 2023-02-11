@@ -9,9 +9,9 @@ bl64_msg_show_task "Build app (${DEVCNT_BUILD_DEV})"
 # shellcheck disable=SC2154
 bl64_fs_merge_files \
   '0755' \
-  "$BL64_LIB_DEFAULT" \
-  "$BL64_LIB_DEFAULT" \
-  "$BL64_LIB_VAR_ON" \
+  "$BL64_VAR_DEFAULT" \
+  "$BL64_VAR_DEFAULT" \
+  "$BL64_VAR_ON" \
   "$DEVCNT_BUILD_DEV" \
   "$DEVCNT_SRC/cntbuild/${DEVCNT_APP_NAME}-header.bash" \
   "$DEVCNT_LIB_BASHLIB64" \
