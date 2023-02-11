@@ -58,3 +58,11 @@ for container_name in $DEVCNT_IMAGES_BASH_TEST_L0; do
   ./cntbuild -b -c "$container_name" ||
     exit $?
 done
+
+bl64_msg_show_phase "Build ansible-node containers - level 0"
+# shellcheck disable=SC2086
+for container_name in $DEVCNT_IMAGES_ANSIBLE_L0; do
+  bl64_msg_show_task "Build container image: ${container_name}"
+  ./cntbuild -b -c "$container_name" ||
+    exit $?
+done

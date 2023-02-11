@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox64.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "$TOOLBOX64_BASHLIB64" || exit $?
+
+#
+# Globals
+#
+
+declare TB64_ANS_LOCAL="${HOME}/.local"
+declare TB64_ANS_BIN="${HOME}/bin"
+declare TB64_ANS_VERSION='2.14'
+
+#
+# Functions
+#
+
+function tb64_ans_promote_apps() {
+  local apps='ansible ansible-playbook ansible-galaxy'
+  local file=''
+  local helper=''
+
+  bl64_msg_show_task "fix permissions (${HOME})"
+  bl64_fs_run_chmod '0755' "$TB64_ANS_LOCAL" &&
+    bl64_fs_fix_permissions '0644' '0755' "${TB64_ANS_LOCAL}/lib" &&
+    bl64_fs_fix_permissions '0755' '0755' "${TB64_ANS_LOCAL}/bin" ||
+    return $?
+
+  bl64_msg_show_task 'create helpers'
+  bl64_fs_run_mkdir "$TB64_ANS_BIN" &&
+    for file in $apps; do
+      helper="${TB64_ANS_BIN}/${file}"
+      # shellcheck disable=SC2016
+      printf '#!/bin/sh\n' >"$helper" &&
+        printf 'PYTHONPATH="${PYTHONPATH}:%s/lib/python3.9/site-packages"\nexport PYTHONPATH\n' "$TB64_ANS_LOCAL" >>"$helper" &&
+        printf 'PATH="${PATH}:%s/bin"\nexport PATH\n' "$TB64_ANS_LOCAL" >>"$helper" &&
+        printf '%s/bin/%s "$@"\n' "$TB64_ANS_LOCAL" "$file" >>"$helper" &&
+        bl64_fs_run_chmod '0755' "$helper" ||
+        return $?
+    done
+
+  return 0
+}
+
+function tb64_ans_provision() {
+  local packages="ansible-core==${TB64_ANS_VERSION}.*"
+
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
+    bl64_py_pip_usr_prepare &&
+    bl64_py_pip_usr_deploy "$packages" &&
+    tb64_ans_promote_apps &&
+    bl64_msg_show_info "Application file: ${TB64_ANS_BIN}"
+}
+
+#
+# Main
+#
+
+declare tb64_ans_process='Install Ansible'
+declare -i tb64_ans_status=0
+
+bl64_py_setup ||
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$tb64_ans_process"
+
+tb64_ans_provision
+tb64_ans_status=$?
+
+bl64_msg_show_batch_finish "$tb64_ans_status" "$tb64_ans_process"
+exit $tb64_ans_status

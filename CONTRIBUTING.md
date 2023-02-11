@@ -10,34 +10,42 @@
 
   ```shell
   git clone https://github.com/serdigital64/container64.git
-  git flow init
   ```
 
-- Adjust environment variables to reflect your configuration:
+- Adjust environment variables to match your configuration:
+
+  - Copy environment definition files from templates:
 
   ```shell
-  # Copy environment definition files from templates:
   cp dot.local .local
   cp dot.secrets .secrets
-  # Review and update content for both files
   ```
 
-- Initialize dev environment
+  - Review and update content for both files to match your environment
+
+- Download dev support scripts
 
   ```shell
   ./bin/devcnt-lib
   ```
 
+- Initialize git-flow. Leave defaults options
+
+  ```shell
+  git flow init
+  ```
+
 ## Update source code
 
-- Add/Edit source code in: `src/dockerfiles`
-- Build container image
+- Add/Edit source code in: `src/`
+
+## Build container image
 
 ```shell
 ./cntbuild -b -c CONTAINER_NAME -e TAG
 ```
 
-- Publish container image
+## Publish container image
 
 ```shell
 ./cntbuild -u -c CONTAINER_NAME -e TAG
