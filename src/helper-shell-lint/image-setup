@@ -8,7 +8,6 @@ source '/bashlib64.bash' || exit $?
 #
 
 export CNT64_LINT_USER
-export CNT64_LINT_VOLUME
 
 #
 # Main
@@ -25,8 +24,6 @@ bl64_msg_all_enable_verbose
 # shellcheck disable=SC2086
 bl64_msg_show_task "create lint user (${CNT64_LINT_USER})" &&
   bl64_iam_user_add "$CNT64_LINT_USER" &&
-  bl64_msg_show_task "create source mount point (${CNT64_LINT_VOLUME})" &&
-  bl64_fs_mkdir_full "$CNT64_LINT_VOLUME" &&
   bl64_msg_show_task "install application (${cnt64_tools})" &&
   bl64_pkg_deploy $cnt64_tools ||
   exit $?
