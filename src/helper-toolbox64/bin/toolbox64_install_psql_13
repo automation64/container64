@@ -15,7 +15,10 @@ tb64_pg13_provision() {
   local packages='postgresql'
 
   bl64_msg_show_task "Enable package repository (${source})"
-  bl64_pkg_run_dnf --assumeyes module enable "$source"
+  bl64_pkg_run_dnf --assumeyes module enable "$source" ||
+    return $?
+
+  bl64_msg_show_task 'deploy application'
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
 
