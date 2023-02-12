@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox64.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "$TOOLBOX64_BASHLIB64" || exit $?
+
+#
+# Functions
+#
+
+tb64_shck_provision() {
+  local packages='shellcheck'
+
+  bl64_msg_show_task 'deploy application'
+  bl64_pkg_deploy "$packages"
+
+}
+
+#
+# Main
+#
+
+declare process='Install ShellCheck linter'
+declare -i tb64_shck_status=0
+
+bl64_os_match "$BL64_OS_ALP" &&
+  bl64_check_privilege_root &&
+  bl64_pkg_setup ||
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$process"
+
+tb64_shck_provision
+tb64_shck_status=$?
+
+bl64_msg_show_batch_finish "$tb64_shck_status" "$process"
+exit $tb64_shck_status
