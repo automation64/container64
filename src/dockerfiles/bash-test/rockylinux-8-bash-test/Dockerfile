@@ -7,7 +7,6 @@ ENV container="docker"
 # Define environment
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
 ARG CNT64_TEST_USER="test"
-ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip"
 
 # Copy image setup script
