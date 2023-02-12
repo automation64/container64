@@ -6,6 +6,7 @@ ENV container="docker"
 
 # Define environment
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
+ARG TOOLBOX64_DEBUG=""
 ARG CNT64_TEST_USER="test"
 ARG CNT64_ANSIBLE_USER="ansible"
 ARG CNT64_ANSIBLE_HOME="/opt/ansible"

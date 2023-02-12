@@ -4,6 +4,12 @@
 source '/bashlib64.bash' || exit $?
 
 #
+# Globals
+#
+
+export TOOLBOX64_DEBUG
+
+#
 # Functions
 #
 
@@ -45,7 +51,8 @@ tb64_bs_provision_tb64() {
     bl64_bsh_env_export_variable 'TOOLBOX64_LIB' "$sysadmin_lib" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$sysadmin_user" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_TMP' "$sysadmin_tmp" >>"$sysadmin_env" &&
-    bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$sysadmin_var" >>"$sysadmin_env" ||
+    bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$sysadmin_var" >>"$sysadmin_env" &&
+    printf 'export TOOLBOX64_DEBUG\n' >>"$sysadmin_env" ||
     return $?
 
   bl64_msg_show_task 'Provision bashlib64' &&
@@ -68,6 +75,7 @@ tb64_bs_provision_tb64() {
 declare tb64_bs_process='Bootstrap Toolbox64 environment'
 declare -i tb64_bs_status=0
 
+[[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_check_privilege_root &&
   bl64_pkg_setup ||
   exit $?

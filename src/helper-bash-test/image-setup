@@ -7,6 +7,7 @@ source '/bashlib64.bash' || exit $?
 # Globals
 #
 
+export TOOLBOX64_DEBUG
 export CNT64_HELPERS
 export CNT64_TEST_USER
 
@@ -14,6 +15,7 @@ export CNT64_TEST_USER
 # Main
 #
 
+[[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_check_privilege_root &&
   bl64_check_export 'CNT64_HELPERS' &&
   bl64_check_export 'CNT64_TEST_USER' &&
