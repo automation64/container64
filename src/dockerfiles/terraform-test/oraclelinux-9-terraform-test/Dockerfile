@@ -5,6 +5,7 @@ FROM ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-terraform:latest
 ENV container="docker"
 
 # Define environment
+ARG TOOLBOX64_DEBUG=""
 ARG CNT64_TEST_USER="test"
 
 # Copy image setup script

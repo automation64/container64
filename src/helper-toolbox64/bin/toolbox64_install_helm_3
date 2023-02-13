@@ -48,6 +48,7 @@ tb64_hlm3_provision() {
 declare tb64_hlm3_process='Install Helm 3'
 declare -i tb64_hlm3_status=0
 
+[[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_arc_setup &&
   bl64_check_privilege_root ||
   exit $?

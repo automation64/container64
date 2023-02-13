@@ -6,8 +6,8 @@ ENV container="docker"
 
 # Define environment
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
+ARG TOOLBOX64_DEBUG=""
 ARG CNT64_TEST_USER="test"
-ARG CNT64_BATSCORE_VOLUME="/test"
 ARG CNT64_HELPERS="sudo git tar hostname wget python3 python3-pip python3-setuptools unzip"
 
 # Copy image setup script
