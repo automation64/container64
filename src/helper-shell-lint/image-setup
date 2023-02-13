@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash
-source '/bashlib64.bash' || exit $?
+# shellcheck disable=SC1091
+source "/toolbox64.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit $?
 
 #
 # Globals
