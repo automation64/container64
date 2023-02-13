@@ -35,6 +35,7 @@ tb64_bc_provision() {
 declare tb64_bc_process='Install BatsCore'
 declare -i tb64_bc_status=0
 
+[[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_vcs_setup &&
   bl64_check_privilege_root ||
   exit $?

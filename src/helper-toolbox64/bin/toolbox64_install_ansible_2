@@ -62,6 +62,7 @@ function tb64_ans_provision() {
 declare tb64_ans_process='Install Ansible'
 declare -i tb64_ans_status=0
 
+[[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_py_setup ||
   exit $?
 

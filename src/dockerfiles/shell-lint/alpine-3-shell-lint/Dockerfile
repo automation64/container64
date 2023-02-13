@@ -1,22 +1,22 @@
 # Base image
-FROM docker.io/library/alpine:3
-
-# Prepare package installer
-ENV container="docker"
+FROM ghcr.io/serdigital64/bash-test/alpine-3-bash-test:latest
 
 # Define environment
+ARG CNT64_SYSADMIN_BIN="/sa/bin"
+ARG TOOLBOX64_DEBUG=""
 ARG CNT64_LINT_USER="linter"
-ARG CNT64_LINT_VOLUME="/src"
 
 # Copy image setup script
 COPY helper-shell-lint/image-setup /image-setup
-COPY loader/bashlib64.bash /bashlib64.bash
 
 # Setup image
 RUN \
-    apk add bash && \
-    /image-setup && \
-    rm /image-setup /bashlib64.bash
+    sudo -E /image-setup && \
+    sudo rm /image-setup
+
+# Setup image / shellcheck
+RUN \
+    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_shellcheck
 
 # Run shellcheck against /src
 USER ${CNT64_LINT_USER}
