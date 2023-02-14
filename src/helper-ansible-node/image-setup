@@ -30,9 +30,6 @@ bl64_check_privilege_root &&
   bl64_check_export 'CNT64_TEST_USER' &&
   bl64_check_export 'CNT64_SYSTEMD_PREREQS' &&
   bl64_check_export 'CNT64_SYSTEMD_PACKAGES' &&
-  bl64_check_export 'CNT64_SUDO_PACKAGES' &&
-  bl64_check_export 'CNT64_PYTHON3_PREREQS' &&
-  bl64_check_export 'CNT64_PYTHON3_PACKAGES' &&
   bl64_pkg_setup ||
   exit $?
 
