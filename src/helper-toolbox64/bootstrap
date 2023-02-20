@@ -13,6 +13,25 @@ export TOOLBOX64_DEBUG
 # Functions
 #
 
+tb64_bs_fix_repository_centos8() {
+  bl64_msg_show_task 'Fix centos 8 repository location to use vault'
+  bl64_txt_run_sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
+    bl64_txt_run_sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+}
+
+tb64_bs_fix_repository_ubuntu2104() {
+  bl64_msg_show_task 'Fix ubuntu 21.4 repository location to use old-release'
+  bl64_txt_run_sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+}
+
+tb64_bs_check_repository() {
+  if bl64_os_match "${BL64_OS_CNT}-8"; then
+    tb64_bs_fix_repository_centos8
+  elif bl64_os_match "${BL64_OS_UB}-21"; then
+    tb64_bs_fix_repository_ubuntu2104
+  fi
+}
+
 tb64_bs_provision_sudo() {
 
   bl64_msg_show_task 'Install sudo'
@@ -83,7 +102,8 @@ bl64_check_privilege_root &&
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$tb64_bs_process"
 
-tb64_bs_provision_sudo &&
+tb64_bs_check_repository &&
+  tb64_bs_provision_sudo &&
   tb64_bs_provision_tb64
 tb64_bs_status=$?
 
