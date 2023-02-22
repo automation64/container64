@@ -63,15 +63,16 @@ tb64_bs_provision_tb64() {
     "${sysadmin_var}" ||
     return $?
 
-  bl64_msg_show_task 'Register directory structure' &&
-    bl64_bsh_env_export_variable 'TOOLBOX64_BASHLIB64' "$sysadmin_bashlib64" >"$sysadmin_env" &&
+  bl64_msg_show_task 'Register directory structure'
+  # shellcheck disable=SC2016
+  bl64_bsh_env_export_variable 'TOOLBOX64_BASHLIB64' "$sysadmin_bashlib64" >"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_BIN' "$sysadmin_bin" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_HOME' "$sysadmin_home" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_LIB' "$sysadmin_lib" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$sysadmin_user" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_TMP' "$sysadmin_tmp" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$sysadmin_var" >>"$sysadmin_env" &&
-    printf 'export TOOLBOX64_DEBUG\n' >>"$sysadmin_env" ||
+    printf 'export TOOLBOX64_DEBUG="${TOOLBOX64_DEBUG:-}"\n' >>"$sysadmin_env" ||
     return $?
 
   bl64_msg_show_task 'Provision bashlib64' &&
