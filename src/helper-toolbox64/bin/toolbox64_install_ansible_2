@@ -11,7 +11,6 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 
 declare TB64_ANS_LOCAL="${HOME}/.local"
 declare TB64_ANS_BIN="${HOME}/bin"
-declare TB64_ANS_VERSION='2.14'
 
 #
 # Functions
@@ -45,7 +44,14 @@ function tb64_ans_promote_apps() {
 }
 
 function tb64_ans_provision() {
-  local packages="ansible-core==${TB64_ANS_VERSION}.*"
+  local packages=''
+
+  bl64_msg_show_task 'determine latest available version for the target OS'
+  if bl64_os_match "${BL64_OS_OL}-8" "${BL64_OS_DEB}-10" "${BL64_OS_RHEL}-8" "${BL64_OS_RCK}-8" "${BL64_OS_ALM}-8"; then
+    packages="ansible-core==2.14.*"
+  else
+    packages="ansible-core==2.11.*"
+  fi
 
   bl64_msg_show_task 'deploy application'
   bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
