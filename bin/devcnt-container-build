@@ -13,7 +13,7 @@ declare container_name=''
 
 bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0' &&
-  bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L0' &&
+  bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L2' &&
@@ -36,9 +36,9 @@ for container_name in $DEVCNT_IMAGES_BASH_TEST_L0; do
     exit $?
 done
 
-bl64_msg_show_phase "Build ansible-node containers - level 0"
+bl64_msg_show_phase "Build ansible-node containers - level 1"
 # shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_ANSIBLE_L0; do
+for container_name in $DEVCNT_IMAGES_ANSIBLE_L1; do
   bl64_msg_show_task "Build container image: ${container_name}"
   ./cntbuild -b -c "$container_name" ||
     exit $?
