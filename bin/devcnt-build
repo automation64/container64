@@ -15,6 +15,6 @@ bl64_fs_merge_files \
   "$DEVCNT_BUILD_DEV" \
   "$DEVCNT_SRC/cntbuild/${DEVCNT_APP_NAME}-header.bash" \
   "$DEVCNT_LIB_BASHLIB64" \
-  "$DEVCNT_SRC/cntbuild/${DEVCNT_APP_NAME}-functions.bash" \
   "$DEVCNT_SRC/cntbuild/${DEVCNT_APP_NAME}-env.bash" \
+  "$DEVCNT_SRC/cntbuild/${DEVCNT_APP_NAME}-functions.bash" \
   "$DEVCNT_SRC/cntbuild/${DEVCNT_APP_NAME}-main.bash"

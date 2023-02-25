@@ -6,72 +6,40 @@ source bin/devcnt-set || exit $?
 source "$DEVCNT_LIB_BASHLIB64"
 
 #
+# Functions
+#
+
+function build_toolbox_cnt() {
+  local image_list="$1"
+  local message="$2"
+  local container_name=''
+
+  bl64_msg_show_phase "$message"
+  # shellcheck disable=SC2086
+  for container_name in $image_list; do
+    bl64_msg_show_task "Build container image: ${container_name}"
+    ./cntbuild -b -c "$container_name" ||
+      return $?
+  done
+}
+
+#
 # Main
 #
 
-declare container_name=''
-
 bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0' &&
-  bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L0' &&
+  bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L2' &&
   bl64_check_export 'DEVCNT_IMAGES_TERRAFORM_TEST_L3' ||
   exit $?
 
-bl64_msg_show_phase "Build toolbox containers - level 0"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_TOOLBOX_L0; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
-
-bl64_msg_show_phase "Build bash-test containers - level 0"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_BASH_TEST_L0; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
-
-bl64_msg_show_phase "Build ansible-node containers - level 0"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_ANSIBLE_L0; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
-
-bl64_msg_show_phase "Build shell-lint containers - level 1"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_SHELL_LINT_L1; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
-
-bl64_msg_show_phase "Build toolbox containers - level 1"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_TOOLBOX_L1; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
-
-bl64_msg_show_phase "Build toolbox containers - level 2"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_TOOLBOX_L2; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
-
-bl64_msg_show_phase "Build terraform-test containers - level 3"
-# shellcheck disable=SC2086
-for container_name in $DEVCNT_IMAGES_TERRAFORM_TEST_L3; do
-  bl64_msg_show_task "Build container image: ${container_name}"
-  ./cntbuild -b -c "$container_name" ||
-    exit $?
-done
+build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L0" 'Build toolbox containers - level 0'
+build_toolbox_cnt "$DEVCNT_IMAGES_BASH_TEST_L0" 'Build bash-test containers - level 0'
+build_toolbox_cnt "$DEVCNT_IMAGES_ANSIBLE_L1" 'Build ansible-node containers - level 1'
+build_toolbox_cnt "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Build shell-lint containers - level 1'
+build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L1" 'Build toolbox containers - level 1'
+build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L2" 'Build toolbox containers - level 2'
+build_toolbox_cnt "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Build terraform-test containers - level 3'

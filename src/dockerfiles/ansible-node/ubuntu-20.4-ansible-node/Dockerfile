@@ -24,7 +24,7 @@ RUN \
 
 # Setup image / Ansible
 RUN \
-    sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_SYSADMIN_BIN}/toolbox64_install_ansible_2
+    sudo -H -E -u ${CNT64_ANSIBLE_USER} ${CNT64_SYSADMIN_BIN}/toolbox64_install_ansible_2
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]
