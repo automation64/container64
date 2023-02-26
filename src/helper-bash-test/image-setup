@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
-source '/bashlib64.bash' || exit $?
+if [[ -f '/toolbox64.env' ]]; then
+  # shellcheck disable=SC1091
+  source "/toolbox64.env" || exit $?
+else
+  export TOOLBOX64_LIB=''
+fi
+# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+source "${TOOLBOX64_LIB}/bashlib64.bash" || exit $?
 
 #
 # Globals
@@ -17,16 +23,19 @@ export CNT64_TEST_USER
 
 [[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_check_privilege_root &&
-  bl64_check_export 'CNT64_HELPERS' &&
   bl64_check_export 'CNT64_TEST_USER' &&
   bl64_pkg_setup ||
   exit $?
 
 bl64_msg_all_enable_verbose
 
-# shellcheck disable=SC2086
-bl64_pkg_deploy ${CNT64_HELPERS} &&
-  bl64_iam_user_add "${CNT64_TEST_USER}" &&
+if [[ -n "$CNT64_HELPERS" ]]; then
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy ${CNT64_HELPERS} ||
+    exit $?
+fi
+
+bl64_iam_user_add "${CNT64_TEST_USER}" &&
   bl64_rbac_add_root "${CNT64_TEST_USER}" ||
   exit $?
 
