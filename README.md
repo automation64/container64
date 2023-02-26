@@ -50,27 +50,27 @@
 | --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
 
-### Container collection: Ansible Node
+### Container collection: Ansible playbooks testing
 
-- Purpose: Ansible node
-- Packages: SystemD, Sudo, Python3
+- Purpose: Ansible playbooks testing
+- Packages: SystemD, Sudo, Python3, Ansible
 
 | Image                                     | OS          | Base Image                          |
 | ----------------------------------------- | ----------- | ----------------------------------- |
-| `ansible-node/almalinux-8-ansible-node`   | almalinux   | `docker.io/library/almalinux:8`     |
-| `ansible-node/centos-8-ansible-node`      | centos      | `docker.io/library/centos:8`        |
-| `ansible-node/debian-10-ansible-node`     | debian      | `docker.io/library/debian:buster`   |
-| `ansible-node/debian-11-ansible-node`     | debian      | `docker.io/library/debian:bullseye` |
-| `ansible-node/fedora-33-ansible-node`     | fedora      | `docker.io/library/fedora:33`       |
-| `ansible-node/fedora-35-ansible-node`     | fedora      | `docker.io/library/fedora:35`       |
-| `ansible-node/fedora-36-ansible-node`     | fedora      | `docker.io/library/fedora:36`       |
-| `ansible-node/oraclelinux-8-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `ansible-node/oraclelinux-9-ansible-node` | oraclelinux | `docker.io/library/oraclelinux:9`   |
-| `ansible-node/rockylinux-8-ansible-node`  | rhel        | `docker.io/rockylinux:8`            |
-| `ansible-node/rhel-8-ansible-node`        | rhel        | `docker.io/redhat/ubi8:latest`      |
-| `ansible-node/ubuntu-20.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
-| `ansible-node/ubuntu-21.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
-| `ansible-node/ubuntu-22.4-ansible-node`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
+| `ansible-test/almalinux-8-ansible-test`   | almalinux   | `docker.io/library/almalinux:8`     |
+| `ansible-test/centos-8-ansible-test`      | centos      | `docker.io/library/centos:8`        |
+| `ansible-test/debian-10-ansible-test`     | debian      | `docker.io/library/debian:buster`   |
+| `ansible-test/debian-11-ansible-test`     | debian      | `docker.io/library/debian:bullseye` |
+| `ansible-test/fedora-33-ansible-test`     | fedora      | `docker.io/library/fedora:33`       |
+| `ansible-test/fedora-35-ansible-test`     | fedora      | `docker.io/library/fedora:35`       |
+| `ansible-test/fedora-36-ansible-test`     | fedora      | `docker.io/library/fedora:36`       |
+| `ansible-test/oraclelinux-8-ansible-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `ansible-test/oraclelinux-9-ansible-test` | oraclelinux | `docker.io/library/oraclelinux:9`   |
+| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `docker.io/rockylinux:8`            |
+| `ansible-test/rhel-8-ansible-test`        | rhel        | `docker.io/redhat/ubi8:latest`      |
+| `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
+| `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
 
 ### Container collection: Bash Testing
 
