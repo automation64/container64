@@ -10,7 +10,8 @@ ARG CNT64_SYSADMIN_BIN="/sa/bin"
 ARG TOOLBOX64_DEBUG=""
 
 # Install tools
-RUN sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_mongosh_5
+RUN \
+    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_mongosh_5
 
 USER ${CNT64_SYSADMIN_USER}
 ENTRYPOINT [ "/bin/bash" ]
