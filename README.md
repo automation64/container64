@@ -96,6 +96,7 @@
 | `bash-test/fedora-35-bash-test`               | fedora      | `docker.io/library/fedora:35`                    |
 | `bash-test/fedora-36-bash-test`               | fedora      | `docker.io/library/fedora:36`                    |
 | `bash-test/oraclelinux-7-bash-test`           | oraclelinux | `docker.io/library/oraclelinux:7`                |
+| `bash-test/oraclelinux-8-bash-test-psql-13`   | oraclelinux | `toolbox/oraclelinux-8-toolbox-psql-13:latest`   |
 | `bash-test/oraclelinux-8-bash-test`           | oraclelinux | `docker.io/library/oraclelinux:8`                |
 | `bash-test/oraclelinux-9-bash-test-ansible-2` | oraclelinux | `toolbox/oraclelinux-9-toolbox-ansible-2:latest` |
 | `bash-test/oraclelinux-9-bash-test-cloud`     | oraclelinux | `toolbox/oraclelinux-9-toolbox-cloud:latest`     |
