@@ -37,6 +37,7 @@ bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEVCNT_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L2' &&
+  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L3' &&
   bl64_check_export 'DEVCNT_IMAGES_TERRAFORM_TEST_L3' ||
   exit $?
 
@@ -46,4 +47,5 @@ publish_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - le
   publish_toolbox_cnt "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Publish shell-lint - level 1' &&
   publish_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
   publish_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L2" 'Publish toolbox containers - level 2' &&
+  publish_toolbox_cnt "$DEVCNT_IMAGES_BASH_TEST_L3" 'Publish bash-test containers - level 3' &&
   publish_toolbox_cnt "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Publish terraform-test containers - level 3'
