@@ -81,30 +81,31 @@
 - Purpose: Bash scripts testing
 - Packages: Bash, Bats Core, Bash Core plugins
 
-| Image                                   | OS          | Base Image                                 |
-| --------------------------------------- | ----------- | ------------------------------------------ |
-| `bash-test/almalinux-8-bash-test`       | almalinux   | `docker.io/library/almalinux:8`            |
-| `bash-test/alpine-3-bash-test`          | alpine      | `docker.io/library/alpine:3`               |
-| `bash-test/centos-7-bash-test`          | centos      | `quay.io/centos/centos:centos7`            |
-| `bash-test/centos-8-bash-test`          | centos      | `quay.io/centos/centos:8`                  |
-| `bash-test/centos-9-bash-test`          | centos      | `quay.io/centos/centos:stream9`            |
-| `bash-test/debian-10-bash-test`         | debian      | `docker.io/library/debian:buster`          |
-| `bash-test/debian-11-bash-test`         | debian      | `docker.io/library/debian:bullseye`        |
-| `bash-test/debian-9-bash-test`          | debian      | `docker.io/library/debian:stretch`         |
-| `bash-test/fedora-33-bash-test`         | fedora      | `docker.io/library/fedora:33`              |
-| `bash-test/fedora-34-bash-test`         | fedora      | `docker.io/library/fedora:34`              |
-| `bash-test/fedora-35-bash-test`         | fedora      | `docker.io/library/fedora:35`              |
-| `bash-test/fedora-36-bash-test`         | fedora      | `docker.io/library/fedora:36`              |
-| `bash-test/oraclelinux-7-bash-test`     | oraclelinux | `docker.io/library/oraclelinux:7`          |
-| `bash-test/oraclelinux-8-bash-test`     | oraclelinux | `docker.io/library/oraclelinux:8`          |
-| `bash-test/oraclelinux-9-bash-test`     | oraclelinux | `docker.io/library/oraclelinux:9`          |
-| `bash-test/oraclelinux-9-bash-test-k8s` | oraclelinux | `toolbox/oraclelinux-9-toolbox-k8s:latest` |
-| `bash-test/rhel-8-bash-test`            | rhel        | `docker.io/redhat/ubi8`                    |
-| `bash-test/rhel-9-bash-test`            | rhel        | `docker.io/redhat/ubi9`                    |
-| `bash-test/rockylinux-8-bash-test`      | rockylinux  | `docker.io/rockylinux:8`                   |
-| `bash-test/ubuntu-20.4-bash-test`       | ubuntu      | `docker.io/library/ubuntu:20.04`           |
-| `bash-test/ubuntu-21.4-bash-test`       | ubuntu      | `docker.io/library/ubuntu:21.04`           |
-| `bash-test/ubuntu-22.4-bash-test`       | ubuntu      | `docker.io/library/ubuntu:22.04`           |
+| Image                                     | OS          | Base Image                                   |
+| ----------------------------------------- | ----------- | -------------------------------------------- |
+| `bash-test/almalinux-8-bash-test`         | almalinux   | `docker.io/library/almalinux:8`              |
+| `bash-test/alpine-3-bash-test`            | alpine      | `docker.io/library/alpine:3`                 |
+| `bash-test/centos-7-bash-test`            | centos      | `quay.io/centos/centos:centos7`              |
+| `bash-test/centos-8-bash-test`            | centos      | `quay.io/centos/centos:8`                    |
+| `bash-test/centos-9-bash-test`            | centos      | `quay.io/centos/centos:stream9`              |
+| `bash-test/debian-10-bash-test`           | debian      | `docker.io/library/debian:buster`            |
+| `bash-test/debian-11-bash-test`           | debian      | `docker.io/library/debian:bullseye`          |
+| `bash-test/debian-9-bash-test`            | debian      | `docker.io/library/debian:stretch`           |
+| `bash-test/fedora-33-bash-test`           | fedora      | `docker.io/library/fedora:33`                |
+| `bash-test/fedora-34-bash-test`           | fedora      | `docker.io/library/fedora:34`                |
+| `bash-test/fedora-35-bash-test`           | fedora      | `docker.io/library/fedora:35`                |
+| `bash-test/fedora-36-bash-test`           | fedora      | `docker.io/library/fedora:36`                |
+| `bash-test/oraclelinux-7-bash-test`       | oraclelinux | `docker.io/library/oraclelinux:7`            |
+| `bash-test/oraclelinux-8-bash-test`       | oraclelinux | `docker.io/library/oraclelinux:8`            |
+| `bash-test/oraclelinux-9-bash-test-cloud` | oraclelinux | `toolbox/oraclelinux-9-toolbox-cloud:latest` |
+| `bash-test/oraclelinux-9-bash-test-k8s`   | oraclelinux | `toolbox/oraclelinux-9-toolbox-k8s:latest`   |
+| `bash-test/oraclelinux-9-bash-test`       | oraclelinux | `docker.io/library/oraclelinux:9`            |
+| `bash-test/rhel-8-bash-test`              | rhel        | `docker.io/redhat/ubi8`                      |
+| `bash-test/rhel-9-bash-test`              | rhel        | `docker.io/redhat/ubi9`                      |
+| `bash-test/rockylinux-8-bash-test`        | rockylinux  | `docker.io/rockylinux:8`                     |
+| `bash-test/ubuntu-20.4-bash-test`         | ubuntu      | `docker.io/library/ubuntu:20.04`             |
+| `bash-test/ubuntu-21.4-bash-test`         | ubuntu      | `docker.io/library/ubuntu:21.04`             |
+| `bash-test/ubuntu-22.4-bash-test`         | ubuntu      | `docker.io/library/ubuntu:22.04`             |
 
 ## Usage
 
