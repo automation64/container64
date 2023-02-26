@@ -56,7 +56,7 @@ tb64_bs_provision_tb64() {
     return $?
 
   bl64_msg_show_task 'Create directory structure'
-  bl64_fs_create_dir '0755' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" \
+  bl64_fs_create_dir '0755' "${sysadmin_user}" "${sysadmin_user}" \
     "${sysadmin_tmp}" \
     "${sysadmin_lib}" \
     "${sysadmin_bin}" \
@@ -80,9 +80,9 @@ tb64_bs_provision_tb64() {
     return $?
 
   bl64_msg_show_task 'Fix permissions'
-  bl64_fs_set_permissions '0755' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" "$sysadmin_home" &&
-    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" "$sysadmin_env" &&
-    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" "$sysadmin_bashlib64" ||
+  bl64_fs_set_permissions '0755' "${sysadmin_user}" "${sysadmin_user}" "$sysadmin_home" &&
+    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${sysadmin_user}" "$sysadmin_env" &&
+    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${sysadmin_user}" "$sysadmin_bashlib64" ||
     return $?
 
   return 0
