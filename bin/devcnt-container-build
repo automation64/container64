@@ -33,13 +33,17 @@ bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEVCNT_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L2' &&
+  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L2' &&
+  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L3' &&
   bl64_check_export 'DEVCNT_IMAGES_TERRAFORM_TEST_L3' ||
   exit $?
 
-build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L0" 'Build toolbox containers - level 0'
-build_toolbox_cnt "$DEVCNT_IMAGES_BASH_TEST_L0" 'Build bash-test containers - level 0'
-build_toolbox_cnt "$DEVCNT_IMAGES_ANSIBLE_L1" 'Build ansible-node containers - level 1'
-build_toolbox_cnt "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Build shell-lint containers - level 1'
-build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L1" 'Build toolbox containers - level 1'
-build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L2" 'Build toolbox containers - level 2'
-build_toolbox_cnt "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Build terraform-test containers - level 3'
+build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L0" 'Build toolbox containers - level 0' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_BASH_TEST_L0" 'Build bash-test containers - level 0' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_ANSIBLE_L1" 'Build ansible-test containers - level 1' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Build shell-lint containers - level 1' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L1" 'Build toolbox containers - level 1' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_TOOLBOX_L2" 'Build toolbox containers - level 2' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_BASH_TEST_L2" 'Build bash-test containers - level 2' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_BASH_TEST_L3" 'Build bash-test containers - level 3' &&
+  build_toolbox_cnt "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Build terraform-test containers - level 3'

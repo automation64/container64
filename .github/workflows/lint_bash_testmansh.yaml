@@ -26,11 +26,17 @@ jobs:
       - name: "Run Bash linter on cntbuild"
         run: "./lib/testmansh -t -c build/cntbuild"
 
-      - name: "Run Bash linter on helper-ansible-node"
-        run: "./lib/testmansh -t -c src/helper-ansible-node"
+      - name: "Run Bash linter on helper-ansible-test"
+        run: "./lib/testmansh -t -c src/helper-ansible-test"
 
       - name: "Run Bash linter on helper-bash-test"
         run: "./lib/testmansh -t -c src/helper-bash-test"
+
+      - name: "Run Bash linter on helper-shell-list"
+        run: "./lib/testmansh -t -c src/helper-shell-list"
+
+      - name: "Run Bash linter on helper-terraform-test"
+        run: "./lib/testmansh -t -c src/helper-terraform-test"
 
       - name: "Run Bash linter on helper-toolbox64"
         run: "./lib/testmansh -t -c src/helper-toolbox64"
