@@ -22,15 +22,18 @@
 
 | Image                                     | OS          | Base Image                                                  |
 | ----------------------------------------- | ----------- | ----------------------------------------------------------- |
-| `toolbox/oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                           |
-| `toolbox/oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 | `toolbox/oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-8-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
 | `toolbox/oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
 | `toolbox/oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                           |
+| `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 
 ### Container collection: Bash Linter
 
@@ -66,8 +69,8 @@
 | `ansible-test/fedora-36-ansible-test`     | fedora      | `docker.io/library/fedora:36`       |
 | `ansible-test/oraclelinux-8-ansible-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `ansible-test/oraclelinux-9-ansible-test` | oraclelinux | `docker.io/library/oraclelinux:9`   |
-| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `docker.io/rockylinux:8`            |
 | `ansible-test/rhel-8-ansible-test`        | rhel        | `docker.io/redhat/ubi8:latest`      |
+| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `docker.io/rockylinux:8`            |
 | `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 | `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
@@ -84,9 +87,9 @@
 | `bash-test/centos-7-bash-test`      | centos      | `quay.io/centos/centos:centos7`     |
 | `bash-test/centos-8-bash-test`      | centos      | `quay.io/centos/centos:8`           |
 | `bash-test/centos-9-bash-test`      | centos      | `quay.io/centos/centos:stream9`     |
-| `bash-test/debian-9-bash-test`      | debian      | `docker.io/library/debian:stretch`  |
 | `bash-test/debian-10-bash-test`     | debian      | `docker.io/library/debian:buster`   |
 | `bash-test/debian-11-bash-test`     | debian      | `docker.io/library/debian:bullseye` |
+| `bash-test/debian-9-bash-test`      | debian      | `docker.io/library/debian:stretch`  |
 | `bash-test/fedora-33-bash-test`     | fedora      | `docker.io/library/fedora:33`       |
 | `bash-test/fedora-34-bash-test`     | fedora      | `docker.io/library/fedora:34`       |
 | `bash-test/fedora-35-bash-test`     | fedora      | `docker.io/library/fedora:35`       |
@@ -94,9 +97,9 @@
 | `bash-test/oraclelinux-7-bash-test` | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `bash-test/oraclelinux-8-bash-test` | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `bash-test/oraclelinux-9-bash-test` | oraclelinux | `docker.io/library/oraclelinux:9`   |
-| `bash-test/rockylinux-8-bash-test`  | rockylinux  | `docker.io/rockylinux:8`            |
 | `bash-test/rhel-8-bash-test`        | rhel        | `docker.io/redhat/ubi8`             |
 | `bash-test/rhel-9-bash-test`        | rhel        | `docker.io/redhat/ubi9`             |
+| `bash-test/rockylinux-8-bash-test`  | rockylinux  | `docker.io/rockylinux:8`            |
 | `bash-test/ubuntu-20.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `bash-test/ubuntu-21.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 | `bash-test/ubuntu-22.4-bash-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
