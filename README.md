@@ -27,6 +27,7 @@
 | `toolbox/oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
 | `toolbox/oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
 | `toolbox/oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                           |
+| `toolbox/oraclelinux-9-toolbox-ansible`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
