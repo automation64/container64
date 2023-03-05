@@ -11,7 +11,7 @@ ARG TOOLBOX64_DEBUG=""
 
 # Install tools
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_aws_cli_2 # && \
+    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_aws_cli_2 && \
     sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_gcloud
 
 USER ${CNT64_SYSADMIN_USER}
