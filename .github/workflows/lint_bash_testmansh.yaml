@@ -40,4 +40,7 @@ jobs:
 
       - name: "Run Bash linter on helper-toolbox64"
         run: "./lib/testmansh -t -c src/helper-toolbox64"
+
+      - name: "Run Bash linter on toolbox64"
+        run: "./lib/testmansh -t -c src/toolbox64"
 ...
