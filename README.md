@@ -100,8 +100,10 @@
 | `bash-test/oraclelinux-8-bash-test`           | oraclelinux | `docker.io/library/oraclelinux:8`                |
 | `bash-test/oraclelinux-9-bash-test-ansible-2` | oraclelinux | `toolbox/oraclelinux-9-toolbox-ansible-2:latest` |
 | `bash-test/oraclelinux-9-bash-test-cloud`     | oraclelinux | `toolbox/oraclelinux-9-toolbox-cloud:latest`     |
+| `bash-test/oraclelinux-9-bash-test-docker`    | oraclelinux | `bash-test/oraclelinux-9-bash-test:latest`       |
 | `bash-test/oraclelinux-9-bash-test-k8s`       | oraclelinux | `toolbox/oraclelinux-9-toolbox-k8s:latest`       |
 | `bash-test/oraclelinux-9-bash-test-mongosh-6` | oraclelinux | `toolbox/oraclelinux-9-toolbox-mongosh-6:latest` |
+| `bash-test/oraclelinux-9-bash-test-podman`    | oraclelinux | `bash-test/oraclelinux-9-bash-test:latest`       |
 | `bash-test/oraclelinux-9-bash-test-terraform` | oraclelinux | `toolbox/oraclelinux-9-toolbox-terraform:latest` |
 | `bash-test/oraclelinux-9-bash-test`           | oraclelinux | `docker.io/library/oraclelinux:9`                |
 | `bash-test/rhel-8-bash-test`                  | rhel        | `docker.io/redhat/ubi8`                          |
