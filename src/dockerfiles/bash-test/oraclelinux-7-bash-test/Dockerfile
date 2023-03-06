@@ -27,7 +27,7 @@ RUN \
     rm /image-setup /bashlib64.bash
 
 # Copy optional provisioning scripts
-COPY helper-toolbox64/bin/* ${CNT64_SYSADMIN_BIN}/
+COPY toolbox64/* ${CNT64_SYSADMIN_BIN}/
 
 # Setup image / bats-core
 RUN \
