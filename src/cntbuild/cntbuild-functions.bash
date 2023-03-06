@@ -58,12 +58,15 @@ function cntbuild_open() {
   local container="$1"
   local tag="$2"
   local context="$3"
+  # shellcheck disable=SC2178
   local version=''
 
   bl64_check_parameter 'container' ||
     return $?
 
+  # shellcheck disable=SC2178
   version="$(cntbuild_get_version "$container" "$context")" || return $?
+  # shellcheck disable=SC2128
   [[ -n "$version" ]] && tag="$version"
 
   bl64_cnt_run_sh "${container}:${tag}"
@@ -74,6 +77,7 @@ function cntbuild_publish() {
   local container="$1"
   local tag="$2"
   local context="$3"
+  # shellcheck disable=SC2178
   local version=''
 
   bl64_check_export 'CNTBUILD_LOGIN_USER' &&
@@ -82,6 +86,7 @@ function cntbuild_publish() {
     return $?
 
   version="$(cntbuild_get_version "$container" "$context")" || return $?
+  # shellcheck disable=SC2128
   [[ -n "$version" ]] && tag="$version"
 
   bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_LOGIN_URL" &&

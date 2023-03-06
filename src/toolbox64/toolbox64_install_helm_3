@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 source "/toolbox64.env" || exit $?
-# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
 source "$TOOLBOX64_BASHLIB64" || exit $?
 
 #
