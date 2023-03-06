@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC1091
 source "/toolbox64.env" || exit $?
-# shellcheck source=SCRIPTDIR/../../loader/bashlib64.bash disable=SC2154
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
 source "$TOOLBOX64_BASHLIB64" || exit $?
 
 #
@@ -11,6 +11,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 
 tb64_dkr_provision() {
   local repository_name='docker-ce'
+  # shellcheck disable=SC2016
   local repository_url='https://download.docker.com/linux/centos/$releasever/$basearch/stable'
   local repository_key='https://download.docker.com/linux/centos/gpg'
   local packages='docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin'
