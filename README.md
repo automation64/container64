@@ -84,6 +84,7 @@
 | Image                                         | OS          | Base Image                                       |
 | --------------------------------------------- | ----------- | ------------------------------------------------ |
 | `bash-test/almalinux-8-bash-test`             | almalinux   | `docker.io/library/almalinux:8`                  |
+| `bash-test/almalinux-9-bash-test`             | almalinux   | `docker.io/library/almalinux:9`                  |
 | `bash-test/alpine-3-bash-test`                | alpine      | `docker.io/library/alpine:3`                     |
 | `bash-test/centos-7-bash-test`                | centos      | `quay.io/centos/centos:centos7`                  |
 | `bash-test/centos-8-bash-test`                | centos      | `quay.io/centos/centos:8`                        |
