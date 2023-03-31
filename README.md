@@ -84,6 +84,7 @@
 | Image                                         | OS          | Base Image                                       |
 | --------------------------------------------- | ----------- | ------------------------------------------------ |
 | `bash-test/almalinux-8-bash-test`             | almalinux   | `docker.io/library/almalinux:8`                  |
+| `bash-test/almalinux-9-bash-test`             | almalinux   | `docker.io/library/almalinux:9`                  |
 | `bash-test/alpine-3-bash-test`                | alpine      | `docker.io/library/alpine:3`                     |
 | `bash-test/centos-7-bash-test`                | centos      | `quay.io/centos/centos:centos7`                  |
 | `bash-test/centos-8-bash-test`                | centos      | `quay.io/centos/centos:8`                        |
@@ -109,6 +110,7 @@
 | `bash-test/rhel-8-bash-test`                  | rhel        | `docker.io/redhat/ubi8`                          |
 | `bash-test/rhel-9-bash-test`                  | rhel        | `docker.io/redhat/ubi9`                          |
 | `bash-test/rockylinux-8-bash-test`            | rockylinux  | `docker.io/rockylinux:8`                         |
+| `bash-test/rockylinux-9-bash-test`            | rockylinux  | `docker.io/rockylinux:9`                         |
 | `bash-test/ubuntu-20.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:20.04`                 |
 | `bash-test/ubuntu-21.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:21.04`                 |
 | `bash-test/ubuntu-22.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:22.04`                 |
