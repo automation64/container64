@@ -17,7 +17,7 @@
 #
 # Author: serdigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/serdigital64/bashlib64
-# Version: 10.1.0
+# Version: 11.0.0
 #
 # Copyright 2022 SerDigital64@gmail.com
 #
@@ -430,7 +430,7 @@ export BL64_FMT_MODULE="$BL64_VAR_OFF"
 #######################################
 # BashLib64 / Module / Globals / Display messages
 #
-# Version: 2.6.0
+# Version: 2.7.0
 #######################################
 
 export BL64_MSG_MODULE="$BL64_VAR_OFF"
@@ -503,6 +503,7 @@ export BL64_MSG_THEME_ASCII_STD_PHASE='(=)'
 export BL64_MSG_THEME_ASCII_STD_TASK='(-)'
 export BL64_MSG_THEME_ASCII_STD_SUBTASK='(>)'
 export BL64_MSG_THEME_ASCII_STD_LIBTASK='(-)'
+export BL64_MSG_THEME_ASCII_STD_LIBINFO='(I)'
 export BL64_MSG_THEME_ASCII_STD_BATCH='(@)'
 export BL64_MSG_THEME_ASCII_STD_BATCHOK='(@)'
 export BL64_MSG_THEME_ASCII_STD_BATCHERR='(@)'
@@ -518,6 +519,7 @@ export BL64_MSG_THEME_ANSI_STD_PHASE='7;1;36'
 export BL64_MSG_THEME_ANSI_STD_TASK='1;37'
 export BL64_MSG_THEME_ANSI_STD_SUBTASK='37'
 export BL64_MSG_THEME_ANSI_STD_LIBTASK='37'
+export BL64_MSG_THEME_ANSI_STD_LIBINFO='36'
 export BL64_MSG_THEME_ANSI_STD_BATCH='30;1;47'
 export BL64_MSG_THEME_ANSI_STD_BATCHOK='30;42'
 export BL64_MSG_THEME_ANSI_STD_BATCHERR='5;30;41'
@@ -601,6 +603,7 @@ export _BL64_MSG_TXT_BATCH='Process'
 export _BL64_MSG_TXT_BATCH_START='started'
 export _BL64_MSG_TXT_BATCH_FINISH_OK='finished successfully'
 export _BL64_MSG_TXT_BATCH_FINISH_ERROR='finished with errors'
+export _BL64_MSG_TXT_INVALID_VALUE='invalid value. Not one of'
 
 #######################################
 # BashLib64 / Module / Globals / OS / Identify OS attributes and provide command aliases
@@ -738,7 +741,7 @@ export _BL64_RXTX_TXT_DOWNLOAD_FILE='download file'
 #######################################
 # BashLib64 / Module / Globals / Manipulate text files content
 #
-# Version: 1.5.0
+# Version: 1.6.0
 #######################################
 
 export BL64_TXT_MODULE="$BL64_VAR_OFF"
@@ -751,7 +754,9 @@ export BL64_TXT_CMD_ENVSUBST=''
 export BL64_TXT_CMD_GAWK=''
 export BL64_TXT_CMD_GREP=''
 export BL64_TXT_CMD_SED=''
+export BL64_TXT_CMD_SORT=''
 export BL64_TXT_CMD_TR=''
+export BL64_TXT_CMD_UNIQ=''
 
 export BL64_TXT_SET_AWK_POSIX=''
 export BL64_TXT_SET_GREP_ERE="$BL64_VAR_UNAVAILABLE"
@@ -892,21 +897,39 @@ export _BL64_AWS_TXT_TOKEN_NOT_FOUND='unable to locate temporary access token fi
 #######################################
 # BashLib64 / Module / Globals / Interact with container engines
 #
-# Version: 1.2.0
+# Version: 1.4.0
 #######################################
 
 # Optional module. Not enabled by default
 export BL64_CNT_MODULE="$BL64_VAR_OFF"
 
+export BL64_CNT_DRIVER_DOCKER='docker'
+export BL64_CNT_DRIVER_PODMAN='podman'
+export BL64_CNT_DRIVER=''
+
+export BL64_CNT_FLAG_STDIN='-'
+
 export BL64_CNT_CMD_PODMAN=''
 export BL64_CNT_CMD_DOCKER=''
 
-export BL64_CNT_SET_DOCKER_VERSION=''
-export BL64_CNT_SET_PODMAN_VERSION=''
+export BL64_CNT_SET_FILTER=''
+export BL64_CNT_SET_QUIET=''
+export BL64_CNT_SET_VERSION=''
+export BL64_CNT_SET_STATUS_RUNNING=''
+export BL64_CNT_SET_FILTER_ID=''
+export BL64_CNT_SET_FILTER_NAME=''
 
 export BL64_CNT_PATH_DOCKER_SOCKET=''
 
 export _BL64_CNT_TXT_NO_CLI='unable to detect supported container engine'
+export _BL64_CNT_TXT_EXISTING_NETWORK='container network already created. No further action needed'
+export _BL64_CNT_TXT_CREATE_NETWORK='creating container network'
+export _BL64_CNT_TXT_LOGIN_REGISTRY='loging to container registry'
+export _BL64_CNT_TXT_BUILD='build container image'
+export _BL64_CNT_TXT_PUSH='push container image to registry'
+export _BL64_CNT_TXT_PULL='pull container image from registry'
+export _BL64_CNT_TXT_TAG='add tag to container image'
+export _BL64_CNT_TXT_MISSING_FILTER='no filter was selected. Task requires one of them'
 
 #######################################
 # BashLib64 / Module / Globals / Interact with GCP
@@ -1109,7 +1132,7 @@ export _BL64_PKG_TXT_REPOSITORY_ADD='add remote package repository'
 #######################################
 # BashLib64 / Module / Globals / Interact with system-wide Python
 #
-# Version: 1.11.1
+# Version: 1.12.0
 #######################################
 
 # Optional module. Not enabled by default
@@ -1123,6 +1146,7 @@ export BL64_PY_CMD_PYTHON37="$BL64_VAR_UNAVAILABLE"
 export BL64_PY_CMD_PYTHON38="$BL64_VAR_UNAVAILABLE"
 export BL64_PY_CMD_PYTHON39="$BL64_VAR_UNAVAILABLE"
 export BL64_PY_CMD_PYTHON310="$BL64_VAR_UNAVAILABLE"
+export BL64_PY_CMD_PYTHON311="$BL64_VAR_UNAVAILABLE"
 
 # Full path to the python venv activated by bl64_py_setup
 export BL64_PY_VENV_PATH=''
@@ -1402,7 +1426,7 @@ function bl64_check_setup() {
 #######################################
 # BashLib64 / Module / Functions / Check for conditions and report status
 #
-# Version: 3.0.2
+# Version: 3.1.0
 #######################################
 
 #######################################
@@ -1839,7 +1863,7 @@ function bl64_check_alert_parameter_invalid() {
   local message="${2:-${_BL64_CHECK_TXT_PARAMETER_INVALID}}"
 
   [[ "$parameter" == "$BL64_VAR_DEFAULT" ]] && parameter=''
-  bl64_msg_show_error "${message} (${parameter:+${_BL64_CHECK_TXT_PARAMETER}: ${parameter}}${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE})"
+  bl64_msg_show_error "${message} (${parameter:+${_BL64_CHECK_TXT_PARAMETER}: ${parameter} ${BL64_MSG_COSMETIC_PIPE} }${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE})"
   return $BL64_LIB_ERROR_PARAMETER_INVALID
 }
 
@@ -1847,7 +1871,7 @@ function bl64_check_alert_parameter_invalid() {
 # Raise unsupported platform error
 #
 # Arguments:
-#   None
+#   $1: extra error message. Added to the error detail between (). Default: none
 # Outputs:
 #   STDOUT: none
 #   STDERR: message
@@ -1855,9 +1879,10 @@ function bl64_check_alert_parameter_invalid() {
 #   BL64_LIB_ERROR_OS_INCOMPATIBLE
 #######################################
 function bl64_check_alert_unsupported() {
-  bl64_dbg_lib_show_function
+  bl64_dbg_lib_show_function "$@"
+  local extra="${1:-}"
 
-  bl64_msg_show_error "${_BL64_CHECK_TXT_INCOMPATIBLE} (os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE})"
+  bl64_msg_show_error "${_BL64_CHECK_TXT_INCOMPATIBLE} (${extra:+${extra} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE})"
   return $BL64_LIB_ERROR_OS_INCOMPATIBLE
 }
 
@@ -3976,7 +4001,7 @@ function bl64_fmt_separator_line() {
 #######################################
 # BashLib64 / Module / Setup / Display messages
 #
-# Version: 2.3.0
+# Version: 2.4.0
 #######################################
 
 #
@@ -4029,6 +4054,7 @@ function bl64_msg_setup() {
 #   >0: unable to set
 #######################################
 function bl64_msg_set_level() {
+  bl64_dbg_lib_show_function "@"
   local level="$1"
 
   bl64_check_parameter 'level' || return $?
@@ -4038,7 +4064,7 @@ function bl64_msg_set_level() {
   "$BL64_MSG_VERBOSE_APP") bl64_msg_app_enable_verbose ;;
   "$BL64_MSG_VERBOSE_LIB") bl64_msg_lib_enable_verbose ;;
   "$BL64_MSG_VERBOSE_ALL") bl64_msg_all_enable_verbose ;;
-  *) bl64_check_alert_parameter_invalid ;;
+  *) bl64_check_alert_parameter_invalid 'BL64_MSG_VERBOSE' "${_BL64_MSG_TXT_INVALID_VALUE}: ${BL64_MSG_VERBOSE_NONE}|${BL64_MSG_VERBOSE_ALL}|${BL64_MSG_VERBOSE_APP}|${BL64_MSG_VERBOSE_LIB}" ;;
   esac
 }
 
@@ -4055,6 +4081,7 @@ function bl64_msg_set_level() {
 #   BL64_LIB_ERROR_PARAMETER_INVALID
 #######################################
 function bl64_msg_set_format() {
+  bl64_dbg_lib_show_function "@"
   local format="$1"
 
   bl64_check_parameter 'format' || return $?
@@ -4065,7 +4092,7 @@ function bl64_msg_set_format() {
   "$BL64_MSG_FORMAT_TIME") BL64_MSG_FORMAT="$BL64_MSG_FORMAT_TIME" ;;
   "$BL64_MSG_FORMAT_CALLER") BL64_MSG_FORMAT="$BL64_MSG_FORMAT_CALLER" ;;
   "$BL64_MSG_FORMAT_FULL") BL64_MSG_FORMAT="$BL64_MSG_FORMAT_FULL" ;;
-  *) bl64_check_alert_parameter_invalid ;;
+  *) bl64_check_alert_parameter_invalid 'BL64_MSG_FORMAT' "${_BL64_MSG_TXT_INVALID_VALUE}: ${BL64_MSG_FORMAT_PLAIN}|${BL64_MSG_FORMAT_HOST}|${BL64_MSG_FORMAT_TIME}|${BL64_MSG_FORMAT_CALLER}|${BL64_MSG_FORMAT_FULL}" ;;
   esac
 }
 
@@ -4082,6 +4109,7 @@ function bl64_msg_set_format() {
 #   BL64_LIB_ERROR_PARAMETER_INVALID
 #######################################
 function bl64_msg_set_theme() {
+  bl64_dbg_lib_show_function "@"
   local theme="$1"
 
   bl64_check_parameter 'theme' || return $?
@@ -4089,7 +4117,7 @@ function bl64_msg_set_theme() {
   case "$theme" in
   'BL64_MSG_THEME_ASCII_STD') BL64_MSG_THEME='BL64_MSG_THEME_ASCII_STD' ;;
   'BL64_MSG_THEME_ANSI_STD') BL64_MSG_THEME='BL64_MSG_THEME_ANSI_STD' ;;
-  *) bl64_check_alert_parameter_invalid ;;
+  *) bl64_check_alert_parameter_invalid 'BL64_MSG_THEME' "${_BL64_MSG_TXT_INVALID_VALUE}: ${BL64_MSG_THEME_ASCII_STD}|${BL64_MSG_THEME_ANSI_STD}" ;;
   esac
 }
 
@@ -4106,6 +4134,7 @@ function bl64_msg_set_theme() {
 #   BL64_LIB_ERROR_PARAMETER_INVALID
 #######################################
 function bl64_msg_set_output() {
+  bl64_dbg_lib_show_function "@"
   local output="$1"
   bl64_check_parameter 'output' || return $?
 
@@ -4118,14 +4147,14 @@ function bl64_msg_set_output() {
     BL64_MSG_OUTPUT="$output"
     BL64_MSG_THEME='BL64_MSG_THEME_ANSI_STD'
     ;;
-  *) bl64_check_alert_parameter_invalid ;;
+  *) bl64_check_alert_parameter_invalid 'BL64_MSG_OUTPUT' "${_BL64_MSG_TXT_INVALID_VALUE}: ${BL64_MSG_OUTPUT_ASCII}|${BL64_MSG_OUTPUT_ANSI}" ;;
   esac
 }
 
 #######################################
 # BashLib64 / Module / Functions / Display messages
 #
-# Version: 3.4.0
+# Version: 3.5.0
 #######################################
 
 #######################################
@@ -4143,6 +4172,7 @@ function bl64_msg_set_output() {
 #   BL64_LIB_ERROR_MODULE_SETUP_INVALID
 #######################################
 function _bl64_msg_show() {
+  bl64_dbg_lib_show_function "@"
   local attribute="${1:-}"
   local type="${2:-}"
   local message="${3:-}"
@@ -4157,7 +4187,7 @@ function _bl64_msg_show() {
 }
 
 function _bl64_msg_show_ansi() {
-
+  bl64_dbg_lib_show_function "@"
   local attribute="${1:-}"
   local type="${2:-}"
   local message="${3:-}"
@@ -4208,6 +4238,7 @@ function _bl64_msg_show_ansi() {
 }
 
 function _bl64_msg_show_ascii() {
+  bl64_dbg_lib_show_function "@"
   local attribute="${1:-}"
   local type="${2:-}"
   local message="${3:-}"
@@ -4274,6 +4305,7 @@ function _bl64_msg_show_ascii() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_usage() {
+  bl64_dbg_lib_show_function "@"
   local usage="${1:-${BL64_VAR_NULL}}"
   local description="${2:-${BL64_VAR_DEFAULT}}"
   local commands="${3:-${BL64_VAR_DEFAULT}}"
@@ -4316,6 +4348,7 @@ function bl64_msg_show_usage() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_error() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_error "${FUNCNAME[1]:-MAIN}" "$message" &&
@@ -4335,6 +4368,7 @@ function bl64_msg_show_error() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_warning() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_warning "${FUNCNAME[1]:-MAIN}" "$message" &&
@@ -4354,6 +4388,7 @@ function bl64_msg_show_warning() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_info() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "$message" &&
@@ -4375,6 +4410,7 @@ function bl64_msg_show_info() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_phase() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_PHASE}:${message}" &&
@@ -4396,6 +4432,7 @@ function bl64_msg_show_phase() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_task() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_TASK}:${message}" &&
@@ -4417,6 +4454,7 @@ function bl64_msg_show_task() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_subtask() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_SUBTASK}:${message}" &&
@@ -4438,6 +4476,7 @@ function bl64_msg_show_subtask() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_lib_task() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_LIBTASK}:${message}" &&
@@ -4459,6 +4498,7 @@ function bl64_msg_show_lib_task() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_lib_info() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_LIBINFO}:${message}" &&
@@ -4480,6 +4520,7 @@ function bl64_msg_show_lib_info() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_text() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "$message" &&
@@ -4501,6 +4542,7 @@ function bl64_msg_show_text() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_batch_start() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_BATCH}:${message}" &&
@@ -4523,6 +4565,7 @@ function bl64_msg_show_batch_start() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_batch_finish() {
+  bl64_dbg_lib_show_function "@"
   local status="$1"
   local message="${2-${BL64_VAR_DEFAULT}}"
 
@@ -4551,6 +4594,7 @@ function bl64_msg_show_batch_finish() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_input() {
+  bl64_dbg_lib_show_function "@"
   local message="$1"
 
   _bl64_msg_show "$BL64_MSG_TYPE_INPUT" "$_BL64_MSG_TXT_INPUT" "$message"
@@ -4748,7 +4792,7 @@ function bl64_os_set_lang() {
 #######################################
 # BashLib64 / Module / Functions / OS / Identify OS attributes and provide command aliases
 #
-# Version: 1.20.0
+# Version: 2.00.0
 #######################################
 
 function _bl64_os_match() {
@@ -4774,7 +4818,22 @@ function _bl64_os_match() {
   return 0
 }
 
-# Warning: bootstrap function
+#######################################
+# Get normalized OS distro and version from uname
+#
+# * Warning: bootstrap function
+# * Use only for OS that do not have /etc/os-release
+# * Normalized data is stored in the global variable BL64_OS_DISTRO
+#
+# Arguments:
+#   None
+# Outputs:
+#   STDOUT: None
+#   STDERR: None
+# Returns:
+#   0: os match
+#   >0: error or os not recognized
+#######################################
 function _bl64_os_get_distro_from_uname() {
   bl64_dbg_lib_show_function
   local os_type=''
@@ -4799,7 +4858,21 @@ function _bl64_os_get_distro_from_uname() {
   return 0
 }
 
-# Warning: bootstrap function
+#######################################
+# Get normalized OS distro and version from os-release
+#
+# * Warning: bootstrap function
+# * Normalized data is stored in the global variable BL64_OS_DISTRO
+#
+# Arguments:
+#   None
+# Outputs:
+#   STDOUT: None
+#   STDERR: None
+# Returns:
+#   0: os match
+#   >0: error or os not recognized
+#######################################
 function _bl64_os_get_distro_from_os_release() {
   bl64_dbg_lib_show_function
 
@@ -4810,7 +4883,7 @@ function _bl64_os_get_distro_from_os_release() {
   fi
 
   case "$BL64_OS_DISTRO" in
-  ${BL64_OS_ALM}-8*) : ;;
+  ${BL64_OS_ALM}-8* | ${BL64_OS_ALM}-9*) : ;;
   ${BL64_OS_ALP}-3*) BL64_OS_DISTRO="${BL64_OS_ALP}-${VERSION_ID%.*}" ;;
   ${BL64_OS_CNT}-7*) [[ "$BL64_OS_DISTRO" == "${BL64_OS_CNT}-7" ]] && BL64_OS_DISTRO="${BL64_OS_CNT}-7.0" ;;
   ${BL64_OS_CNT}-8*) [[ "$BL64_OS_DISTRO" == "${BL64_OS_CNT}-8" ]] && BL64_OS_DISTRO="${BL64_OS_CNT}-8.0" ;;
@@ -4822,8 +4895,9 @@ function _bl64_os_get_distro_from_os_release() {
   ${BL64_OS_FD}-34*) [[ "$BL64_OS_DISTRO" == "${BL64_OS_FD}-34" ]] && BL64_OS_DISTRO="${BL64_OS_FD}-34.0" ;;
   ${BL64_OS_FD}-35*) [[ "$BL64_OS_DISTRO" == "${BL64_OS_FD}-35" ]] && BL64_OS_DISTRO="${BL64_OS_FD}-35.0" ;;
   ${BL64_OS_FD}-36*) [[ "$BL64_OS_DISTRO" == "${BL64_OS_FD}-36" ]] && BL64_OS_DISTRO="${BL64_OS_FD}-36.0" ;;
+  ${BL64_OS_FD}-37*) [[ "$BL64_OS_DISTRO" == "${BL64_OS_FD}-37" ]] && BL64_OS_DISTRO="${BL64_OS_FD}-37.0" ;;
   ${BL64_OS_OL}-7* | ${BL64_OS_OL}-8* | ${BL64_OS_OL}-9*) : ;;
-  ${BL64_OS_RCK}-8*) : ;;
+  ${BL64_OS_RCK}-8* | ${BL64_OS_RCK}-9*) : ;;
   ${BL64_OS_RHEL}-8* | ${BL64_OS_RHEL}-9*) : ;;
   ${BL64_OS_UB}-20* | ${BL64_OS_UB}-21* | ${BL64_OS_UB}-22*) : ;;
   *) BL64_OS_DISTRO="$BL64_OS_UNK" ;;
@@ -5881,7 +5955,7 @@ function bl64_tm_create_timestamp_file() {
 #######################################
 # BashLib64 / Module / Setup / Manipulate text files content
 #
-# Version: 1.8.0
+# Version: 1.9.0
 #######################################
 
 #######################################
@@ -5931,13 +6005,16 @@ function _bl64_txt_set_command() {
   case "$BL64_OS_DISTRO" in
   ${BL64_OS_UB}-* | ${BL64_OS_DEB}-*)
     BL64_TXT_CMD_AWK='/usr/bin/awk'
+    BL64_TXT_CMD_BASE64='/usr/bin/base64'
     BL64_TXT_CMD_CUT='/usr/bin/cut'
+    BL64_TXT_CMD_ENVSUBST='/usr/bin/envsubst'
     BL64_TXT_CMD_GAWK='/usr/bin/gawk'
     BL64_TXT_CMD_GREP='/bin/grep'
     BL64_TXT_CMD_SED='/bin/sed'
+    BL64_TXT_CMD_SORT='/usr/bin/sort'
     BL64_TXT_CMD_TR='/usr/bin/tr'
-    BL64_TXT_CMD_BASE64='/usr/bin/base64'
-    BL64_TXT_CMD_ENVSUBST='/usr/bin/envsubst'
+    BL64_TXT_CMD_UNIQ='/usr/bin/uniq'
+
     if [[ -x '/usr/bin/gawk' ]]; then
       BL64_TXT_CMD_AWK_POSIX='/usr/bin/gawk'
       BL64_TXT_SET_AWK_POSIX='--posix'
@@ -5946,26 +6023,32 @@ function _bl64_txt_set_command() {
     fi
     ;;
   ${BL64_OS_FD}-* | ${BL64_OS_CNT}-* | ${BL64_OS_RHEL}-* | ${BL64_OS_ALM}-* | ${BL64_OS_OL}-* | ${BL64_OS_RCK}-*)
+    BL64_TXT_CMD_AWK_POSIX='/usr/bin/gawk'
     BL64_TXT_CMD_AWK='/usr/bin/awk'
+    BL64_TXT_CMD_BASE64='/usr/bin/base64'
     BL64_TXT_CMD_CUT='/usr/bin/cut'
+    BL64_TXT_CMD_ENVSUBST='/usr/bin/envsubst'
     BL64_TXT_CMD_GAWK='/usr/bin/gawk'
     BL64_TXT_CMD_GREP='/usr/bin/grep'
     BL64_TXT_CMD_SED='/usr/bin/sed'
+    BL64_TXT_CMD_SORT='/usr/bin/sort'
     BL64_TXT_CMD_TR='/usr/bin/tr'
-    BL64_TXT_CMD_BASE64='/usr/bin/base64'
-    BL64_TXT_CMD_ENVSUBST='/usr/bin/envsubst'
-    BL64_TXT_CMD_AWK_POSIX='/usr/bin/gawk'
+    BL64_TXT_CMD_UNIQ='/usr/bin/uniq'
+
     BL64_TXT_SET_AWK_POSIX='--posix'
     ;;
   ${BL64_OS_ALP}-*)
     BL64_TXT_CMD_AWK='/usr/bin/awk'
+    BL64_TXT_CMD_BASE64='/bin/base64'
     BL64_TXT_CMD_CUT='/usr/bin/cut'
+    BL64_TXT_CMD_ENVSUBST='/usr/bin/envsubst'
     BL64_TXT_CMD_GAWK='/usr/bin/gawk'
     BL64_TXT_CMD_GREP='/bin/grep'
     BL64_TXT_CMD_SED='/bin/sed'
+    BL64_TXT_CMD_SORT='/usr/bin/sort'
     BL64_TXT_CMD_TR='/usr/bin/tr'
-    BL64_TXT_CMD_BASE64='/bin/base64'
-    BL64_TXT_CMD_ENVSUBST='/usr/bin/envsubst'
+    BL64_TXT_CMD_UNIQ='/usr/bin/uniq'
+
     if [[ -x '/usr/bin/gawk' ]]; then
       BL64_TXT_CMD_AWK_POSIX='/usr/bin/gawk'
       BL64_TXT_SET_AWK_POSIX='--posix'
@@ -5973,13 +6056,16 @@ function _bl64_txt_set_command() {
     ;;
   ${BL64_OS_MCOS}-*)
     BL64_TXT_CMD_AWK='/usr/bin/awk'
+    BL64_TXT_CMD_BASE64='/usr/bin/base64'
     BL64_TXT_CMD_CUT='/usr/bin/cut'
+    BL64_TXT_CMD_ENVSUBST='/opt/homebrew/bin/envsubst'
     BL64_TXT_CMD_GAWK="$BL64_VAR_INCOMPATIBLE"
     BL64_TXT_CMD_GREP='/usr/bin/grep'
     BL64_TXT_CMD_SED='/usr/bin/sed'
+    BL64_TXT_CMD_SORT='/usr/bin/sort'
     BL64_TXT_CMD_TR='/usr/bin/tr'
-    BL64_TXT_CMD_BASE64='/usr/bin/base64'
-    BL64_TXT_CMD_ENVSUBST='/opt/homebrew/bin/envsubst'
+    BL64_TXT_CMD_UNIQ='/usr/bin/uniq'
+
     BL64_TXT_CMD_AWK_POSIX='/usr/bin/awk'
     ;;
   *) bl64_check_alert_unsupported ;;
@@ -6045,7 +6131,7 @@ function _bl64_txt_set_options() {
 #######################################
 # BashLib64 / Module / Functions / Manipulate text files content
 #
-# Version: 1.8.0
+# Version: 1.9.0
 #######################################
 
 #######################################
@@ -6294,6 +6380,58 @@ function bl64_txt_run_cut() {
 
   bl64_dbg_lib_trace_start
   "$BL64_TXT_CMD_CUT" "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Command wrapper with verbose, debug and common options
+#
+# * Trust no one. Ignore inherited config and use explicit
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+function bl64_txt_run_uniq() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_parameters_none "$#" &&
+    bl64_check_module 'BL64_TXT_MODULE' &&
+    bl64_check_command "$BL64_TXT_CMD_UNIQ" ||
+    return $?
+
+  bl64_dbg_lib_trace_start
+  "$BL64_TXT_CMD_UNIQ" "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Command wrapper with verbose, debug and common options
+#
+# * Trust no one. Ignore inherited config and use explicit
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+function bl64_txt_run_sort() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_parameters_none "$#" &&
+    bl64_check_module 'BL64_TXT_MODULE' &&
+    bl64_check_command "$BL64_TXT_CMD_SORT" ||
+    return $?
+
+  bl64_dbg_lib_trace_start
+  "$BL64_TXT_CMD_SORT" "$@"
   bl64_dbg_lib_trace_stop
 }
 
@@ -7906,7 +8044,7 @@ function bl64_aws_blank_aws() {
 #######################################
 # BashLib64 / Module / Setup / Interact with container engines
 #
-# Version: 1.7.0
+# Version: 1.9.0
 #######################################
 
 #######################################
@@ -7928,17 +8066,27 @@ function bl64_cnt_setup() {
   bl64_dbg_lib_show_function
   local -i status=0
 
-  _bl64_cnt_set_command &&
-    _bl64_cnt_set_options &&
-    bl64_cnt_set_paths
+  _bl64_cnt_set_command
   status=$?
   if ((status == 0)); then
     if [[ ! -x "$BL64_CNT_CMD_DOCKER" && ! -x "$BL64_CNT_CMD_PODMAN" ]]; then
       bl64_msg_show_error "unable to find a container manager (${BL64_CNT_CMD_DOCKER}, ${BL64_CNT_CMD_PODMAN})"
       status=$BL64_LIB_ERROR_APP_MISSING
     else
+      bl64_dbg_lib_show_info 'detect and set current container driver'
+      if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
+        BL64_CNT_DRIVER="$BL64_CNT_DRIVER_DOCKER"
+      elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
+        BL64_CNT_DRIVER="$BL64_CNT_DRIVER_PODMAN"
+      fi
+      bl64_dbg_lib_show_vars 'BL64_CNT_DRIVER'
       BL64_CNT_MODULE="$BL64_VAR_ON"
     fi
+
+    # Engine specific sets
+    bl64_cnt_set_paths &&
+      _bl64_cnt_set_options
+    status=$?
   fi
 
   ((status == 0))
@@ -7991,9 +8139,16 @@ function _bl64_cnt_set_command() {
 function _bl64_cnt_set_options() {
   bl64_dbg_lib_show_function
 
-  BL64_CNT_SET_DOCKER_VERSION='version'
-  BL64_CNT_SET_PODMAN_VERSION='version'
+  BL64_CNT_SET_VERSION='version'
+  BL64_CNT_SET_QUIET='--quiet'
+  BL64_CNT_SET_FILTER='--filter'
 
+  # Container status
+  BL64_CNT_SET_STATUS_RUNNING='running'
+
+  # Format field names
+  BL64_CNT_SET_FILTER_ID='{{.ID}}'
+  BL64_CNT_SET_FILTER_NAME='{{.Names}}'
   return 0
 }
 
@@ -8034,7 +8189,7 @@ function bl64_cnt_set_paths() {
 #######################################
 # BashLib64 / Module / Functions / Interact with container engines
 #
-# Version: 1.8.1
+# Version: 1.9.0
 #######################################
 
 #######################################
@@ -8078,6 +8233,32 @@ function _bl64_cnt_find_variable_marker() {
 }
 
 #######################################
+# Logins the container engine to a container registry. The password is taken from STDIN
+#
+# Arguments:
+#   $1: user
+#   $2: registry
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+function bl64_cnt_login_stdin() {
+  bl64_dbg_lib_show_function "$@"
+  local user="${1:-}"
+  local registry="${2:-}"
+
+  bl64_check_module 'BL64_CNT_MODULE' &&
+    bl64_check_parameter 'user' &&
+    bl64_check_parameter 'registry' ||
+    return $?
+
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_LOGIN_REGISTRY} (${user}@${registry})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_login" "$user" "$BL64_VAR_DEFAULT" "$BL64_CNT_FLAG_STDIN" "$registry"
+}
+
+#######################################
 # Logins the container engine to a container registry. The password is stored in a regular file
 #
 # Arguments:
@@ -8092,9 +8273,9 @@ function _bl64_cnt_find_variable_marker() {
 #######################################
 function bl64_cnt_login_file() {
   bl64_dbg_lib_show_function "$@"
-  local user="$1"
-  local file="$2"
-  local registry="$3"
+  local user="${1:-}"
+  local file="${2:-}"
+  local registry="${3:-}"
 
   bl64_check_module 'BL64_CNT_MODULE' &&
     bl64_check_parameter 'user' &&
@@ -8103,11 +8284,8 @@ function bl64_cnt_login_file() {
     bl64_check_file "$file" ||
     return $?
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_login "$user" "$BL64_VAR_DEFAULT" "$file" "$registry"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_login "$user" "$BL64_VAR_DEFAULT" "$file" "$registry"
-  fi
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_LOGIN_REGISTRY} (${user}@${registry})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_login" "$user" "$BL64_VAR_DEFAULT" "$file" "$registry"
 }
 
 #######################################
@@ -8125,9 +8303,9 @@ function bl64_cnt_login_file() {
 #######################################
 function bl64_cnt_login() {
   bl64_dbg_lib_show_function "$@"
-  local user="$1"
-  local password="$2"
-  local registry="$3"
+  local user="${1:-}"
+  local password="${2:-}"
+  local registry="${3:-}"
 
   bl64_check_module 'BL64_CNT_MODULE' &&
     bl64_check_parameter 'user' &&
@@ -8135,71 +8313,8 @@ function bl64_cnt_login() {
     bl64_check_parameter 'registry' ||
     return $?
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_login "$user" "$password" "$BL64_VAR_DEFAULT" "$registry"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_login "$user" "$password" "$BL64_VAR_DEFAULT" "$registry"
-  fi
-}
-
-#######################################
-# Command wrapper: docker login
-#
-# Arguments:
-#   $1: user
-#   $2: password
-#   $3: file
-#   $4: registry
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_docker_login() {
-  bl64_dbg_lib_show_function "$@"
-  local user="$1"
-  local password="$2"
-  local file="$3"
-  local registry="$4"
-
-  _bl64_cnt_login_put_password "$password" "$file" |
-    bl64_cnt_run_docker \
-      login \
-      --username "$user" \
-      --password-stdin \
-      "$registry"
-}
-
-#######################################
-# Command wrapper: podman login
-#
-# Arguments:
-#   $1: user
-#   $2: password
-#   $3: file
-#   $4: registry
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_podman_login() {
-  bl64_dbg_lib_show_function "$@"
-  local user="$1"
-  local password="$2"
-  local file="$3"
-  local registry="$4"
-
-  _bl64_cnt_login_put_password "$password" "$file" |
-    bl64_cnt_run_podman \
-      login \
-      --username "$user" \
-      --password-stdin \
-      "$registry"
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_LOGIN_REGISTRY} (${user}@${registry})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_login" "$user" "$password" "$BL64_VAR_DEFAULT" "$registry"
 }
 
 #######################################
@@ -8244,137 +8359,7 @@ function bl64_cnt_run_interactive() {
   bl64_check_module 'BL64_CNT_MODULE' ||
     return $?
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_run_interactive "$@"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_run_interactive "$@"
-  fi
-}
-
-#######################################
-# Command wrapper: podman run
-#
-# * Provides verbose and debug support
-#
-# Arguments:
-#   $@: arguments are passed as-is to the command
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_podman_run_interactive() {
-  bl64_dbg_lib_show_function "$@"
-
-  bl64_check_parameters_none "$#" || return $?
-
-  bl64_cnt_run_podman \
-    run \
-    --rm \
-    --interactive \
-    --tty \
-    "$@"
-}
-
-#######################################
-# Command wrapper: docker run
-#
-# * Provides verbose and debug support
-#
-# Arguments:
-#   $@: arguments are passed as-is to the command
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_docker_run_interactive() {
-  bl64_dbg_lib_show_function "$@"
-
-  bl64_check_parameters_none "$#" || return $?
-
-  bl64_cnt_run_docker \
-    run \
-    --rm \
-    --interactive \
-    --tty \
-    "$@"
-
-}
-
-#######################################
-# Command wrapper: podman
-#
-# * Provides debug support
-#
-# Arguments:
-#   $@: arguments are passed as-is to the command
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_run_podman() {
-  bl64_dbg_lib_show_function "$@"
-  local verbose='error'
-
-  bl64_check_parameters_none "$#" &&
-    bl64_check_module 'BL64_CNT_MODULE' &&
-    bl64_check_command "$BL64_CNT_CMD_PODMAN" ||
-    return $?
-
-  bl64_dbg_lib_command_enabled && verbose='debug'
-  bl64_dbg_runtime_show_paths
-
-  bl64_dbg_lib_trace_start
-  "$BL64_CNT_CMD_PODMAN" \
-    --log-level "$verbose" \
-    "$@"
-  bl64_dbg_lib_trace_stop
-}
-
-#######################################
-# Command wrapper: docker
-#
-# * Provides debug support
-#
-# Arguments:
-#   $@: arguments are passed as-is to the command
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_run_docker() {
-  bl64_dbg_lib_show_function "$@"
-  local verbose='error'
-  local debug=' '
-
-  bl64_check_parameters_none "$#" &&
-  bl64_check_module 'BL64_CNT_MODULE' &&
-    bl64_check_command "$BL64_CNT_CMD_DOCKER" ||
-    return $?
-
-  if bl64_dbg_lib_command_enabled; then
-    verbose='debug'
-    debug='--debug'
-  fi
-  bl64_dbg_runtime_show_paths
-
-  bl64_dbg_lib_trace_start
-  "$BL64_CNT_CMD_DOCKER" \
-    --log-level "$verbose" \
-    $debug \
-    "$@"
-  bl64_dbg_lib_trace_stop
+  "_bl64_cnt_${BL64_CNT_DRIVER}_run_interactive" "$@"
 }
 
 #######################################
@@ -8411,75 +8396,8 @@ function bl64_cnt_build() {
   # shellcheck disable=SC2164
   cd "${context}"
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_build "$file" "$tag" "$@"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_build "$file" "$tag" "$@"
-  fi
-}
-
-#######################################
-# Command wrapper: docker build
-#
-# Arguments:
-#   $1: file
-#   $2: tag
-#   $@: arguments are passed as-is to the command
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_docker_build() {
-  bl64_dbg_lib_show_function "$@"
-  local file="$1"
-  local tag="$2"
-
-  # Remove used parameters
-  shift
-  shift
-
-  bl64_cnt_run_docker \
-    build \
-    --no-cache \
-    --rm \
-    --tag "$tag" \
-    --file "$file" \
-    "$@" .
-}
-
-#######################################
-# Command wrapper: podman build
-#
-# Arguments:
-#   $1: file
-#   $2: tag
-#   $@: arguments are passed as-is to the command
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_podman_build() {
-  bl64_dbg_lib_show_function "$@"
-  local file="$1"
-  local tag="$2"
-
-  # Remove used parameters
-  shift
-  shift
-
-  bl64_cnt_run_podman \
-    build \
-    --no-cache \
-    --rm \
-    --tag "$tag" \
-    --file "$file" \
-    "$@" .
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_BUILD} (${file}:${tag})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_build" "$file" "$tag" "$@"
 }
 
 #######################################
@@ -8506,63 +8424,8 @@ function bl64_cnt_push() {
     bl64_check_parameter 'destination' ||
     return $?
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_push "$source" "$destination"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_push "$source" "$destination"
-  fi
-}
-
-#######################################
-# Command wrapper: docker push
-#
-# Arguments:
-#   $1: source
-#   $2: destination
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_docker_push() {
-  bl64_dbg_lib_show_function "$@"
-  local source="$1"
-  local destination="$2"
-
-  bl64_cnt_run_docker \
-    tag \
-    "$source" \
-    "$destination"
-
-  bl64_cnt_run_docker \
-    push \
-    "$destination"
-}
-
-#######################################
-# Command wrapper: podman push
-#
-# Arguments:
-#   $1: source
-#   $2: destination
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_podman_push() {
-  bl64_dbg_lib_show_function "$@"
-  local source="$1"
-  local destination="$2"
-
-  bl64_cnt_run_podman \
-    push \
-    "localhost/${source}" \
-    "$destination"
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_PUSH} (${source} -> ${destination})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_push" "$source" "$destination"
 }
 
 #######################################
@@ -8584,56 +8447,12 @@ function bl64_cnt_pull() {
     bl64_check_parameter 'source' ||
     return $?
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_pull "$source"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_pull "$source"
-  fi
-}
-
-#######################################
-# Command wrapper: docker pull
-#
-# Arguments:
-#   $1: source
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_docker_pull() {
-  bl64_dbg_lib_show_function "$@"
-  local source="$1"
-
-  bl64_cnt_run_docker \
-    pull \
-    "${source}"
-}
-
-#######################################
-# Command wrapper: podman pull
-#
-# Arguments:
-#   $1: source
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_podman_pull() {
-  bl64_dbg_lib_show_function "$@"
-  local source="$1"
-
-  bl64_cnt_run_podman \
-    pull \
-    "${source}"
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_PULL} (${source})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_pull" "$source"
 }
 
 function _bl64_cnt_login_put_password() {
+  bl64_dbg_lib_show_function "$@"
   local password="$1"
   local file="$2"
 
@@ -8641,8 +8460,9 @@ function _bl64_cnt_login_put_password() {
     printf '%s\n' "$password"
   elif [[ "$file" != "$BL64_VAR_DEFAULT" ]]; then
     "$BL64_OS_CMD_CAT" "$file"
+  elif [[ "$file" == "$BL64_CNT_FLAG_STDIN" ]]; then
+    "$BL64_OS_CMD_CAT"
   fi
-
 }
 
 #######################################
@@ -8667,59 +8487,8 @@ function bl64_cnt_tag() {
     bl64_check_parameter 'target' ||
     return $?
 
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_tag "$source" "$target"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_tag "$source" "$target"
-  fi
-}
-
-#######################################
-# Command wrapper: docker tag
-#
-# Arguments:
-#   $1: source. Format: image[:tag]
-#   $2: target. Format: image[:tag]
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_docker_tag() {
-  bl64_dbg_lib_show_function "$@"
-  local source="$1"
-  local target="$2"
-
-  bl64_cnt_run_docker \
-    tag \
-    "$source" \
-    "$target"
-}
-
-#######################################
-# Command wrapper: podman tag
-#
-# Arguments:
-#   $1: source. Format: image[:tag]
-#   $2: target. Format: image[:tag]
-# Outputs:
-#   STDOUT: command output
-#   STDERR: command stderr
-# Returns:
-#   command exit status
-#######################################
-
-function bl64_cnt_podman_tag() {
-  bl64_dbg_lib_show_function "$@"
-  local source="$1"
-  local target="$2"
-
-  bl64_cnt_run_podman \
-    tag \
-    "$source" \
-    "$target"
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_TAG} (${source} -> ${target})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_tag" "$source" "$target"
 }
 
 #######################################
@@ -8738,20 +8507,139 @@ function bl64_cnt_run() {
 
   bl64_check_module 'BL64_CNT_MODULE' ||
     return $?
-  if [[ -x "$BL64_CNT_CMD_DOCKER" ]]; then
-    bl64_cnt_docker_run "$@"
-  elif [[ -x "$BL64_CNT_CMD_PODMAN" ]]; then
-    bl64_cnt_podman_run "$@"
+
+  "_bl64_cnt_${BL64_CNT_DRIVER}_run" "$@"
+}
+
+#######################################
+# Runs the container manager CLI
+#
+# * Function provided as-is to catch cases where there is no wrapper
+# * Calling function must make sure that the current driver supports provided arguments
+#
+# Arguments:
+#   $@: arguments are passed as-is
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+function bl64_cnt_cli() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_module 'BL64_CNT_MODULE' ||
+    return $?
+
+  "bl64_cnt_run_${BL64_CNT_DRIVER}" "$@"
+}
+
+#######################################
+# Determine if the container is running
+#
+# * Look for one or more instances of the container
+# * The container status is Running
+# * Filter by one of: name, id
+#
+# Arguments:
+#   $1: name. Exact match
+#   $2: id
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: true
+#   >0: false or cmd error
+#######################################
+function bl64_cnt_container_is_running() {
+  bl64_dbg_lib_show_function "$@"
+  local name="${1:-${BL64_VAR_DEFAULT}}"
+  local id="${2:-${BL64_VAR_DEFAULT}}"
+  local result=''
+
+  if [[ "$name" == "$BL64_VAR_DEFAULT" && "$id" == "$BL64_VAR_DEFAULT" ]]; then
+    bl64_check_alert_parameter_invalid "$BL64_VAR_DEFAULT" "$_BL64_CNT_TXT_MISSING_FILTER (ID, Name)"
+    return $?
+  fi
+
+  bl64_check_module 'BL64_CNT_MODULE' ||
+    return $?
+
+  result="$("_bl64_cnt_${BL64_CNT_DRIVER}_ps_filter" "$name" "$id" "$BL64_CNT_SET_STATUS_RUNNING")" ||
+    return $?
+  bl64_dbg_lib_show_var 'result'
+
+  if [[ "$name" != "$BL64_VAR_DEFAULT" ]]; then
+    [[ "$result" == "$name" ]]
+  elif [[ "$id" == "$BL64_VAR_DEFAULT" ]]; then
+    [[ "$result" != "$id" ]]
   fi
 }
 
 #######################################
-# Command wrapper: podman run
-#
-# * Provides verbose and debug support
+# Determine if the container network is defined
 #
 # Arguments:
-#   $@: arguments are passed as-is to the command
+#   $1: network name
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function bl64_cnt_network_is_defined() {
+  bl64_dbg_lib_show_function "$@"
+  local network="$1"
+
+  bl64_check_module 'BL64_CNT_MODULE' &&
+    bl64_check_parameter 'network' ||
+    return $?
+
+  "_bl64_cnt_${BL64_CNT_DRIVER}_network_is_defined" "$network"
+}
+
+#######################################
+# Create a container network
+#
+# Arguments:
+#   $1: network name
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function bl64_cnt_network_create() {
+  bl64_dbg_lib_show_function "$@"
+  local network="$1"
+
+  bl64_check_module 'BL64_CNT_MODULE' &&
+    bl64_check_parameter 'network' ||
+    return $?
+
+  if bl64_cnt_network_is_defined "$network"; then
+    bl64_msg_show_lib_info "${_BL64_CNT_TXT_EXISTING_NETWORK} (${network})"
+    return 0
+  fi
+
+  bl64_msg_show_lib_task "${_BL64_CNT_TXT_CREATE_NETWORK} (${network})"
+  "_bl64_cnt_${BL64_CNT_DRIVER}_network_create" "$network"
+}
+
+#
+# Docker
+#
+
+#######################################
+# Command wrapper: docker login
+#
+# Arguments:
+#   $1: user
+#   $2: password
+#   $3: file
+#   $4: registry
 # Outputs:
 #   STDOUT: command output
 #   STDERR: command stderr
@@ -8759,13 +8647,19 @@ function bl64_cnt_run() {
 #   command exit status
 #######################################
 
-function bl64_cnt_podman_run() {
+function _bl64_cnt_docker_login() {
   bl64_dbg_lib_show_function "$@"
+  local user="$1"
+  local password="$2"
+  local file="$3"
+  local registry="$4"
 
-  bl64_cnt_run_podman \
-    run \
-    --rm \
-    "$@"
+  _bl64_cnt_login_put_password "$password" "$file" |
+    bl64_cnt_run_docker \
+      login \
+      --username "$user" \
+      --password-stdin \
+      "$registry"
 }
 
 #######################################
@@ -8782,7 +8676,178 @@ function bl64_cnt_podman_run() {
 #   command exit status
 #######################################
 
-function bl64_cnt_docker_run() {
+function _bl64_cnt_docker_run_interactive() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_parameters_none "$#" || return $?
+
+  bl64_cnt_run_docker \
+    run \
+    --rm \
+    --interactive \
+    --tty \
+    "$@"
+
+}
+
+#######################################
+# Command wrapper: docker
+#
+# * Provides debug support
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function bl64_cnt_run_docker() {
+  bl64_dbg_lib_show_function "$@"
+  local verbose='error'
+  local debug=' '
+
+  bl64_check_parameters_none "$#" &&
+    bl64_check_module 'BL64_CNT_MODULE' &&
+    bl64_check_command "$BL64_CNT_CMD_DOCKER" ||
+    return $?
+
+  if bl64_dbg_lib_command_enabled; then
+    verbose='debug'
+    debug='--debug'
+  fi
+  bl64_dbg_runtime_show_paths
+
+  bl64_dbg_lib_trace_start
+  "$BL64_CNT_CMD_DOCKER" \
+    --log-level "$verbose" \
+    $debug \
+    "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Command wrapper: docker build
+#
+# Arguments:
+#   $1: file
+#   $2: tag
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_docker_build() {
+  bl64_dbg_lib_show_function "$@"
+  local file="$1"
+  local tag="$2"
+
+  # Remove used parameters
+  shift
+  shift
+
+  bl64_cnt_run_docker \
+    build \
+    --no-cache \
+    --rm \
+    --tag "$tag" \
+    --file "$file" \
+    "$@" .
+}
+
+#######################################
+# Command wrapper: docker push
+#
+# Arguments:
+#   $1: source
+#   $2: destination
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_docker_push() {
+  bl64_dbg_lib_show_function "$@"
+  local source="$1"
+  local destination="$2"
+
+  bl64_cnt_run_docker \
+    tag \
+    "$source" \
+    "$destination"
+
+  bl64_cnt_run_docker \
+    push \
+    "$destination"
+}
+
+#######################################
+# Command wrapper: docker pull
+#
+# Arguments:
+#   $1: source
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_docker_pull() {
+  bl64_dbg_lib_show_function "$@"
+  local source="$1"
+
+  bl64_cnt_run_docker \
+    pull \
+    "${source}"
+}
+
+#######################################
+# Command wrapper: docker tag
+#
+# Arguments:
+#   $1: source. Format: image[:tag]
+#   $2: target. Format: image[:tag]
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_docker_tag() {
+  bl64_dbg_lib_show_function "$@"
+  local source="$1"
+  local target="$2"
+
+  bl64_cnt_run_docker \
+    tag \
+    "$source" \
+    "$target"
+}
+
+#######################################
+# Command wrapper: docker run
+#
+# * Provides verbose and debug support
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_docker_run() {
   bl64_dbg_lib_show_function "$@"
 
   bl64_cnt_run_docker \
@@ -8790,6 +8855,396 @@ function bl64_cnt_docker_run() {
     --rm \
     "$@"
 
+}
+
+#######################################
+# Command wrapper: detect network
+#
+# Arguments:
+#   $1: network name
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function _bl64_cnt_docker_network_is_defined() {
+  bl64_dbg_lib_show_function "$@"
+  local network="$1"
+  local network_id=''
+
+  network_id="$(
+    bl64_cnt_run_docker \
+      network ls \
+      "$BL64_CNT_SET_QUIET" \
+      "$BL64_CNT_SET_FILTER" "name=${network}"
+  )"
+
+  bl64_dbg_lib_show_info "check if the network is defined ([${network}] == [${network_id}])"
+  [[ -n "$network_id" ]]
+}
+
+#######################################
+# Command wrapper: create network
+#
+# Arguments:
+#   $1: network name
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function _bl64_cnt_docker_network_create() {
+  bl64_dbg_lib_show_function "$@"
+  local network="$1"
+
+  bl64_cnt_run_docker \
+    network create \
+    "$network"
+}
+
+#######################################
+# Command wrapper: ps with filters
+#
+# Arguments:
+#   $1: name
+#   $2: id
+#   $3: status
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function _bl64_cnt_docker_ps_filter() {
+  bl64_dbg_lib_show_function "$@"
+  local name="$1"
+  local id="$2"
+  local status="$3"
+  local format=''
+  local filter=''
+
+  if [[ "$name" != "$BL64_VAR_DEFAULT" ]]; then
+    filter="--filter name=${name}"
+    format="$BL64_CNT_SET_FILTER_NAME"
+  elif [[ "$id" != "$BL64_VAR_DEFAULT" ]]; then
+    filter="--filter id=${id}"
+    format="$BL64_CNT_SET_FILTER_ID"
+  fi
+  [[ "$status" != "$BL64_VAR_DEFAULT" ]] && filter_status="--filter status=${status}"
+
+  # shellcheck disable=SC2086
+  bl64_cnt_run_docker \
+    ps \
+    ${filter} ${filter_status} --format "$format"
+}
+
+#
+# Podman
+#
+
+#######################################
+# Command wrapper: podman login
+#
+# Arguments:
+#   $1: user
+#   $2: password
+#   $3: file
+#   $4: registry
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_login() {
+  bl64_dbg_lib_show_function "$@"
+  local user="$1"
+  local password="$2"
+  local file="$3"
+  local registry="$4"
+
+  _bl64_cnt_login_put_password "$password" "$file" |
+    bl64_cnt_run_podman \
+      login \
+      --username "$user" \
+      --password-stdin \
+      "$registry"
+}
+
+#######################################
+# Command wrapper: podman run
+#
+# * Provides verbose and debug support
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_run_interactive() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_parameters_none "$#" || return $?
+
+  bl64_cnt_run_podman \
+    run \
+    --rm \
+    --interactive \
+    --tty \
+    "$@"
+}
+
+#######################################
+# Command wrapper: podman
+#
+# * Provides debug support
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function bl64_cnt_run_podman() {
+  bl64_dbg_lib_show_function "$@"
+  local verbose='error'
+
+  bl64_check_parameters_none "$#" &&
+    bl64_check_module 'BL64_CNT_MODULE' &&
+    bl64_check_command "$BL64_CNT_CMD_PODMAN" ||
+    return $?
+
+  bl64_dbg_lib_command_enabled && verbose='debug'
+  bl64_dbg_runtime_show_paths
+
+  bl64_dbg_lib_trace_start
+  "$BL64_CNT_CMD_PODMAN" \
+    --log-level "$verbose" \
+    "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Command wrapper: podman build
+#
+# Arguments:
+#   $1: file
+#   $2: tag
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_build() {
+  bl64_dbg_lib_show_function "$@"
+  local file="$1"
+  local tag="$2"
+
+  # Remove used parameters
+  shift
+  shift
+
+  bl64_cnt_run_podman \
+    build \
+    --no-cache \
+    --rm \
+    --tag "$tag" \
+    --file "$file" \
+    "$@" .
+}
+
+#######################################
+# Command wrapper: podman push
+#
+# Arguments:
+#   $1: source
+#   $2: destination
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_push() {
+  bl64_dbg_lib_show_function "$@"
+  local source="$1"
+  local destination="$2"
+
+  bl64_cnt_run_podman \
+    push \
+    "localhost/${source}" \
+    "$destination"
+}
+
+#######################################
+# Command wrapper: podman pull
+#
+# Arguments:
+#   $1: source
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_pull() {
+  bl64_dbg_lib_show_function "$@"
+  local source="$1"
+
+  bl64_cnt_run_podman \
+    pull \
+    "${source}"
+}
+
+#######################################
+# Command wrapper: podman tag
+#
+# Arguments:
+#   $1: source. Format: image[:tag]
+#   $2: target. Format: image[:tag]
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_tag() {
+  bl64_dbg_lib_show_function "$@"
+  local source="$1"
+  local target="$2"
+
+  bl64_cnt_run_podman \
+    tag \
+    "$source" \
+    "$target"
+}
+
+#######################################
+# Command wrapper: podman run
+#
+# * Provides verbose and debug support
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   command exit status
+#######################################
+
+function _bl64_cnt_podman_run() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_cnt_run_podman \
+    run \
+    --rm \
+    "$@"
+}
+
+#######################################
+# Command wrapper: detect network
+#
+# Arguments:
+#   $1: network name
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function _bl64_cnt_podman_network_is_defined() {
+  bl64_dbg_lib_show_function "$@"
+  local network="$1"
+  local network_id=''
+
+  network_id="$(
+    bl64_cnt_run_podman \
+      network ls \
+      "$BL64_CNT_SET_QUIET" \
+      "$BL64_CNT_SET_FILTER" "name=${network}"
+  )"
+
+  bl64_dbg_lib_show_info "check if the network is defined ([${network}] == [${network_id}])"
+  [[ -n "$network_id" ]]
+}
+
+#######################################
+# Command wrapper: create network
+#
+# Arguments:
+#   $1: network name
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function _bl64_cnt_podman_network_create() {
+  bl64_dbg_lib_show_function "$@"
+  local network="$1"
+
+  bl64_cnt_run_podman \
+    network create \
+    "$network"
+}
+
+#######################################
+# Command wrapper: ps with filters
+#
+# Arguments:
+#   $1: name
+#   $2: id
+#   $3: status
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: defined
+#   >0: not defined or error
+#######################################
+function _bl64_cnt_podman_ps_filter() {
+  bl64_dbg_lib_show_function "$@"
+  local name="$1"
+  local id="$2"
+  local status="$3"
+  local format=''
+  local filter=''
+
+  if [[ "$name" != "$BL64_VAR_DEFAULT" ]]; then
+    filter="--filter name=${name}"
+    format='{{.NAME}}'
+  elif [[ "$id" != "$BL64_VAR_DEFAULT" ]]; then
+    filter="--filter id=${id}"
+    format='{{.ID}}'
+  fi
+  [[ "$status" != "$BL64_VAR_DEFAULT" ]] && filter_status="--filter status=${status}"
+
+  # shellcheck disable=SC2086
+  bl64_cnt_run_podman \
+    ps \
+    ${filter} ${filter_status} --format "$format"
 }
 
 #######################################
@@ -9173,7 +9628,7 @@ function bl64_hlm_set_timeout() {
 #######################################
 # BashLib64 / Module / Functions / Interact with HLM
 #
-# Version: 1.2.0
+# Version: 1.2.1
 #######################################
 
 #######################################
@@ -9197,14 +9652,14 @@ function bl64_hlm_repo_add() {
     bl64_check_parameter 'source' ||
     return $?
 
-  bl64_dbg_app_show_info "add helm repository (${repository})"
+  bl64_dbg_lib_show_info "add helm repository (${repository})"
   bl64_hlm_run_helm \
     repo add \
     "$repository" \
     "$source" ||
     return $?
 
-  bl64_dbg_app_show_info "try to update repository from source (${source})"
+  bl64_dbg_lib_show_info "try to update repository from source (${source})"
   bl64_hlm_run_helm repo update "$repository"
 
   return 0
@@ -9596,7 +10051,7 @@ function bl64_iam_user_get_current() {
 #######################################
 # BashLib64 / Module / Setup / Interact with Kubernetes
 #
-# Version: 1.3.0
+# Version: 1.4.0
 #######################################
 
 #######################################
@@ -9685,7 +10140,7 @@ function _bl64_k8s_set_options() {
   bl64_dbg_lib_show_function
 
   case "$BL64_K8S_VERSION_KUBECTL" in
-  1.22 | 1.23 | 1.24 | 1.25 )
+  1.22 | 1.23 | 1.24 | 1.25 | 1.26)
     BL64_K8S_SET_VERBOSE_NONE='--v=0'
     BL64_K8S_SET_VERBOSE_NORMAL='--v=2'
     BL64_K8S_SET_VERBOSE_DEBUG='--v=4'
@@ -9699,7 +10154,7 @@ function _bl64_k8s_set_options() {
     BL64_K8S_SET_DRY_RUN_SERVER='--dry-run=server'
     BL64_K8S_SET_DRY_RUN_CLIENT='--dry-run=client'
     ;;
-  *) bl64_check_alert_unsupported ;;
+  *) bl64_check_alert_unsupported "k8s-api: ${BL64_K8S_VERSION_KUBECTL}";;
   esac
 }
 
@@ -10943,7 +11398,7 @@ function bl64_mdb_run_mongoexport() {
 #######################################
 # BashLib64 / Module / Setup / Manage native OS packages
 #
-# Version: 1.5.1
+# Version: 2.0.0
 #######################################
 
 #######################################
@@ -10969,7 +11424,7 @@ function bl64_pkg_setup() {
     case "$BL64_OS_DISTRO" in
     ${BL64_OS_FD}-*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
     ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
-    ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
+    ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*) bl64_check_command "$BL64_PKG_CMD_DNF" ;;
     ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*) bl64_check_command "$BL64_PKG_CMD_YUM" ;;
     ${BL64_OS_UB}-* | ${BL64_OS_DEB}-*) bl64_check_command "$BL64_PKG_CMD_APT" ;;
     ${BL64_OS_ALP}-*) bl64_check_command "$BL64_PKG_CMD_APK" ;;
@@ -11004,7 +11459,7 @@ function _bl64_pkg_set_command() {
   ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*)
     BL64_PKG_CMD_DNF='/usr/bin/dnf'
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     BL64_PKG_CMD_DNF='/usr/bin/dnf'
     ;;
   ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*)
@@ -11052,7 +11507,7 @@ function _bl64_pkg_set_options() {
     BL64_PKG_SET_QUIET='--quiet'
     BL64_PKG_SET_VERBOSE='--color=never --verbose'
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     BL64_PKG_SET_ASSUME_YES='--assumeyes'
     BL64_PKG_SET_SLIM='--nodocs'
     BL64_PKG_SET_QUIET='--quiet'
@@ -11115,7 +11570,7 @@ function _bl64_pkg_set_alias() {
     BL64_PKG_ALIAS_DNF_INSTALL="$BL64_PKG_CMD_DNF ${BL64_PKG_SET_VERBOSE} ${BL64_PKG_SET_SLIM} ${BL64_PKG_SET_ASSUME_YES} install"
     BL64_PKG_ALIAS_DNF_CLEAN="$BL64_PKG_CMD_DNF clean all"
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     BL64_PKG_ALIAS_DNF_CACHE="$BL64_PKG_CMD_DNF ${BL64_PKG_SET_VERBOSE} makecache"
     BL64_PKG_ALIAS_DNF_INSTALL="$BL64_PKG_CMD_DNF ${BL64_PKG_SET_VERBOSE} ${BL64_PKG_SET_SLIM} ${BL64_PKG_SET_ASSUME_YES} install"
     BL64_PKG_ALIAS_DNF_CLEAN="$BL64_PKG_CMD_DNF clean all"
@@ -11188,7 +11643,7 @@ function bl64_pkg_set_paths() {
   ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*)
     BL64_PKG_PATH_YUM_REPOS_D='/etc/yum.repos.d/'
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     BL64_PKG_PATH_YUM_REPOS_D='/etc/yum.repos.d/'
     ;;
   ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*)
@@ -11212,7 +11667,7 @@ function bl64_pkg_set_paths() {
 #######################################
 # BashLib64 / Module / Functions / Manage native OS packages
 #
-# Version: 2.2.2
+# Version: 3.0.0
 #######################################
 
 #######################################
@@ -11249,8 +11704,8 @@ function bl64_pkg_repository_add() {
   case "$BL64_OS_DISTRO" in
   ${BL64_OS_FD}-* | \
     ${BL64_OS_RHEL}-8.* | ${BL64_OS_RHEL}-9.* | \
-    ${BL64_OS_ALM}-8.* | \
-    ${BL64_OS_RCK}-8.* | \
+    ${BL64_OS_ALM}-8.* | ${BL64_OS_ALM}-9.* | \
+    ${BL64_OS_RCK}-8.* | ${BL64_OS_RCK}-9.* | \
     ${BL64_OS_CNT}-7.* | ${BL64_OS_CNT}-8.* | ${BL64_OS_CNT}-9.* | \
     ${BL64_OS_OL}-7.* | ${BL64_OS_OL}-8.* | ${BL64_OS_OL}-9.*)
 
@@ -11310,7 +11765,7 @@ function bl64_pkg_repository_refresh() {
   ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*)
     bl64_pkg_run_dnf 'makecache'
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     bl64_pkg_run_dnf 'makecache'
     ;;
   ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*)
@@ -11404,7 +11859,7 @@ function bl64_pkg_install() {
   ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*)
     bl64_pkg_run_dnf $BL64_PKG_SET_SLIM $BL64_PKG_SET_ASSUME_YES 'install' -- "$@"
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     bl64_pkg_run_dnf $BL64_PKG_SET_SLIM $BL64_PKG_SET_ASSUME_YES 'install' -- "$@"
     ;;
   ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*)
@@ -11452,7 +11907,7 @@ function bl64_pkg_upgrade() {
   ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*)
     bl64_pkg_run_dnf $BL64_PKG_SET_SLIM $BL64_PKG_SET_ASSUME_YES 'upgrade' -- "$@"
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     bl64_pkg_run_dnf $BL64_PKG_SET_SLIM $BL64_PKG_SET_ASSUME_YES 'upgrade' -- "$@"
     ;;
   ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*)
@@ -11500,7 +11955,7 @@ function bl64_pkg_cleanup() {
   ${BL64_OS_CNT}-8.* | ${BL64_OS_OL}-8.* | ${BL64_OS_RHEL}-8.* | ${BL64_OS_ALM}-8.* | ${BL64_OS_RCK}-8.*)
     BL64_PKG_CMD_DNF='/usr/bin/dnf'
     ;;
-  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*)
+  ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*)
     BL64_PKG_CMD_DNF='/usr/bin/dnf'
     ;;
   ${BL64_OS_CNT}-7.* | ${BL64_OS_OL}-7.*)
@@ -11729,7 +12184,7 @@ function bl64_pkg_run_brew() {
 #######################################
 # BashLib64 / Module / Setup / Interact with system-wide Python
 #
-# Version: 1.12.2
+# Version: 3.0.0
 #######################################
 
 #######################################
@@ -11816,9 +12271,10 @@ function _bl64_py_set_command() {
       BL64_PY_CMD_PYTHON36='/usr/bin/python3'
       BL64_PY_CMD_PYTHON39='/usr/bin/python3.9'
       ;;
-    ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.*) BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
+    ${BL64_OS_CNT}-9.* | ${BL64_OS_OL}-9.* | ${BL64_OS_RHEL}-9.* | ${BL64_OS_ALM}-9.* | ${BL64_OS_RCK}-9.*) BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
     ${BL64_OS_FD}-33.* | ${BL64_OS_FD}-34.*) BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
     ${BL64_OS_FD}-35.* | ${BL64_OS_FD}-36.*) BL64_PY_CMD_PYTHON310='/usr/bin/python3.10' ;;
+    ${BL64_OS_FD}-37.*) BL64_PY_CMD_PYTHON311='/usr/bin/python3.11' ;;
     ${BL64_OS_DEB}-9.*) BL64_PY_CMD_PYTHON35='/usr/bin/python3.5' ;;
     ${BL64_OS_DEB}-10.*) BL64_PY_CMD_PYTHON37='/usr/bin/python3.7' ;;
     ${BL64_OS_DEB}-11.*) BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
@@ -11827,12 +12283,15 @@ function _bl64_py_set_command() {
     ${BL64_OS_UB}-22.*) BL64_PY_CMD_PYTHON310='/usr/bin/python3.10' ;;
     "${BL64_OS_ALP}-3.14" | "${BL64_OS_ALP}-3.15") BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
     "${BL64_OS_ALP}-3.16" | "${BL64_OS_ALP}-3.17") BL64_PY_CMD_PYTHON39='/usr/bin/python3.10' ;;
-    ${BL64_OS_MCOS}-12.*) BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
+    ${BL64_OS_MCOS}-12.* | ${BL64_OS_MCOS}-13.*) BL64_PY_CMD_PYTHON39='/usr/bin/python3.9' ;;
     *) bl64_check_alert_unsupported ;;
     esac
 
     # Select best match for default python3
-    if [[ -x "$BL64_PY_CMD_PYTHON310" ]]; then
+    if [[ -x "$BL64_PY_CMD_PYTHON311" ]]; then
+      BL64_PY_CMD_PYTHON3="$BL64_PY_CMD_PYTHON311"
+      BL64_PY_VERSION_PYTHON3='3.11'
+    elif [[ -x "$BL64_PY_CMD_PYTHON310" ]]; then
       BL64_PY_CMD_PYTHON3="$BL64_PY_CMD_PYTHON310"
       BL64_PY_VERSION_PYTHON3='3.10'
     elif [[ -x "$BL64_PY_CMD_PYTHON39" ]]; then
@@ -12639,7 +13098,9 @@ function cntbuild_open() {
   bl64_check_parameter 'container' ||
     return $?
 
+  # shellcheck disable=SC2178
   version="$(cntbuild_get_version "$container" "$context")" || return $?
+  # shellcheck disable=SC2128
   [[ -n "$version" ]] && tag="$version"
 
   bl64_cnt_run_sh "${container}:${tag}"
