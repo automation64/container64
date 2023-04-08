@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/redhat/ubi8:latest
+FROM registry.suse.com/bci/bci-base:15.4
 
 # Prepare package installer
 ENV container="docker"
@@ -8,7 +8,7 @@ ENV container="docker"
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
 ARG TOOLBOX64_DEBUG=""
 ARG CNT64_TEST_USER="test"
-ARG CNT64_HELPERS="sudo git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext"
+ARG CNT64_HELPERS="sudo git hostname wget gawk gettext-runtime python3 python3-pip unzip tar"
 
 # Copy image setup script
 COPY loader/bashlib64.bash /bashlib64.bash
