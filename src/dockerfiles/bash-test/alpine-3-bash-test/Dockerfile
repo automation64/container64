@@ -8,7 +8,7 @@ ENV container="docker"
 ARG CNT64_SYSADMIN_BIN="/sa/bin"
 ARG TOOLBOX64_DEBUG=""
 ARG CNT64_TEST_USER="test"
-ARG CNT64_HELPERS="sudo git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata"
+ARG CNT64_HELPERS="sudo git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata gettext"
 
 # Copy image setup script
 COPY loader/bashlib64.bash /bashlib64.bash

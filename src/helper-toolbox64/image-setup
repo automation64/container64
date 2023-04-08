@@ -19,7 +19,7 @@ export TOOLBOX64_DEBUG
 # Main
 #
 
-declare cnt64_tools='sudo git tar hostname wget unzip bzip2 diffutils python3 python3-pip python3-setuptools'
+declare cnt64_tools='sudo git tar hostname wget python3 python3-pip python3-setuptools unzip gettext bzip2 diffutils'
 
 [[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_os_match "${BL64_OS_OL}" || {
