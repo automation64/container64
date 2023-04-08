@@ -33,10 +33,14 @@ tb64_bs_check_repository() {
 }
 
 tb64_bs_provision_sudo() {
+  local packages='sudo'
 
   bl64_msg_show_task 'Install sudo'
-  bl64_pkg_deploy 'sudo'
-
+  if bl64_os_match "${BL64_OS_SLES}"; then
+    packages+=' gawk'
+  fi
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy $packages
 }
 
 tb64_bs_provision_tb64() {
@@ -56,7 +60,7 @@ tb64_bs_provision_tb64() {
     return $?
 
   bl64_msg_show_task 'Create directory structure'
-  bl64_fs_create_dir '0755' "${sysadmin_user}" "${sysadmin_user}" \
+  bl64_fs_create_dir '0755' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" \
     "${sysadmin_tmp}" \
     "${sysadmin_lib}" \
     "${sysadmin_bin}" \
@@ -80,9 +84,9 @@ tb64_bs_provision_tb64() {
     return $?
 
   bl64_msg_show_task 'Fix permissions'
-  bl64_fs_set_permissions '0755' "${sysadmin_user}" "${sysadmin_user}" "$sysadmin_home" &&
-    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${sysadmin_user}" "$sysadmin_env" &&
-    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${sysadmin_user}" "$sysadmin_bashlib64" ||
+  bl64_fs_set_permissions '0755' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" "$sysadmin_home" &&
+    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" "$sysadmin_env" &&
+    bl64_fs_set_permissions '0644' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" "$sysadmin_bashlib64" ||
     return $?
 
   return 0
