@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# shellcheck source=SCRIPTDIR/devcnt-set
-source bin/devcnt-set || exit $?
+# shellcheck source=SCRIPTDIR/dev-set
+source bin/dev-set || exit $?
 # shellcheck source=SCRIPTDIR/../lib/bashlib64.bash
-source "$DEVCNT_LIB_BASHLIB64"
+source "$DEVCNT_CICD_BASHLIB64"
 
 #
 # Functions
