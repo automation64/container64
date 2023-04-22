@@ -17,8 +17,8 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Prepare build environment"
-        run: "./bin/devcnt-lib"
+        run: "./bin/dev-lib"
 
       - name: "Build container images"
-        run: "./bin/devcnt-container-build"
+        run: "./bin/dev-container-build"
 ...
