@@ -26,7 +26,7 @@
 - Download dev support scripts
 
   ```shell
-  ./bin/devcnt-lib
+  ./bin/dev-lib
   ```
 
 - Initialize git-flow. Leave defaults options
