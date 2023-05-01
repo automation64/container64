@@ -75,6 +75,7 @@
 | `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 | `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
+| `ansible-test/ubuntu-23.04-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:23.04`    |
 
 ### Container collection: Bash Testing
 
@@ -116,6 +117,7 @@
 | `bash-test/ubuntu-20.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:20.04`                 |
 | `bash-test/ubuntu-21.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:21.04`                 |
 | `bash-test/ubuntu-22.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:22.04`                 |
+| `bash-test/ubuntu-23.04-bash-test`             | ubuntu      | `docker.io/library/ubuntu:23.04`                 |
 
 ## Usage
 
