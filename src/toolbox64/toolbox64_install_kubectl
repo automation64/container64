@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox64.env" || exit $?
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
+source "$TOOLBOX64_BASHLIB64" || exit $?
+
+#
+# Globals
+#
+
+#
+# Functions
+#
+
+function tb64_k8s_install_k8s() {
+  local target_version="$1"
+  local target_subversion='0'
+  local target_release="${target_version}.${target_subversion}"
+  local package_source='kubectl'
+  local package_url="https://dl.k8s.io/release/v${target_release}/bin/linux/amd64"
+  local app_cli="${TOOLBOX64_LOCAL_BIN}/${package_source}-${target_release}"
+
+  bl64_msg_show_phase "provision ${package_source}"
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "$app_cli" "$BL64_VAR_ON" '0755' &&
+    bl64_check_command "$app_cli" &&
+    bl64_msg_show_info "Provisioning complete. Application file available at: ${app_cli}"
+}
+
+#
+# Main
+#
+
+declare process='Install KubeCtl'
+declare -i status=1
+declare target_version="${1:-1.25}"
+
+[[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
+bl64_check_export 'TOOLBOX64_LOCAL_BIN' &&
+  bl64_check_privilege_root ||
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$process"
+
+tb64_k8s_install_k8s "$target_version"
+status=$?
+
+bl64_fs_cleanup_full
+bl64_msg_show_batch_finish "$status" "$process"
+exit $status
