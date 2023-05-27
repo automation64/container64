@@ -34,7 +34,6 @@ tb64_bs_check_repository() {
 
 tb64_bs_provision_sudo() {
   local packages='sudo'
-
   bl64_msg_show_task 'Install sudo'
   if bl64_os_match "${BL64_OS_SLES}"; then
     packages+=' gawk'
@@ -44,14 +43,15 @@ tb64_bs_provision_sudo() {
 }
 
 tb64_bs_provision_tb64() {
-
-  local sysadmin_user="sysadmin"
-  local sysadmin_home="/sa"
-  local sysadmin_tmp="/sa/tmp"
-  local sysadmin_lib="/sa/lib"
-  local sysadmin_bin="/sa/bin"
-  local sysadmin_var="/sa/var"
-  local sysadmin_env="/toolbox64.env"
+  local sysadmin_user='sysadmin'
+  local sysadmin_home='/sa'
+  local sysadmin_tmp='/sa/tmp'
+  local sysadmin_lib='/sa/lib'
+  local sysadmin_bin='/sa/bin'
+  local sysadmin_var='/sa/var'
+  local sysadmin_local='/usr/local'
+  local sysadmin_local_bin="${sysadmin_local}/bin"
+  local sysadmin_env='/toolbox64.env'
   local sysadmin_bashlib64="${sysadmin_lib}/bashlib64.bash"
 
   bl64_msg_show_task 'Create sysadmin user'
@@ -59,7 +59,13 @@ tb64_bs_provision_tb64() {
     bl64_rbac_add_root "${sysadmin_user}" ||
     return $?
 
-  bl64_msg_show_task 'Create directory structure'
+  bl64_msg_show_task 'Create directory structure (/usr/local)'
+  bl64_fs_create_dir '0755' 'root' 'root' \
+    "${sysadmin_local}" \
+    "${sysadmin_local_bin}" ||
+    return $?
+
+  bl64_msg_show_task 'Create directory structure (/sa)'
   bl64_fs_create_dir '0755' "${sysadmin_user}" "${BL64_VAR_DEFAULT}" \
     "${sysadmin_tmp}" \
     "${sysadmin_lib}" \
@@ -73,9 +79,11 @@ tb64_bs_provision_tb64() {
     bl64_bsh_env_export_variable 'TOOLBOX64_BIN' "$sysadmin_bin" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_HOME' "$sysadmin_home" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_LIB' "$sysadmin_lib" >>"$sysadmin_env" &&
+    bl64_bsh_env_export_variable 'TOOLBOX64_LOCAL_BIN' "$sysadmin_local_bin" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$sysadmin_user" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_TMP' "$sysadmin_tmp" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$sysadmin_var" >>"$sysadmin_env" &&
+    printf 'export PATH="/usr/sbin:/usr/bin:/sbin:/bin:${TOOLBOX64_LOCAL_BIN}:${TOOLBOX64_BIN}:${TOOLBOX64_LIB}"\n' >>"$sysadmin_env" &&
     printf 'export TOOLBOX64_DEBUG="${TOOLBOX64_DEBUG:-}"\n' >>"$sysadmin_env" ||
     return $?
 
