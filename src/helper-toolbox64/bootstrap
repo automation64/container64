@@ -83,7 +83,7 @@ tb64_bs_provision_tb64() {
     bl64_bsh_env_export_variable 'TOOLBOX64_OWNER' "$sysadmin_user" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_TMP' "$sysadmin_tmp" >>"$sysadmin_env" &&
     bl64_bsh_env_export_variable 'TOOLBOX64_VAR' "$sysadmin_var" >>"$sysadmin_env" &&
-    printf 'export PATH="/usr/sbin:/usr/bin:/sbin:/bin:${TOOLBOX64_LOCAL_BIN}:${TOOLBOX64_BIN}:${TOOLBOX64_LIB}"\n' >>"$sysadmin_env" ||
+    printf 'export PATH="/usr/sbin:/usr/bin:/sbin:/bin:${TOOLBOX64_LOCAL_BIN}:${TOOLBOX64_BIN}:${TOOLBOX64_LIB}"\n' >>"$sysadmin_env" &&
     printf 'export TOOLBOX64_DEBUG="${TOOLBOX64_DEBUG:-}"\n' >>"$sysadmin_env" ||
     return $?
 
