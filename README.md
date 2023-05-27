@@ -114,10 +114,11 @@
 | `bash-test/rockylinux-8-bash-test`            | rockylinux  | `docker.io/rockylinux:8`                         |
 | `bash-test/rockylinux-9-bash-test`            | rockylinux  | `docker.io/rockylinux:9`                         |
 | `bash-test/sles-15-bash-test`                 | sles        | `registry.suse.com/bci/bci-base:15`              |
+| `bash-test/ubuntu-18.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:18.04`                 |
 | `bash-test/ubuntu-20.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:20.04`                 |
 | `bash-test/ubuntu-21.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:21.04`                 |
 | `bash-test/ubuntu-22.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:22.04`                 |
-| `bash-test/ubuntu-23.04-bash-test`             | ubuntu      | `docker.io/library/ubuntu:23.04`                 |
+| `bash-test/ubuntu-23.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:23.04`                 |
 
 ## Usage
 
