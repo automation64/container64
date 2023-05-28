@@ -28,11 +28,11 @@
 | `toolbox/oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
 | `toolbox/oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                           |
 | `toolbox/oraclelinux-9-toolbox-ansible`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-db`        | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 
@@ -75,7 +75,6 @@
 | `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
 | `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
 | `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
-| `ansible-test/ubuntu-23.04-ansible-test`   | ubuntu      | `docker.io/library/ubuntu:23.04`    |
 
 ### Container collection: Bash Testing
 
@@ -86,13 +85,13 @@
 | --------------------------------------------- | ----------- | ------------------------------------------------ |
 | `bash-test/almalinux-8-bash-test`             | almalinux   | `docker.io/library/almalinux:8`                  |
 | `bash-test/almalinux-9-bash-test`             | almalinux   | `docker.io/library/almalinux:9`                  |
-| `bash-test/alpine-3-bash-test`                | alpine      | `docker.io/library/alpine:3`                     |
+| `bash-test/alpine-3-bash-test`                | alpine      | `docker.io/library/alpine:3.17`                  |
 | `bash-test/centos-7-bash-test`                | centos      | `quay.io/centos/centos:centos7`                  |
 | `bash-test/centos-8-bash-test`                | centos      | `quay.io/centos/centos:8`                        |
 | `bash-test/centos-9-bash-test`                | centos      | `quay.io/centos/centos:stream9`                  |
+| `bash-test/debian-9-bash-test`                | debian      | `docker.io/library/debian:stretch`               |
 | `bash-test/debian-10-bash-test`               | debian      | `docker.io/library/debian:buster`                |
 | `bash-test/debian-11-bash-test`               | debian      | `docker.io/library/debian:bullseye`              |
-| `bash-test/debian-9-bash-test`                | debian      | `docker.io/library/debian:stretch`               |
 | `bash-test/fedora-33-bash-test`               | fedora      | `docker.io/library/fedora:33`                    |
 | `bash-test/fedora-34-bash-test`               | fedora      | `docker.io/library/fedora:34`                    |
 | `bash-test/fedora-35-bash-test`               | fedora      | `docker.io/library/fedora:35`                    |
@@ -118,6 +117,7 @@
 | `bash-test/ubuntu-20.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:20.04`                 |
 | `bash-test/ubuntu-21.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:21.04`                 |
 | `bash-test/ubuntu-22.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:22.04`                 |
+| `bash-test/ubuntu-22.10-bash-test`            | ubuntu      | `docker.io/library/ubuntu:22.10`                 |
 | `bash-test/ubuntu-23.4-bash-test`             | ubuntu      | `docker.io/library/ubuntu:23.04`                 |
 
 ## Usage
