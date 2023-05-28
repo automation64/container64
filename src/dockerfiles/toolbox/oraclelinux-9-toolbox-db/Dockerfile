@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest
+FROM ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-cloud:latest
 
 # Prepare package installer
 ENV container="docker"
@@ -11,7 +11,8 @@ ARG TOOLBOX64_DEBUG=""
 
 # Install tools
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_psql 13
+    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_mongosh_6 && \
+    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_psql 15
 
 USER ${CNT64_SYSADMIN_USER}
 ENTRYPOINT [ "/bin/bash" ]

@@ -20,5 +20,5 @@ jobs:
         run: "./bin/dev-lib"
 
       - name: "Build container images"
-        run: "./bin/dev-container-build"
+        run: "./bin/dev-container"
 ...

@@ -9,7 +9,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-tb64_bc_provision() {
+function tb64_bc_provision() {
   local repo="https://github.com/bats-core"
   local component_path="/opt"
   local component_name_core="bats-core"

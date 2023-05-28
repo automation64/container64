@@ -9,7 +9,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-tb64_mg6_provision() {
+function tb64_mg6_provision() {
   local repository_name='mongodb-org-6.0'
   # shellcheck disable=SC2016
   local repository_url='https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/6.0/x86_64/'

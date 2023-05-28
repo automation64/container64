@@ -1,5 +1,5 @@
 # Base Image
-FROM debian/eol:stretch AS base
+FROM docker.io/library/ubuntu:22.10 AS base
 
 # Prepare package installer
 ENV container="docker"

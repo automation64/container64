@@ -9,7 +9,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-tb64_hlm3_provision() {
+function tb64_hlm3_provision() {
   local package_installer='linux-amd64'
   local package_installer_bin="${package_installer}/helm"
   local package_source='helm-v3.11.0-linux-amd64.tar.gz'
