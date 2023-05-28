@@ -9,7 +9,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-tb64_dkr_provision() {
+function tb64_dkr_provision() {
   local repository_name='docker-ce'
   # shellcheck disable=SC2016
   local repository_url='https://download.docker.com/linux/centos/$releasever/$basearch/stable'
@@ -23,7 +23,6 @@ tb64_dkr_provision() {
   bl64_msg_show_task 'deploy application'
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
-
 }
 
 #
@@ -34,11 +33,8 @@ declare process='Install Docker CLI'
 declare -i tb64_dkr_status=0
 
 [[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
-bl64_os_match "${BL64_OS_OL}" || {
-  bl64_check_alert_unsupported
-  exit $?
-}
-bl64_check_privilege_root &&
+bl64_os_check_version "${BL64_OS_OL}" &&
+  bl64_check_privilege_root &&
   bl64_pkg_setup ||
   exit $?
 

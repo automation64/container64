@@ -24,11 +24,21 @@ tb64_bs_fix_repository_ubuntu2104() {
   bl64_txt_run_sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
 }
 
+tb64_bs_fix_repository_debian9() {
+  bl64_msg_show_task 'Fix ubuntu 9 repository location to use archive'
+  local sources='/etc/apt/sources.list'
+  printf 'deb http://archive.debian.org/debian/ stretch main contrib non-free\n' >"$sources" &&
+    printf 'deb http://archive.debian.org/debian/ stretch-backports main contrib non-free\n' >>"$sources" &&
+    printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"$sources"
+}
+
 tb64_bs_check_repository() {
   if bl64_os_match "${BL64_OS_CNT}-8"; then
     tb64_bs_fix_repository_centos8
   elif bl64_os_match "${BL64_OS_UB}-21"; then
     tb64_bs_fix_repository_ubuntu2104
+  elif bl64_os_match "${BL64_OS_DEB}-9"; then
+    tb64_bs_fix_repository_debian9
   fi
 }
 

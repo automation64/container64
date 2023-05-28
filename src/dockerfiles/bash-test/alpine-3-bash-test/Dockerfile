@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/library/alpine:3
+FROM docker.io/library/alpine:3.17
 
 # Prepare package installer
 ENV container="docker"

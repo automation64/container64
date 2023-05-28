@@ -13,7 +13,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-function tb64_k8s_install_k9s() {
+function tb64_k8st_install_k9s() {
   local repo_owner='derailed'
   local repo_name='k9s'
   local target_release=''
@@ -48,8 +48,8 @@ function tb64_k8s_install_k9s() {
 # Main
 #
 
-declare process='Install Kubernetes tools'
-declare -i status=1
+declare tb64_k8st_process='Install Kubernetes tools'
+declare -i tb64_k8st_status=1
 
 [[ -n "$TOOLBOX64_DEBUG" ]] && bl64_dbg_lib_enable
 bl64_arc_setup &&
@@ -58,11 +58,11 @@ bl64_arc_setup &&
   exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$process"
+bl64_msg_show_batch_start "$tb64_k8st_process"
 
-tb64_k8s_install_k9s
-status=$?
+tb64_k8st_install_k9s
+tb64_k8st_status=$?
 
 bl64_fs_cleanup_full
-bl64_msg_show_batch_finish "$status" "$process"
-exit $status
+bl64_msg_show_batch_finish "$tb64_k8st_status" "$tb64_k8st_process"
+exit $tb64_k8st_status
