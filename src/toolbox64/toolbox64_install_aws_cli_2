@@ -9,7 +9,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-tb64_aws2_provision() {
+function tb64_aws2_provision() {
   local package_installer='aws'
   local package_installer_bin='aws/install'
   local package_source='awscli-exe-linux-x86_64.zip'

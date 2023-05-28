@@ -9,7 +9,7 @@ source "$TOOLBOX64_BASHLIB64" || exit $?
 # Functions
 #
 
-tb64_pdm_provision() {
+function tb64_pdm_provision() {
   local packages='podman'
 
   bl64_msg_show_task 'deploy application'
