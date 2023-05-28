@@ -1,5 +1,5 @@
 # Base Image
-FROM docker.io/library/debian:stretch AS base
+FROM debian/eol:stretch AS base
 
 # Prepare package installer
 ENV container="docker"
