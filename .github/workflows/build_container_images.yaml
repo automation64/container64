@@ -21,4 +21,56 @@ jobs:
 
       - name: "Build container images"
         run: "./bin/dev-container toolbox"
+
+  build-container-images-bash_test:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/dev-lib"
+
+      - name: "Build container images"
+        run: "./bin/dev-container bash_test"
+
+  build-container-images-ansible:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/dev-lib"
+
+      - name: "Build container images"
+        run: "./bin/dev-container ansible"
+
+  build-container-images-shell_lint:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/dev-lib"
+
+      - name: "Build container images"
+        run: "./bin/dev-container shell_lint"
+
+  build-container-images-terraform_test:
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare build environment"
+        run: "./bin/dev-lib"
+
+      - name: "Build container images"
+        run: "./bin/dev-container terraform_test"
 ...
