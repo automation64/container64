@@ -22,18 +22,18 @@
 
 | Image                                     | OS          | Base Image                                                  |
 | ----------------------------------------- | ----------- | ----------------------------------------------------------- |
-| `toolbox/oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
-| `toolbox/oraclelinux-8-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
-| `toolbox/oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
-| `toolbox/oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox-cloud`     | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox-mongosh-5` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox-mongosh-6` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-8-toolbox:latest` |
+| `toolbox/oraclelinux-8-toolbox-psql-13`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-8-toolbox:latest` |
 | `toolbox/oraclelinux-8-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:8`                           |
-| `toolbox/oraclelinux-9-toolbox-ansible`   | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-db`        | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
-| `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
-| `toolbox/oraclelinux-9-toolbox-mongosh-5` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-mongosh-6` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-ansible`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-db`        | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-mongosh-5` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-mongosh-6` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 
 ### Container collection: Bash Linter
@@ -52,7 +52,7 @@
 
 | Image                                         | OS          | Base Image                                                            |
 | --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
-| `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
+| `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
 
 ### Container collection: Ansible playbooks testing
 
@@ -127,9 +127,9 @@ Run a command inside the container:
 
 ```shell
 # Using docker:
-docker run ghcr.io/serdigital64/<IMAGE> <COMMAND>
+docker run ghcr.io/automation64/<IMAGE> <COMMAND>
 # Using podman:
-podman run ghcr.io/serdigital64/<IMAGE> <COMMAND>
+podman run ghcr.io/automation64/<IMAGE> <COMMAND>
 ```
 
 ## Deployment
@@ -146,17 +146,17 @@ Download the target image to the local registry:
 
 ```shell
 # Using docker:
-docker pull ghcr.io/serdigital64/<IMAGE>
+docker pull ghcr.io/automation64/<IMAGE>
 # Using podman:
-podman pull ghcr.io/serdigital64/<IMAGE>`
+podman pull ghcr.io/automation64/<IMAGE>`
 ```
 
 ## Contributing
 
 Help on implementing new features and maintaining the code base is welcomed.
 
-- [Guidelines](https://github.com/serdigital64/container64/blob/master/CONTRIBUTING.md)
-- [Contributor Covenant Code of Conduct](https://github.com/serdigital64/container64/blob/master/CODE_OF_CONDUCT.md)
+- [Guidelines](https://github.com/automation64/container64/blob/master/CONTRIBUTING.md)
+- [Contributor Covenant Code of Conduct](https://github.com/automation64/container64/blob/master/CODE_OF_CONDUCT.md)
 
 ## License
 
