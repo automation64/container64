@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-ansible-2:latest
+FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-ansible-2:latest
 
 # Define environment
 ARG TOOLBOX64_DEBUG=""

@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-terraform:latest
+FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest
 
 # Define environment
 ARG TOOLBOX64_DEBUG=""

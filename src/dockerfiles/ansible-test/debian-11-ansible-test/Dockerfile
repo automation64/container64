@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/serdigital64/bash-test/debian-11-bash-test:latest
+FROM ghcr.io/automation64/bash-test/debian-11-bash-test:latest
 
 # Define environment
 ARG CNT64_SYSADMIN_BIN="/sa/bin"

@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/serdigital64/toolbox/oraclelinux-9-toolbox-mongosh-6:latest
+FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-mongosh-6:latest
 
 # Define environment
 ARG TOOLBOX64_DEBUG=""
