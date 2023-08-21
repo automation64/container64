@@ -1,0 +1,114 @@
+#!/bin/sh
+# Template: 1.0.0
+#######################################
+# Toolbox64 / Package installer
+#
+# Author: SerDigital64 (https://github.com/serdigital64)
+# Repository: https://github.com/automation64/container64
+# Version: 1.0.0
+# Template: 1.0.0
+#
+#######################################
+# Copyright [2023] [serdigital64@gmail.com]
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
+
+#
+# Imports
+#
+
+#
+# Globals
+#
+
+TOOLBOX64_DEBUG="${TOOLBOX64_DEBUG:-}"
+TOOLBOX64_TARGET="${TOOLBOX64_TARGET:-/opt/bl64}"
+TOOLBOX64_SOURCE="${TOOLBOX64_SOURCE:-https://raw.githubusercontent.com/automation64/bashlib64/main/bashlib64.bash}"
+_TOOLBOX64_DOWNLOAD_TOOL='none'
+
+#
+# Functions
+#
+
+#######################################
+# Install application packages
+#
+# Arguments:
+#   None
+# Outputs:
+#   Package installer progress and errors
+# Returns:
+#   0: package installed ok
+#   >0: unable to install package
+#######################################
+tb64_install() {
+  file_name='bashlib64.bash'
+
+  echo "Task: prepare destination (${TOOLBOX64_TARGET})"
+  if test ! -d "$TOOLBOX64_TARGET"; then
+    mkdir "$TOOLBOX64_TARGET" &&
+      chmod 755 "$TOOLBOX64_TARGET"
+  fi
+  cd "$TOOLBOX64_TARGET" || return 1
+
+  echo "Task: install packages (${TOOLBOX64_SOURCE})"
+  case "$_TOOLBOX64_DOWNLOAD_TOOL" in
+  'curl') "$_TOOLBOX64_DOWNLOAD_TOOL" --remote-name --location "$TOOLBOX64_SOURCE" ;;
+  'wget') "$_TOOLBOX64_DOWNLOAD_TOOL" --output-document "$TOOLBOX64_SOURCE" ;;
+  *) return 1 ;;
+  esac
+
+  test -f "$file_name" && chmod 644 "$file_name"
+}
+
+#######################################
+# Initialize environment
+#
+# Arguments:
+#   None
+# Outputs:
+#   Initializacion progress messages
+# Returns:
+#   0: initialization ok
+#   >: failed to initialize
+#######################################
+tb64_initialize() {
+
+  if command -v 'curl' >/dev/null 2>&1; then
+    _TOOLBOX64_DOWNLOAD_TOOL='curl'
+  elif command -v 'wget' >/dev/null 2>&1; then
+    _TOOLBOX64_DOWNLOAD_TOOL='wget'
+  else
+    echo 'Error: no donwload tool found (curl, wget)'
+    return 1
+  fi
+
+}
+
+#
+# Main
+#
+
+tb64_task_title='Install package: BashLib64'
+tb64_status=0
+
+echo "Start job: $tb64_task_title"
+
+test -n "$TOOLBOX64_DEBUG" && set -x
+tb64_initialize &&
+  tb64_install
+tb64_status=$?
+
+test "$tb64_status" -eq 0 && echo "Job completed: ${tb64_task_title}." || echo "Job failed: ${tb64_task_title}. Error: ${tb64_status}"
+exit $tb64_status
