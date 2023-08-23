@@ -5,5 +5,5 @@ org.opencontainers.image.source=https://github.com/automation64/container64
 org.opencontainers.image.version=0.5.0
 org.opencontainers.image.vendor=https://github.com/automation64/container64
 org.opencontainers.image.licenses=Apache-2.0
-org.opencontainers.image.title=apline-3-bash-test
+org.opencontainers.image.title=alpine-3-bash-test
 org.opencontainers.image.description=Bash testing environment. Packages: Bash, Bats Core, Bash Core plugins, OS utilities
