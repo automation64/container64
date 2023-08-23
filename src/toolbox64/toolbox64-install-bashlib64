@@ -103,12 +103,12 @@ tb64_initialize() {
 tb64_task_title='Install package: BashLib64'
 tb64_status=0
 
-echo "Start job: $tb64_task_title"
+echo "Process: [${tb64_task_title}] started"
 
 test -n "$TOOLBOX64_DEBUG" && set -x
 tb64_initialize &&
   tb64_install
 tb64_status=$?
 
-test "$tb64_status" -eq 0 && echo "Job completed: ${tb64_task_title}." || echo "Job failed: ${tb64_task_title}. Error: ${tb64_status}"
+test "$tb64_status" -eq 0 && echo "Process: [${tb64_task_title}] finished successfully" || echo "Process: [${tb64_task_title}] finished with errors: exit-status-${tb64_status}"
 exit $tb64_status
