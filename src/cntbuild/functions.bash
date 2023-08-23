@@ -3,7 +3,7 @@
 #
 
 function cntbuild_list() {
-  bl64_dbg_app_show_function
+  bl64_dbg_app_show_function "$@"
   local context="$1"
 
   bl64_check_parameter 'context' &&
@@ -16,7 +16,7 @@ function cntbuild_list() {
 }
 
 function cntbuild_build() {
-  bl64_dbg_app_show_function
+  bl64_dbg_app_show_function "$@"
   local container="$1"
   local tag="$2"
   local context="$3"
@@ -30,14 +30,13 @@ function cntbuild_build() {
     bl64_check_parameter 'context' ||
     return $?
 
-  # Determine if standard labels are provided
   if [[ -f "$labels_file" ]]; then
-    # Load each label and add to the command line
+    bl64_dbg_app_show_info "get container labels (${labels_file})"
     IFS=$'\n'
     for labels_record in $(<"${labels_file}"); do
       unset IFS
       # shellcheck disable=SC2004
-      command_line[${labels_index}]="--label='$labels_record'"
+      command_line[${labels_index}]="--label=$labels_record"
       labels_index=$((labels_index + 1))
 
       # Extract the container version if provided
@@ -48,13 +47,18 @@ function cntbuild_build() {
       fi
 
     done
+    bl64_dbg_app_show_info "labels: ${command_line[*]}"
   fi
 
-  bl64_cnt_build "$context" "${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_DOCKERFILE_NAME}" "${container}:${tag}" "${command_line[@]}"
+  bl64_cnt_build \
+    "$context" \
+    "${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_DOCKERFILE_NAME}" \
+    "${container}:${tag}" \
+    "${command_line[@]}"
 }
 
 function cntbuild_open() {
-  bl64_dbg_app_show_function
+  bl64_dbg_app_show_function "$@"
   local container="$1"
   local tag="$2"
   local context="$3"
@@ -73,7 +77,7 @@ function cntbuild_open() {
 }
 
 function cntbuild_publish() {
-  bl64_dbg_app_show_function
+  bl64_dbg_app_show_function "$@"
   local container="$1"
   local tag="$2"
   local context="$3"
@@ -96,16 +100,8 @@ function cntbuild_publish() {
 
 }
 
-function cntbuild_setup_globals() {
-  :
-}
-
-function cntbuild_check_requirements() {
-  [[ -z "$cntbuild_command" ]] && cntbuild_help && return 1
-  return 0
-}
-
 function cntbuild_get_version() {
+  bl64_dbg_app_show_function "@"
   local container="$1"
   local context="$2"
   local labels_file="${context}/${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_METADATA_FILE}"
@@ -126,13 +122,45 @@ function cntbuild_get_version() {
       fi
     done
   fi
-
 }
 
+#######################################
+# Initialize environment
+#
+# Arguments:
+#   None
+# Outputs:
+#   Initializacion progress messages
+# Returns:
+#   0: initialization ok
+#   >: failed to initialize
+#######################################
+function cntbuild_initialize() {
+  bl64_dbg_app_show_function "@"
+  local command="$1"
+
+  bl64_check_parameter 'command' ||
+    { cntbuild_help && return 1; }
+
+  bl64_cnt_setup || return $?
+
+  return 0
+}
+
+#######################################
+# Show script usage description
+#
+# Arguments:
+#   None
+# Outputs:
+#   Command line format and description
+# Returns:
+#   0
+#######################################
 function cntbuild_help() {
 
   bl64_msg_show_usage \
-    '<-b|-u|-l|-n> [-c Container] [-e Tag] [-o Context] [-h]' \
+    '<-b|-u|-l|-n> [-c Container] [-e Tag] [-o Context] [-V Verbose] [-D Debug] [-h]' \
     'Build containers in dev environment' \
     '
   -b          : Build container
@@ -145,6 +173,8 @@ function cntbuild_help() {
   -c Container: Container name: Format: base directory where the Dockerfile is. Required for -b, -l, -n
   -e Tag      : Container tag. Format: tag. Default: 0.1.0
   -o Context  : Build context. Format: full path. Default: PWD/src
+  -V Verbose  : Set verbosity level. Format: one of BL64_MSG_VERBOSE_*
+  -D Debug    : Enable debugging mode. Format: one of BL64_DBG_TARGET_*
   "
 
 }
