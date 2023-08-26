@@ -52,7 +52,7 @@ bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
 
 case "$dev_cnt_build_target" in
 'all')
-  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0' &&
+    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0" 'Publish bash-test containers - level 0' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_ANSIBLE_L1" 'Publish ansible-test containers - level 1' &&
