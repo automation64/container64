@@ -32,6 +32,7 @@ function cntbuild_build() {
   local -i labels_index=0
   local labels_file=''
   local labels_record=''
+  local target=''
 
   bl64_check_parameter 'container' &&
     bl64_check_parameter 'context' ||
@@ -62,11 +63,12 @@ function cntbuild_build() {
     return 1
   fi
 
-  bl64_msg_show_task "Build container image (${container}:${tag})"
+  target="${container}:${tag}"
+  bl64_msg_show_task "Build container image (${target})"
   bl64_cnt_build \
     "$context" \
     "${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_DOCKERFILE_NAME}" \
-    "$tag" \
+    "$target" \
     "${command_line[@]}"
 }
 
@@ -136,7 +138,7 @@ function cntbuild_publish() {
 
   tag="$(cntbuild_get_version "$container" "$context" "$tag")" || return $?
   target="${CNTBUILD_REGISTRY}/${container}:${tag}"
-  bl64_msg_show_task "Publish container image to registry (${CNTBUILD_REGISTRY}: ${target})" &&
+  bl64_msg_show_task "Publish container image to registry (${target})" &&
   bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_REGISTRY" &&
     bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
     bl64_cnt_push "${container}:${tag}" "$target" &&

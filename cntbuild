@@ -1379,6 +1379,7 @@ function bl64_api_call() {
 # *  unreserved: left as is
 # *  reserved: converted
 # *  remaining ascii-127 non-control chars: converted
+# * Warning: sed regexp is not consistent across versions and vendors. Using [] when \ is not possible to scape special chars
 #
 # Arguments:
 #   $1: String to convert. Must be terminated by \n
@@ -1401,7 +1402,7 @@ function bl64_api_url_encode() {
       -e 's/ /%20/g' \
       -e 's/:/%3A/g' \
       -e 's/\//%2F/g' \
-      -e 's/\?/%3F/g' \
+      -e 's/[?]/%3F/g' \
       -e 's/#/%23/g' \
       -e 's/@/%40/g' \
       -e 's/\[/%5B/g' \
@@ -1413,7 +1414,7 @@ function bl64_api_url_encode() {
       -e 's/[(]/%28/g' \
       -e 's/[)]/%29/g' \
       -e 's/\*/%2A/g' \
-      -e 's/\+/%2B/g' \
+      -e 's/[+]/%2B/g' \
       -e 's/,/%2C/g' \
       -e 's/;/%3B/g' \
       -e 's/=/%3D/g' \
@@ -7049,6 +7050,7 @@ function bl64_txt_run_egrep() {
 # Command wrapper with verbose, debug and common options
 #
 # * Trust no one. Ignore inherited config and use explicit
+# * Warning: sed regexp is not consistent across versions and vendors. Caller is responsible for testing to ensure compatibility
 #
 # Arguments:
 #   $@: arguments are passed as-is to the command
@@ -9661,7 +9663,6 @@ function bl64_cnt_run_docker() {
     verbose='debug'
     debug='--debug'
   fi
-  bl64_dbg_runtime_show_paths
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -9972,7 +9973,6 @@ function bl64_cnt_run_podman() {
     return $?
 
   bl64_dbg_lib_command_enabled && verbose='debug'
-  bl64_dbg_runtime_show_paths
 
   bl64_dbg_lib_trace_start
   "$BL64_CNT_CMD_PODMAN" \
@@ -14195,6 +14195,7 @@ function cntbuild_build() {
   local -i labels_index=0
   local labels_file=''
   local labels_record=''
+  local target=''
 
   bl64_check_parameter 'container' &&
     bl64_check_parameter 'context' ||
@@ -14225,11 +14226,12 @@ function cntbuild_build() {
     return 1
   fi
 
-  bl64_msg_show_task "Build container image (${container}:${tag})"
+  target="${container}:${tag}"
+  bl64_msg_show_task "Build container image (${target})"
   bl64_cnt_build \
     "$context" \
     "${CNTBUILD_DOCKERFILE_SOURCES}/${container}/${CNTBUILD_DOCKERFILE_NAME}" \
-    "$tag" \
+    "$target" \
     "${command_line[@]}"
 }
 
@@ -14299,7 +14301,7 @@ function cntbuild_publish() {
 
   tag="$(cntbuild_get_version "$container" "$context" "$tag")" || return $?
   target="${CNTBUILD_REGISTRY}/${container}:${tag}"
-  bl64_msg_show_task "Publish container image to registry (${CNTBUILD_REGISTRY}: ${target})" &&
+  bl64_msg_show_task "Publish container image to registry (${target})" &&
   bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_REGISTRY" &&
     bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
     bl64_cnt_push "${container}:${tag}" "$target" &&

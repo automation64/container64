@@ -8,5 +8,5 @@
 #
 
 # Project base location. Adjust to your local GIT repo
-DEVCNT_ROOT="${HOME}/git/container64"
+DEVCNT_ROOT="$(pwd)"
 export DEVCNT_ROOT
