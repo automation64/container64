@@ -27,6 +27,7 @@
 # Imports
 #
 
+# shellcheck source=SCRIPTDIR/../loader/bashlib64.bash disable=SC2154
 export TOOLBOX64_BASHLIB64="${TOOLBOX64_BASHLIB64:-/opt/bl64/bashlib64.bash}"
 # shellcheck disable=SC1090
 source "$TOOLBOX64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${TOOLBOX64_BASHLIB64})" && exit 1; }
