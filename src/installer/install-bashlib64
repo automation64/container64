@@ -1,0 +1,113 @@
+#!/bin/sh
+# Template: 1.0.0
+#######################################
+# Container64 / Package installer
+#
+# Author: SerDigital64 (https://github.com/serdigital64)
+# Repository: https://github.com/automation64/container64
+# Version: 1.0.0
+#
+#######################################
+# Copyright [2023] [serdigital64@gmail.com]
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
+
+#
+# Imports
+#
+
+# Environment Definition. See docs/base-environment.md for details
+export CNT64_DEBUG="${CNT64_DEBUG:-}"
+
+#
+# Globals
+#
+
+CNT64_BASHLIB64_TARGET="${CNT64_BASHLIB64_TARGET:-/opt/bl64}"
+CNT64_BASHLIB64_SOURCE="${CNT64_BASHLIB64_SOURCE:-https://raw.githubusercontent.com/automation64/bashlib64/main/bashlib64.bash}"
+
+#
+# Functions
+#
+
+#######################################
+# Install application packages
+#
+# Arguments:
+#   None
+# Outputs:
+#   Package installer progress and errors
+# Returns:
+#   0: package installed ok
+#   >0: unable to install package
+#######################################
+cnt64_bashlib64_install() {
+  file_name='bashlib64.bash'
+
+  echo "Task: prepare destination (${CNT64_BASHLIB64_TARGET})"
+  if test ! -d "$CNT64_BASHLIB64_TARGET"; then
+    mkdir "$CNT64_BASHLIB64_TARGET" &&
+      chmod 755 "$CNT64_BASHLIB64_TARGET"
+  fi
+  cd "$CNT64_BASHLIB64_TARGET" || return 1
+
+  echo "Task: install packages (${CNT64_BASHLIB64_SOURCE})"
+  case "$cnt64_bashlib64_download_tool" in
+  'curl') "$cnt64_bashlib64_download_tool" --remote-name --location "$CNT64_BASHLIB64_SOURCE" ;;
+  'wget') "$cnt64_bashlib64_download_tool" --output-document "$CNT64_BASHLIB64_SOURCE" ;;
+  *) return 1 ;;
+  esac
+
+  test -f "$file_name" && chmod 644 "$file_name"
+}
+
+#######################################
+# Initialize environment
+#
+# Arguments:
+#   None
+# Outputs:
+#   Initializacion progress messages
+# Returns:
+#   0: initialization ok
+#   >: failed to initialize
+#######################################
+cnt64_bashlib64_initialize() {
+  if command -v 'curl' >/dev/null 2>&1; then
+    cnt64_bashlib64_download_tool='curl'
+  elif command -v 'wget' >/dev/null 2>&1; then
+    cnt64_bashlib64_download_tool='wget'
+  else
+    echo 'Error: no donwload tool found (curl, wget)'
+    return 1
+  fi
+}
+
+#
+# Main
+#
+
+cnt64_bashlib64_task_title='Install package: BashLib64'
+cnt64_bashlib64_status=0
+cnt64_bashlib64_download_tool='none'
+
+echo "Process: [${cnt64_bashlib64_task_title}] started"
+
+test -n "$CNT64_DEBUG" && set -x
+cnt64_bashlib64_initialize &&
+  cnt64_bashlib64_install
+cnt64_bashlib64_status=$?
+
+test "$cnt64_bashlib64_status" -eq 0 && echo "Process: [${cnt64_bashlib64_task_title}] finished successfully" || echo "Process: [${cnt64_bashlib64_task_title}] finished with errors: exit-status-${cnt64_bashlib64_status}"
+exit $cnt64_bashlib64_status
