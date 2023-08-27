@@ -14,7 +14,6 @@ source ./bin/dev-set || exit $?
 echo 'Download bash library: BashLib64'
 cd "$DEVCNT_LIB" &&
   curl -O "$DEVCNT_CICD_BASHLIB64_REPO" || exit 1
-  cp bashlib64.bash "$DEVCNT_CICD_LOADER" ||
   exit $?
 
 echo 'Download tools: TestManSH'
