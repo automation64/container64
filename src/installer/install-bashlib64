@@ -64,8 +64,8 @@ cnt64_bashlib64_install() {
 
   echo "Task: install packages (${CNT64_BASHLIB64_SOURCE})"
   case "$cnt64_bashlib64_download_tool" in
-  'curl') "$cnt64_bashlib64_download_tool" --remote-name --location "$CNT64_BASHLIB64_SOURCE" ;;
-  'wget') "$cnt64_bashlib64_download_tool" --output-document "$CNT64_BASHLIB64_SOURCE" ;;
+  'curl') curl --remote-name --location "$CNT64_BASHLIB64_SOURCE" ;;
+  'wget') wget "$CNT64_BASHLIB64_SOURCE" ;;
   *) return 1 ;;
   esac
 

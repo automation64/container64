@@ -27,17 +27,17 @@
 # Imports
 #
 
-export CNT64_BASHLIB64
-# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
-source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
-
 # Environment Definition. See docs/base-environment.md for details
+export CNT64_BASHLIB64
 export CNT64_DEBUG
 export CNT64_TMP
-export CNT64_USER
-export CNT64_PUBLIC_ROOT
-export CNT64_PUBLIC_BIN
-export CNT64_ROOT
+export CNT64_LOCAL_ROOT
+export CNT64_LOCAL_BIN
+export CNT64_INSTALLER_ROOT
+export CNT64_OPT_ROOT
+
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
+source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
 # Globals
@@ -96,20 +96,16 @@ cnt64_bootstrap_prepare_os() {
   local public_mode='0755'
   local public_owner='root'
 
-  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add "${CNT64_USER}" &&
-    bl64_rbac_add_root "${CNT64_USER}" ||
+  bl64_msg_show_task 'Create shared paths'
+  bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
+    "$CNT64_LOCAL_ROOT" \
+    "$CNT64_LOCAL_BIN" \
+    "$CNT64_OPT_ROOT" ||
     return $?
 
-  bl64_msg_show_task "Create shared paths (${CNT64_PUBLIC_ROOT})"
+  bl64_msg_show_task "Create container64 installers repository (${CNT64_INSTALLER_ROOT})"
   bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
-    "${CNT64_PUBLIC_ROOT}" \
-    "${CNT64_PUBLIC_BIN}" ||
-    return $?
-
-  bl64_msg_show_task "Create container64 installers repository (${CNT64_ROOT})"
-  bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
-    "${CNT64_ROOT}" ||
+    "${CNT64_INSTALLER_ROOT}" ||
     return $?
 
   return 0
@@ -153,11 +149,11 @@ function cnt64_bootstrap_install() {
 function cnt64_bootstrap_initialize() {
   bl64_dbg_app_show_function
 
-  bl64_check_export 'CNT64_PUBLIC_BIN' &&
-    bl64_check_export 'CNT64_PUBLIC_ROOT' &&
-    bl64_check_export 'CNT64_ROOT' &&
+  bl64_check_export 'CNT64_INSTALLER_ROOT' &&
+    bl64_check_export 'CNT64_LOCAL_ROOT' &&
     bl64_check_export 'CNT64_TMP' &&
-    bl64_check_export 'CNT64_USER' &&
+    bl64_check_export 'CNT64_LOCAL_BIN' &&
+    bl64_check_export 'CNT64_OPT_ROOT' &&
     bl64_pkg_setup &&
     bl64_check_privilege_root ||
     return $?

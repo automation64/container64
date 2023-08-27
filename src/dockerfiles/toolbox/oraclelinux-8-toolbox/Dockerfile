@@ -11,12 +11,13 @@ ENV container="docker"
 #
 
 ENV CNT64_DEBUG=""
-ENV CNT64_ROOT="/opt/cnt64"
 ENV CNT64_USER="sysadmin"
 ENV CNT64_TMP="/tmp"
-ENV CNT64_BASHLIB64="/opt/bl64/bashlib64.bash"
-ENV CNT64_PUBLIC_ROOT="/usr/local"
-ENV CNT64_PUBLIC_BIN="${CNT64_PUBLIC_BIN}/bin"
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+ENV CNT64_LOCAL_ROOT="/usr/local"
+ENV CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN}/bin"
+ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 
 #
 # Bootstrap image
@@ -34,8 +35,11 @@ RUN \
     /bootstrap && \
     rm /install-bashlib64 /bootstrap
 
+#
 # Setup image
-COPY installer/* ${CNT64_ROOT}/
+#
+
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
 RUN \
     /setup && \
     rm /setup
