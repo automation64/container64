@@ -14,9 +14,9 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 # Setup image
 #
 
-USER root
+# Update installers
 COPY installer/* ${CNT64_INSTALLER_ROOT}/
+# Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-gcloud
-
-#    sudo -E ${CNT64_INSTALLER_ROOT}/install-aws_cli && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-gcloud && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-awscli

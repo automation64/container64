@@ -32,7 +32,6 @@ export CNT64_DEBUG="${CNT64_DEBUG:-}"
 export CNT64_BASHLIB64
 export CNT64_LOCAL_BIN
 export CNT64_OPT_ROOT
-export CNT64_TMP
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
@@ -64,8 +63,8 @@ export CNT64_HCR_VERSION="${CNT64_HCR_VERSION:-1.6.0}"
 function cnt64_hcr_install() {
   bl64_dbg_app_show_function
   local package_prefix='chart-releaser'
-  local package_sufix='tar.gz'
-  local package_name="${package_prefix}_${CNT64_HCR_VERSION}_${CNT64_HCR_PLATFORM}.${package_sufix}"
+  local package_sufix='.tar.gz'
+  local package_name="${package_prefix}_${CNT64_HCR_VERSION}_${CNT64_HCR_PLATFORM}${package_sufix}"
   local package_url="${CNT64_HCR_SOURCE}/v${CNT64_HCR_VERSION}"
   local work_path=''
   local app_target_mode='0755'
@@ -73,14 +72,14 @@ function cnt64_hcr_install() {
   local app_cli_mode='0755'
   local app_cli='cr'
 
-  bl64_msg_show_task "download application (${package_url})"
+  bl64_msg_show_task 'download application'
   work_path="$(bl64_fs_create_tmpdir)" || return $?
   bl64_rxtx_web_get_file "${package_url}/${package_name}" "${work_path}/${package_name}" &&
     bl64_arc_open_tar "${work_path}/${package_name}" "${work_path}" ||
     return $?
 
-  bl64_msg_show_task "deploy application (${CNT64_HCR_TARGET})"
-  bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_HCR_TARGET" "$CNT64_LOCAL_BIN" &&
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_HCR_TARGET" &&
     bl64_fs_copy_files "$app_cli_mode" "$app_target_owner" "$app_target_owner" "$CNT64_HCR_TARGET" "${work_path}/${app_cli}" ||
     return $?
 
@@ -110,7 +109,6 @@ function cnt64_hcr_initialize() {
 
   bl64_check_export 'CNT64_LOCAL_BIN' &&
     bl64_check_export 'CNT64_OPT_ROOT' &&
-    bl64_check_export 'CNT64_TMP' &&
     bl64_arc_setup &&
     bl64_check_privilege_root
 }

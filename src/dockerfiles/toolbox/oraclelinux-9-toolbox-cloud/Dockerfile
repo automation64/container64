@@ -1,18 +1,22 @@
 # Base image
 FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest
 
-# Prepare package installer
-ENV container="docker"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Define environment
-ARG CNT64_USER="sysadmin"
-ARG CNT64_INSTALLER_ROOT="/sa/bin"
-ARG CNT64_DEBUG=""
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 
-# Install tools
+#
+# Setup image
+#
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+# Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-aws_cli_2 && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-gcloud
-
-USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash" ]
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-gcloud && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-awscli

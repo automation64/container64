@@ -30,7 +30,6 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64
 export CNT64_DEBUG
-export CNT64_TMP
 export CNT64_LOCAL_ROOT
 export CNT64_LOCAL_BIN
 export CNT64_INSTALLER_ROOT
@@ -151,7 +150,6 @@ function cnt64_bootstrap_initialize() {
 
   bl64_check_export 'CNT64_INSTALLER_ROOT' &&
     bl64_check_export 'CNT64_LOCAL_ROOT' &&
-    bl64_check_export 'CNT64_TMP' &&
     bl64_check_export 'CNT64_LOCAL_BIN' &&
     bl64_check_export 'CNT64_OPT_ROOT' &&
     bl64_pkg_setup &&

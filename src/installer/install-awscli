@@ -30,6 +30,8 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_LOCAL_BIN
+export CNT64_OPT_ROOT
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
@@ -37,6 +39,10 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 #
 # Globals
 #
+
+export CNT64_AWSCLI_PLATFORM="${CNT64_AWSCLI_PLATFORM:-linux-x86_64}"
+export CNT64_AWSCLI_SOURCE="${CNT64_AWSCLI_SOURCE:-https://awscli.amazonaws.com}"
+export CNT64_AWSCLI_TARGET="${CNT64_AWSCLI_TARGET:-${CNT64_OPT_ROOT}/awscli}"
 
 #
 # Functions
@@ -55,39 +61,41 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 #######################################
 function cnt64_awscli_install() {
   bl64_dbg_app_show_function
-  # X_CODE_PLACEHOLDER_3_X
-  local package_installer='aws'
-  local package_installer_bin='aws/install'
-  local package_source='awscli-exe-linux-x86_64.zip'
-  local package_url='https://awscli.amazonaws.com'
-  local aws_mode='0755'
-  local aws_root='/opt/aws'
-  local aws_bin='/opt/aws/bin'
-  local aws_cli='/opt/aws/bin/aws'
-  local aws_versions='/opt/aws/versions'
+  local package_prefix='awscli-exe-'
+  local package_sufix='.zip'
+  local package_name="${package_prefix}${CNT64_AWSCLI_PLATFORM}${package_sufix}"
+  local package_url="$CNT64_AWSCLI_SOURCE"
+  local work_path=''
+  local app_target_mode='0755'
+  local app_target_owner='root'
+  local app_cli='aws'
+  local app_installer='aws/install'
+  local app_bin="${CNT64_AWSCLI_TARGET}/bin"
+  local app_versions="${CNT64_AWSCLI_TARGET}/versions"
 
   bl64_msg_show_task 'download application'
-  # shellcheck disable=SC2154
-  package_installer_bin="${CNT64_TMP}/${package_installer_bin}"
-  bl64_rxtx_web_get_file "${package_url}/${package_source}" "${CNT64_TMP}/${package_source}" &&
-    bl64_arc_open_zip "${CNT64_TMP}/${package_source}" "${CNT64_TMP}" &&
-    bl64_check_command "$package_installer_bin" ||
+  work_path="$(bl64_fs_create_tmpdir)" || return $?
+  bl64_rxtx_web_get_file "${package_url}/${package_name}" "${work_path}/${package_name}" &&
+    bl64_arc_open_zip "${work_path}/${package_name}" "${work_path}" ||
     return $?
 
   bl64_msg_show_task 'deploy application'
-  bl64_fs_create_dir "$aws_mode" "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$aws_root" &&
+  bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_AWSCLI_TARGET" &&
     bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
-    "$package_installer_bin" \
-      --install-dir "$aws_versions" \
-      --bin-dir "$aws_bin" \
-      --update &&
-    bl64_check_command "$aws_cli" &&
-    bl64_msg_show_info "Application file: ${aws_cli}" ||
+    "${work_path}/$app_installer" \
+      --bin-dir "$app_bin" \
+      --install-dir "$app_versions" \
+      --update ||
     return $?
 
-  bl64_msg_show_task "clean temporary files"
-  bl64_fs_rm_file "${CNT64_TMP}/${package_source}"
-  bl64_fs_rm_full "$package_installer"
+  bl64_msg_show_task "publish application to searchable path (${CNT64_LOCAL_BIN})"
+  # shellcheck disable=SC2086
+  "$BL64_FS_CMD_LN" $BL64_FS_SET_LN_SYMBOLIC "${app_bin}/${app_cli}" "${CNT64_LOCAL_BIN}/${app_cli}" ||
+    return $?
+
+  bl64_msg_show_task 'cleanup temporary files'
+  bl64_fs_rm_tmpdir "$work_path"
+  return 0
 }
 
 #######################################
@@ -103,11 +111,11 @@ function cnt64_awscli_install() {
 #######################################
 function cnt64_awscli_initialize() {
   bl64_dbg_app_show_function
-  # X_CODE_PLACEHOLDER_4_X
-  bl64_arc_setup &&
-    bl64_check_privilege_root ||
-    exit $?
 
+  bl64_check_export 'CNT64_LOCAL_BIN' &&
+    bl64_check_export 'CNT64_OPT_ROOT' &&
+    bl64_arc_setup &&
+    bl64_check_privilege_root
 }
 
 #
