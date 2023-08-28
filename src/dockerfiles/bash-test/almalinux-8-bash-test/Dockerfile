@@ -5,15 +5,15 @@ FROM docker.io/library/almalinux:8
 ENV container="docker"
 
 # Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_TEST_USER="test"
+ARG CNT64_INSTALLER_ROOT="/sa/bin"
+ARG CNT64_DEBUG=""
+ARG CNT64_USER="test"
 ARG CNT64_HELPERS="sudo git diffutils python3 python3-pip python3-setuptools unzip wget gettext"
 
 # Copy image setup script
 COPY loader/bashlib64.bash /bashlib64.bash
 COPY helper-bash-test/image-setup /image-setup
-COPY helper-toolbox64/bootstrap /bootstrap
+COPY helper-toolbox/bootstrap /bootstrap
 
 # Setup image / bootstrap
 RUN \
@@ -27,13 +27,13 @@ RUN \
     rm /image-setup /bashlib64.bash
 
 # Copy optional provisioning scripts
-COPY toolbox64/* ${CNT64_SYSADMIN_BIN}/
+COPY toolbox/* ${CNT64_INSTALLER_ROOT}/
 
 # Setup image / bats-core
 RUN \
-    ${CNT64_SYSADMIN_BIN}/toolbox64_install_batscore
+    ${CNT64_INSTALLER_ROOT}/install-batscore
 
 # Run bats-core against /test
 CMD [ "/test" ]
-USER ${CNT64_TEST_USER}
+USER ${CNT64_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]

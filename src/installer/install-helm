@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash disable=SC2154
+source "$CNT64_BASHLIB64" || exit $?
+
+#
+# Functions
+#
+
+function cnt64_hlm3_provision() {
+  local package_installer='linux-amd64'
+  local package_installer_bin="${package_installer}/helm"
+  local package_source='helm-v3.11.0-linux-amd64.tar.gz'
+  local package_url='https://get.helm.sh'
+  local app_mode='0755'
+  local app_root='/usr/local'
+  local app_bin="${app_root}/bin"
+  local app_cli="${app_bin}/helm"
+
+  bl64_msg_show_task 'download application'
+  # shellcheck disable=SC2154
+  package_installer="${CNT64_TMP}/${package_installer}"
+  package_installer_bin="${CNT64_TMP}/${package_installer_bin}"
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "${CNT64_TMP}/${package_source}" &&
+    bl64_arc_open_tar "${CNT64_TMP}/${package_source}" "${CNT64_TMP}" &&
+    bl64_check_command "$package_installer_bin" ||
+    return $?
+
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_create_dir "$app_mode" "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$app_root" "$app_bin" &&
+    bl64_fs_copy_files "$app_mode" "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$app_bin" "$package_installer_bin" &&
+    bl64_check_command "$app_cli" &&
+    bl64_msg_show_info "Application file: ${app_cli}" ||
+    return $?
+
+  bl64_msg_show_task "clean temporary files"
+  bl64_fs_rm_full "$package_installer"
+
+  return 0
+}
+
+#
+# Main
+#
+
+declare cnt64_hlm3_process='Install Helm 3'
+declare -i cnt64_hlm3_status=0
+
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+bl64_arc_setup &&
+  bl64_check_privilege_root ||
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$cnt64_hlm3_process"
+
+cnt64_hlm3_provision
+cnt64_hlm3_status=$?
+
+bl64_fs_cleanup_full
+bl64_msg_show_batch_finish "$cnt64_hlm3_status" "$cnt64_hlm3_process"
+exit $cnt64_hlm3_status

@@ -2,9 +2,9 @@
 FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest
 
 # Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_TEST_USER="test"
+ARG CNT64_INSTALLER_ROOT="/sa/bin"
+ARG CNT64_DEBUG=""
+ARG CNT64_USER="test"
 
 # Copy image setup script
 COPY helper-terraform-test/image-setup /image-setup
@@ -16,6 +16,6 @@ RUN \
 
 # Setup image / terraform
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_terraform_1
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-terraform_1
 
-USER ${CNT64_TEST_USER}
+USER ${CNT64_USER}

@@ -112,10 +112,7 @@ function cnt64_hcr_initialize() {
     bl64_check_export 'CNT64_OPT_ROOT' &&
     bl64_check_export 'CNT64_TMP' &&
     bl64_arc_setup &&
-    bl64_check_privilege_root ||
-    return $?
-
-  return 0
+    bl64_check_privilege_root
 }
 
 #

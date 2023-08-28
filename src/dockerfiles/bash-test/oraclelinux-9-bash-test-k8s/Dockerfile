@@ -2,10 +2,10 @@
 FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-k8s:latest
 
 # Define environment
-ARG TOOLBOX64_DEBUG=""
+ARG CNT64_DEBUG=""
 ARG CNT64_SYSADMIN_TMP='/sa/tmp'
-ARG CNT64_SYSADMIN_BIN='/sa/bin'
-ARG CNT64_TEST_USER="test"
+ARG CNT64_INSTALLER_ROOT='/sa/bin'
+ARG CNT64_USER="test"
 ARG CNT64_HELPERS=""
 
 # Copy image setup script
@@ -19,9 +19,9 @@ RUN \
 
 # Setup image / bats-core
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_batscore
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-batscore
 
 # Run bats-core against /test
 CMD [ "/test" ]
-USER ${CNT64_TEST_USER}
+USER ${CNT64_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]

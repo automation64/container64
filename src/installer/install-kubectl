@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash disable=SC2154
+source "$CNT64_BASHLIB64" || exit $?
+
+#
+# Globals
+#
+
+#
+# Functions
+#
+
+function cnt64_kctl_install_k8s() {
+  local target_version="$1"
+  local target_subversion='0'
+  local target_release="${target_version}.${target_subversion}"
+  local package_source='kubectl'
+  local package_url="https://dl.k8s.io/release/v${target_release}/bin/linux/amd64"
+  local app_cli="${CNT64_LOCAL_BIN}/${package_source}-${target_release}"
+
+  bl64_msg_show_phase "provision ${package_source}"
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "$app_cli" "$BL64_VAR_ON" '0755' &&
+    bl64_check_command "$app_cli" &&
+    bl64_msg_show_info "Provisioning complete. Application file available at: ${app_cli}"
+}
+
+#
+# Main
+#
+
+declare cnt64_kctl_target_version="${1:-1.25}" # Format: X.Y
+declare cnt64_kctl_process='Install KubeCtl'
+declare -i cnt64_kctl_status=1
+
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+bl64_check_export 'CNT64_LOCAL_BIN' &&
+  bl64_check_privilege_root ||
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$cnt64_kctl_process"
+
+cnt64_kctl_install_k8s "$cnt64_kctl_target_version"
+cnt64_kctl_status=$?
+
+bl64_fs_cleanup_full
+bl64_msg_show_batch_finish "$cnt64_kctl_status" "$cnt64_kctl_process"
+exit $cnt64_kctl_status

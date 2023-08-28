@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# Template: 1.0.0
+#######################################
+# Container64 / Package installer
+#
+# Author: SerDigital64 (https://github.com/serdigital64)
+# Repository: https://github.com/automation64/container64
+# Version: 1.0.0
+#
+#######################################
+# Copyright [2023] [serdigital64@gmail.com]
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
+
+#
+# Imports
+#
+
+# Environment Definition. See docs/base-environment.md for details
+export CNT64_BASHLIB64
+export CNT64_DEBUG="${CNT64_DEBUG:-}"
+
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
+source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+
+#
+# Globals
+#
+
+#
+# Functions
+#
+
+#######################################
+# Install application packages
+#
+# Arguments:
+#   None. Parameters are imported from Globals
+# Outputs:
+#   Package installer progress and errors
+# Returns:
+#   0: package installed ok
+#   >0: unable to install package
+#######################################
+function cnt64_awscli_install() {
+  bl64_dbg_app_show_function
+  # X_CODE_PLACEHOLDER_3_X
+  local package_installer='aws'
+  local package_installer_bin='aws/install'
+  local package_source='awscli-exe-linux-x86_64.zip'
+  local package_url='https://awscli.amazonaws.com'
+  local aws_mode='0755'
+  local aws_root='/opt/aws'
+  local aws_bin='/opt/aws/bin'
+  local aws_cli='/opt/aws/bin/aws'
+  local aws_versions='/opt/aws/versions'
+
+  bl64_msg_show_task 'download application'
+  # shellcheck disable=SC2154
+  package_installer_bin="${CNT64_TMP}/${package_installer_bin}"
+  bl64_rxtx_web_get_file "${package_url}/${package_source}" "${CNT64_TMP}/${package_source}" &&
+    bl64_arc_open_zip "${CNT64_TMP}/${package_source}" "${CNT64_TMP}" &&
+    bl64_check_command "$package_installer_bin" ||
+    return $?
+
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_create_dir "$aws_mode" "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$aws_root" &&
+    bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
+    "$package_installer_bin" \
+      --install-dir "$aws_versions" \
+      --bin-dir "$aws_bin" \
+      --update &&
+    bl64_check_command "$aws_cli" &&
+    bl64_msg_show_info "Application file: ${aws_cli}" ||
+    return $?
+
+  bl64_msg_show_task "clean temporary files"
+  bl64_fs_rm_file "${CNT64_TMP}/${package_source}"
+  bl64_fs_rm_full "$package_installer"
+}
+
+#######################################
+# Initialize environment
+#
+# Arguments:
+#   None
+# Outputs:
+#   Initializacion progress messages
+# Returns:
+#   0: initialization ok
+#   >: failed to initialize
+#######################################
+function cnt64_awscli_initialize() {
+  bl64_dbg_app_show_function
+  # X_CODE_PLACEHOLDER_4_X
+  bl64_arc_setup &&
+    bl64_check_privilege_root ||
+    exit $?
+
+}
+
+#
+# Main
+#
+
+declare cnt64_awscli_installer_description='Install package: AWS CLI'
+declare -i cnt64_awscli_status=0
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$cnt64_awscli_installer_description"
+
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+cnt64_awscli_initialize &&
+  cnt64_awscli_install
+cnt64_awscli_status=$?
+
+bl64_msg_show_batch_finish "$cnt64_awscli_status" "$cnt64_awscli_installer_description"
+exit $cnt64_awscli_status

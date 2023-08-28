@@ -2,9 +2,9 @@
 FROM ghcr.io/automation64/bash-test/debian-11-bash-test:latest
 
 # Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_TEST_USER="test"
+ARG CNT64_INSTALLER_ROOT="/sa/bin"
+ARG CNT64_DEBUG=""
+ARG CNT64_USER="test"
 ARG CNT64_ANSIBLE_USER="ansible"
 ARG CNT64_ANSIBLE_HOME="/opt/ansible"
 
@@ -24,7 +24,7 @@ RUN \
 
 # Setup image / Ansible
 RUN \
-    sudo -H -E -u ${CNT64_ANSIBLE_USER} ${CNT64_SYSADMIN_BIN}/toolbox64_install_ansible_2
+    sudo -H -E -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible_2
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]

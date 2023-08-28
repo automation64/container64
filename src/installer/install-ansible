@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "/toolbox.env" || exit $?
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash disable=SC2154
+source "$CNT64_BASHLIB64" || exit $?
+
+#
+# Globals
+#
+
+declare TB64_ANS_LOCAL="${HOME}/.local"
+declare TB64_ANS_BIN="${HOME}/bin"
+
+#
+# Functions
+#
+
+function cnt64_ans_promote_apps() {
+  local apps='ansible ansible-playbook ansible-galaxy'
+  local file=''
+  local helper=''
+
+  bl64_msg_show_task "fix permissions (${HOME})"
+  bl64_fs_run_chmod '0755' "$TB64_ANS_LOCAL" &&
+    bl64_fs_fix_permissions '0644' '0755' "${TB64_ANS_LOCAL}/lib" &&
+    bl64_fs_fix_permissions '0755' '0755' "${TB64_ANS_LOCAL}/bin" ||
+    return $?
+
+  bl64_msg_show_task 'create helpers'
+  bl64_fs_run_mkdir "$TB64_ANS_BIN" &&
+    for file in $apps; do
+      helper="${TB64_ANS_BIN}/${file}"
+      # shellcheck disable=SC2016
+      printf '#!/bin/sh\n' >"$helper" &&
+        printf 'PYTHONPATH="${PYTHONPATH}:%s/lib/python3.9/site-packages"\nexport PYTHONPATH\n' "$TB64_ANS_LOCAL" >>"$helper" &&
+        printf 'PATH="${PATH}:%s/bin"\nexport PATH\n' "$TB64_ANS_LOCAL" >>"$helper" &&
+        printf '%s/bin/%s "$@"\n' "$TB64_ANS_LOCAL" "$file" >>"$helper" &&
+        bl64_fs_run_chmod '0755' "$helper" ||
+        return $?
+    done
+
+  return 0
+}
+
+function cnt64_ans_provision() {
+  local packages=''
+
+  bl64_msg_show_task 'determine latest available version for the target OS'
+  if bl64_os_match "${BL64_OS_OL}-8" "${BL64_OS_DEB}-10" "${BL64_OS_RHEL}-8" "${BL64_OS_RCK}-8" "${BL64_OS_ALM}-8" "${BL64_OS_UB}-20"; then
+    packages="ansible-core==2.11.*"
+  else
+    packages="ansible-core==2.14.*"
+  fi
+
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
+    bl64_py_pip_usr_prepare &&
+    bl64_py_pip_usr_deploy "$packages" &&
+    cnt64_ans_promote_apps &&
+    bl64_msg_show_info "Application file: ${TB64_ANS_BIN}"
+}
+
+#
+# Main
+#
+
+declare cnt64_ans_process='Install Ansible'
+declare -i cnt64_ans_status=0
+
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+bl64_py_setup ||
+  exit $?
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$cnt64_ans_process"
+
+cnt64_ans_provision
+cnt64_ans_status=$?
+
+bl64_msg_show_batch_finish "$cnt64_ans_status" "$cnt64_ans_process"
+exit $cnt64_ans_status
