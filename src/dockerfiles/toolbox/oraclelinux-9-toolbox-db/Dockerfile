@@ -1,18 +1,27 @@
 # Base image
 FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-cloud:latest
 
-# Prepare package installer
-ENV container="docker"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Define environment
-ARG CNT64_USER="sysadmin"
-ARG CNT64_INSTALLER_ROOT="/sa/bin"
-ARG CNT64_DEBUG=""
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 
-# Install tools
+#
+# Setup image
+#
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Set installer parameters
+ENV CNT64_MONGOSHCLI_VERSION="6"
+ENV CNT64_PSQLCLI_VERSION="15"
+
+# Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongosh_6 && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-psql 15
-
-USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash" ]
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongoshcli && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-psqlcli

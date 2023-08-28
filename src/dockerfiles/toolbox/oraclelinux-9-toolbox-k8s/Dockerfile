@@ -14,11 +14,11 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 # Setup image
 #
 
-# Set installer parameters
-ENV CNT64_KUBECTL_VERSION="1.28.0"
-
 # Update installers
 COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Set installer parameters
+ENV CNT64_KUBECTL_VERSION="1.28.0"
 
 # Install applications
 RUN \
