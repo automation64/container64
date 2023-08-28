@@ -32,7 +32,7 @@ function cnt64_mg5_provision() {
 declare process='Install MongoDB Shell 5 CLI'
 declare -i cnt64_mg5_status=0
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 bl64_os_match "${BL64_OS_OL}-8" || {
   bl64_check_alert_unsupported
   exit $?

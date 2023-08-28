@@ -2,14 +2,11 @@
 FROM ghcr.io/automation64/bash-test/alpine-3-bash-test:latest
 
 #
-# Environment definition
-#
-
-ENV CNT64_SHELL_INT_USER="linter"
-
-#
 # Setup image
 #
+
+# Set setup parameters
+ENV CNT64_SHELL_INT_USER="linter"
 
 # Copy image setup script
 COPY helper-shell-lint/setup /setup
@@ -18,6 +15,9 @@ COPY helper-shell-lint/setup /setup
 RUN \
     sudo -E /setup && \
     sudo rm /setup
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
 
 # Install applications
 RUN \

@@ -78,7 +78,7 @@ function cnt64_batscore_install() {
 
   bl64_msg_show_task "publish application to searchable path (${CNT64_LOCAL_BIN})"
   # shellcheck disable=SC2086
-  "$BL64_FS_CMD_LN" $BL64_FS_SET_LN_SYMBOLIC "${CNT64_BATSCORE_TARGET}/bin/${app_cli}" "${CNT64_LOCAL_BIN}/${app_cli}" ||
+  bl64_fs_run_ln $BL64_FS_SET_LN_SYMBOLIC "${CNT64_BATSCORE_TARGET}/bin/${app_cli}" "${CNT64_LOCAL_BIN}/${app_cli}" ||
     return $?
 
   return 0
@@ -114,7 +114,7 @@ declare -i cnt64_batscore_status=0
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$cnt64_batscore_installer_description"
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_batscore_initialize &&
   cnt64_batscore_install
 cnt64_batscore_status=$?

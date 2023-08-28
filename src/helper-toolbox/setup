@@ -59,7 +59,7 @@ function cnt64_setup_install() {
   local packages=''
 
   if bl64_os_match "${BL64_OS_OL}"; then
-    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext bzip2 diffutils'
+    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext bzip2 diffutils file'
   fi
 
   bl64_msg_show_task 'deploy packages'
@@ -111,7 +111,7 @@ declare -i cnt64_setup_status=0
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_setup_initialize &&
   cnt64_setup_install
 cnt64_setup_status=$?

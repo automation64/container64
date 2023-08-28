@@ -68,7 +68,7 @@ function cnt64_ans_provision() {
 declare cnt64_ans_process='Install Ansible'
 declare -i cnt64_ans_status=0
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 bl64_py_setup ||
   exit $?
 

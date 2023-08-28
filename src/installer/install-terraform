@@ -72,7 +72,7 @@ function cnt64_tf1_install_tflintc() {
 declare process='Install Terraform 1'
 declare -i status=1
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 bl64_arc_setup &&
   bl64_check_privilege_root ||
   exit $?
