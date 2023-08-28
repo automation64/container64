@@ -64,7 +64,8 @@ function cnt64_setup_install() {
 
   bl64_msg_show_task 'deploy packages'
   # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
+  bl64_pkg_deploy $packages ||
+    return $?
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add "${CNT64_USER}" &&
