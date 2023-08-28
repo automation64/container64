@@ -143,7 +143,22 @@ function cntbuild_publish() {
     bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
     bl64_cnt_push "${container}:${tag}" "$target" &&
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
+}
 
+function cntbuild_reset() {
+  bl64_dbg_app_show_function
+  local images=''
+
+  bl64_msg_show_task 'remove all local container images'
+  images="$(bl64_cnt_cli images -q)"
+  # shellcheck disable=SC2086
+  [[ -n "$images" ]] && bl64_cnt_cli rmi -f $images
+
+  bl64_msg_show_task 'cleanup docker runtime environment'
+  # shellcheck disable=SC2046
+  bl64_cnt_cli system prune -a -f
+
+  return 0
 }
 
 function cntbuild_get_version() {
@@ -199,7 +214,7 @@ function cntbuild_initialize() {
 
   # shellcheck disable=SC2249
   case "$command" in
-  'cntbuild_build' | 'cntbuild_publish' | 'cntbuild_open' | 'cntbuild_delete')
+  'cntbuild_publish' | 'cntbuild_delete')
     bl64_check_export 'CNTBUILD_LOGIN_USER' &&
       bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
       bl64_check_export 'CNTBUILD_REGISTRY' &&
@@ -224,7 +239,7 @@ function cntbuild_initialize() {
 function cntbuild_help() {
 
   bl64_msg_show_usage \
-    '<-b|-u|-l|-n|-x> [-c Container] [-e Tag] [-o Context] [-V Verbose] [-D Debug] [-h]' \
+    '<-b|-u|-l|-n|-x|-r> [-c Container] [-e Tag] [-o Context] [-V Verbose] [-D Debug] [-h]' \
     'Build containers in dev environment' \
     '
   -b          : Build container
@@ -232,6 +247,7 @@ function cntbuild_help() {
   -l          : List container sources
   -n          : Open local container
   -x          : Delete container from registry. Supported registries: GitHub
+  -r          : Reset build environment. Warning: removes local images and containers
     ' '
   -h          : Show help
     ' "
