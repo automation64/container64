@@ -8,7 +8,6 @@ ARG CNT64_USER="test"
 ARG CNT64_ANSIBLE_USER="ansible"
 ARG CNT64_ANSIBLE_HOME="/opt/ansible"
 ARG CNT64_SYSTEMD_PREREQS="xkeyboard-config diffutils kbd"
-
 ARG CNT64_SYSTEMD_PREREQS="dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs"
 ARG CNT64_SYSTEMD_PACKAGES="systemd systemd-timesyncd"
 ARG CNT64_SUDO_PACKAGES="sudo"

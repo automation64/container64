@@ -7,6 +7,7 @@ ARG CNT64_DEBUG=""
 ARG CNT64_USER="test"
 ARG CNT64_ANSIBLE_USER="ansible"
 ARG CNT64_ANSIBLE_HOME="/opt/ansible"
+
 ARG CNT64_SYSTEMD_PREREQS="xkeyboard-config diffutils kbd"
 ARG CNT64_SYSTEMD_PACKAGES="systemd systemd-libs systemd-pam systemd-udev"
 ARG CNT64_SUDO_PACKAGES="sudo"
