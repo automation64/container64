@@ -1,16 +1,22 @@
 # Base image
 FROM ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest
 
-# Define environment
-ARG CNT64_DEBUG=""
-ARG CNT64_INSTALLER_ROOT="/sa/bin"
-ARG CNT64_USER="test"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Setup image / Docker
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+
+#
+# Setup image
+#
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-docker
-
-# Run bats-core against /test
-CMD [ "/test" ]
-USER ${CNT64_USER}
-ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-dockercli

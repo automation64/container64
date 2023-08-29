@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/toolbox/oraclelinux-8-toolbox-psql-13:latest
+FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-ansible-2:latest
 
 # Define environment
 ARG CNT64_DEBUG=""
