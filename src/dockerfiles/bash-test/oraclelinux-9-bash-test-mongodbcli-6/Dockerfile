@@ -17,7 +17,9 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 # Update installers
 COPY installer/* ${CNT64_INSTALLER_ROOT}/
 
+# Set setup parameters
+ENV CNT64_MONGODBCLI_VERSION=6
+
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-gcloud && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-awscli
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongodbcli
