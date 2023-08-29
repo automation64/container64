@@ -34,6 +34,9 @@ export CNT64_DEBUG="${CNT64_DEBUG:-}"
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
+# Setup parameters
+export CNT64_TERRAFORM_TEST_USER
+
 #
 # Globals
 #
@@ -55,44 +58,9 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 #######################################
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
-  local packages=''
 
-  if bl64_os_match "${BL64_OS_ALP}"; then
-    packages='sudo git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata gettext'
-  elif bl64_os_match "${BL64_OS_ALM}"; then
-    packages='sudo git diffutils python3 python3-pip python3-setuptools unzip wget gettext'
-  elif bl64_os_match "${BL64_OS_CNT}"; then
-    packages='sudo git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext'
-  elif bl64_os_match "${BL64_OS_DEB}"; then
-    packages='sudo git wget curl gawk python3 python3-pip python3-venv unzip gettext'
-  elif bl64_os_match "${BL64_OS_FD}"; then
-    packages='sudo git diffutils hostname wget python3-pip findutils unzip gettext'
-  elif bl64_os_match "${BL64_OS_OL}"; then
-    packages='sudo git tar hostname wget python3 python3-pip python3-setuptools unzip gettext'
-  elif bl64_os_match "${BL64_OS_RHEL}"; then
-    packages='sudo git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext'
-  elif bl64_os_match "${BL64_OS_RCK}"; then
-    packages='sudo git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext'
-  elif bl64_os_match "${BL64_OS_SLES}"; then
-    packages='sudo git hostname wget gawk gettext-runtime python3 python3-pip unzip tar'
-  elif bl64_os_match "${BL64_OS_UB}"; then
-    packages='sudo git wget curl gawk python3 python3-pip python3-venv unzip gettext'
-  fi
-
-  bl64_msg_show_task 'deploy packages'
-  # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages ||
-    return $?
-
-  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add "${CNT64_USER}" &&
-    bl64_rbac_add_root "${CNT64_USER}" ||
-    return $?
-
-  bl64_msg_show_task 'cleanup temporary files'
-  bl64_fs_cleanup_full
-
-  return 0
+  bl64_msg_show_task "create entrypoint user (${CNT64_TERRAFORM_TEST_USER})" &&
+    bl64_iam_user_add "${CNT64_TERRAFORM_TEST_USER}"
 }
 
 #######################################
@@ -109,19 +77,8 @@ function cnt64_setup_install() {
 function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
-  bl64_os_check_version \
-    "${BL64_OS_ALM}" \
-    "${BL64_OS_ALP}" \
-    "${BL64_OS_CNT}" \
-    "${BL64_OS_DEB}" \
-    "${BL64_OS_FD}" \
-    "${BL64_OS_OL}" \
-    "${BL64_OS_RCK}" \
-    "${BL64_OS_RHEL}" \
-    "${BL64_OS_SLES}" \
-    "${BL64_OS_UB}" &&
-    bl64_check_privilege_root &&
-    bl64_pkg_setup
+  bl64_check_export 'CNT64_TERRAFORM_TEST_USER' &&
+    bl64_check_privilege_root
 }
 
 #
@@ -134,7 +91,7 @@ declare -i cnt64_setup_status=0
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
 cnt64_setup_initialize &&
   cnt64_setup_install
 cnt64_setup_status=$?

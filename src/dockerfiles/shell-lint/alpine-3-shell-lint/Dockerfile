@@ -5,11 +5,11 @@ FROM ghcr.io/automation64/bash-test/alpine-3-bash-test:latest
 # Setup image
 #
 
-# Set setup parameters
-ENV CNT64_SHELL_LINT_USER="linter"
-
 # Copy image setup script
 COPY helper-shell-lint/setup /setup
+
+# Set setup parameters
+ENV CNT64_SHELL_LINT_USER="linter"
 
 # Setup image
 RUN \

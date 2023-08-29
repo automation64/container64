@@ -60,10 +60,7 @@ function cnt64_setup_install() {
   bl64_dbg_app_show_function
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_SHELL_LINT_USER})"
-  bl64_iam_user_add "${CNT64_SHELL_LINT_USER}" ||
-    return $?
-
-  return 0
+  bl64_iam_user_add "${CNT64_SHELL_LINT_USER}"
 }
 
 #######################################

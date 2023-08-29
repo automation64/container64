@@ -14,12 +14,12 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 # Setup image
 #
 
+# Copy image setup script
+COPY helper-toolbox-ansible/setup /setup
+
 # Set setup parameters
 ENV CNT64_ANSIBLE_USER="ansible"
 ENV CNT64_ANSIBLE_HOME="${CNT64_OPT_ROOT}/ansible"
-
-# Copy image setup script
-COPY helper-toolbox-ansible/setup /setup
 
 # Setup image
 RUN \
