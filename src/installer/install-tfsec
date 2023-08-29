@@ -30,6 +30,8 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_LOCAL_BIN
+export CNT64_OPT_ROOT
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
@@ -38,24 +40,13 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Globals
 #
 
+export CNT64_TFSEC_PLATFORM="${CNT64_TFSEC_PLATFORM:-linux-amd64}"
+export CNT64_TFSEC_TARGET="${CNT64_TFSEC_TARGET:-${CNT64_OPT_ROOT}/tfsec}"
+export CNT64_TFSEC_VERSION="${CNT64_TFSEC_VERSION:-latest}"
+
 #
 # Functions
 #
-
-function cnt64_terraform_install_rhel() {
-  local repository_name='terraform'
-  local repository_url='https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable'
-  local repository_key='https://rpm.releases.hashicorp.com/gpg'
-  local packages='terraform'
-
-  bl64_msg_show_task 'Add YUM package repository'
-  bl64_pkg_repository_add "$repository_name" "$repository_url" "$repository_key" ||
-    return $?
-
-  bl64_msg_show_task 'deploy packages'
-  # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
-}
 
 #######################################
 # Install application packages
@@ -68,17 +59,31 @@ function cnt64_terraform_install_rhel() {
 #   0: package installed ok
 #   >0: unable to install package
 #######################################
-function cnt64_terraform_install() {
+function cnt64_tfsec_install() {
   bl64_dbg_app_show_function
-  if bl64_os_match "${BL64_OS_OL}-8" "${BL64_OS_OL}-9"; then
-    cnt64_terraform_install_rhel
-  fi
-  # shellcheck disable=SC2181
-  (($? != 0)) && return $?
+  local repo_owner='aquasecurity'
+  local repo_name='tfsec'
+  local package_prefix='tfsec-'
+  local package_name="${package_prefix}${CNT64_TFSEC_PLATFORM}"
+  local app_target_mode='0755'
+  local app_target_owner='root'
+  local app_cli_mode='0755'
+  local app_cli='tfsec'
 
-  bl64_msg_show_task 'cleanup temporary files'
-  bl64_fs_cleanup_full
-  return 0
+  bl64_msg_show_task 'download application'
+  if [[ "$CNT64_TFSEC_VERSION" == 'latest' ]]; then
+    CNT64_TFSEC_VERSION="$(bl64_vcs_github_release_get_latest "$repo_owner" "$repo_name")" ||
+      return $?
+  fi
+
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_TFSEC_TARGET" &&
+    bl64_rxtx_github_get_asset "$repo_owner" "$repo_name" "$CNT64_TFSEC_VERSION" "$package_name" "${CNT64_TFSEC_TARGET}/${app_cli}" "$BL64_VAR_OFF" "$app_cli_mode" ||
+    return $?
+
+  bl64_msg_show_task "publish application to searchable path (${CNT64_LOCAL_BIN})"
+  # shellcheck disable=SC2086
+  bl64_fs_run_ln $BL64_FS_SET_LN_SYMBOLIC "${CNT64_TFSEC_TARGET}/${app_cli}" "${CNT64_LOCAL_BIN}/${app_cli}"
 }
 
 #######################################
@@ -92,27 +97,27 @@ function cnt64_terraform_install() {
 #   0: initialization ok
 #   >: failed to initialize
 #######################################
-function cnt64_terraform_initialize() {
+function cnt64_tfsec_initialize() {
   bl64_dbg_app_show_function
-  bl64_os_check_version "${BL64_OS_OL}-8" "${BL64_OS_OL}-9" &&
-    bl64_check_privilege_root &&
-    bl64_pkg_setup
+  bl64_check_export 'CNT64_LOCAL_BIN' &&
+    bl64_check_export 'CNT64_OPT_ROOT' &&
+    bl64_check_privilege_root
 }
 
 #
 # Main
 #
 
-declare cnt64_terraform_installer_description='Install application: Terraform'
-declare -i cnt64_terraform_status=0
+declare cnt64_tfsec_installer_description='Install application: TFSec'
+declare -i cnt64_tfsec_status=0
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$cnt64_terraform_installer_description"
+bl64_msg_show_batch_start "$cnt64_tfsec_installer_description"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
-cnt64_terraform_initialize &&
-  cnt64_terraform_install
-cnt64_terraform_status=$?
+cnt64_tfsec_initialize &&
+  cnt64_tfsec_install
+cnt64_tfsec_status=$?
 
-bl64_msg_show_batch_finish "$cnt64_terraform_status" "$cnt64_terraform_installer_description"
-exit $cnt64_terraform_status
+bl64_msg_show_batch_finish "$cnt64_tfsec_status" "$cnt64_tfsec_installer_description"
+exit $cnt64_tfsec_status

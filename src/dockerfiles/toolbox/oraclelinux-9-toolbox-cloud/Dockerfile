@@ -16,6 +16,7 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 
 # Update installers
 COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
 # Install applications
 RUN \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-gcloud && \
