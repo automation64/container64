@@ -1,27 +1,34 @@
 # Base image
 FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest
 
-# Prepare package installer
-ENV container="docker"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Define environment
-ARG CNT64_USER="sysadmin"
-ARG CNT64_INSTALLER_ROOT="/sa/bin"
-ARG CNT64_ANSIBLE_USER="ansible"
-ARG CNT64_ANSIBLE_HOME="/opt/ansible"
-ARG CNT64_DEBUG=""
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+
+#
+# Setup image
+#
+
+# Set setup parameters
+ENV CNT64_ANSIBLE_USER="ansible"
+ENV CNT64_ANSIBLE_HOME="${CNT64_OPT_ROOT}/ansible"
 
 # Copy image setup script
-COPY helper-toolbox-ansible/image-setup /image-setup
+COPY helper-toolbox-ansible/setup /setup
 
 # Setup image
 RUN \
-    sudo -E /image-setup && \
-    sudo rm /image-setup
+    sudo -E /setup && \
+    sudo rm /setup
 
-# Install tools
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
 RUN \
-    sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible_2
-
-USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash" ]
+    sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible

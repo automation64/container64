@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Template: 1.0.0
 #######################################
-# Container64 / Package installer
+# Container64 / Setup container image
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
@@ -38,6 +38,9 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Globals
 #
 
+export CNT64_ANSIBLE_USER
+export CNT64_ANSIBLE_HOME
+
 #
 # Functions
 #
@@ -53,22 +56,13 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 #   0: package installed ok
 #   >0: unable to install package
 #######################################
-function cnt64_shellcheck_install() {
+function cnt64_setup_install() {
   bl64_dbg_app_show_function
-  local packages=''
 
-  if bl64_os_match "${BL64_OS_ALP}"; then
-    packages='shellcheck'
-  fi
-
-  bl64_msg_show_task 'deploy packages'
-  # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages || return $?
-
-  bl64_msg_show_task 'cleanup temporary files'
-  bl64_fs_cleanup_full
-
-  return 0
+  bl64_msg_show_task "Create ansible installation owner user (${CNT64_ANSIBLE_USER})" &&
+    bl64_iam_user_add "$CNT64_ANSIBLE_USER" "$CNT64_ANSIBLE_HOME" &&
+    bl64_fs_fix_permissions 'go+r' 'go+rx' "$CNT64_ANSIBLE_HOME" ||
+    return 0
 }
 
 #######################################
@@ -82,28 +76,28 @@ function cnt64_shellcheck_install() {
 #   0: initialization ok
 #   >: failed to initialize
 #######################################
-function cnt64_shellcheck_initialize() {
+function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
-  bl64_os_check_version "${BL64_OS_ALP}" &&
-    bl64_check_privilege_root &&
-    bl64_pkg_setup
+  bl64_check_export 'CNT64_ANSIBLE_USER' &&
+    bl64_check_export 'CNT64_ANSIBLE_HOME' &&
+    bl64_check_privilege_root
 }
 
 #
 # Main
 #
 
-declare cnt64_shellcheck_installer_description='Install application: Shellcheck'
-declare -i cnt64_shellcheck_status=0
+declare cnt64_setup_installer_description='Setup Container64 image'
+declare -i cnt64_setup_status=0
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$cnt64_shellcheck_installer_description"
+bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
-cnt64_shellcheck_initialize &&
-  cnt64_shellcheck_install
-cnt64_shellcheck_status=$?
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+cnt64_setup_initialize &&
+  cnt64_setup_install
+cnt64_setup_status=$?
 
-bl64_msg_show_batch_finish "$cnt64_shellcheck_status" "$cnt64_shellcheck_installer_description"
-exit $cnt64_shellcheck_status
+bl64_msg_show_batch_finish "$cnt64_setup_status" "$cnt64_setup_installer_description"
+exit $cnt64_setup_status

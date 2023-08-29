@@ -124,7 +124,7 @@ function cnt64_helm_initialize() {
 # Main
 #
 
-declare cnt64_helm_installer_description='Install package: Helm'
+declare cnt64_helm_installer_description='Install application: Helm'
 declare -i cnt64_helm_status=0
 
 bl64_msg_all_enable_verbose

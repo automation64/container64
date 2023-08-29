@@ -135,7 +135,7 @@ function cnt64_psqlcli_initialize() {
 # Main
 #
 
-declare cnt64_psqlcli_installer_description='Install package: PostgreSQL CLI'
+declare cnt64_psqlcli_installer_description='Install application: PostgreSQL CLI'
 declare -i cnt64_psqlcli_status=0
 
 bl64_msg_all_enable_verbose

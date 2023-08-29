@@ -122,7 +122,7 @@ function cnt64_k9s_initialize() {
 # Main
 #
 
-declare cnt64_k9s_installer_description='Install package: K9S'
+declare cnt64_k9s_installer_description='Install application: K9S'
 declare -i cnt64_k9s_status=0
 
 bl64_msg_all_enable_verbose

@@ -98,7 +98,7 @@ cnt64_bashlib64_initialize() {
 # Main
 #
 
-cnt64_bashlib64_task_title='Install package: BashLib64'
+cnt64_bashlib64_task_title='Install application: BashLib64'
 cnt64_bashlib64_status=0
 cnt64_bashlib64_download_tool='none'
 

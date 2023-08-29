@@ -122,7 +122,7 @@ function cnt64_awscli_initialize() {
 # Main
 #
 
-declare cnt64_awscli_installer_description='Install package: AWS CLI'
+declare cnt64_awscli_installer_description='Install application: AWS CLI'
 declare -i cnt64_awscli_status=0
 
 bl64_msg_all_enable_verbose

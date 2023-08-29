@@ -153,8 +153,7 @@ function cnt64_bootstrap_initialize() {
     bl64_check_export 'CNT64_LOCAL_BIN' &&
     bl64_check_export 'CNT64_OPT_ROOT' &&
     bl64_pkg_setup &&
-    bl64_check_privilege_root ||
-    return $?
+    bl64_check_privilege_root
 }
 
 #

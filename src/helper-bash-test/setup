@@ -93,10 +93,7 @@ function cnt64_setup_initialize() {
 
   bl64_os_check_version "${BL64_OS_ALP}" &&
     bl64_check_privilege_root &&
-    bl64_pkg_setup ||
-    return $?
-
-  return 0
+    bl64_pkg_setup
 }
 
 #

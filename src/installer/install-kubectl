@@ -105,7 +105,7 @@ function cnt64_kubectl_initialize() {
 # Main
 #
 
-declare cnt64_kubectl_installer_description='Install package: KubeCTL'
+declare cnt64_kubectl_installer_description='Install application: KubeCTL'
 declare -i cnt64_kubectl_status=0
 
 bl64_msg_all_enable_verbose

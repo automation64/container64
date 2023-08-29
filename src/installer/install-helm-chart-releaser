@@ -117,7 +117,7 @@ function cnt64_hcr_initialize() {
 # Main
 #
 
-declare cnt64_hcr_installer_description='Install package: Helm Chart Releaser'
+declare cnt64_hcr_installer_description='Install application: Helm Chart Releaser'
 declare -i cnt64_hcr_status=0
 
 bl64_msg_all_enable_verbose

@@ -107,7 +107,7 @@ function cnt64_gcloud_initialize() {
 # Main
 #
 
-declare cnt64_gcloud_installer_description='Install package: GCloud CLI'
+declare cnt64_gcloud_installer_description='Install application: GCloud CLI'
 declare -i cnt64_gcloud_status=0
 
 bl64_msg_all_enable_verbose

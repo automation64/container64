@@ -146,7 +146,7 @@ function cnt64_mongodbcli_initialize() {
 # Main
 #
 
-declare cnt64_mongodbcli_installer_description='Install package: MongoDB CLI'
+declare cnt64_mongodbcli_installer_description='Install application: MongoDB CLI'
 declare -i cnt64_mongodbcli_status=0
 
 bl64_msg_all_enable_verbose

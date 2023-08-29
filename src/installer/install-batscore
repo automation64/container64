@@ -108,7 +108,7 @@ function cnt64_batscore_initialize() {
 # Main
 #
 
-declare cnt64_batscore_installer_description='Install package: BatsCore'
+declare cnt64_batscore_installer_description='Install application: BatsCore'
 declare -i cnt64_batscore_status=0
 
 bl64_msg_all_enable_verbose

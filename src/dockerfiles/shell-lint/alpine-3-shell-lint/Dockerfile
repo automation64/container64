@@ -6,7 +6,7 @@ FROM ghcr.io/automation64/bash-test/alpine-3-bash-test:latest
 #
 
 # Set setup parameters
-ENV CNT64_SHELL_INT_USER="linter"
+ENV CNT64_SHELL_LINT_USER="linter"
 
 # Copy image setup script
 COPY helper-shell-lint/setup /setup
@@ -24,5 +24,5 @@ RUN \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-shellcheck
 
 # Run linter against /src
-USER ${CNT64_SHELL_INT_USER}
+USER ${CNT64_SHELL_LINT_USER}
 ENTRYPOINT [ "/usr/bin/shellcheck" ]

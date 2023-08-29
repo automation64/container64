@@ -35,7 +35,11 @@ export CNT64_DEBUG="${CNT64_DEBUG:-}"
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 # Setup parameters
-export CNT64_SHELL_INT_USER
+export CNT64_SHELL_LINT_USER
+
+#
+# Globals
+#
 
 #
 # Functions
@@ -55,8 +59,8 @@ export CNT64_SHELL_INT_USER
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
 
-  bl64_msg_show_task "Create entrypoint user (${CNT64_SHELL_INT_USER})"
-  bl64_iam_user_add "${CNT64_SHELL_INT_USER}" ||
+  bl64_msg_show_task "Create entrypoint user (${CNT64_SHELL_LINT_USER})"
+  bl64_iam_user_add "${CNT64_SHELL_LINT_USER}" ||
     return $?
 
   return 0
@@ -76,11 +80,8 @@ function cnt64_setup_install() {
 function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
-  bl64_check_export 'CNT64_SHELL_INT_USER' &&
-    bl64_check_privilege_root ||
-    exit $?
-
-  return 0
+  bl64_check_export 'CNT64_SHELL_LINT_USER' &&
+    bl64_check_privilege_root
 }
 
 #
