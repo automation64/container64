@@ -45,7 +45,8 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # repo definition: https://cloud.google.com/sdk/docs/install#rpm
 function cnt64_gcloud_install_el8() {
   local repository_name='google-cloud-cli'
-  local repository_url='https://packages.cloud.google.com/yum/repos/cloud-sdk-el8-x86_64'
+  local repository_platform='x86_64'
+  local repository_url="https://packages.cloud.google.com/yum/repos/cloud-sdk-el8-${repository_platform}"
   local repository_key='https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
   local packages='google-cloud-cli'
 

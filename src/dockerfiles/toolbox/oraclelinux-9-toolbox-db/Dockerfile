@@ -18,10 +18,10 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 COPY installer/* ${CNT64_INSTALLER_ROOT}/
 
 # Set installer parameters
-ENV CNT64_MONGOSHCLI_VERSION="6"
+ENV CNT64_MONGODBCLI_VERSION="6"
 ENV CNT64_PSQLCLI_VERSION="15"
 
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongoshcli && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongodbcli && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-psqlcli
