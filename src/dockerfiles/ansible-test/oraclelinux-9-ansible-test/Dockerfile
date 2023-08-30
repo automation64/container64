@@ -15,6 +15,14 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 #
 
 # Copy image setup script
+COPY helper-ansible-test/setup /setup
+
+# Setup image
+RUN \
+    sudo -E /setup && \
+    sudo rm /setup
+
+# Copy image setup script
 COPY helper-toolbox-ansible/setup /setup
 
 # Set setup parameters
@@ -32,3 +40,6 @@ COPY installer/* ${CNT64_INSTALLER_ROOT}/
 # Install applications
 RUN \
     sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
+
+# Run systemd to allow services
+CMD ["/lib/systemd/systemd"]
