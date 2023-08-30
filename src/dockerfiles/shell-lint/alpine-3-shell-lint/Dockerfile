@@ -1,23 +1,28 @@
 # Base image
 FROM ghcr.io/automation64/bash-test/alpine-3-bash-test:latest
 
-# Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_LINT_USER="linter"
+#
+# Setup image
+#
 
 # Copy image setup script
-COPY helper-shell-lint/image-setup /image-setup
+COPY helper-shell-lint/setup /setup
+
+# Set setup parameters
+ENV CNT64_SHELL_LINT_USER="linter"
 
 # Setup image
 RUN \
-    sudo -E /image-setup && \
-    sudo rm /image-setup
+    sudo -E /setup && \
+    sudo rm /setup
 
-# Setup image / shellcheck
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_shellcheck
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-shellcheck
 
-# Run shellcheck against /src
-USER ${CNT64_LINT_USER}
+# Run linter against /src
+USER ${CNT64_SHELL_LINT_USER}
 ENTRYPOINT [ "/usr/bin/shellcheck" ]

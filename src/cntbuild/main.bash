@@ -13,13 +13,14 @@ declare cntbuild_context=''
 cntbuild_context="$(pwd)/src"
 
 (($# == 0)) && cntbuild_help && exit 1
-while getopts ':bulnxc:e:o:V:D:h' cntbuild_option; do
+while getopts ':bulnrxc:e:o:V:D:h' cntbuild_option; do
   case "$cntbuild_option" in
   b) cntbuild_command='cntbuild_build' ;;
   u) cntbuild_command='cntbuild_publish' ;;
   l) cntbuild_command='cntbuild_list' ;;
   n) cntbuild_command='cntbuild_open' ;;
   x) cntbuild_command='cntbuild_delete' ;;
+  r) cntbuild_command='cntbuild_reset' ;;
   c) cntbuild_container="$OPTARG" ;;
   e) cntbuild_tag="$OPTARG" ;;
   o) cntbuild_context="$OPTARG" ;;
@@ -34,9 +35,10 @@ cntbuild_initialize "$cntbuild_command" || exit $?
 
 bl64_msg_show_batch_start "$cntbuild_command"
 case "$cntbuild_command" in
-'cntbuild_build' | 'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag";;
+'cntbuild_build' | 'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" ;;
 'cntbuild_list') "$cntbuild_command" "$cntbuild_context" ;;
 'cntbuild_delete') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" ;;
+'cntbuild_reset') "$cntbuild_command" ;;
 *) bl64_check_alert_parameter_invalid "$cntbuild_command" ;;
 esac
 cntbuild_status=$?

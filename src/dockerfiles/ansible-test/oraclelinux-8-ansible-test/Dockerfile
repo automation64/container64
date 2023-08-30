@@ -1,30 +1,45 @@
 # Base image
 FROM ghcr.io/automation64/bash-test/oraclelinux-8-bash-test:latest
 
-# Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_TEST_USER="test"
-ARG CNT64_ANSIBLE_USER="ansible"
-ARG CNT64_ANSIBLE_HOME="/opt/ansible"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-ARG CNT64_SYSTEMD_PREREQS="kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
-ARG CNT64_SYSTEMD_PACKAGES="systemd systemd-libs systemd-pam systemd-udev"
-ARG CNT64_SUDO_PACKAGES="sudo"
-ARG CNT64_PYTHON3_PREREQS="platform-python-pip python3-pip python3-setuptools"
-ARG CNT64_PYTHON3_PACKAGES="python36"
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+
+#
+# Setup image
+#
 
 # Copy image setup script
-COPY helper-ansible-test/image-setup /image-setup
+COPY helper-ansible-test/setup /setup
 
 # Setup image
 RUN \
-    sudo -E /image-setup && \
-    sudo rm /image-setup
+    sudo -E /setup && \
+    sudo rm /setup
 
-# Setup image / Ansible
+# Copy image setup script
+COPY helper-toolbox-ansible/setup /setup
+
+# Set setup parameters
+ENV CNT64_ANSIBLE_USER="ansible"
+ENV CNT64_ANSIBLE_HOME="${CNT64_OPT_ROOT}/ansible"
+
+# Setup image
 RUN \
-    sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_SYSADMIN_BIN}/toolbox64_install_ansible_2
+    sudo -E /setup && \
+    sudo rm /setup
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
+RUN \
+    sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]

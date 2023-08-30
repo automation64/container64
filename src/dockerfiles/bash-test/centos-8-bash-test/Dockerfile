@@ -4,36 +4,51 @@ FROM quay.io/centos/centos:8
 # Prepare package installer
 ENV container="docker"
 
-# Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_TEST_USER="test"
-ARG CNT64_HELPERS="sudo git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Copy image setup script
-COPY loader/bashlib64.bash /bashlib64.bash
-COPY helper-bash-test/image-setup /image-setup
-COPY helper-toolbox64/bootstrap /bootstrap
+ENV CNT64_DEBUG=""
+ENV CNT64_USER="test"
+ENV CNT64_TMP="/tmp"
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+ENV CNT64_LOCAL_ROOT="/usr/local"
+ENV CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN}/bin"
+ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 
-# Setup image / bootstrap
+#
+# Bootstrap image
+#
+
+# Copy image setup scripts
+COPY helper-toolbox/bootstrap /bootstrap
+COPY helper-bash-test/setup /setup
+COPY installer/install-bashlib64 /install-bashlib64
+
+# Bootstrap
 RUN \
-    chmod 700 /bootstrap /image-setup && \
+    chmod 700 /install-bashlib64 /bootstrap /setup && \
+    /install-bashlib64 && \
     /bootstrap && \
-    rm /bootstrap
+    rm /install-bashlib64 /bootstrap
 
+#
 # Setup image
-RUN \
-    /image-setup && \
-    rm /image-setup /bashlib64.bash
+#
 
-# Copy optional provisioning scripts
-COPY toolbox64/* ${CNT64_SYSADMIN_BIN}/
-
-# Setup image / bats-core
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
 RUN \
-    ${CNT64_SYSADMIN_BIN}/toolbox64_install_batscore
+    /setup && \
+    rm /setup
+
+# Install applications
+RUN \
+    ${CNT64_INSTALLER_ROOT}/install-batscore
 
 # Run bats-core against /test
 CMD [ "/test" ]
-USER ${CNT64_TEST_USER}
+USER ${CNT64_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]

@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+# Template: 1.0.0
+#######################################
+# Container64 / Package installer
+#
+# Author: SerDigital64 (https://github.com/serdigital64)
+# Repository: https://github.com/automation64/container64
+# Version: 1.0.0
+#
+#######################################
+# Copyright [2023] [serdigital64@gmail.com]
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
+
+#
+# Imports
+#
+
+# Environment Definition. See docs/base-environment.md for details
+export CNT64_BASHLIB64
+export CNT64_DEBUG="${CNT64_DEBUG:-}"
+
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
+source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+
+#
+# Globals
+#
+
+export CNT64_ANSIBLE_USER
+export CNT64_ANSIBLE_HOME
+export CNT64_ANSIBLE_VERSION="${CNT64_ANSIBLE_VERSION:-2.14}"
+
+#
+# Functions
+#
+
+function cnt64_ansible_promote_with_pip() {
+  local home_local="${CNT64_ANSIBLE_HOME}/.local"
+  local home_bin="${CNT64_ANSIBLE_HOME}/bin"
+  local apps='ansible ansible-playbook ansible-galaxy'
+  local file=''
+  local helper=''
+  local ansible_legacy='2.11'
+
+  bl64_fs_run_chmod '0755' "$home_local" &&
+    bl64_fs_fix_permissions '0644' '0755' "${home_local}/lib" &&
+    bl64_fs_fix_permissions '0755' '0755' "${home_local}/bin" ||
+    return $?
+
+  bl64_fs_run_mkdir "$home_bin" &&
+    for file in $apps; do
+      helper="${home_bin}/${file}"
+      # shellcheck disable=SC2016
+      printf '#!/bin/sh\n' >"$helper" &&
+        printf 'PYTHONPATH="${PYTHONPATH}:%s/lib/python%s/site-packages"\nexport PYTHONPATH\n' "$home_local" "$BL64_PY_VERSION_PYTHON3" >>"$helper" &&
+        printf 'PATH="${PATH}:%s/bin"\nexport PATH\n' "$home_local" >>"$helper" &&
+        printf '%s/bin/%s "$@"\n' "$home_local" "$file" >>"$helper" &&
+        bl64_fs_run_chmod '0755' "$helper" ||
+        return $?
+    done
+
+  return 0
+}
+
+function cnt64_ansible_install_with_pip() {
+  local packages=''
+
+  if bl64_os_match "${BL64_OS_OL}-8" "${BL64_OS_DEB}-10" "${BL64_OS_RHEL}-8" "${BL64_OS_RCK}-8" "${BL64_OS_ALM}-8" "${BL64_OS_UB}-20"; then
+    bl64_msg_show_alert "fixing ansible version for compatibility to target OS (${ansible_legacy})"
+    packages="ansible-core==${ansible_legacy}.*"
+  else
+    packages="ansible-core==${CNT64_ANSIBLE_VERSION}.*"
+  fi
+
+  bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
+    bl64_py_pip_usr_prepare &&
+    bl64_py_pip_usr_deploy "$packages"
+}
+
+#######################################
+# Install application packages
+#
+# Arguments:
+#   None. Parameters are imported from Globals
+# Outputs:
+#   Package installer progress and errors
+# Returns:
+#   0: package installed ok
+#   >0: unable to install package
+#######################################
+function cnt64_ansible_install() {
+  bl64_dbg_app_show_function
+
+  bl64_msg_show_task 'deploy application'
+  cnt64_ansible_install_with_pip &&
+    cnt64_ansible_promote_with_pip
+
+  return 0
+}
+
+#######################################
+# Initialize environment
+#
+# Arguments:
+#   None
+# Outputs:
+#   Initializacion progress messages
+# Returns:
+#   0: initialization ok
+#   >: failed to initialize
+#######################################
+function cnt64_ansible_initialize() {
+  bl64_dbg_app_show_function
+
+  bl64_check_export 'CNT64_ANSIBLE_USER' &&
+    bl64_check_export 'CNT64_ANSIBLE_HOME' &&
+    bl64_os_check_version \
+      "${BL64_OS_ALM}-8" "${BL64_OS_ALM}-9" \
+      "${BL64_OS_ALM}-8" "${BL64_OS_ALM}-9" \
+      "${BL64_OS_DEB}-10" "${BL64_OS_DEB}-11" \
+      "${BL64_OS_FD}-33" "${BL64_OS_FD}-35" "${BL64_OS_FD}-36" \
+      "${BL64_OS_OL}-8" "${BL64_OS_OL}-9" \
+      "${BL64_OS_RCK}-8" "${BL64_OS_RCK}-9" \
+      "${BL64_OS_RHEL}-8" "${BL64_OS_RHEL}-9" \
+      "${BL64_OS_UB}-20" "${BL64_OS_UB}-21" "${BL64_OS_UB}-22" "${BL64_OS_UB}-23" &&
+    bl64_py_setup
+}
+
+#
+# Main
+#
+
+declare cnt64_ansible_installer_description='Install application: Ansible (dedicated user)'
+declare -i cnt64_ansible_status=0
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$cnt64_ansible_installer_description"
+
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
+cnt64_ansible_initialize &&
+  cnt64_ansible_install
+cnt64_ansible_status=$?
+
+bl64_msg_show_batch_finish "$cnt64_ansible_status" "$cnt64_ansible_installer_description"
+exit $cnt64_ansible_status

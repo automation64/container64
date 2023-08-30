@@ -1,16 +1,22 @@
 # Base image
 FROM ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest
 
-# Define environment
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG CNT64_TEST_USER="test"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Setup image / Podman
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+
+#
+# Setup image
+#
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_podman
-
-# Run bats-core against /test
-CMD [ "/test" ]
-USER ${CNT64_TEST_USER}
-ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-podman

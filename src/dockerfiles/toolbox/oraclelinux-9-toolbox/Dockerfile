@@ -4,30 +4,46 @@ FROM docker.io/library/oraclelinux:9
 # Prepare package installer
 ENV container="docker"
 
-# Define environment
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
-ARG CNT64_SYSADMIN_USER="sysadmin"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Copy image setup script
-COPY loader/bashlib64.bash /bashlib64.bash
-COPY helper-toolbox64/image-setup /image-setup
-COPY helper-toolbox64/bootstrap /bootstrap
+ENV CNT64_DEBUG=""
+ENV CNT64_USER="sysadmin"
+ENV CNT64_TMP="/tmp"
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+ENV CNT64_LOCAL_ROOT="/usr/local"
+ENV CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN}/bin"
+ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 
-# Setup image / bootstrap
+#
+# Bootstrap image
+#
+
+# Copy image setup scripts
+COPY helper-toolbox/bootstrap /bootstrap
+COPY helper-toolbox/setup /setup
+COPY installer/install-bashlib64 /install-bashlib64
+
+# Bootstrap
 RUN \
-    chmod 700 /bootstrap /image-setup && \
+    chmod 700 /install-bashlib64 /bootstrap /setup && \
+    /install-bashlib64 && \
     /bootstrap && \
-    rm /bootstrap
+    rm /install-bashlib64 /bootstrap
 
+#
 # Setup image
+#
+
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
 RUN \
-    /image-setup && \
-    rm /image-setup /bashlib64.bash
+    /setup && \
+    rm /setup
 
-# Copy optional provisioning scripts
-COPY toolbox64/* ${CNT64_SYSADMIN_BIN}/
-
-# Set default user to sysadmin
-USER ${CNT64_SYSADMIN_USER}
+# Set default user and entrypoint
+USER ${CNT64_USER}
 ENTRYPOINT [ "/bin/bash" ]

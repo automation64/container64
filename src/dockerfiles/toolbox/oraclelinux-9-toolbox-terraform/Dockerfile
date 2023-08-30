@@ -1,17 +1,24 @@
 # Base image
 FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-cloud:latest
 
-# Prepare package installer
-ENV container="docker"
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
 
-# Define environment
-ARG CNT64_SYSADMIN_USER="sysadmin"
-ARG CNT64_SYSADMIN_BIN="/sa/bin"
-ARG TOOLBOX64_DEBUG=""
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
 
-# Install tools
+#
+# Setup image
+#
+
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
 RUN \
-    sudo -E ${CNT64_SYSADMIN_BIN}/toolbox64_install_terraform_1
-
-USER ${CNT64_SYSADMIN_USER}
-ENTRYPOINT [ "/bin/bash" ]
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-terraform && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-tfsec && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-tflint

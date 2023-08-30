@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+# Template: 1.0.0
+#######################################
+# Container64 / Bootstrap
+#
+# Author: SerDigital64 (https://github.com/serdigital64)
+# Repository: https://github.com/automation64/container64
+# Version: 1.0.0
+#
+#######################################
+# Copyright [2023] [serdigital64@gmail.com]
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
+
+#
+# Imports
+#
+
+# Environment Definition. See docs/base-environment.md for details
+export CNT64_BASHLIB64
+export CNT64_DEBUG
+export CNT64_LOCAL_ROOT
+export CNT64_LOCAL_BIN
+export CNT64_INSTALLER_ROOT
+export CNT64_OPT_ROOT
+
+# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
+source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+
+#
+# Globals
+#
+
+#
+# Functions
+#
+
+cnt64_bootstrap_fix_repository_centos8() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task 'Fix centos 8 repository location to use vault'
+  bl64_txt_run_sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
+    bl64_txt_run_sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+}
+
+cnt64_bootstrap_fix_repository_ubuntu2104() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task 'Fix ubuntu 21.4 repository location to use old-release'
+  bl64_txt_run_sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+}
+
+cnt64_bootstrap_fix_repository_debian9() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task 'Fix ubuntu 9 repository location to use archive'
+  local sources='/etc/apt/sources.list'
+  printf 'deb http://archive.debian.org/debian/ stretch main contrib non-free\n' >"$sources" &&
+    printf 'deb http://archive.debian.org/debian/ stretch-backports main contrib non-free\n' >>"$sources" &&
+    printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"$sources"
+}
+
+cnt64_bootstrap_fix_os_source() {
+  bl64_dbg_app_show_function
+  if bl64_os_match "${BL64_OS_CNT}-8"; then
+    cnt64_bootstrap_fix_repository_centos8
+  elif bl64_os_match "${BL64_OS_UB}-21"; then
+    cnt64_bootstrap_fix_repository_ubuntu2104
+  elif bl64_os_match "${BL64_OS_DEB}-9"; then
+    cnt64_bootstrap_fix_repository_debian9
+  fi
+}
+
+cnt64_bootstrap_install_sudo() {
+  bl64_dbg_app_show_function
+  local packages='sudo'
+  bl64_msg_show_task 'Install sudo'
+  if bl64_os_match "${BL64_OS_SLES}"; then
+    packages+=' gawk'
+  fi
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy $packages
+}
+
+cnt64_bootstrap_prepare_os() {
+  bl64_dbg_app_show_function
+  local public_mode='0755'
+  local public_owner='root'
+
+  bl64_msg_show_task 'Create shared paths'
+  bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
+    "$CNT64_LOCAL_ROOT" \
+    "$CNT64_LOCAL_BIN" \
+    "$CNT64_OPT_ROOT" ||
+    return $?
+
+  bl64_msg_show_task "Create container64 installers repository (${CNT64_INSTALLER_ROOT})"
+  bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
+    "${CNT64_INSTALLER_ROOT}" ||
+    return $?
+
+  return 0
+}
+
+#######################################
+# Install application packages
+#
+# Arguments:
+#   None. Parameters are imported from Globals
+# Outputs:
+#   Package installer progress and errors
+# Returns:
+#   0: package installed ok
+#   >0: unable to install package
+#######################################
+function cnt64_bootstrap_install() {
+  bl64_dbg_app_show_function
+
+  cnt64_bootstrap_fix_os_source &&
+    cnt64_bootstrap_install_sudo &&
+    cnt64_bootstrap_prepare_os ||
+    return $?
+
+  bl64_msg_show_task 'cleanup temporary files'
+  bl64_fs_cleanup_full
+  return 0
+}
+
+#######################################
+# Initialize environment
+#
+# Arguments:
+#   None
+# Outputs:
+#   Initializacion progress messages
+# Returns:
+#   0: initialization ok
+#   >: failed to initialize
+#######################################
+function cnt64_bootstrap_initialize() {
+  bl64_dbg_app_show_function
+
+  bl64_check_export 'CNT64_INSTALLER_ROOT' &&
+    bl64_check_export 'CNT64_LOCAL_ROOT' &&
+    bl64_check_export 'CNT64_LOCAL_BIN' &&
+    bl64_check_export 'CNT64_OPT_ROOT' &&
+    bl64_pkg_setup &&
+    bl64_check_privilege_root
+}
+
+#
+# Main
+#
+
+declare cnt64_bootstrap_task_title='Bootstrap Container64 environment'
+declare -i cnt64_bootstrap_status=0
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start "$cnt64_bootstrap_task_title"
+
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
+cnt64_bootstrap_initialize &&
+  cnt64_bootstrap_install
+cnt64_bootstrap_status=$?
+
+bl64_msg_show_batch_finish "$cnt64_bootstrap_status" "$cnt64_bootstrap_task_title"
+exit $cnt64_bootstrap_status
