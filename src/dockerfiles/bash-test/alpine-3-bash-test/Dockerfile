@@ -30,8 +30,8 @@ COPY installer/install-bashlib64 /install-bashlib64
 
 # Bootstrap
 RUN \
-    chmod 700 /install-bashlib64 /bootstrap /setup && \
     apk add bash gawk && \
+    chmod 700 /install-bashlib64 /bootstrap /setup && \
     /install-bashlib64 && \
     /bootstrap && \
     rm /install-bashlib64 /bootstrap

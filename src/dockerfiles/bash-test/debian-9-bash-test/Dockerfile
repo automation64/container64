@@ -1,5 +1,5 @@
 # Base Image
-FROM docker.io/library/debian/eol:stretch AS base
+FROM debian/eol:stretch AS base
 
 # Prepare package installer
 ENV container="docker"
@@ -30,6 +30,11 @@ COPY installer/install-bashlib64 /install-bashlib64
 
 # Bootstrap
 RUN \
+    printf 'deb http://archive.debian.org/debian/ stretch main contrib non-free\n' >"/etc/apt/sources.list" && \
+    printf 'deb http://archive.debian.org/debian/ stretch-backports main contrib non-free\n' >>"/etc/apt/sources.list" && \
+    printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"/etc/apt/sources.list" && \
+    apt-get update && \
+    apt-get install --assume-yes curl && \
     chmod 700 /install-bashlib64 /bootstrap /setup && \
     /install-bashlib64 && \
     /bootstrap && \

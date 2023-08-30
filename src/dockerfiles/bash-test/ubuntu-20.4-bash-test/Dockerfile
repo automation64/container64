@@ -30,6 +30,8 @@ COPY installer/install-bashlib64 /install-bashlib64
 
 # Bootstrap
 RUN \
+    apt-get update && \
+    apt-get install --assume-yes curl && \
     chmod 700 /install-bashlib64 /bootstrap /setup && \
     /install-bashlib64 && \
     /bootstrap && \
