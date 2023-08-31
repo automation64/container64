@@ -31,4 +31,4 @@ COPY installer/* ${CNT64_INSTALLER_ROOT}/
 
 # Install applications
 RUN \
-    sudo -E -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
+    sudo -E -H -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
