@@ -9,8 +9,11 @@ jobs:
     runs-on: "ubuntu-latest"
 
     permissions:
-      contents: read
-      packages: write
+      contents: "read"
+      packages: "write"
+
+    env:
+      CNTBUILD_LOGIN_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
 
     steps:
 
@@ -20,7 +23,7 @@ jobs:
       - name: "Prepare build environment"
         run: "./bin/dev-lib"
 
-      - name: "Run Bash linter"
+      - name: "Build and publish container images"
         shell: 'script -q -e -c "bash {0}"'
         run: "./bin/dev-container all 0"
 ...
