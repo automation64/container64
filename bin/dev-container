@@ -37,6 +37,8 @@ function dev_cnt_publish() {
 declare dev_cnt_build_target="${1:-all}"
 declare dev_cnt_build_only="${2:-${BL64_VAR_ON}}"
 declare dev_cnt_delete_first="${3:-${BL64_VAR_OFF}}"
+env | sort
+exit
 
 bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0' &&
