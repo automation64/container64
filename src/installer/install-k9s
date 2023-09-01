@@ -74,11 +74,6 @@ function cnt64_k9s_install() {
 
   bl64_msg_show_task 'download application'
   work_path="$(bl64_fs_create_tmpdir)" || return $?
-  if [[ "$CNT64_K9S_VERSION" == 'latest' ]]; then
-    CNT64_K9S_VERSION="$(bl64_vcs_github_release_get_latest "$repo_owner" "$repo_name")" ||
-      return $?
-  fi
-
   bl64_rxtx_github_get_asset "$repo_owner" "$repo_name" "$CNT64_K9S_VERSION" "$package_name" "${work_path}/${package_name}" &&
     bl64_arc_open_tar "${work_path}/${package_name}" "${work_path}" ||
     return $?

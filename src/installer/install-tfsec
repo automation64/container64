@@ -70,12 +70,6 @@ function cnt64_tfsec_install() {
   local app_cli_mode='0755'
   local app_cli='tfsec'
 
-  bl64_msg_show_task 'download application'
-  if [[ "$CNT64_TFSEC_VERSION" == 'latest' ]]; then
-    CNT64_TFSEC_VERSION="$(bl64_vcs_github_release_get_latest "$repo_owner" "$repo_name")" ||
-      return $?
-  fi
-
   bl64_msg_show_task 'deploy application'
   bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_TFSEC_TARGET" &&
     bl64_rxtx_github_get_asset "$repo_owner" "$repo_name" "$CNT64_TFSEC_VERSION" "$package_name" "${CNT64_TFSEC_TARGET}/${app_cli}" "$BL64_VAR_OFF" "$app_cli_mode" ||

@@ -1,22 +1,17 @@
 ---
-# Template: 2.2.0
-name: "Lint / Bash / TestManSH"
+name: "Deliver / Container"
 
 on:
-  pull_request:
-    branches:
-      - "main"
-  push:
-    branches:
-      - "feature/**"
-    paths:
-      - "src/cntbuild/*"
-      - "src/helper-*/*"
-      - "src/installer/**"
+  workflow_dispatch:
 
 jobs:
-  lint-bash-testmansh:
+  deliver-docker-all:
     runs-on: "ubuntu-latest"
+
+    permissions:
+      contents: read
+      packages: write
+
     steps:
 
       - name: "Check out repository code"
@@ -27,5 +22,5 @@ jobs:
 
       - name: "Run Bash linter"
         shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-lint"
+        run: "./bin/dev-container all 0"
 ...
