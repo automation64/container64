@@ -73,19 +73,19 @@ function dev_set_load_gitlab() {
 }
 
 function dev_set_load_github() {
-  local dot_secrets='.secrets-github'
+  local dot_local='.local-github'
 
   dev_set_message "GitHub detected, setting project root (${GITHUB_WORKSPACE})"
   # shellcheck disable=SC2155
   export DEVCNT_ROOT="$GITHUB_WORKSPACE"
 
-  dot_secrets="${DEVCNT_ROOT}/${dot_secrets}"
-  if [[ -f "$dot_secrets" ]]; then
-    dev_set_message "Load github secrets (${dot_secrets})"
+  dot_local="${DEVCNT_ROOT}/${dot_local}"
+  if [[ -f "$dot_local" ]]; then
+    dev_set_message "Load local github automatic environment variables (${dot_local})"
     # shellcheck source=SCRIPTDIR/../.secrets-github
-    source "${dot_secrets}" ||
+    source "${dot_local}" ||
       {
-        dev_set_error "unable to source file (${dot_secrets})"
+        dev_set_error "unable to source file (${dot_local})"
         return 1
       }
   fi

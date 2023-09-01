@@ -9,8 +9,11 @@ jobs:
     runs-on: "ubuntu-latest"
 
     permissions:
-      contents: read
-      packages: write
+      contents: "read"
+      packages: "write"
+
+    env:
+      CNTBUILD_LOGIN_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
 
     steps:
 

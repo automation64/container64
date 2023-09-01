@@ -10,3 +10,7 @@
 # Project base location. Adjust to your local GIT repo
 DEVCNT_ROOT="$(pwd)"
 export DEVCNT_ROOT
+
+# GitHub User
+CNTBUILD_LOGIN_USER='TBD'
+export CNTBUILD_LOGIN_USER
