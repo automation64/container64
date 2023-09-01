@@ -3,7 +3,7 @@
 # Set development environment variables
 #
 # * Source this script from the project's root directory
-# * Template Version: 6.0.0
+# * Template Version: 7.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -22,18 +22,24 @@
 #######################################
 
 #
+# Globals
+#
+
+export DEV_SET_VERBOSE="${DEV_SET_VERBOSE:-verbose}"
+
+#
 # Functions
 #
 
 function dev_set_error() {
   local msg="$1"
-  echo "Error: ${msg}"
+  echo "dev-set:Error: ${msg}"
   return 0
 }
 
 function dev_set_message() {
   local msg="$1"
-  [[ "$_DEV_SET_VERBOSE" == 'verbose' ]] && echo "$msg"
+  [[ "$_DEV_SET_VERBOSE" == 'verbose' ]] && echo "dev-set: ${msg}"
   return 0
 }
 
@@ -115,8 +121,6 @@ function dev_set_load_env() {
 #
 # Main
 #
-
-declare _DEV_SET_VERBOSE="${1:-no}"
 
 # shellcheck disable=SC2154
 if [[ -f ./.local ]]; then
