@@ -3,7 +3,7 @@
 # Set development environment variables
 #
 # * Source this script from the project's root directory
-# * Template Version: v5.0.0
+# * Template Version: 6.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -67,9 +67,22 @@ function dev_set_load_gitlab() {
 }
 
 function dev_set_load_github() {
+  local dot_secrets='.secrets-github'
+
   dev_set_message "GitHub detected, setting project root (${GITHUB_WORKSPACE})"
   # shellcheck disable=SC2155
   export DEVCNT_ROOT="$GITHUB_WORKSPACE"
+
+  dot_secrets="${DEVCNT_ROOT}/${dot_secrets}"
+  if [[ -f "$dot_secrets" ]]; then
+    dev_set_message "Load github secrets (${dot_secrets})"
+    # shellcheck source=SCRIPTDIR/../.secrets-github
+    source "${dot_secrets}" ||
+      {
+        dev_set_error "unable to source file (${dot_secrets})"
+        return 1
+      }
+  fi
 }
 
 function dev_set_load_testmansh() {
