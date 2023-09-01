@@ -1,11 +1,11 @@
 ---
-name: "Deliver / Container"
+name: "Deliver / Container / Terraform Test"
 
 on:
   workflow_dispatch:
 
 jobs:
-  deliver-docker-all:
+  deliver-docker-terraform-test:
     runs-on: "ubuntu-latest"
 
     permissions:
@@ -25,5 +25,5 @@ jobs:
 
       - name: "Build and publish container images"
         shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-container all 0"
+        run: "./bin/dev-container terraform_test 0"
 ...
