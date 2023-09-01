@@ -52,15 +52,15 @@ bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
 
 case "$dev_cnt_build_target" in
 'all')
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0" 'Publish bash-test containers - level 0' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_ANSIBLE_L1" 'Publish ansible-test containers - level 1' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Publish shell-lint - level 1' &&
+  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L2" 'Publish toolbox containers - level 2' &&
+    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0" 'Publish bash-test containers - level 0' &&
+    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L2" 'Publish bash-test containers - level 2' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L3" 'Publish bash-test containers - level 3' &&
+    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Publish shell-lint - level 1' &&
+    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_ANSIBLE_L1" 'Publish ansible-test containers - level 1' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Publish terraform-test containers - level 3'
   ;;
 'toolbox')
@@ -74,19 +74,14 @@ case "$dev_cnt_build_target" in
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L2" 'Publish bash-test containers - level 2' &&
     dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L3" 'Publish bash-test containers - level 3'
   ;;
-'ansible')
-  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0" 'Publish bash-test containers - level 0' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_ANSIBLE_L1" 'Publish ansible-test containers - level 1'
+'ansible_test')
+  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_ANSIBLE_L1" 'Publish ansible-test containers - level 1'
   ;;
 'shell_lint')
-  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0" 'Publish bash-test containers - level 0' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Publish shell-lint - level 1'
+  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_SHELL_LINT_L1" 'Publish shell-lint - level 1'
   ;;
 'terraform_test')
-  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L2" 'Publish toolbox containers - level 2' &&
-    dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Publish terraform-test containers - level 3'
+  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Publish terraform-test containers - level 3'
   ;;
-*) bl64_check_alert_parameter_invalid 'build_target' 'not one of: [all|toolbox|bash|ansible|shell|terraform]' ;;
+*) bl64_check_alert_parameter_invalid 'build_target' 'not one of: [all|toolbox|bash_test|ansible_test|shell_lint|terraform_test]' ;;
 esac
