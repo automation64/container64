@@ -77,7 +77,7 @@ function cnt64_kubectl_install() {
 
   bl64_msg_show_task "publish application to searchable path (${CNT64_LOCAL_BIN})"
   # shellcheck disable=SC2086
-  bl64_fs_run_ln -f $BL64_FS_SET_LN_SYMBOLIC "${CNT64_KUBECTL_TARGET}/${app_cli_release}" "${CNT64_LOCAL_BIN}/${app_cli}" ||
+  bl64_fs_run_ln $BL64_FS_SET_LN_FORCE $BL64_FS_SET_LN_SYMBOLIC "${CNT64_KUBECTL_TARGET}/${app_cli_release}" "${CNT64_LOCAL_BIN}/${app_cli}" ||
     return $?
 
   return 0
