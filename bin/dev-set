@@ -39,7 +39,7 @@ function dev_set_error() {
 
 function dev_set_message() {
   local msg="$1"
-  [[ "$_DEV_SET_VERBOSE" == 'verbose' ]] && echo "dev-set: ${msg}"
+  [[ "$DEV_SET_VERBOSE" == 'verbose' ]] && echo "dev-set: ${msg}"
   return 0
 }
 
