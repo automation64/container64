@@ -19,4 +19,4 @@ COPY installer/* ${CNT64_INSTALLER_ROOT}/
 
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/podman
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-podman
