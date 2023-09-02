@@ -28,10 +28,10 @@
 #
 
 # Environment Definition. See docs/base-environment.md for details
-export CNT64_BASHLIB64
+export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64/bashlib64.bash}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
-export CNT64_LOCAL_BIN
-export CNT64_OPT_ROOT
+export CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN:-/usr/local/bin}"
+export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-/opt}"
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }

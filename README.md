@@ -24,6 +24,7 @@
 | ----------------------------------------- | ----------- | ----------------------------------------------------------- |
 | `toolbox/oraclelinux-9-toolbox-ansible`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-container` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-db`        | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |

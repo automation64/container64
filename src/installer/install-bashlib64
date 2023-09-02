@@ -84,6 +84,11 @@ function cnt64_bashlib64_install() {
 #   >: failed to initialize
 #######################################
 function cnt64_bashlib64_initialize() {
+  if [[ "$EUID" != '0' ]]; then
+    echo 'Error: script must be run as root user'
+    return 1
+  fi
+
   if command -v 'curl' >/dev/null 2>&1; then
     cnt64_bashlib64_download_tool='curl'
   elif command -v 'wget' >/dev/null 2>&1; then

@@ -24,4 +24,6 @@ ENV CNT64_KUBECTL_VERSION="1.28.0"
 RUN \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-kubectl && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-helm && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-k9s
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-k9s && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-kubescape

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Template: 1.0.0
 #######################################
-# Container64 / Setup container image
+# Container64 / Package installer
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
@@ -30,6 +30,8 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64/bashlib64.bash}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN:-/usr/local/bin}"
+export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-/opt}"
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
@@ -38,8 +40,9 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Globals
 #
 
-export CNT64_ANSIBLE_USER
-export CNT64_ANSIBLE_HOME
+export CNT64_KUBESCAPE_PLATFORM="${CNT64_KUBESCAPE_PLATFORM:-ubuntu}"
+export CNT64_KUBESCAPE_TARGET="${CNT64_KUBESCAPE_TARGET:-${CNT64_OPT_ROOT}/kubescape}"
+export CNT64_KUBESCAPE_VERSION="${CNT64_KUBESCAPE_VERSION:-latest}"
 
 #
 # Functions
@@ -56,13 +59,26 @@ export CNT64_ANSIBLE_HOME
 #   0: package installed ok
 #   >0: unable to install package
 #######################################
-function cnt64_setup_install() {
+function cnt64_kubescape_install() {
   bl64_dbg_app_show_function
+  local repo_owner='kubescape'
+  local repo_name='kubescape'
+  local package_prefix='kubescape-'
+  local package_sufix='-latest'
+  local package_name="${package_prefix}${CNT64_KUBESCAPE_PLATFORM}${package_sufix}"
+  local app_target_mode='0755'
+  local app_target_owner='root'
+  local app_cli_mode='0755'
+  local app_cli='kubescape'
 
-  bl64_msg_show_task "Create ansible installation owner user (${CNT64_ANSIBLE_USER})" &&
-    bl64_iam_user_add "$CNT64_ANSIBLE_USER" "$CNT64_ANSIBLE_HOME" &&
-    bl64_fs_fix_permissions 'go+r' 'go+rx' "$CNT64_ANSIBLE_HOME" ||
-    return 0
+  bl64_msg_show_task 'deploy application'
+  bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_KUBESCAPE_TARGET" &&
+    bl64_rxtx_github_get_asset "$repo_owner" "$repo_name" "$CNT64_KUBESCAPE_VERSION" "$package_name" "${CNT64_KUBESCAPE_TARGET}/${package_name}" "$BL64_VAR_ON" "$app_cli_mode" ||
+    return $?
+
+  bl64_msg_show_task "publish application to searchable path (${CNT64_LOCAL_BIN})"
+  # shellcheck disable=SC2086
+  bl64_fs_run_ln $BL64_FS_SET_LN_SYMBOLIC $BL64_FS_SET_LN_FORCE "${CNT64_KUBESCAPE_TARGET}/${package_name}" "${CNT64_LOCAL_BIN}/${app_cli}"
 }
 
 #######################################
@@ -76,11 +92,11 @@ function cnt64_setup_install() {
 #   0: initialization ok
 #   >: failed to initialize
 #######################################
-function cnt64_setup_initialize() {
+function cnt64_kubescape_initialize() {
   bl64_dbg_app_show_function
-
-  bl64_check_export 'CNT64_ANSIBLE_USER' &&
-    bl64_check_export 'CNT64_ANSIBLE_HOME' &&
+  bl64_check_export 'CNT64_LOCAL_BIN' &&
+    bl64_check_export 'CNT64_OPT_ROOT' &&
+    bl64_arc_setup &&
     bl64_check_privilege_root
 }
 
@@ -88,16 +104,16 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-declare cnt64_setup_installer_description='Setup Container64 image'
-declare -i cnt64_setup_status=0
+declare cnt64_kubescape_installer_description='Install application: Kubescape'
+declare -i cnt64_kubescape_status=0
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$cnt64_setup_installer_description"
+bl64_msg_show_batch_start "$cnt64_kubescape_installer_description"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
-cnt64_setup_initialize &&
-  cnt64_setup_install
-cnt64_setup_status=$?
+cnt64_kubescape_initialize &&
+  cnt64_kubescape_install
+cnt64_kubescape_status=$?
 
-bl64_msg_show_batch_finish "$cnt64_setup_status" "$cnt64_setup_installer_description"
-exit $cnt64_setup_status
+bl64_msg_show_batch_finish "$cnt64_kubescape_status" "$cnt64_kubescape_installer_description"
+exit $cnt64_kubescape_status
