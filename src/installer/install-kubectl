@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -30,8 +30,8 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64/bashlib64.bash}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
-export CNT64_LOCAL_BIN
-export CNT64_OPT_ROOT
+export CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN:-/usr/local/bin}"
+export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-/opt}"
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
@@ -43,7 +43,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 export CNT64_KUBECTL_PLATFORM="${CNT64_KUBECTL_PLATFORM:-linux/amd64}"
 export CNT64_KUBECTL_SOURCE="${CNT64_KUBECTL_SOURCE:-https://dl.k8s.io}"
 export CNT64_KUBECTL_TARGET="${CNT64_KUBECTL_TARGET:-${CNT64_OPT_ROOT}/kubectl}"
-export CNT64_KUBECTL_VERSION="${CNT64_KUBECTL_VERSION:-2.27}"
+export CNT64_KUBECTL_VERSION="${CNT64_KUBECTL_VERSION:-stable}"
 
 #
 # Functions
@@ -64,13 +64,22 @@ function cnt64_kubectl_install() {
   bl64_dbg_app_show_function
   local package_name='kubectl'
   local package_url="${CNT64_KUBECTL_SOURCE}/release/v${CNT64_KUBECTL_VERSION}/bin/${CNT64_KUBECTL_PLATFORM}"
+  local package_url_stable="${CNT64_KUBECTL_SOURCE}/release/stable.txt"
   local app_target_mode='0755'
   local app_target_owner='root'
   local app_cli_mode='0755'
   local app_cli='kubectl'
-  local app_cli_release="${app_cli}-$CNT64_KUBECTL_VERSION}"
+  local app_cli_release="${app_cli}-${CNT64_KUBECTL_VERSION}"
 
-  bl64_msg_show_task 'deploy application'
+  bl64_msg_show_task 'download application'
+  if [[ "$CNT64_KUBECTL_VERSION" == 'stable' ]]; then
+    CNT64_KUBECTL_VERSION="$(bl64_rxtx_run_curl $BL64_RXTX_SET_CURL_SILENT $BL64_RXTX_SET_CURL_REDIRECT "$package_url_stable")"
+    [[ -z "$CNT64_KUBECTL_VERSION" ]] && bl64_msg_show_error "unable to determine stable version (${package_url_stable})" && return 1
+    CNT64_KUBECTL_VERSION="${CNT64_KUBECTL_VERSION#v}"
+    package_url="${CNT64_KUBECTL_SOURCE}/release/v${CNT64_KUBECTL_VERSION}/bin/${CNT64_KUBECTL_PLATFORM}"
+    app_cli_release="${app_cli}-${CNT64_KUBECTL_VERSION}"
+  fi
+
   bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_KUBECTL_TARGET" &&
     bl64_rxtx_web_get_file "${package_url}/${package_name}" "${CNT64_KUBECTL_TARGET}/${app_cli_release}" "$BL64_VAR_OFF" "$app_cli_mode" ||
     return $?
