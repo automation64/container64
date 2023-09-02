@@ -43,7 +43,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 export CNT64_HCR_PLATFORM="${CNT64_HCR_PLATFORM:-linux_amd64}"
 export CNT64_HCR_SOURCE="${CNT64_HCR_SOURCE:-https://github.com/helm/chart-releaser/releases/download}"
 export CNT64_HCR_TARGET="${CNT64_HCR_TARGET:-${CNT64_OPT_ROOT}/chart-releaser}"
-export CNT64_HCR_VERSION="${CNT64_HCR_VERSION:-1.6.0}"
+export CNT64_HCR_VERSION="${CNT64_HCR_VERSION:-latest}"
 
 #
 # Functions
@@ -62,10 +62,12 @@ export CNT64_HCR_VERSION="${CNT64_HCR_VERSION:-1.6.0}"
 #######################################
 function cnt64_hcr_install() {
   bl64_dbg_app_show_function
+  local repo_owner='helm'
+  local repo_name='chart-releaser'
   local package_prefix='chart-releaser'
   local package_sufix='.tar.gz'
-  local package_name="${package_prefix}_${CNT64_HCR_VERSION}_${CNT64_HCR_PLATFORM}${package_sufix}"
-  local package_url="${CNT64_HCR_SOURCE}/v${CNT64_HCR_VERSION}"
+  local package_name=''
+  local package_url=''
   local work_path=''
   local app_target_mode='0755'
   local app_target_owner='root'
@@ -74,6 +76,14 @@ function cnt64_hcr_install() {
 
   bl64_msg_show_task 'download application'
   work_path="$(bl64_fs_create_tmpdir)" || return $?
+  if [[ "$CNT64_HCR_VERSION" == 'latest' ]]; then
+    CNT64_HCR_VERSION="$(bl64_vcs_github_release_get_latest "$repo_owner" "$repo_name")" ||
+      return $?
+    CNT64_HCR_VERSION="${CNT64_HCR_VERSION#v}"
+  fi
+  package_name="${package_prefix}_${CNT64_HCR_VERSION}_${CNT64_HCR_PLATFORM}${package_sufix}"
+  package_url="${CNT64_HCR_SOURCE}/v${CNT64_HCR_VERSION}"
+
   bl64_rxtx_web_get_file "${package_url}/${package_name}" "${work_path}/${package_name}" &&
     bl64_arc_open_tar "${work_path}/${package_name}" "${work_path}" ||
     return $?
