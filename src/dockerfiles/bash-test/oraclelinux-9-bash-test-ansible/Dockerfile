@@ -1,27 +1,34 @@
 # Base image
-FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-ansible-2:latest
+FROM ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest
 
-# Define environment
-ARG CNT64_DEBUG=""
-ARG CNT64_SYSADMIN_TMP='/sa/tmp'
-ARG CNT64_INSTALLER_ROOT='/sa/bin'
-ARG CNT64_USER="test"
-ARG CNT64_HELPERS=""
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
+
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+
+#
+# Setup image
+#
 
 # Copy image setup script
-COPY helper-bash-test/image-setup ${CNT64_SYSADMIN_TMP}/image-setup
+COPY helper-toolbox-ansible/setup /setup
+
+# Set setup parameters
+ENV CNT64_ANSIBLE_USER="ansible"
+ENV CNT64_ANSIBLE_HOME="${CNT64_OPT_ROOT}/ansible"
 
 # Setup image
 RUN \
-    sudo chmod 0700 ${CNT64_SYSADMIN_TMP}/image-setup && \
-    sudo -E ${CNT64_SYSADMIN_TMP}/image-setup && \
-    sudo rm ${CNT64_SYSADMIN_TMP}/image-setup
+    sudo -E /setup && \
+    sudo rm /setup
 
-# Setup image / bats-core
+# Update installers
+COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
+# Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-batscore
-
-# Run bats-core against /test
-CMD [ "/test" ]
-USER ${CNT64_USER}
-ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
+    sudo -E -H -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
