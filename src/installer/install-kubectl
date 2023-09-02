@@ -63,22 +63,23 @@ export CNT64_KUBECTL_VERSION="${CNT64_KUBECTL_VERSION:-stable}"
 function cnt64_kubectl_install() {
   bl64_dbg_app_show_function
   local package_name='kubectl'
-  local package_url="${CNT64_KUBECTL_SOURCE}/release/v${CNT64_KUBECTL_VERSION}/bin/${CNT64_KUBECTL_PLATFORM}"
+  local package_url=''
   local package_url_stable="${CNT64_KUBECTL_SOURCE}/release/stable.txt"
   local app_target_mode='0755'
   local app_target_owner='root'
   local app_cli_mode='0755'
   local app_cli='kubectl'
-  local app_cli_release="${app_cli}-${CNT64_KUBECTL_VERSION}"
+  local app_cli_release=''
 
   bl64_msg_show_task 'download application'
   if [[ "$CNT64_KUBECTL_VERSION" == 'stable' ]]; then
     CNT64_KUBECTL_VERSION="$(bl64_rxtx_run_curl $BL64_RXTX_SET_CURL_SILENT $BL64_RXTX_SET_CURL_REDIRECT "$package_url_stable")"
-    [[ -z "$CNT64_KUBECTL_VERSION" ]] && bl64_msg_show_error "unable to determine stable version (${package_url_stable})" && return 1
+    [[ -z "$CNT64_KUBECTL_VERSION" ]] && bl64_msg_show_error "unable to determine stable version (${package_url_stable})" &&
+      return 1
     CNT64_KUBECTL_VERSION="${CNT64_KUBECTL_VERSION#v}"
-    package_url="${CNT64_KUBECTL_SOURCE}/release/v${CNT64_KUBECTL_VERSION}/bin/${CNT64_KUBECTL_PLATFORM}"
-    app_cli_release="${app_cli}-${CNT64_KUBECTL_VERSION}"
   fi
+  package_url="${CNT64_KUBECTL_SOURCE}/release/v${CNT64_KUBECTL_VERSION}/bin/${CNT64_KUBECTL_PLATFORM}"
+  app_cli_release="${app_cli}-${CNT64_KUBECTL_VERSION}"
 
   bl64_fs_create_dir "$app_target_mode" "$app_target_owner" "$app_target_owner" "$CNT64_KUBECTL_TARGET" &&
     bl64_rxtx_web_get_file "${package_url}/${package_name}" "${CNT64_KUBECTL_TARGET}/${app_cli_release}" "$BL64_VAR_OFF" "$app_cli_mode" ||
