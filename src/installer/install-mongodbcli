@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -57,7 +57,7 @@ function cnt64_mongodbcli_install_v5() {
     repository_platform='x86_64'
     repository_url="https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/5.0/${repository_platform}/"
     repository_key='https://www.mongodb.org/static/pgp/server-5.0.asc'
-    packages='mongodb-org-tools mongodb-mongosh'
+    packages='mongodb-atlas mongodb-atlas-cli mongodb-database-tools mongodb-mongosh'
     bl64_pkg_repository_add "$repository_name" "$repository_url" "$repository_key"
   fi
   # shellcheck disable=SC2181
@@ -111,7 +111,7 @@ function cnt64_mongodbcli_install() {
   '6') cnt64_mongodbcli_install_v6 ;;
   *) bl64_check_alert_parameter_invalid ;;
   esac
-  (($? != 0)) && return $?
+  (($? != 0)) && return 1
 
   bl64_msg_show_task 'cleanup temporary files'
   bl64_fs_cleanup_full
