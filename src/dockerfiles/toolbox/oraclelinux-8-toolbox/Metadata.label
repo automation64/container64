@@ -5,5 +5,5 @@ org.opencontainers.image.source=https://github.com/automation64/container64
 org.opencontainers.image.version=1.0.1
 org.opencontainers.image.vendor=https://github.com/automation64/container64
 org.opencontainers.image.licenses=Apache-2.0
-org.opencontainers.image.title=oraclelinux-9-toolbox-db
-org.opencontainers.image.description=provide common OS management tools for MongoDB and Postgresql"
+org.opencontainers.image.title=oraclelinux-8-toolbox
+org.opencontainers.image.description=Provide common OS management tools

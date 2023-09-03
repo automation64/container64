@@ -106,10 +106,10 @@ function cnt64_mongodbcli_install_v6() {
 function cnt64_mongodbcli_install() {
   bl64_dbg_app_show_function
 
+  # shellcheck disable=SC2249
   case "$CNT64_MONGODBCLI_VERSION" in
   '5') cnt64_mongodbcli_install_v5 ;;
   '6') cnt64_mongodbcli_install_v6 ;;
-  *) bl64_check_alert_parameter_invalid ;;
   esac
   (($? != 0)) && return 1
 

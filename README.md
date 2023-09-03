@@ -20,15 +20,19 @@
 - Purpose: Linux systems administration
 - Packages: common os management tools
 
-| Image                                     | OS          | Base Image                                                  |
-| ----------------------------------------- | ----------- | ----------------------------------------------------------- |
-| `toolbox/oraclelinux-9-toolbox-ansible`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-cloud`     | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-container` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
-| `toolbox/oraclelinux-9-toolbox-db`        | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
-| `toolbox/oraclelinux-9-toolbox-k8s`       | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
-| `toolbox/oraclelinux-9-toolbox-terraform` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
-| `toolbox/oraclelinux-9-toolbox`           | oraclelinux | `docker.io/library/oraclelinux:9`                           |
+| Image                                        | OS          | Base Image                                                  |
+| -------------------------------------------- | ----------- | ----------------------------------------------------------- |
+| `toolbox/oraclelinux-8-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:8`                           |
+| `toolbox/oraclelinux-9-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:9`                           |
+| `toolbox/oraclelinux-9-toolbox-ansible`      | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-cloud`        | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-container`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
+| `toolbox/oraclelinux-9-toolbox-db`           | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-k8s`          | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-mongodbcli-5` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-psqlcli-13`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-terraform`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 
 ### Container collection: Bash Linter
 
