@@ -74,7 +74,7 @@ function cnt64_docker_install() {
     cnt64_docker_install_centos
   fi
   # shellcheck disable=SC2181
-  (($? != 0)) && return $?
+  (($? != 0)) && return 1
 
   bl64_msg_show_task 'cleanup temporary files'
   bl64_fs_cleanup_full
