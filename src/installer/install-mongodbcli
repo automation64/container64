@@ -111,6 +111,7 @@ function cnt64_mongodbcli_install() {
   '5') cnt64_mongodbcli_install_v5 ;;
   '6') cnt64_mongodbcli_install_v6 ;;
   esac
+  # shellcheck disable=SC2181
   (($? != 0)) && return 1
 
   bl64_msg_show_task 'cleanup temporary files'

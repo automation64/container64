@@ -44,6 +44,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 
 function cnt64_docker_install_centos() {
   local repository_name='docker-ce'
+  # shellcheck disable=SC2016
   local repository_url='https://download.docker.com/linux/centos/$releasever/$basearch/stable'
   local repository_key='https://download.docker.com/linux/centos/gpg'
   local packages='docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin'

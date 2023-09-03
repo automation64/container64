@@ -44,6 +44,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 
 function cnt64_terraform_install_rhel() {
   local repository_name='terraform'
+  # shellcheck disable=SC2016
   local repository_url='https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable'
   local repository_key='https://rpm.releases.hashicorp.com/gpg'
   local packages='terraform'

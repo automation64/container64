@@ -113,6 +113,7 @@ function cnt64_psqlcli_install() {
   '13') cnt64_psqlcli_install_v13 ;;
   '15') cnt64_psqlcli_install_v15 ;;
   esac
+  # shellcheck disable=SC2181
   (($? != 0)) && return 1
 
   bl64_msg_show_task 'cleanup temporary files'
