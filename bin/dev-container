@@ -38,16 +38,17 @@ declare dev_cnt_build_target="${1:-all}"
 declare dev_cnt_build_only="${2:-${BL64_VAR_ON}}"
 declare dev_cnt_delete_first="${3:-${BL64_VAR_OFF}}"
 
-bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' &&
+bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L1' &&
-  bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L1' &&
-  bl64_check_export 'DEVCNT_IMAGES_SHELL_LINT_L1' &&
-  bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L1' &&
-  bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L2' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L2' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L3' &&
-  bl64_check_export 'DEVCNT_IMAGES_TERRAFORM_TEST_L3' ||
+  bl64_check_export 'DEVCNT_IMAGES_DEV_L0' &&
+  bl64_check_export 'DEVCNT_IMAGES_SHELL_LINT_L1' &&
+  bl64_check_export 'DEVCNT_IMAGES_TERRAFORM_TEST_L3' &&
+  bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L1' &&
+  bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L2' &&
+  bl64_check_export 'DEVCNT_IMAGES_TOOLBOX_L0' ||
   exit $?
 
 case "$dev_cnt_build_target" in
@@ -83,5 +84,8 @@ case "$dev_cnt_build_target" in
 'terraform_test')
   dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TERRAFORM_TEST_L3" 'Publish terraform-test containers - level 3'
   ;;
-*) bl64_check_alert_parameter_invalid 'build_target' 'not one of: [all|toolbox|bash_test|ansible_test|shell_lint|terraform_test]' ;;
+'dev')
+  dev_cnt_publish "$dev_cnt_build_only" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_DEV_L0" 'Publish dev - level 0'
+  ;;
+*) bl64_check_alert_parameter_invalid 'build_target' 'not one of: [all|toolbox|bash_test|ansible_test|shell_lint|terraform_test|dev]' ;;
 esac
