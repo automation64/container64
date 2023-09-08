@@ -58,9 +58,8 @@ function cnt64_setup_install() {
   bl64_dbg_app_show_function
   local packages=''
   local user_mode='0755'
-  local user_shell="/bin/bash"
+  local user_shell='/bin/bash'
   local user_home="/home/${CNT64_USER}"
-  local user_bashrc="${user_home}/.bashrc"
   local xdg_config="${user_home}/.config"
   local xdg_cache="${user_home}/.cache"
   local xdg_local="${user_home}/.local"

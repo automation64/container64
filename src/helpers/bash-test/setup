@@ -30,6 +30,7 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64/bashlib64.bash}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_USER
 
 # shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
@@ -56,6 +57,12 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
   local packages=''
+  local user_mode='0755'
+  local user_shell='/bin/bash'
+  local user_home="/home/${CNT64_USER}"
+  local xdg_config="${user_home}/.config"
+  local xdg_cache="${user_home}/.cache"
+  local xdg_local="${user_home}/.local"
 
   if bl64_os_match "${BL64_OS_ALP}"; then
     packages='sudo git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata gettext'
@@ -85,7 +92,11 @@ function cnt64_setup_install() {
     return $?
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add "${CNT64_USER}" &&
+  "$BL64_IAM_CMD_USERADD" \
+    $BL64_IAM_SET_USERADD_CREATE_HOME \
+    $BL64_IAM_SET_USERADD_HOME_PATH "${user_home}" \
+    --shell "$user_shell" \
+    "$CNT64_USER" &&
     bl64_rbac_add_root "${CNT64_USER}" ||
     return $?
 
@@ -131,6 +142,7 @@ function cnt64_setup_initialize() {
     "${BL64_OS_RHEL}" \
     "${BL64_OS_SLES}" \
     "${BL64_OS_UB}" &&
+    bl64_check_export 'CNT64_USER' &&
     bl64_check_privilege_root &&
     bl64_pkg_setup
 }
