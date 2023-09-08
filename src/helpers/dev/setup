@@ -66,9 +66,9 @@ function cnt64_setup_install() {
   local xdg_local="${user_home}/.local"
 
   if bl64_os_match "${BL64_OS_OL}"; then
-    packages='git tar hostname wget unzip gettext bzip2 diffutils file'
+    packages='git tar hostname wget unzip gettext bzip2 diffutils file mc'
   elif bl64_os_match "${BL64_OS_UB}"; then
-    packages='git tar hostname wget unzip gettext bzip2 diffutils file gawk'
+    packages='git tar hostname wget unzip gettext bzip2 diffutils file gawk mc'
   fi
 
   bl64_msg_show_task 'deploy packages'

@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -59,7 +59,18 @@ function cnt64_setup_install() {
   local packages=''
 
   if bl64_os_match "${BL64_OS_OL}"; then
-    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext bzip2 diffutils file'
+    # Base tools
+    packages='hostname python3 python3-pip python3-setuptools gettext'
+    # File management tools
+    packages="${packages} tar unzip bzip2 xz mc file"
+    # Networking tools
+    packages="${packages} tcpdump bind-utils net-tools telnet nmap"
+    # File transfer tools
+    packages="${packages} ftp wget rsync"
+    # Performance tools
+    packages="${packages} sysstat strace ltrace"
+    # Code management tools
+    packages="${packages} git diffutils"
   fi
 
   bl64_msg_show_task 'deploy packages'
@@ -70,6 +81,17 @@ function cnt64_setup_install() {
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add "${CNT64_USER}" &&
     bl64_rbac_add_root "${CNT64_USER}" ||
+    return $?
+
+  bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
+  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
+    "$xdg_config" \
+    "$xdg_local" \
+    "$xdg_cache" \
+    "${xdg_local}/bin" \
+    "${xdg_local}/lib" \
+    "${xdg_local}/share" \
+    "${xdg_local}/state" ||
     return $?
 
   bl64_msg_show_task 'cleanup temporary files'

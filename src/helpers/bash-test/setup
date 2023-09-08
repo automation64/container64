@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -87,6 +87,17 @@ function cnt64_setup_install() {
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add "${CNT64_USER}" &&
     bl64_rbac_add_root "${CNT64_USER}" ||
+    return $?
+
+  bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
+  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
+    "$xdg_config" \
+    "$xdg_local" \
+    "$xdg_cache" \
+    "${xdg_local}/bin" \
+    "${xdg_local}/lib" \
+    "${xdg_local}/share" \
+    "${xdg_local}/state" ||
     return $?
 
   bl64_msg_show_task 'cleanup temporary files'
