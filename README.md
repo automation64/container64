@@ -11,11 +11,27 @@
   ░░░░░░░░░   ░░░░░░  ░░░░ ░░░░░    ░░░░░   ░░░░░░░░ ░░░░░ ░░░░ ░░░░░  ░░░░░░  ░░░░░      ░░░░░░░░        ░░░░░
 ```
 
+- [Project: Container64](#project-container64)
+  - [Overview](#overview)
+    - [Container collection: System Administration toolbox](#container-collection-system-administration-toolbox)
+    - [Container collection: Dev](#container-collection-dev)
+    - [Container collection: Bash Linter](#container-collection-bash-linter)
+    - [Container collection: Bash Testing](#container-collection-bash-testing)
+    - [Container collection: Terraform projects testing](#container-collection-terraform-projects-testing)
+    - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
+  - [Usage](#usage)
+  - [Deployment](#deployment)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Author](#author)
+
 ## Overview
 
 **Container64** is a catalog of OCI compliant container images for infrastructure management.
 
-### Container collection: Linux System Administration toolbox
+### Container collection: System Administration toolbox
 
 - Purpose: Linux systems administration
 - Packages: common os management tools
@@ -34,6 +50,16 @@
 | `toolbox/oraclelinux-9-toolbox-psqlcli-13`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-terraform`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 
+### Container collection: Dev
+
+- Purpose: Development environment
+- Packages: dev tools
+
+| Image                          | OS     | Base Image                                         |
+| ------------------------------ | ------ | -------------------------------------------------- |
+| `dev/ubuntu-22.04-dev`         | Ubuntu | `docker.io/library/ubuntu:22.04`                   |
+| `dev/ubuntu-22.04-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.04-dev:latest` |
+
 ### Container collection: Bash Linter
 
 - Purpose: Unix Shell scripts linting
@@ -42,37 +68,6 @@
 | Image                            | OS     | Base Image                   |
 | -------------------------------- | ------ | ---------------------------- |
 | `shell-lint/alpine-3-shell-lint` | alpine | `docker.io/library/alpine:3` |
-
-### Container collection: Terraform projects testing
-
-- Purpose: Terraform code testing
-- Packages: TFSec, TFLint, Terraform
-
-| Image                                         | OS          | Base Image                                                            |
-| --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
-| `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
-
-### Container collection: Ansible playbooks testing
-
-- Purpose: Ansible playbooks testing
-- Packages: SystemD, Sudo, Python3, Ansible
-
-| Image                                     | OS          | Base Image                                                      |
-| ----------------------------------------- | ----------- | --------------------------------------------------------------- |
-| `ansible-test/almalinux-8-ansible-test`   | almalinux   | `ghcr.io/automation64/bash-test/almalinux-8-bash-test:latest`   |
-| `ansible-test/centos-8-ansible-test`      | centos      | `ghcr.io/automation64/bash-test/centos-8-bash-test:latest`      |
-| `ansible-test/debian-10-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-10-bash-test:latest`     |
-| `ansible-test/debian-11-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-11-bash-test:latest`     |
-| `ansible-test/fedora-33-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-33-bash-test:latest`     |
-| `ansible-test/fedora-35-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-35-bash-test:latest`     |
-| `ansible-test/fedora-36-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-36-bash-test:latest`     |
-| `ansible-test/oraclelinux-8-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-8-bash-test:latest` |
-| `ansible-test/oraclelinux-9-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `ansible-test/rhel-8-ansible-test`        | rhel        | `ghcr.io/automation64/bash-test/rhel-8-bash-test:latest`        |
-| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `ghcr.io/automation64/bash-test/rockylinux-8-bash-test:latest`  |
-| `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-20.4-bash-test:latest`   |
-| `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
-| `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
 
 ### Container collection: Bash Testing
 
@@ -117,6 +112,37 @@
 | `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:22.10`                                |
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
 | `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
+
+### Container collection: Terraform projects testing
+
+- Purpose: Terraform code testing
+- Packages: TFSec, TFLint, Terraform
+
+| Image                                         | OS          | Base Image                                                            |
+| --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
+| `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
+
+### Container collection: Ansible playbooks testing
+
+- Purpose: Ansible playbooks testing
+- Packages: SystemD, Sudo, Python3, Ansible
+
+| Image                                     | OS          | Base Image                                                      |
+| ----------------------------------------- | ----------- | --------------------------------------------------------------- |
+| `ansible-test/almalinux-8-ansible-test`   | almalinux   | `ghcr.io/automation64/bash-test/almalinux-8-bash-test:latest`   |
+| `ansible-test/centos-8-ansible-test`      | centos      | `ghcr.io/automation64/bash-test/centos-8-bash-test:latest`      |
+| `ansible-test/debian-10-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-10-bash-test:latest`     |
+| `ansible-test/debian-11-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-11-bash-test:latest`     |
+| `ansible-test/fedora-33-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-33-bash-test:latest`     |
+| `ansible-test/fedora-35-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-35-bash-test:latest`     |
+| `ansible-test/fedora-36-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-36-bash-test:latest`     |
+| `ansible-test/oraclelinux-8-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-8-bash-test:latest` |
+| `ansible-test/oraclelinux-9-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
+| `ansible-test/rhel-8-ansible-test`        | rhel        | `ghcr.io/automation64/bash-test/rhel-8-bash-test:latest`        |
+| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `ghcr.io/automation64/bash-test/rockylinux-8-bash-test:latest`  |
+| `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-20.4-bash-test:latest`   |
+| `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
+| `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
 
 ## Usage
 

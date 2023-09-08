@@ -24,8 +24,8 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 #
 
 # Copy image setup scripts
-COPY helper-toolbox/bootstrap /bootstrap
-COPY helper-bash-test/setup /setup
+COPY helpers/toolbox/bootstrap /bootstrap
+COPY helpers/bash-test/setup /setup
 COPY installer/install-bashlib64 /install-bashlib64
 
 # Bootstrap
