@@ -38,64 +38,54 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Globals
 #
 
+# Dedicated user home path
 export CNT64_ANSIBLE_HOME
+# Ansible core version
 export CNT64_ANSIBLE_VERSION="${CNT64_ANSIBLE_VERSION:-latest}"
+# Use OS native package?
+export CNT64_ANSIBLE_FLAG_NATIVE="${CNT64_ANSIBLE_FLAG_NATIVE:-$BL64_VAR_OFF}"
+# Use Python PIPX?
+export CNT64_ANSIBLE_PIPX="${CNT64_ANSIBLE_PIPX:-$BL64_VAR_OFF}"
 
 #
 # Functions
 #
 
-function cnt64_ansible_promote_with_pip() {
-  local home_local="${CNT64_ANSIBLE_HOME}/.local"
-  local home_bin="${CNT64_ANSIBLE_HOME}/bin"
-  local apps='ansible ansible-playbook ansible-galaxy'
-  local app_target_mode='0755'
-  local app_cli=''
-  local app_helper=''
-  local app_full_path=''
+function cnt64_ansible_select_packages() {
+  local packages=''
+  local version_legacy='2.11'
+  local version_target=''
 
-  bl64_msg_show_task "publish application to searchable path (${home_bin})"
-  bl64_fs_create_dir "$app_target_mode" "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$home_bin" ||
-    return $?
-
-  for app_cli in $apps; do
-    app_helper="${home_bin}/${app_cli}"
-    app_full_path="${home_local}/bin/${app_cli}"
-    if [[ ! -x "$app_full_path" ]]; then
-        bl64_msg_error "unable to find ansible app (${app_full_path})}"
-        return 1
-    fi
-
-    # shellcheck disable=SC2016
-    printf '#!/bin/sh\n' >"$app_helper" &&
-      printf 'PYTHONPATH="${PYTHONPATH}:%s/lib/python%s/site-packages"\nexport PYTHONPATH\n' "$home_local" "$BL64_PY_VERSION_PYTHON3" >>"$app_helper" &&
-      printf 'PATH="${PATH}:%s/bin"\nexport PATH\n' "$home_local" >>"$app_helper" &&
-      printf '%s "$@"\n' "$app_full_path" >>"$app_helper" &&
-      bl64_fs_run_chmod '0755' "$app_helper" ||
-      return $?
-  done
-
-  return 0
+  if bl64_os_match "${BL64_OS_OL}-8" "${BL64_OS_CNT}-8" "${BL64_OS_DEB}-10" "${BL64_OS_RHEL}-8" "${BL64_OS_RCK}-8" "${BL64_OS_ALM}-8" "${BL64_OS_UB}-20"; then
+    bl64_msg_show_alert "fixing package version_target for compatibility to target OS (${version_legacy})"
+    version_target="==${version_legacy}.*"
+  elif [[ "$CNT64_ANSIBLE_VERSION" == 'latest' ]]; then
+    version_target=''
+  else
+    version_target="==${CNT64_ANSIBLE_VERSION}.*"
+  fi
+  packages="ansible-core${version_target}"
+  [[ -n "$packages" ]] && echo "$packages"
 }
 
 function cnt64_ansible_install_with_pip() {
   local packages=''
-  local ansible_legacy='2.11'
-  local ansible_version=''
 
-  if bl64_os_match "${BL64_OS_OL}-8" "${BL64_OS_CNT}-8" "${BL64_OS_DEB}-10" "${BL64_OS_RHEL}-8" "${BL64_OS_RCK}-8" "${BL64_OS_ALM}-8" "${BL64_OS_UB}-20"; then
-    bl64_msg_show_alert "fixing ansible version for compatibility to target OS (${ansible_legacy})"
-    ansible_version="==${ansible_legacy}.*"
-  elif [[ "$CNT64_ANSIBLE_VERSION" == 'latest' ]]; then
-    ansible_version=''
-  else
-    ansible_version="==${CNT64_ANSIBLE_VERSION}.*"
-  fi
-  packages="ansible-core${ansible_version}"
+  packages="$(cnt64_ansible_select_packages)" ||
+    return $?
 
   bl64_fs_set_umask "$BL64_FS_UMASK_RW_USER_RO_ALL" &&
     bl64_py_pip_usr_prepare &&
     bl64_py_pip_usr_deploy "$packages"
+}
+
+function cnt64_ansible_install_with_pipx() {
+  local packages=''
+
+  packages="$(cnt64_ansible_select_packages)" ||
+    return $?
+
+  pipx install "$packages"
 }
 
 #######################################
@@ -113,10 +103,11 @@ function cnt64_ansible_install() {
   bl64_dbg_app_show_function
 
   bl64_msg_show_task 'deploy application'
-  cnt64_ansible_install_with_pip ||
-    return $?
-
-  cnt64_ansible_promote_with_pip
+  if [[ "$CNT64_ANSIBLE_PIPX" == "$BL64_VAR_ON" ]]; then
+    cnt64_ansible_install_with_pipx
+  else
+    cnt64_ansible_install_with_pip
+  fi
 }
 
 #######################################
@@ -132,6 +123,10 @@ function cnt64_ansible_install() {
 #######################################
 function cnt64_ansible_initialize() {
   bl64_dbg_app_show_function
+
+  [[ "$CNT64_ANSIBLE_FLAG_NATIVE" != "$BL64_VAR_OFF" ]] &&
+    bl64_msg_show_error 'installer supports Python modules only' &&
+    return 1
 
   bl64_check_export 'CNT64_ANSIBLE_HOME' &&
     bl64_check_directory "$CNT64_ANSIBLE_HOME" &&
