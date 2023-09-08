@@ -55,9 +55,10 @@
 - Purpose: Development environment
 - Packages: dev tools
 
-| Image                  | OS     | Base Image                       |
-| ---------------------- | ------ | -------------------------------- |
-| `dev/ubuntu-22.04-dev` | Ubuntu | `docker.io/library/ubuntu:22.04` |
+| Image                          | OS     | Base Image                                         |
+| ------------------------------ | ------ | -------------------------------------------------- |
+| `dev/ubuntu-22.04-dev`         | Ubuntu | `docker.io/library/ubuntu:22.04`                   |
+| `dev/ubuntu-22.04-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.04-dev:latest` |
 
 ### Container collection: Bash Linter
 
