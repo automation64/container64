@@ -39,7 +39,9 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 #
 
 # Enable development packages?
-export CNT64_PYTHON_DEVELOPMENT="${CNT64_PYTHON_DEVELOPMENT:-$BL64_VAR_OFF}"
+export CNT64_PYTHON_FLAG_DEVELOPMENT="${CNT64_PYTHON_FLAG_DEVELOPMENT:-$BL64_VAR_OFF}"
+# Use OS native package?
+export CNT64_PYTHON_FLAG_NATIVE="${CNT64_PYTHON_FLAG_NATIVE:-$BL64_VAR_ON}"
 
 #
 # Functions
@@ -61,8 +63,8 @@ function cnt64_python_install() {
   local packages=''
 
   if bl64_os_match "${BL64_OS_UB}-22"; then
-    packages='python3 python3.9 python3-pip python3-venv'
-    [[ "$CNT64_PYTHON_DEVELOPMENT" == "$BL64_VAR_ON" ]] &&
+    packages='python3 python3.9 python3-pip python3-venv pipx'
+    [[ "$CNT64_PYTHON_FLAG_DEVELOPMENT" == "$BL64_VAR_ON" ]] &&
       packages="${packages} python3-dev build-essential"
   fi
 
@@ -89,6 +91,11 @@ function cnt64_python_install() {
 #######################################
 function cnt64_python_initialize() {
   bl64_dbg_app_show_function
+
+  [[ "$CNT64_PYTHON_FLAG_NATIVE" != "$BL64_VAR_ON" ]] &&
+    bl64_msg_show_error 'installer supports OS native packages only' &&
+    return 1
+
   bl64_os_check_version "${BL64_OS_UB}-22" &&
     bl64_check_privilege_root &&
     bl64_pkg_setup
