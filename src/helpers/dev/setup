@@ -57,8 +57,13 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
   local packages=''
-  local user_home="/home/${CNT64_USER}"
+  local user_mode='0755'
   local user_shell="/bin/bash"
+  local user_home="/home/${CNT64_USER}"
+  local user_bashrc="${user_home}/.bashrc"
+  local xdg_config="${user_home}/.config"
+  local xdg_cache="${user_home}/.cache"
+  local xdg_local="${user_home}/.local"
 
   if bl64_os_match "${BL64_OS_OL}"; then
     packages='git tar hostname wget unzip gettext bzip2 diffutils file'
@@ -78,6 +83,17 @@ function cnt64_setup_install() {
     --shell "$user_shell" \
     "$CNT64_USER" &&
     bl64_rbac_add_root "${CNT64_USER}" ||
+    return $?
+
+  bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
+  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
+    "$xdg_config" \
+    "$xdg_local" \
+    "$xdg_cache" \
+    "${xdg_local}/bin" \
+    "${xdg_local}/lib" \
+    "${xdg_local}/share" \
+    "${xdg_local}/state" ||
     return $?
 
   bl64_msg_show_task 'cleanup temporary files'
