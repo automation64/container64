@@ -35,7 +35,7 @@ export CNT64_LOCAL_BIN
 export CNT64_INSTALLER_ROOT
 export CNT64_OPT_ROOT
 
-# shellcheck source=SCRIPTDIR/../../lib/bashlib64.bash
+# shellcheck source=SCRIPTDIR/../../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
