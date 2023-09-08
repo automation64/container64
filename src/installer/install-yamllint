@@ -39,7 +39,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 #
 
 # Use OS native package?
-export CNT64_YAMLLINT_NATIVE="${CNT64_YAMLLINT_NATIVE:-$BL64_VAR_ON}"
+export CNT64_YAMLLINT_FLAG_NATIVE="${CNT64_YAMLLINT_FLAG_NATIVE:-$BL64_VAR_ON}"
 
 #
 # Functions
@@ -87,7 +87,7 @@ function cnt64_yamllint_install() {
 #######################################
 function cnt64_yamllint_initialize() {
   bl64_dbg_app_show_function
-  [[ "$CNT64_YAMLLINT_NATIVE" != "$BL64_VAR_ON" ]] &&
+  [[ "$CNT64_YAMLLINT_FLAG_NATIVE" != "$BL64_VAR_ON" ]] &&
     bl64_msg_show_error 'installer supports OS native packages only' &&
     return 1
 
