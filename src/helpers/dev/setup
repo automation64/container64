@@ -57,6 +57,8 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
   local packages=''
+  local user_home="/home/${CNT64_USER}"
+  local user_shell="/bin/bash"
 
   if bl64_os_match "${BL64_OS_OL}"; then
     packages='git tar hostname wget unzip gettext bzip2 diffutils file'
@@ -70,7 +72,11 @@ function cnt64_setup_install() {
     return $?
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add "${CNT64_USER}" &&
+  "$BL64_IAM_CMD_USERADD" \
+    $BL64_IAM_SET_USERADD_CREATE_HOME \
+    $BL64_IAM_SET_USERADD_HOME_PATH "${user_home}" \
+    --shell "$user_shell" \
+    "$CNT64_USER" &&
     bl64_rbac_add_root "${CNT64_USER}" ||
     return $?
 

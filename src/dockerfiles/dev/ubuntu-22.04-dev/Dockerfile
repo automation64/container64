@@ -11,7 +11,7 @@ ENV container="docker"
 #
 
 ENV CNT64_DEBUG=""
-ENV CNT64_USER="sysadmin"
+ENV CNT64_USER="dev"
 ENV CNT64_TMP="/tmp"
 ENV CNT64_OPT_ROOT="/opt"
 ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
@@ -48,4 +48,4 @@ RUN \
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash", "--login" ]
