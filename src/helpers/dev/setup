@@ -76,11 +76,11 @@ function cnt64_setup_install() {
     return $?
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  "$BL64_IAM_CMD_USERADD" \
-    $BL64_IAM_SET_USERADD_CREATE_HOME \
-    $BL64_IAM_SET_USERADD_HOME_PATH "${user_home}" \
-    --shell "$user_shell" \
-    "$CNT64_USER" &&
+  bl64_iam_user_add \
+    "$CNT64_USER" \
+    "$user_home" \
+    "$BL64_VAR_DEFAULT" \
+    "$user_shell" &&
     bl64_rbac_add_root "${CNT64_USER}" ||
     return $?
 
