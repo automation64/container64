@@ -39,6 +39,7 @@ ENV INST64_INSTALLER64_VERSION='v1.0.0'
 
 # Bootstrap
 RUN \
+    sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list && \
     apt-get update && \
     apt-get install --assume-yes curl && \
     chmod 700 /install-installer64 /bootstrap /setup && \
