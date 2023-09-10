@@ -8,17 +8,14 @@ FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-cloud:latest
 #
 
 ENV CNT64_OPT_ROOT="/opt"
-ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 #
 # Setup image
 #
 
-# Update installers
-COPY installer/* ${CNT64_INSTALLER_ROOT}/
-
 # Set installer parameters
-ENV CNT64_KUBECTL_VERSION="1.28.0"
+ENV INST64_KUBECTL_VERSION="1.28.0"
 
 # Install applications
 RUN \

@@ -17,7 +17,7 @@ RUN \
     sudo rm /setup
 
 # Update installers
-COPY installer/* ${CNT64_INSTALLER_ROOT}/
+
 
 # Install applications
 RUN \

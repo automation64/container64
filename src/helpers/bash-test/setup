@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.1.0
+# Version: 1.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -65,25 +65,26 @@ function cnt64_setup_install() {
   local xdg_local="${user_home}/.local"
 
   if bl64_os_match "${BL64_OS_ALP}"; then
-    packages='sudo git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata gettext'
+    packages='git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata gettext'
   elif bl64_os_match "${BL64_OS_ALM}"; then
-    packages='sudo git diffutils python3 python3-pip python3-setuptools unzip wget gettext'
+    packages='git diffutils python3 python3-pip python3-setuptools unzip wget gettext'
   elif bl64_os_match "${BL64_OS_CNT}"; then
-    packages='sudo git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext'
+    packages='git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext'
   elif bl64_os_match "${BL64_OS_DEB}"; then
-    packages='sudo git wget curl gawk python3 python3-pip python3-venv unzip gettext'
+    packages='git wget curl gawk python3 python3-pip python3-venv unzip gettext'
   elif bl64_os_match "${BL64_OS_FD}"; then
-    packages='sudo git diffutils hostname wget python3-pip findutils unzip gettext'
+    packages='git diffutils hostname wget python3-pip findutils unzip gettext'
   elif bl64_os_match "${BL64_OS_OL}"; then
-    packages='sudo git tar hostname wget python3 python3-pip python3-setuptools unzip gettext'
+    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext'
   elif bl64_os_match "${BL64_OS_RHEL}"; then
-    packages='sudo git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext'
+    packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext'
   elif bl64_os_match "${BL64_OS_RCK}"; then
-    packages='sudo git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext'
+    packages='git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext'
   elif bl64_os_match "${BL64_OS_SLES}"; then
-    packages='sudo git hostname wget gawk gettext-runtime python3 python3-pip unzip tar'
+    packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar'
+    sudo groupadd "${CNT64_USER}"
   elif bl64_os_match "${BL64_OS_UB}"; then
-    packages='sudo git wget curl gawk python3 python3-pip python3-venv unzip gettext'
+    packages='git wget curl gawk python3 python3-pip python3-venv unzip gettext'
   fi
 
   bl64_msg_show_task 'deploy packages'
@@ -94,7 +95,7 @@ function cnt64_setup_install() {
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add \
     "$CNT64_USER" \
-    "$user_home" \
+    "$BL64_VAR_DEFAULT" \
     "$BL64_VAR_DEFAULT" \
     "$user_shell" &&
     bl64_rbac_add_root "${CNT64_USER}" ||

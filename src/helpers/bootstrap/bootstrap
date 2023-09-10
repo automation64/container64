@@ -79,7 +79,7 @@ cnt64_bootstrap_fix_os_source() {
   fi
 }
 
-cnt64_bootstrap_install_sudo() {
+cnt64_bootstrap_install_packages() {
   bl64_dbg_app_show_function
   local packages='sudo'
   bl64_msg_show_task 'Install sudo'
@@ -125,7 +125,7 @@ function cnt64_bootstrap_install() {
   bl64_dbg_app_show_function
 
   cnt64_bootstrap_fix_os_source &&
-    cnt64_bootstrap_install_sudo &&
+    cnt64_bootstrap_install_packages &&
     cnt64_bootstrap_prepare_os ||
     return $?
 

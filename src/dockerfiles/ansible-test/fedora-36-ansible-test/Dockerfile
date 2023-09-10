@@ -9,7 +9,7 @@ FROM ghcr.io/automation64/bash-test/fedora-36-bash-test:latest
 #
 
 ENV CNT64_OPT_ROOT="/opt"
-ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/cnt64"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 #
 # Setup image
@@ -34,9 +34,6 @@ ENV CNT64_ANSIBLE_HOME="${CNT64_OPT_ROOT}/ansible"
 RUN \
     sudo -E /setup && \
     sudo rm /setup
-
-# Update installers
-COPY installer/* ${CNT64_INSTALLER_ROOT}/
 
 # Install applications
 RUN \

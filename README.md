@@ -13,12 +13,18 @@
 
 - [Project: Container64](#project-container64)
   - [Overview](#overview)
-    - [Container collection: System Administration toolbox](#container-collection-system-administration-toolbox)
-    - [Container collection: Dev](#container-collection-dev)
-    - [Container collection: Bash Linter](#container-collection-bash-linter)
-    - [Container collection: Bash Testing](#container-collection-bash-testing)
-    - [Container collection: Terraform projects testing](#container-collection-terraform-projects-testing)
-    - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
+    - [Container Catalog](#container-catalog)
+      - [Container collection: System Administration toolbox](#container-collection-system-administration-toolbox)
+      - [Container collection: Dev](#container-collection-dev)
+      - [Container collection: Bash Linter](#container-collection-bash-linter)
+      - [Container collection: Bash Testing](#container-collection-bash-testing)
+      - [Container collection: Terraform projects testing](#container-collection-terraform-projects-testing)
+      - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
+    - [Container structure](#container-structure)
+      - [Global environment variables](#global-environment-variables)
+      - [Shared Directories](#shared-directories)
+      - [Application Installers](#application-installers)
+      - [Global Tools](#global-tools)
   - [Usage](#usage)
   - [Deployment](#deployment)
     - [Requirements](#requirements)
@@ -29,9 +35,11 @@
 
 ## Overview
 
-**Container64** is a catalog of OCI compliant container images for infrastructure management.
+**Container64** is a catalog of container images for infrastructure management, development and testing.
 
-### Container collection: System Administration toolbox
+### Container Catalog
+
+#### Container collection: System Administration toolbox
 
 - Purpose: Linux systems administration
 - Packages: common os management tools
@@ -50,7 +58,7 @@
 | `toolbox/oraclelinux-9-toolbox-psqlcli-13`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-terraform`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 
-### Container collection: Dev
+#### Container collection: Dev
 
 - Purpose: Development environment
 - Packages: dev tools
@@ -60,7 +68,7 @@
 | `dev/ubuntu-22.04-dev`         | Ubuntu | `docker.io/library/ubuntu:22.04`                   |
 | `dev/ubuntu-22.04-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.04-dev:latest` |
 
-### Container collection: Bash Linter
+#### Container collection: Bash Linter
 
 - Purpose: Unix Shell scripts linting
 - Packages: ShellCheck, OS utilities
@@ -69,7 +77,7 @@
 | -------------------------------- | ------ | ---------------------------- |
 | `shell-lint/alpine-3-shell-lint` | alpine | `docker.io/library/alpine:3` |
 
-### Container collection: Bash Testing
+#### Container collection: Bash Testing
 
 - Purpose: Bash scripts testing
 - Packages: Bash, Bats Core, Bash Core plugins
@@ -113,7 +121,7 @@
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
 | `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
 
-### Container collection: Terraform projects testing
+#### Container collection: Terraform projects testing
 
 - Purpose: Terraform code testing
 - Packages: TFSec, TFLint, Terraform
@@ -122,7 +130,7 @@
 | --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
 
-### Container collection: Ansible playbooks testing
+#### Container collection: Ansible playbooks testing
 
 - Purpose: Ansible playbooks testing
 - Packages: SystemD, Sudo, Python3, Ansible
@@ -143,6 +151,51 @@
 | `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-20.4-bash-test:latest`   |
 | `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
 | `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
+
+### Container structure
+
+Container64 defines a base environment from where all images are built. The environment is described using shell environment variables to avoid hard-coding details in scripts.
+
+#### Global environment variables
+
+Born Shell compatible environment variables exported to be consumed by scripts
+
+- `CNT64_BASHLIB64`: Bashlib64 location
+- `CNT64_DEBUG`: Enable script debugging?. Assign any non-null value to enable
+- `CNT64_INSTALLER_ROOT`: Container64 installers location
+- `CNT64_LOCAL_BIN`: Searchable path for local executables
+- `CNT64_LOCAL_ROOT`: Linux well-known base path for local content
+- `CNT64_OPT_ROOT`: Linux well-known base path for non-os packaged content
+- `CNT64_TMP`: System path for temporal files
+- `CNT64_USER`: Image Run-As user
+
+#### Shared Directories
+
+Linux standard set of directories to be used by installers to deploy and publish applications for general usage:
+
+- `CNT64_OPT_ROOT=/opt`
+- `$CNT64_OPT_ROOT/<APPLICATION>`
+- `CNT64_LOCAL_ROOT=/usr/local`
+- `CNT64_LOCAL_BIN=/usr/local/bin`
+
+#### Application Installers
+
+Stand-alone Bash based scripts for installing individual application packages.
+Installers are maintained separately and downloaded at build time from the [Installer64](https://github.com/automation64/installer64) project
+
+- Installers are purpose build for container environments or similar (CICD runners, etc)
+- Installers will consume Container64 global environment variables as needed
+- Installer specific parameters are defined as shell exported variables that must be defined before script execution (i.e.: via Dockerfile, CICD, etc)
+- Default location: `$CNT64_INSTALLER_ROOT`
+
+#### Global Tools
+
+Set of common tools that are available for all images.
+
+- Bash
+- CURL
+- BashLib64: automation library for Bash scripts
+- Installer64: application installers
 
 ## Usage
 
@@ -171,7 +224,7 @@ Download the target image to the local registry:
 # Using docker:
 docker pull ghcr.io/automation64/<IMAGE>
 # Using podman:
-podman pull ghcr.io/automation64/<IMAGE>`
+podman pull ghcr.io/automation64/<IMAGE>
 ```
 
 ## Contributing
