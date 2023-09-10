@@ -26,9 +26,6 @@ RUN \
     sudo -E /setup && \
     sudo rm /setup
 
-# Set installer parameters
-ENV INST64_ANSIBLE_HOME="${CNT64_ANSIBLE_HOME}"
-
 # Install applications
 RUN \
     sudo -E -H -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
