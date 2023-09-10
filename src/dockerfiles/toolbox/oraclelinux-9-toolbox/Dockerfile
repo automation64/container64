@@ -49,7 +49,6 @@ RUN \
 # Setup image
 #
 
-COPY installer/* ${CNT64_INSTALLER_ROOT}/
 RUN \
     /setup && \
     rm /setup
