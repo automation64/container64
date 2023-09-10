@@ -35,7 +35,7 @@
 
 ## Overview
 
-**Container64** is a catalog of OCI compliant container images for infrastructure management.
+**Container64** is a catalog of container images for infrastructure management, development and testing.
 
 ### Container Catalog
 
