@@ -39,6 +39,7 @@ ENV INST64_INSTALLER64_VERSION='v1.0.0'
 
 # Bootstrap
 RUN \
+    zypper install --no-confirm tar gzip && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
     ${CNT64_INSTALLER_ROOT}/install-bashlib64 && \
