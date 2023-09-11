@@ -20,7 +20,7 @@ function dev_cnt_publish() {
   # shellcheck disable=SC2086
   for container_name in $image_list; do
     ./cntbuild -b -c "$container_name" || return $?
-    if ! bl64_lib_flag_is_enabled "$publish"; then
+    if bl64_lib_flag_is_enabled "$publish"; then
       if bl64_lib_flag_is_enabled "$delete_first"; then
         ./cntbuild -x -c "$container_name"
       fi
