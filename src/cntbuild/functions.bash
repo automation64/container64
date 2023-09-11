@@ -59,7 +59,7 @@ function cntbuild_build() {
     bl64_dbg_app_show_info "labels: ${command_line[*]}"
   fi
   if [[ -z "$tag" ]]; then
-    bl64_msg_show_error 'unable to determine container tag. Specify one either by using the labels file or the -e parameter'
+    bl64_msg_show_error "unable to determine container tag from labels file. Specify one either by using the labels file or the -e parameter (${labels_file})"
     return 1
   fi
 
@@ -186,7 +186,7 @@ function cntbuild_get_version() {
   elif [[ -n "$tag" ]]; then
     echo "$tag"
   else
-    bl64_msg_show_error 'unable to determine container tag. Specify one either by using the labels file or the -e parameter'
+    bl64_msg_show_error "unable to determine container tag from labels file. Specify one either by using the labels file or the -e parameter (${labels_file})"
     return 1
   fi
 
