@@ -59,8 +59,14 @@ case "$dev_cnt_build_target" in
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_TOOLBOX_L2" 'Publish toolbox containers - level 2'
   ;;
-'bash_test_a')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0" 'Publish bash-test containers - level 0'
+'bash_test_a_redhat')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0_REDHAT" 'Publish bash-test containers - level 0 - redhat'
+  ;;
+'bash_test_a_ubuntu')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0_UBUNTU" 'Publish bash-test containers - level 0 - ubuntu'
+  ;;
+'bash_test_a_other')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L0_OTHER" 'Publish bash-test containers - level 0 - other'
   ;;
 'bash_test_b')
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEVCNT_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
