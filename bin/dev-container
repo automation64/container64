@@ -39,7 +39,9 @@ declare dev_cnt_publish="${2:-${BL64_VAR_OFF}}"
 declare dev_cnt_delete_first="${3:-${BL64_VAR_OFF}}"
 
 bl64_check_export 'DEVCNT_IMAGES_ANSIBLE_L1' &&
-  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0' &&
+  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0_REDHAT' &&
+  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0_UBUNTU' &&
+  bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L1' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L2' &&
   bl64_check_export 'DEVCNT_IMAGES_BASH_TEST_L3' &&
