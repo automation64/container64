@@ -67,6 +67,7 @@
 | ----------------------------- | ------ | ------------------------------------------------- |
 | `dev/ubuntu-22.4-dev`         | Ubuntu | `docker.io/library/ubuntu:22.04`                  |
 | `dev/ubuntu-22.4-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
+| `dev/ubuntu-22.4-dev-mkdocs`  | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
 
 #### Container collection: Bash Linter
 
