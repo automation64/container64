@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 2.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -43,6 +43,41 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
+function cnt64_setup_configure_os() {
+  bl64_dbg_app_show_function
+  if bl64_os_match "${BL64_OS_UB}"; then
+    # Base image doesn't have locales, need to generate at least for en
+    bl64_msg_show_task 'Generate en_US.UTF-8 locale'
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+  fi
+}
+
+function cnt64_setup_select_packages() {
+  bl64_dbg_app_show_function
+  local packages=''
+  if bl64_os_match "${BL64_OS_UB}"; then
+    # OS dependant tools
+    packages="${packages} apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
+    # File management tools
+    packages="${packages} tar unzip bzip2 xz-utils mc file lsof"
+    # Networking tools
+    packages="${packages} tcpdump dnsutils net-tools telnet nmap openssh-client iptraf-ng"
+    # File transfer tools
+    packages="${packages} ftp wget rsync"
+    # Performance tools
+    packages="${packages} hostname sysstat strace ltrace procps psmisc htop"
+    # Shells
+    packages="${packages} zsh csh"
+    # Code management tools
+    packages="${packages} git diffutils"
+    # Text utils
+    packages="${packages} vim nano less jq gettext gawk readline-common"
+    # Certificate tools
+    packages="${packages} dirmngr gnupg2 ca-certificates openssl"
+  fi
+  [[ -n "$packages" ]] && echo "$packages"
+}
+
 #######################################
 # Install application packages
 #
@@ -64,15 +99,14 @@ function cnt64_setup_install() {
   local xdg_cache="${user_home}/.cache"
   local xdg_local="${user_home}/.local"
 
-  if bl64_os_match "${BL64_OS_OL}"; then
-    packages='git tar hostname wget unzip gettext bzip2 diffutils file mc'
-  elif bl64_os_match "${BL64_OS_UB}"; then
-    packages='git tar hostname wget unzip gettext bzip2 diffutils file gawk mc'
-  fi
-
   bl64_msg_show_task 'deploy packages'
+  packages="$(cnt64_setup_select_packages)" ||
+    return $?
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages ||
+    return $?
+
+  cnt64_setup_configure_os ||
     return $?
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
@@ -116,8 +150,7 @@ function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
   bl64_os_check_version \
-    "${BL64_OS_UB}-22" \
-    "${BL64_OS_OL}-8" "${BL64_OS_OL}-9" &&
+    "${BL64_OS_UB}-22" &&
     bl64_check_export 'CNT64_USER' &&
     bl64_check_privilege_root &&
     bl64_pkg_setup

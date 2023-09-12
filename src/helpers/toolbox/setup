@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.1.0
+# Version: 1.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -43,6 +43,26 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
+function cnt64_setup_select_packages() {
+  bl64_dbg_app_show_function
+  local packages=''
+  if bl64_os_match "${BL64_OS_OL}"; then
+    # Base tools
+    packages='hostname python3 python3-pip python3-setuptools gettext'
+    # File management tools
+    packages="${packages} tar unzip bzip2 xz mc file"
+    # Networking tools
+    packages="${packages} tcpdump bind-utils net-tools telnet nmap"
+    # File transfer tools
+    packages="${packages} ftp wget rsync"
+    # Performance tools
+    packages="${packages} sysstat strace ltrace"
+    # Code management tools
+    packages="${packages} git diffutils"
+  fi
+  [[ -n "$packages" ]] && echo "$packages"
+}
+
 #######################################
 # Install application packages
 #
@@ -64,22 +84,9 @@ function cnt64_setup_install() {
   local xdg_cache="${user_home}/.cache"
   local xdg_local="${user_home}/.local"
 
-  if bl64_os_match "${BL64_OS_OL}"; then
-    # Base tools
-    packages='hostname python3 python3-pip python3-setuptools gettext'
-    # File management tools
-    packages="${packages} tar unzip bzip2 xz mc file"
-    # Networking tools
-    packages="${packages} tcpdump bind-utils net-tools telnet nmap"
-    # File transfer tools
-    packages="${packages} ftp wget rsync"
-    # Performance tools
-    packages="${packages} sysstat strace ltrace"
-    # Code management tools
-    packages="${packages} git diffutils"
-  fi
-
   bl64_msg_show_task 'deploy packages'
+  packages="$(cnt64_setup_select_packages)" ||
+    return $?
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages ||
     return $?
