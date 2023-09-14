@@ -46,20 +46,20 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
-cnt64_bootstrap_fix_repository_centos8() {
+function cnt64_bootstrap_fix_repository_centos8() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix centos 8 repository location to use vault'
   bl64_txt_run_sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
     bl64_txt_run_sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 }
 
-cnt64_bootstrap_fix_repository_ubuntu2104() {
+function cnt64_bootstrap_fix_repository_ubuntu2104() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix ubuntu 21.4 repository location to use old-release'
   bl64_txt_run_sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
 }
 
-cnt64_bootstrap_fix_repository_debian9() {
+function cnt64_bootstrap_fix_repository_debian9() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix ubuntu 9 repository location to use archive'
   local sources='/etc/apt/sources.list'
@@ -68,7 +68,7 @@ cnt64_bootstrap_fix_repository_debian9() {
     printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"$sources"
 }
 
-cnt64_bootstrap_fix_os_source() {
+function cnt64_bootstrap_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_match "${BL64_OS_CNT}-8"; then
     cnt64_bootstrap_fix_repository_centos8
@@ -79,7 +79,7 @@ cnt64_bootstrap_fix_os_source() {
   fi
 }
 
-cnt64_bootstrap_install_packages() {
+function cnt64_bootstrap_install_packages() {
   bl64_dbg_app_show_function
   local packages='sudo'
   bl64_msg_show_task 'Install sudo'
@@ -90,7 +90,7 @@ cnt64_bootstrap_install_packages() {
   bl64_pkg_deploy $packages
 }
 
-cnt64_bootstrap_prepare_os() {
+function cnt64_bootstrap_configure_os() {
   bl64_dbg_app_show_function
   local public_mode='0755'
   local public_owner='root'
@@ -104,10 +104,7 @@ cnt64_bootstrap_prepare_os() {
 
   bl64_msg_show_task "Create container64 installers repository (${CNT64_INSTALLER_ROOT})"
   bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
-    "${CNT64_INSTALLER_ROOT}" ||
-    return $?
-
-  return 0
+    "${CNT64_INSTALLER_ROOT}"
 }
 
 #######################################
@@ -124,9 +121,9 @@ cnt64_bootstrap_prepare_os() {
 function cnt64_bootstrap_install() {
   bl64_dbg_app_show_function
 
-  cnt64_bootstrap_fix_os_source &&
+  cnt64_bootstrap_prepare_os &&
     cnt64_bootstrap_install_packages &&
-    cnt64_bootstrap_prepare_os ||
+    cnt64_bootstrap_configure_os ||
     return $?
 
   bl64_msg_show_task 'cleanup temporary files'
