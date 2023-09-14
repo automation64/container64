@@ -28,4 +28,6 @@ RUN \
 
 # Install applications
 RUN \
-    sudo -E -H -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
+    sudo -E -H -u ${CNT64_ANSIBLE_USER} ${CNT64_INSTALLER_ROOT}/install-ansible && \
+    sudo sh -c 'find /opt/ansible -type d -exec chmod "o+rx,g+rx" "{}" \;' && \
+    sudo sh -c 'find /opt/ansible -type f -exec chmod "o+r,g+r" "{}" \;'
