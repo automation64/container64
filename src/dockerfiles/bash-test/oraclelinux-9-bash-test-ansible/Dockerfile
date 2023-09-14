@@ -15,6 +15,9 @@ ENV CNT64_USER="test"
 # Setup image
 #
 
+# Set installer parameters
+ENV INST64_ANSIBLE_PIPX="OFF"
+
 # Install applications
 RUN \
     sudo -E -H -u ${CNT64_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
