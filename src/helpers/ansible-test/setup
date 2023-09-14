@@ -62,7 +62,8 @@ function cnt64_setup_create_users() {
     home="${CNT64_ANSIBLE_HOME}-${current}"
     user="${CNT64_ANSIBLE_USER}-${current}"
     bl64_msg_show_task "Create ansible installation owner user (${user})"
-    bl64_iam_user_add "$user" "$home" ||
+    bl64_iam_user_add "$user" "$home" &&
+      bl64_rbac_add_root "$user" ||
       return $?
   done
 }
