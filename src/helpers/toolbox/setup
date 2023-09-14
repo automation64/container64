@@ -47,18 +47,26 @@ function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_match "${BL64_OS_OL}"; then
-    # Base tools
-    packages='hostname python3 python3-pip python3-setuptools gettext'
+    # OS dependant tools
+    packages=''
+    # Python3
+    packages='python3 python3-pip python3-setuptools'
     # File management tools
-    packages="${packages} tar unzip bzip2 xz mc file"
+    packages="${packages} tar unzip bzip2 xz mc file lsof"
     # Networking tools
-    packages="${packages} tcpdump bind-utils net-tools telnet nmap"
+    packages="${packages} hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
     # File transfer tools
     packages="${packages} ftp wget rsync"
     # Performance tools
     packages="${packages} sysstat strace ltrace"
     # Code management tools
     packages="${packages} git diffutils"
+    # Shells
+    packages="${packages} zsh csh"
+    # Text utils
+    packages="${packages} vim nano less jq gettext gawk"
+    # Certificate tools
+    packages="${packages} dirmngr gnupg2 openssl"
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
