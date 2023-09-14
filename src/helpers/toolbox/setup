@@ -46,8 +46,10 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 function cnt64_setup_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_match "${BL64_OS_OL}-8"; then
+    bl64_msg_show_task 'Enable EPEL repository'
     bl64_pkg_deploy 'oracle-epel-release-el8'
   elif bl64_os_match "${BL64_OS_OL}-9"; then
+    bl64_msg_show_task 'Enable EPEL repository'
     bl64_pkg_deploy 'oracle-epel-release-el9'
   fi
 }
@@ -55,9 +57,11 @@ function cnt64_setup_prepare_os() {
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
+
+  # Distro specific
   if bl64_os_match "${BL64_OS_OL}"; then
     # Python3
-    packages="${packages} python3 python3-pip python3-setuptools pipx"
+    packages="${packages} python3 python3-pip python3-setuptools"
     # File management tools
     packages="${packages} tar unzip bzip2 xz mc file lsof"
     # Networking tools
@@ -75,6 +79,12 @@ function cnt64_setup_select_packages() {
     # Certificate tools
     packages="${packages} dirmngr gnupg2 openssl"
   fi
+
+  # OS release specific
+  if bl64_os_match "${BL64_OS_OL}-9"; then
+    packages="${packages} pipx"
+  fi
+
   [[ -n "$packages" ]] && echo "$packages"
 }
 
