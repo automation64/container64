@@ -28,6 +28,9 @@ RUN \
     sudo -E /setup && \
     sudo rm /setup
 
+# Set installer parameters
+ENV INST64_ANSIBLE_PIPX="OFF"
+
 # Install applications
 RUN \
     sudo -E -H -u "${CNT64_ANSIBLE_USER}-2.10" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
