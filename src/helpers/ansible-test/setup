@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.2.0
+# Version: 1.3.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -38,9 +38,10 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Globals
 #
 
-export CNT64_ANSIBLE_USER
-export CNT64_ANSIBLE_HOME
-export CNT64_ANSIBLE_VERSIONS
+# Se the following three variables to create dedicate users for ansible installation
+export CNT64_ANSIBLE_USER="${CNT64_ANSIBLE_USER:-}"
+export CNT64_ANSIBLE_HOME="${CNT64_ANSIBLE_HOME:-}"
+export CNT64_ANSIBLE_VERSIONS="${CNT64_ANSIBLE_VERSIONS:-}"
 
 #
 # Functions
@@ -57,6 +58,11 @@ function cnt64_setup_create_users() {
   local user=''
   local home=''
   local current=''
+
+  if [[ -z "$CNT64_ANSIBLE_USER" ]]; then
+    bl64_msg_show_info "dedicated user not requested. Installing to current user ($(id))"
+    return 0
+  fi
 
   for current in $CNT64_ANSIBLE_VERSIONS; do
     home="${CNT64_ANSIBLE_HOME}-${current}"
@@ -166,6 +172,17 @@ function cnt64_setup_select_packages() {
   [[ -n "$packages" ]] && echo "$packages"
 }
 
+function cnt64_setup_install_packages() {
+  bl64_dbg_app_show_function
+  local packages=''
+
+  bl64_msg_show_task 'deploy packages'
+  packages="$(cnt64_setup_select_packages)" ||
+    return $?
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy $packages
+}
+
 #######################################
 # Install application packages
 #
@@ -179,16 +196,9 @@ function cnt64_setup_select_packages() {
 #######################################
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
-  local packages=''
 
-  bl64_msg_show_task 'deploy packages'
-  packages="$(cnt64_setup_select_packages)" ||
-    return $?
-  # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages ||
-    return $?
-
-  cnt64_setup_configure_os &&
+  cnt64_setup_install_packages &&
+    cnt64_setup_configure_os &&
     cnt64_setup_create_users ||
     return $?
 
@@ -211,6 +221,12 @@ function cnt64_setup_install() {
 function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
+  if [[ -n "$CNT64_ANSIBLE_USER" ]]; then
+    bl64_check_export 'CNT64_ANSIBLE_HOME' &&
+      bl64_check_export 'CNT64_ANSIBLE_VERSIONS' ||
+      return $?
+  fi
+
   bl64_os_check_version \
     "${BL64_OS_ALM}-8" \
     "${BL64_OS_CNT}-8" \
@@ -220,12 +236,8 @@ function cnt64_setup_initialize() {
     "${BL64_OS_RHEL}-8" \
     "${BL64_OS_RCK}-8" \
     "${BL64_OS_UB}-20.4" "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.4" &&
-    bl64_check_export 'CNT64_ANSIBLE_USER' &&
-    bl64_check_export 'CNT64_ANSIBLE_HOME' &&
-    bl64_check_export 'CNT64_ANSIBLE_VERSIONS' &&
     bl64_check_privilege_root &&
     bl64_pkg_setup
-  return 0
 }
 
 #

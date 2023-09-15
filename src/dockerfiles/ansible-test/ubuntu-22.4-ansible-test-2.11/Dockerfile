@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/bash-test/debian-11-bash-test:latest
+FROM ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest
 
 #
 # Environment definition
@@ -25,9 +25,11 @@ RUN \
 
 # Set installer parameters
 ENV INST64_ANSIBLE_PIPX="OFF"
+ENV INST64_ANSIBLE_VERSION="2.11"
 
 # Install applications
 RUN \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible"
+
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]
