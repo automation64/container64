@@ -3,7 +3,7 @@
 # Assemble modular script
 #
 # * Use to build script from multiple sources (modular)
-# * Template Version: v1.2.0
+# * Template Version: v1.3.0
 #
 
 #
@@ -24,6 +24,7 @@ bl64_check_export 'DEV_BUILD_FULL_PATH' &&
   bl64_check_export 'DEV_SRC_CNTBUILD' ||
   exit $?
 
+bl64_msg_show_batch_start 'build-app'
 # shellcheck disable=SC2154
 bl64_msg_show_task "Build app (${DEV_BUILD_NAME})"
 bl64_fs_merge_files \
@@ -37,3 +38,4 @@ bl64_fs_merge_files \
   "${DEV_SRC_CNTBUILD}/env.bash" \
   "${DEV_SRC_CNTBUILD}/functions.bash" \
   "${DEV_SRC_CNTBUILD}/main.bash"
+bl64_msg_show_batch_finish $? 'build-app'

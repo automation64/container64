@@ -45,56 +45,62 @@ declare dev_cnt_build_target="${1:-all}"
 declare dev_cnt_publish="${2:-${BL64_VAR_OFF}}"
 declare dev_cnt_delete_first="${3:-${BL64_VAR_OFF}}"
 
-bl64_check_export 'DEV_CICD_CNTBUILD' &&
-  bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
+bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
+  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_REDHAT' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_UBUNTU' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L1' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L2' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L3' &&
   bl64_check_export 'DEV_IMAGES_DEV_L0' &&
   bl64_check_export 'DEV_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEV_IMAGES_TERRAFORM_TEST_L3' &&
+  bl64_check_export 'DEV_IMAGES_TFLINT_L0' &&
+  bl64_check_export 'DEV_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L2' &&
-  bl64_check_export 'DEV_IMAGES_TOOLBOX_L0' ||
+  bl64_check_export 'DEV_CICD_CNTBUILD' ||
   exit $?
 
+bl64_msg_show_batch_start 'build-container'
 case "$dev_cnt_build_target" in
 'toolbox_a')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L0" 'toolbox containers - level 0'
   ;;
 'toolbox_b')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L2" 'Publish toolbox containers - level 2'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L1" 'toolbox containers - level 1' &&
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L2" 'toolbox containers - level 2'
   ;;
 'bash_test_a_redhat')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_REDHAT" 'Publish bash-test containers - level 0 - redhat'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_REDHAT" 'bash-test containers - level 0 - redhat'
   ;;
 'bash_test_a_ubuntu')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_UBUNTU" 'Publish bash-test containers - level 0 - ubuntu'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_UBUNTU" 'bash-test containers - level 0 - ubuntu'
   ;;
 'bash_test_a_other')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_OTHER" 'Publish bash-test containers - level 0 - other'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_OTHER" 'bash-test containers - level 0 - other'
   ;;
 'bash_test_b')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L2" 'Publish bash-test containers - level 2' &&
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L3" 'Publish bash-test containers - level 3'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L1" 'bash-test containers - level 1' &&
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L2" 'bash-test containers - level 2' &&
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L3" 'bash-test containers - level 3'
   ;;
 'ansible_test')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_ANSIBLE_L1" 'Publish ansible-test containers - level 1'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_ANSIBLE_L1" 'ansible-test containers - level 1'
   ;;
 'shell_lint')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_SHELL_LINT_L1" 'Publish shell-lint - level 1'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_SHELL_LINT_L1" 'shell-lint - level 1'
   ;;
 'terraform_test')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TERRAFORM_TEST_L3" 'Publish terraform-test containers - level 3'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TERRAFORM_TEST_L3" 'terraform-test containers - level 3'
   ;;
 'dev')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L0" 'Publish dev - level 0' &&
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L1" 'Publish dev - level 1'
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L0" 'dev - level 0' &&
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L1" 'dev - level 1'
+  ;;
+'tflint')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TFLINT_L0" 'tflint - level 0'
   ;;
 *) bl64_check_alert_parameter_invalid 'build_target' ;;
 esac
+bl64_msg_show_batch_finish $? 'build-container'
