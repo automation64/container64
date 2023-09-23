@@ -55,6 +55,10 @@ RUN \
     /setup && \
     rm /setup
 
+# Install applications
+RUN \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-ghcli
+
 # Set default user and entrypoint
 USER ${CNT64_USER}
 ENTRYPOINT [ "/bin/bash", "--login" ]
