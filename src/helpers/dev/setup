@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.1.0
+# Version: 2.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -43,7 +43,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
-function cnt64_setup_prepare_os() {
+function cnt64_setup_configure_os() {
   bl64_dbg_app_show_function
   if bl64_os_match "${BL64_OS_UB}"; then
     # Base image doesn't have locales, need to generate at least for en
@@ -134,7 +134,7 @@ function cnt64_setup_install() {
 
   cnt64_setup_create_users &&
     cnt64_setup_install_packages &&
-    cnt64_setup_prepare_os
+    cnt64_setup_configure_os
 }
 
 #######################################
@@ -163,7 +163,6 @@ function cnt64_setup_initialize() {
 #
 
 declare cnt64_setup_installer_description='Setup Container64 image'
-declare -i cnt64_setup_status=0
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$cnt64_setup_installer_description"
@@ -171,7 +170,5 @@ bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_setup_initialize &&
   cnt64_setup_install
-cnt64_setup_status=$?
 
-bl64_msg_show_batch_finish "$cnt64_setup_status" "$cnt64_setup_installer_description"
-exit $cnt64_setup_status
+bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
