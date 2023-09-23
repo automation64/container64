@@ -60,4 +60,4 @@ RUN \
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash", "--login" ]
