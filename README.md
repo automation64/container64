@@ -18,6 +18,7 @@
       - [Container collection: Dev](#container-collection-dev)
       - [Container collection: Bash Linter](#container-collection-bash-linter)
       - [Container collection: Bash Testing](#container-collection-bash-testing)
+      - [Container collection: Terraform projects linting](#container-collection-terraform-projects-linting)
       - [Container collection: Terraform projects testing](#container-collection-terraform-projects-testing)
       - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
     - [Container structure](#container-structure)
@@ -122,6 +123,15 @@
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
 | `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
 
+#### Container collection: Terraform projects linting
+
+- Purpose: Terraform code linting
+- Packages: TFLint
+
+| Image                                    | OS     | Base Image                      |
+| ---------------------------------------- | ------ | ------------------------------- |
+| `terraform-lint/alpine-3-terraform-lint` | alpine | `docker.io/library/alpine:3.17` |
+
 #### Container collection: Terraform projects testing
 
 - Purpose: Terraform code testing
@@ -130,6 +140,7 @@
 | Image                                         | OS          | Base Image                                                            |
 | --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
+| `terraform-lint/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
 
 #### Container collection: Ansible playbooks testing
 

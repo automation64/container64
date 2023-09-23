@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -34,16 +34,22 @@ export CNT64_DEBUG="${CNT64_DEBUG:-}"
 # shellcheck source=SCRIPTDIR/../../../lib/bashlib64.bash
 source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
-# Setup parameters
-export CNT64_SHELL_LINT_USER
-
 #
 # Globals
 #
 
+# Setup parameters
+export CNT64_SHELL_LINT_USER
+
 #
 # Functions
 #
+
+function cnt64_setup_create_users() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task "Create entrypoint user (${CNT64_SHELL_LINT_USER})"
+  bl64_iam_user_add "${CNT64_SHELL_LINT_USER}"
+}
 
 #######################################
 # Install application packages
@@ -58,9 +64,7 @@ export CNT64_SHELL_LINT_USER
 #######################################
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
-
-  bl64_msg_show_task "Create entrypoint user (${CNT64_SHELL_LINT_USER})"
-  bl64_iam_user_add "${CNT64_SHELL_LINT_USER}"
+  cnt64_setup_create_users
 }
 
 #######################################
@@ -86,7 +90,6 @@ function cnt64_setup_initialize() {
 #
 
 declare cnt64_setup_installer_description='Setup Container64 image'
-declare -i cnt64_setup_status=0
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$cnt64_setup_installer_description"
@@ -94,7 +97,5 @@ bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_setup_initialize &&
   cnt64_setup_install
-cnt64_setup_status=$?
 
-bl64_msg_show_batch_finish "$cnt64_setup_status" "$cnt64_setup_installer_description"
-exit $cnt64_setup_status
+bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"

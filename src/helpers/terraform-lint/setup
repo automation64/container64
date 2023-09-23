@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.4.0
+# Version: 1.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -43,78 +43,13 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
-function cnt64_setup_prepare_os() {
-  bl64_dbg_app_show_function
-  if bl64_os_match "${BL64_OS_OL}-8"; then
-    bl64_msg_show_task 'Enable EPEL repository'
-    bl64_pkg_deploy 'oracle-epel-release-el8'
-  elif bl64_os_match "${BL64_OS_OL}-9"; then
-    bl64_msg_show_task 'Enable EPEL repository'
-    bl64_pkg_deploy 'oracle-epel-release-el9'
-  fi
-}
-
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
-
-  # Distro specific
-  if bl64_os_match "${BL64_OS_OL}"; then
-    # Python3
-    packages="${packages} python3 python3-pip python3-setuptools"
-    # File management tools
-    packages="${packages} tar unzip bzip2 xz mc file lsof"
-    # Networking tools
-    packages="${packages} hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
-    # File transfer tools
-    packages="${packages} ftp wget rsync"
-    # Performance tools
-    packages="${packages} sysstat strace ltrace"
-    # Code management tools
-    packages="${packages} git diffutils"
-    # Shells
-    packages="${packages} zsh csh"
-    # Text utils
-    packages="${packages} vim nano less jq gettext gawk"
-    # Certificate tools
-    packages="${packages} dirmngr gnupg2 openssl"
+  if bl64_os_match "${BL64_OS_ALP}"; then
+    packages="${packages} curl"
   fi
-
-  # OS release specific
-  if bl64_os_match "${BL64_OS_OL}-9"; then
-    packages="${packages} pipx"
-  fi
-
   [[ -n "$packages" ]] && echo "$packages"
-}
-
-function cnt64_setup_create_users() {
-  bl64_dbg_app_show_function
-  local user_mode='0755'
-  local user_shell='/bin/bash'
-  local user_home="/home/${CNT64_USER}"
-  local xdg_config="${user_home}/.config"
-  local xdg_cache="${user_home}/.cache"
-  local xdg_local="${user_home}/.local"
-
-  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add \
-    "$CNT64_USER" \
-    "$user_home" \
-    "$BL64_VAR_DEFAULT" \
-    "$user_shell" &&
-    bl64_rbac_add_root "${CNT64_USER}" ||
-    return $?
-
-  bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
-  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
-    "$xdg_config" \
-    "$xdg_local" \
-    "$xdg_cache" \
-    "${xdg_local}/bin" \
-    "${xdg_local}/lib" \
-    "${xdg_local}/share" \
-    "${xdg_local}/state"
 }
 
 function cnt64_setup_install_packages() {
@@ -125,6 +60,12 @@ function cnt64_setup_install_packages() {
     return $?
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
+}
+
+function cnt64_setup_create_users() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
+  bl64_iam_user_add "${CNT64_USER}"
 }
 
 #######################################
@@ -140,10 +81,8 @@ function cnt64_setup_install_packages() {
 #######################################
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
-
-  cnt64_setup_prepare_os &&
-    cnt64_setup_install_packages &&
-    cnt64_setup_create_users
+  cnt64_setup_create_users &&
+    cnt64_setup_install_packages
 }
 
 #######################################
@@ -159,11 +98,10 @@ function cnt64_setup_install() {
 #######################################
 function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
-
-  bl64_os_check_version "${BL64_OS_OL}-8" "${BL64_OS_OL}-9" &&
-    bl64_check_export 'CNT64_USER' &&
-    bl64_check_privilege_root &&
-    bl64_pkg_setup
+  bl64_check_export 'CNT64_USER' &&
+    bl64_os_check_version "$BL64_OS_ALP" &&
+    bl64_pkg_setup &&
+    bl64_check_privilege_root
 }
 
 #
@@ -175,7 +113,7 @@ declare cnt64_setup_installer_description='Setup Container64 image'
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
+[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
 cnt64_setup_initialize &&
   cnt64_setup_install
 

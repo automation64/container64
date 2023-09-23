@@ -8,8 +8,8 @@
 #
 
 # Project base location. Adjust to your local GIT repo
-DEVCNT_ROOT="$(pwd)"
-export DEVCNT_ROOT
+DEV_ROOT="$(pwd)"
+export DEV_ROOT
 
 # GitHub User
 CNTBUILD_LOGIN_USER='TBD'

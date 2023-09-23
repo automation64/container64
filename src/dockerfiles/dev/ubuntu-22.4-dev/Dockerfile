@@ -1,3 +1,4 @@
+# Template: 1.0.0
 # Base image
 FROM docker.io/library/ubuntu:22.04 AS base
 
@@ -53,6 +54,10 @@ RUN \
 RUN \
     /setup && \
     rm /setup
+
+# Install applications
+RUN \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-ghcli
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
