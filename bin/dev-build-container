@@ -26,12 +26,12 @@ function dev_cnt_publish() {
   bl64_msg_show_phase "$message"
   # shellcheck disable=SC2086
   for container_name in $image_list; do
-    ./cntbuild -b -c "$container_name" || return $?
+    "$DEV_CICD_CNTBUILD" -b -c "$container_name" || return $?
     if bl64_lib_flag_is_enabled "$publish"; then
       if bl64_lib_flag_is_enabled "$delete_first"; then
-        ./cntbuild -x -c "$container_name"
+        "$DEV_CICD_CNTBUILD" -x -c "$container_name"
       fi
-      ./cntbuild -u -c "$container_name" ||
+      "$DEV_CICD_CNTBUILD" -u -c "$container_name" ||
         return $?
     fi
   done
@@ -45,7 +45,8 @@ declare dev_cnt_build_target="${1:-all}"
 declare dev_cnt_publish="${2:-${BL64_VAR_OFF}}"
 declare dev_cnt_delete_first="${3:-${BL64_VAR_OFF}}"
 
-bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
+bl64_check_export 'DEV_CICD_CNTBUILD' &&
+  bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_REDHAT' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_UBUNTU' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
@@ -65,7 +66,7 @@ case "$dev_cnt_build_target" in
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L0" 'Publish toolbox containers - level 0'
   ;;
 'toolbox_b')
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L1" 'Publish toolbox containers - level 1' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L2" 'Publish toolbox containers - level 2'
   ;;
 'bash_test_a_redhat')
@@ -78,7 +79,7 @@ case "$dev_cnt_build_target" in
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_OTHER" 'Publish bash-test containers - level 0 - other'
   ;;
 'bash_test_b')
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L1" 'Publish bash-test containers - level 1' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L2" 'Publish bash-test containers - level 2' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L3" 'Publish bash-test containers - level 3'
   ;;
@@ -95,5 +96,5 @@ case "$dev_cnt_build_target" in
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L0" 'Publish dev - level 0' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L1" 'Publish dev - level 1'
   ;;
-*) bl64_check_alert_parameter_invalid 'build_target';;
+*) bl64_check_alert_parameter_invalid 'build_target' ;;
 esac

@@ -25,5 +25,5 @@ jobs:
 
       - name: "Build and publish container images"
         shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-container bash_test_b ON"
+        run: "./bin/dev-build-container bash_test_b ON"
 ...
