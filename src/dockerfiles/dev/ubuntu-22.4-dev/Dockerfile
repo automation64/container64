@@ -1,3 +1,4 @@
+# Template: 1.0.0
 # Base image
 FROM docker.io/library/ubuntu:22.04 AS base
 

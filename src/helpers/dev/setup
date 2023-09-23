@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Template: 1.0.0
+# Template: 1.1.0
 #######################################
 # Container64 / Setup container image
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.0.0
+# Version: 2.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -43,7 +43,7 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
-function cnt64_setup_configure_os() {
+function cnt64_setup_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_match "${BL64_OS_UB}"; then
     # Base image doesn't have locales, need to generate at least for en
@@ -78,36 +78,14 @@ function cnt64_setup_select_packages() {
   [[ -n "$packages" ]] && echo "$packages"
 }
 
-#######################################
-# Install application packages
-#
-# Arguments:
-#   None. Parameters are imported from Globals
-# Outputs:
-#   Package installer progress and errors
-# Returns:
-#   0: package installed ok
-#   >0: unable to install package
-#######################################
-function cnt64_setup_install() {
+function cnt64_setup_create_users() {
   bl64_dbg_app_show_function
-  local packages=''
   local user_mode='0755'
   local user_shell='/bin/bash'
   local user_home="/home/${CNT64_USER}"
   local xdg_config="${user_home}/.config"
   local xdg_cache="${user_home}/.cache"
   local xdg_local="${user_home}/.local"
-
-  bl64_msg_show_task 'deploy packages'
-  packages="$(cnt64_setup_select_packages)" ||
-    return $?
-  # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages ||
-    return $?
-
-  cnt64_setup_configure_os ||
-    return $?
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add \
@@ -128,11 +106,35 @@ function cnt64_setup_install() {
     "${xdg_local}/share" \
     "${xdg_local}/state" ||
     return $?
+}
 
-  bl64_msg_show_task 'cleanup temporary files'
-  bl64_fs_cleanup_full
+function cnt64_setup_install_packages() {
+  bl64_dbg_app_show_function
+  local packages=''
+  bl64_msg_show_task 'deploy packages'
+  packages="$(cnt64_setup_select_packages)" ||
+    return $?
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy $packages
+}
 
-  return 0
+#######################################
+# Install application packages
+#
+# Arguments:
+#   None. Parameters are imported from Globals
+# Outputs:
+#   Package installer progress and errors
+# Returns:
+#   0: package installed ok
+#   >0: unable to install package
+#######################################
+function cnt64_setup_install() {
+  bl64_dbg_app_show_function
+
+  cnt64_setup_create_users &&
+    cnt64_setup_install_packages &&
+    cnt64_setup_prepare_os
 }
 
 #######################################
