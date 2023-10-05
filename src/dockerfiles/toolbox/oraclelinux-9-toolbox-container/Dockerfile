@@ -16,5 +16,9 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 # Install applications
 RUN \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-crane && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-dockle && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-hadolint && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-lazydocker && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-podman && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-trivy
