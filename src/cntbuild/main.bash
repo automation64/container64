@@ -2,7 +2,6 @@
 # Main
 #
 
-declare cntbuild_status=1
 declare cntbuild_debug="$BL64_DBG_TARGET_NONE"
 declare cntbuild_verbose="$BL64_MSG_VERBOSE_APP"
 declare cntbuild_option=''
@@ -41,7 +40,4 @@ case "$cntbuild_command" in
 'cntbuild_reset') "$cntbuild_command" ;;
 *) bl64_check_alert_parameter_invalid "$cntbuild_command" ;;
 esac
-cntbuild_status=$?
-
-bl64_msg_show_batch_finish $cntbuild_status "$cntbuild_command"
-exit $cntbuild_status
+bl64_msg_show_batch_finish $? "$cntbuild_command"
