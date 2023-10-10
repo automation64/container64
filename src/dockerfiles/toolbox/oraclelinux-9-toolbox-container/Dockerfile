@@ -21,4 +21,5 @@ RUN \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-hadolint && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-lazydocker && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-podman && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-trivy
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-trivy && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-cosign

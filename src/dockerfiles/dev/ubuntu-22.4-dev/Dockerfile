@@ -57,7 +57,8 @@ RUN \
 
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-ghcli
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-ghcli && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-gitui
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
