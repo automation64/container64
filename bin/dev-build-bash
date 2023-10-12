@@ -3,7 +3,7 @@
 # Assemble modular script
 #
 # * Use to build script from multiple sources (modular)
-# * Template: v1.3.0
+# * Template: 1.4.0
 #
 
 #
@@ -24,6 +24,7 @@ bl64_check_export 'DEV_BUILD_FULL_PATH' &&
   bl64_check_export 'DEV_SRC_CNTBUILD' ||
   exit $?
 
+bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'build-app'
 # shellcheck disable=SC2154
 bl64_msg_show_task "Build app (${DEV_BUILD_NAME})"

@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.1.0
+# Version: 1.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -46,22 +46,22 @@ source "$CNT64_BASHLIB64" || { echo "Error: unable to load bashlib64 (${CNT64_BA
 # Functions
 #
 
-function cnt64_bootstrap_fix_repository_centos8() {
+function cnt64_bootstrap_fix_repository_centos() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'Fix centos 8 repository location to use vault'
+  bl64_msg_show_task 'Fix centos repository location to use vault'
   bl64_txt_run_sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
     bl64_txt_run_sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 }
 
-function cnt64_bootstrap_fix_repository_ubuntu2104() {
+function cnt64_bootstrap_fix_repository_ubuntu() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'Fix ubuntu 21.4 repository location to use old-release'
+  bl64_msg_show_task 'Fix ubuntu repository location to use old-release'
   bl64_txt_run_sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
 }
 
-function cnt64_bootstrap_fix_repository_debian9() {
+function cnt64_bootstrap_fix_repository_debian() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'Fix ubuntu 9 repository location to use archive'
+  bl64_msg_show_task 'Fix debian repository location to use archive'
   local sources='/etc/apt/sources.list'
   printf 'deb http://archive.debian.org/debian/ stretch main contrib non-free\n' >"$sources" &&
     printf 'deb http://archive.debian.org/debian/ stretch-backports main contrib non-free\n' >>"$sources" &&
@@ -71,11 +71,11 @@ function cnt64_bootstrap_fix_repository_debian9() {
 function cnt64_bootstrap_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_match "${BL64_OS_CNT}-8"; then
-    cnt64_bootstrap_fix_repository_centos8
-  elif bl64_os_match "${BL64_OS_UB}-21"; then
-    cnt64_bootstrap_fix_repository_ubuntu2104
+    cnt64_bootstrap_fix_repository_centos
+  elif bl64_os_match "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.10"; then
+    cnt64_bootstrap_fix_repository_ubuntu
   elif bl64_os_match "${BL64_OS_DEB}-9"; then
-    cnt64_bootstrap_fix_repository_debian9
+    cnt64_bootstrap_fix_repository_debian
   fi
 }
 

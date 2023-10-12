@@ -5,7 +5,7 @@
 # * Use to lint shell source code
 # * Check is done using shellcheck
 # * TestManSH is used to manage linting environment
-# * Template: v2.1.0
+# * Template: 2.2.0
 #
 
 #
@@ -26,6 +26,7 @@ bl64_check_export 'DEV_CICD_TESTMANSH' &&
   bl64_check_export 'DEV_BUILD_NAME' ||
   exit $?
 
+bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'lint-app'
 bl64_msg_show_phase 'Lint CLI'
 "$DEV_CICD_TESTMANSH" -t -o -c "${DEV_BASE_BUILD}/${DEV_BUILD_NAME}" &&

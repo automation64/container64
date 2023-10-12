@@ -95,7 +95,7 @@
 | `bash-test/centos-9-bash-test`                   | centos      | `quay.io/centos/centos:stream9`                                 |
 | `bash-test/debian-10-bash-test`                  | debian      | `docker.io/library/debian:buster`                               |
 | `bash-test/debian-11-bash-test`                  | debian      | `docker.io/library/debian:bullseye`                             |
-| `bash-test/debian-9-bash-test`                   | debian      | `docker.io/library/debian:stretch`                              |
+| `bash-test/debian-9-bash-test`                   | debian      | `docker.io/debian/eol:stretch                                   |
 | `bash-test/fedora-33-bash-test`                  | fedora      | `docker.io/library/fedora:33`                                   |
 | `bash-test/fedora-34-bash-test`                  | fedora      | `docker.io/library/fedora:34`                                   |
 | `bash-test/fedora-35-bash-test`                  | fedora      | `docker.io/library/fedora:35`                                   |

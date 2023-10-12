@@ -62,6 +62,7 @@ bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEV_CICD_CNTBUILD' ||
   exit $?
 
+bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'build-container'
 case "$dev_cnt_build_target" in
 'toolbox_a')
