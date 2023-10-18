@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/library/oraclelinux:9
+FROM docker.io/library/alpine:3.17
 
 # Prepare package installer
 ENV container="docker"
@@ -11,8 +11,8 @@ ENV container="docker"
 # * See docs/base-environment.md for details
 #
 
-ARG CNT64_DEBUG=""
-ENV CNT64_USER="sysadmin"
+ENV CNT64_DEBUG=""
+ENV CNT64_USER="linter"
 ENV CNT64_TMP="/tmp"
 ENV CNT64_OPT_ROOT="/opt"
 ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
@@ -26,7 +26,7 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 
 # Copy image setup scripts
 COPY helpers/bootstrap/bootstrap /bootstrap
-COPY helpers/toolbox/setup /setup
+COPY helpers/run/setup /setup
 COPY installer/install-installer64 /install-installer64
 
 # Set Installer64 parameters
@@ -39,6 +39,7 @@ ENV INST64_INSTALLER64_TARGET="${CNT64_INSTALLER_ROOT}"
 
 # Bootstrap
 RUN \
+    apk add bash && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
     ${CNT64_INSTALLER_ROOT}/install-bashlib64 && \
@@ -52,6 +53,10 @@ RUN \
 RUN \
     /setup && \
     rm /setup
+
+# Install applications
+RUN \
+    ${CNT64_INSTALLER_ROOT}/install-hadolint
 
 # Set default user and entrypoint
 USER ${CNT64_USER}

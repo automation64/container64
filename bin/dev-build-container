@@ -53,6 +53,7 @@ bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L2' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L3' &&
   bl64_check_export 'DEV_IMAGES_DEV_L0' &&
+  bl64_check_export 'DEV_IMAGES_RUN_L0' &&
   bl64_check_export 'DEV_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEV_IMAGES_TERRAFORM_TEST_L3' &&
   bl64_check_export 'DEV_IMAGES_TFLINT_L0' &&
@@ -99,8 +100,14 @@ case "$dev_cnt_build_target" in
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L0" 'dev - level 0' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L1" 'dev - level 1'
   ;;
+'run')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_RUN_L0" 'run - level 0'
+  ;;
 'tflint')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TFLINT_L0" 'tflint - level 0'
+  ;;
+'docker_lint')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DOCKER_LINT_L0" 'docker-lint - level 0'
   ;;
 *) bl64_check_alert_parameter_invalid 'build_target' ;;
 esac

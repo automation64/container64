@@ -47,6 +47,7 @@ function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_match "${BL64_OS_ALP}"; then
+    # Required by Installer64 to perform API calls
     packages="${packages} curl"
   fi
   [[ -n "$packages" ]] && echo "$packages"

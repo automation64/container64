@@ -12,7 +12,7 @@ ENV container="docker"
 #
 
 ENV CNT64_DEBUG=""
-ENV CNT64_USER="test"
+ENV CNT64_USER="linter"
 ENV CNT64_TMP="/tmp"
 ENV CNT64_OPT_ROOT="/opt"
 ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
@@ -26,7 +26,7 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 
 # Copy image setup scripts
 COPY helpers/bootstrap/bootstrap /bootstrap
-COPY helpers/terraform-lint/setup /setup
+COPY helpers/run/setup /setup
 COPY installer/install-installer64 /install-installer64
 
 # Set Installer64 parameters
