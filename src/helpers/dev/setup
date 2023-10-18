@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.2.0
+# Version: 2.3.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -65,7 +65,7 @@ function cnt64_setup_select_packages() {
     # File transfer tools
     packages="${packages} ftp wget rsync"
     # Performance tools
-    packages="${packages} hostname sysstat strace ltrace procps psmisc htop"
+    packages="${packages} hostname sysstat strace ltrace procps psmisc htop btop glance"
     # Shells
     packages="${packages} zsh csh"
     # Code management tools
