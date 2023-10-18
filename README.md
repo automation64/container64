@@ -16,6 +16,7 @@
     - [Container Catalog](#container-catalog)
       - [Container collection: System Administration toolbox](#container-collection-system-administration-toolbox)
       - [Container collection: Dev](#container-collection-dev)
+      - [Container collection: Run](#container-collection-run)
       - [Container collection: Bash Linter](#container-collection-bash-linter)
       - [Container collection: Bash Testing](#container-collection-bash-testing)
       - [Container collection: Terraform projects linting](#container-collection-terraform-projects-linting)
@@ -62,7 +63,7 @@
 #### Container collection: Dev
 
 - Purpose: Development environment
-- Packages: dev tools
+- Packages: dev tools, languages
 
 | Image                         | OS     | Base Image                                        |
 | ----------------------------- | ------ | ------------------------------------------------- |
@@ -70,6 +71,15 @@
 | `dev/ubuntu-22.4-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
 | `dev/ubuntu-22.4-dev-go`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
 | `dev/ubuntu-22.4-dev-mkdocs`  | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
+
+#### Container collection: Run
+
+- Purpose: minimal runtime environment for running individual tools
+- Packages: bash, sudo, curl, purpose specific tools
+
+| Image              | OS     | Base Image                   |
+| ------------------ | ------ | ---------------------------- |
+| `run/alpine-3-run` | alpine | `docker.io/library/alpine:3` |
 
 #### Container collection: Bash Linter
 
