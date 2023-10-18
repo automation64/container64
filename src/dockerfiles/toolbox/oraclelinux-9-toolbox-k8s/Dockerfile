@@ -29,5 +29,8 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew" && \
     sudo rm /setup
