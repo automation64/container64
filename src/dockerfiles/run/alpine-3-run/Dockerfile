@@ -26,7 +26,7 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 
 # Copy image setup scripts
 COPY helpers/bootstrap/bootstrap /bootstrap
-COPY helpers/terraform-lint/setup /setup
+COPY helpers/run/setup /setup
 COPY installer/install-installer64 /install-installer64
 
 # Set Installer64 parameters
