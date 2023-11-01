@@ -37,7 +37,7 @@
 
 ## Overview
 
-**Container64** is a catalog of container images for infrastructure management, development and testing.
+**Container64** is a catalog of purpose build container images for infrastructure management, development and testing.
 
 ### Container Catalog
 
@@ -69,6 +69,7 @@
 | ----------------------------- | ------ | ------------------------------------------------- |
 | `dev/ubuntu-22.4-dev`         | Ubuntu | `docker.io/library/ubuntu:22.04`                  |
 | `dev/ubuntu-22.4-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
+| `dev/ubuntu-22.4-dev-bash`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
 | `dev/ubuntu-22.4-dev-go`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
 | `dev/ubuntu-22.4-dev-mkdocs`  | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
 
