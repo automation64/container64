@@ -26,7 +26,6 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
