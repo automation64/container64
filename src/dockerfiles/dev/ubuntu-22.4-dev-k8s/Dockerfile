@@ -28,4 +28,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew"
