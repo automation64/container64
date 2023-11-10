@@ -60,6 +60,7 @@ bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L2' &&
+  bl64_check_export 'DEV_IMAGES_TOOLBOX_L3' &&
   bl64_check_export 'DEV_CICD_CNTBUILD' ||
   exit $?
 
@@ -71,7 +72,8 @@ case "$dev_cnt_build_target" in
   ;;
 'toolbox_b')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L1" 'toolbox containers - level 1' &&
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L2" 'toolbox containers - level 2'
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L2" 'toolbox containers - level 2' &&
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L3" 'toolbox containers - level 3'
   ;;
 'bash_test_a_redhat')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASH_TEST_L0_REDHAT" 'bash-test containers - level 0 - redhat'
