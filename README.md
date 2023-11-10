@@ -137,6 +137,7 @@
 | `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:22.10`                                |
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
 | `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
+| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:23.10`                                |
 
 #### Container collection: Terraform projects linting
 
