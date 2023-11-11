@@ -18,7 +18,7 @@ ENV CNT64_OPT_ROOT="/opt"
 ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 ENV CNT64_LOCAL_ROOT="/usr/local"
 ENV CNT64_LOCAL_BIN="${CNT64_LOCAL_ROOT}/bin"
-ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
+ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
 
 #
 # Bootstrap image
@@ -28,14 +28,6 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64/bashlib64.bash"
 COPY helpers/bootstrap/bootstrap /bootstrap
 COPY helpers/run/setup /setup
 COPY installer/install-installer64 /install-installer64
-
-# Set Installer64 parameters
-ARG INST64_DEBUG="${CNT64_DEBUG}"
-ENV INST64_OPT_ROOT="${CNT64_OPT_ROOT}"
-ENV INST64_LOCAL_ROOT="${CNT64_LOCAL_ROOT}"
-ENV INST64_LOCAL_BIN="${CNT64_LOCAL_BIN}"
-ENV INST64_BASHLIB64="${CNT64_BASHLIB64}"
-ENV INST64_INSTALLER64_TARGET="${CNT64_INSTALLER_ROOT}"
 
 # Bootstrap
 RUN \

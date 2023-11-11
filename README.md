@@ -49,16 +49,17 @@
 | Image                                        | OS          | Base Image                                                  |
 | -------------------------------------------- | ----------- | ----------------------------------------------------------- |
 | `toolbox/oraclelinux-8-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:8`                           |
-| `toolbox/oraclelinux-9-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 | `toolbox/oraclelinux-9-toolbox-ansible`      | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-cloud`        | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-container`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-db`           | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox-gitops`       | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-k8s:latest`     |
 | `toolbox/oraclelinux-9-toolbox-k8s`          | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-mongodbcli-5` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-psqlcli-13`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-terraform`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
+| `toolbox/oraclelinux-9-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 
 #### Container collection: Dev
 
@@ -107,13 +108,14 @@
 | `bash-test/centos-9-bash-test`                   | centos      | `quay.io/centos/centos:stream9`                                 |
 | `bash-test/debian-10-bash-test`                  | debian      | `docker.io/library/debian:buster`                               |
 | `bash-test/debian-11-bash-test`                  | debian      | `docker.io/library/debian:bullseye`                             |
-| `bash-test/debian-9-bash-test`                   | debian      | `docker.io/debian/eol:stretch                                   |
+| `bash-test/debian-9-bash-test`                   | debian      | `docker.io/debian/eol:stretch`                                  |
 | `bash-test/fedora-33-bash-test`                  | fedora      | `docker.io/library/fedora:33`                                   |
 | `bash-test/fedora-34-bash-test`                  | fedora      | `docker.io/library/fedora:34`                                   |
 | `bash-test/fedora-35-bash-test`                  | fedora      | `docker.io/library/fedora:35`                                   |
 | `bash-test/fedora-36-bash-test`                  | fedora      | `docker.io/library/fedora:36`                                   |
 | `bash-test/fedora-37-bash-test`                  | fedora      | `docker.io/library/fedora:37`                                   |
 | `bash-test/fedora-38-bash-test`                  | fedora      | `docker.io/library/fedora:38`                                   |
+| `bash-test/fedora-39-bash-test`                  | fedora      | `docker.io/library/fedora:39`                                   |
 | `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `docker.io/library/oraclelinux:7`                               |
 | `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `docker.io/library/oraclelinux:8`                               |
 | `bash-test/oraclelinux-9-bash-test-ansible`      | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
@@ -135,6 +137,7 @@
 | `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:22.10`                                |
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
 | `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
+| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:23.10`                                |
 
 #### Container collection: Terraform projects linting
 

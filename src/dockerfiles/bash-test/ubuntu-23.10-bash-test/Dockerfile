@@ -1,5 +1,5 @@
-# Base image
-FROM docker.io/library/fedora:37
+# Base Image
+FROM docker.io/library/ubuntu:23.10 AS base
 
 # Prepare package installer
 ENV container="docker"
@@ -30,6 +30,8 @@ COPY installer/install-installer64 /install-installer64
 
 # Bootstrap
 RUN \
+    apt-get update && \
+    apt-get install --assume-yes curl && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
     ${CNT64_INSTALLER_ROOT}/install-bashlib64 && \

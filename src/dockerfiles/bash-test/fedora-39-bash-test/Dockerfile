@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/library/fedora:37
+FROM docker.io/library/fedora:39
 
 # Prepare package installer
 ENV container="docker"

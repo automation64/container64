@@ -24,8 +24,8 @@ RUN \
     sudo rm /setup
 
 # Set installer parameters
-ENV INST64_ANSIBLE_PIPX="OFF"
-ENV INST64_ANSIBLE_VERSION="2.15"
+ARG INST64_ANSIBLE_PIPX="OFF"
+ARG INST64_ANSIBLE_VERSION="2.15"
 
 # Install applications
 RUN \
