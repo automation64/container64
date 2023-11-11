@@ -15,7 +15,7 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 # Set installer parameters
-ENV INST64_PSQLCLI_VERSION="13"
+ARG INST64_PSQLCLI_VERSION="13"
 
 # Install applications
 RUN \
