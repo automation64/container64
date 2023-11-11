@@ -17,9 +17,13 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Copy image setup script
 COPY helpers/toolbox-k8s/setup /setup
 
-# Install applications
+# Setup image
 RUN \
     sudo -E /setup && \
+    sudo rm /setup
+
+# Install applications
+RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
@@ -28,7 +32,6 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-popeye" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-stern" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-kubepug" && \
-    sudo rm /setup
+    sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
+    sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
+    sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug"
