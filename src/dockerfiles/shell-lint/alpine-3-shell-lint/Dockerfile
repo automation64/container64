@@ -16,9 +16,6 @@ RUN \
     sudo -E /setup && \
     sudo rm /setup
 
-# Update installers
-
-
 # Install applications
 RUN \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-shellcheck
