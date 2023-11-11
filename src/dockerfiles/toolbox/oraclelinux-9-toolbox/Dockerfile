@@ -41,10 +41,14 @@ RUN \
 # Setup image
 #
 
+# Setup image
 RUN \
     /setup && \
-    ${CNT64_INSTALLER_ROOT}/install-lnav && \
     rm /setup
+
+# Install applications
+RUN \
+    ${CNT64_INSTALLER_ROOT}/install-lnav
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
