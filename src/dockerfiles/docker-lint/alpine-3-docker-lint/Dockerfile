@@ -31,7 +31,7 @@ COPY installer/install-installer64 /install-installer64
 
 # Bootstrap
 RUN \
-    apk add bash && \
+    apk add bash gawk && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
     ${CNT64_INSTALLER_ROOT}/install-bashlib64 && \
