@@ -24,11 +24,11 @@ RUN \
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-popeye" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew" && \
