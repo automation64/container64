@@ -108,8 +108,8 @@ case "$dev_cnt_build_target" in
 'tflint')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TFLINT_L0" 'tflint - level 0'
   ;;
-'docker_lint')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DOCKER_LINT_L0" 'docker-lint - level 0'
+'container_lint')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_CONTAINER_LINT_L0" 'container-lint - level 0'
   ;;
 *) bl64_check_alert_parameter_invalid 'build_target' ;;
 esac

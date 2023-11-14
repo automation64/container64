@@ -1,11 +1,11 @@
 ---
-name: "Deliver / Container / Docker Lint"
+name: "Deliver / Container / Lint"
 
 on:
   workflow_dispatch:
 
 jobs:
-  deliver-docker-docker-lint:
+  deliver-docker-container-lint:
     runs-on: "ubuntu-latest"
 
     permissions:
@@ -25,5 +25,5 @@ jobs:
 
       - name: "Build and publish container images"
         shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-build-container docker_lint ON"
+        run: "./bin/dev-build-container container_lint ON"
 ...

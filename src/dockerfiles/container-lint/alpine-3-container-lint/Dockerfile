@@ -48,7 +48,7 @@ RUN \
 
 # Install applications
 RUN \
-    ${CNT64_INSTALLER_ROOT}/install-hadolint
+    "${CNT64_INSTALLER_ROOT}/install-hadolint"
 
 # Set default user and entrypoint
 USER ${CNT64_USER}

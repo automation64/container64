@@ -5,5 +5,5 @@ org.opencontainers.image.source=https://github.com/automation64/container64
 org.opencontainers.image.version=1.0.0
 org.opencontainers.image.vendor=https://github.com/automation64/container64
 org.opencontainers.image.licenses=Apache-2.0
-org.opencontainers.image.title=alpine-3-docker-lint
-org.opencontainers.image.description=Tools for Docker files linting
+org.opencontainers.image.title=alpine-3-container-lint
+org.opencontainers.image.description=Tools for Container files linting
