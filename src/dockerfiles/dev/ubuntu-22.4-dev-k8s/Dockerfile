@@ -16,16 +16,15 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew"

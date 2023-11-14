@@ -66,14 +66,16 @@
 - Purpose: Development environment
 - Packages: dev tools, languages
 
-| Image                         | OS     | Base Image                                        |
-| ----------------------------- | ------ | ------------------------------------------------- |
-| `dev/ubuntu-22.4-dev`         | Ubuntu | `docker.io/library/ubuntu:22.04`                  |
-| `dev/ubuntu-22.4-dev-ansible` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
-| `dev/ubuntu-22.4-dev-bash`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
-| `dev/ubuntu-22.4-dev-go`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
-| `dev/ubuntu-22.4-dev-k8s`     | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
-| `dev/ubuntu-22.4-dev-mkdocs`  | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest` |
+| Image                           | OS     | Base Image                                            |
+| ------------------------------- | ------ | ----------------------------------------------------- |
+| `dev/ubuntu-22.4-dev`           | Ubuntu | `docker.io/library/ubuntu:22.04`                      |
+| `dev/ubuntu-22.4-dev-ansible`   | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-bash`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-container` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-gitops`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-k8s:latest` |
+| `dev/ubuntu-22.4-dev-go`        | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-k8s`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 
 #### Container collection: Run
 
