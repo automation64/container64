@@ -33,7 +33,7 @@ RUN \
     zypper install --no-confirm tar gzip && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
-    ${CNT64_INSTALLER_ROOT}/install-bashlib64 && \
+    "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
     rm /install-installer64 /bootstrap
 
