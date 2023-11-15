@@ -102,7 +102,7 @@ case "$dev_cnt_build_target" in
   ;;
 'dev')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L0" 'dev - level 0' &&
-    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L1" 'dev - level 1'
+    dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L1" 'dev - level 1' &&
     dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_DEV_L2" 'dev - level 2'
   ;;
 'run')
