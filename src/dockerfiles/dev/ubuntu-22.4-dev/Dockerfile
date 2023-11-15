@@ -35,7 +35,7 @@ RUN \
     apt-get install --assume-yes curl && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
-    ${CNT64_INSTALLER_ROOT}/install-bashlib64 && \
+    "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
     rm /install-installer64 /bootstrap
 
@@ -49,8 +49,9 @@ RUN \
 
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-ghcli && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-gitui
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-ghcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-gitui" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-yq"
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
