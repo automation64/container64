@@ -17,4 +17,4 @@ ENV CNT64_USER="sysadmin"
 
 # Install applications
 RUN \
-    sudo -E -H -u ${CNT64_USER} ${CNT64_INSTALLER_ROOT}/install-ansible
+    sudo -E -H -u "${CNT64_USER}" ${CNT64_INSTALLER_ROOT}/install-ansible
