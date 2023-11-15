@@ -49,7 +49,8 @@ RUN \
 
 # Install applications
 RUN \
-    ${CNT64_INSTALLER_ROOT}/install-batscore
+    "${CNT64_INSTALLER_ROOT}/install-batscore" && \
+    "${CNT64_INSTALLER_ROOT}/install-yq"
 
 # Run bats-core against /test
 CMD [ "/test" ]
