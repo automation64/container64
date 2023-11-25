@@ -14,6 +14,7 @@
 - [Project: Container64](#project-container64)
   - [Overview](#overview)
     - [Container Catalog](#container-catalog)
+      - [Container collection: Base](#container-collection-base)
       - [Container collection: System Administration toolbox](#container-collection-system-administration-toolbox)
       - [Container collection: Dev](#container-collection-dev)
       - [Container collection: Run](#container-collection-run)
@@ -22,6 +23,7 @@
       - [Container collection: Terraform projects linting](#container-collection-terraform-projects-linting)
       - [Container collection: Terraform projects testing](#container-collection-terraform-projects-testing)
       - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
+      - [Container collection: Static Site Generator linter](#container-collection-static-site-generator-linter)
     - [Container structure](#container-structure)
       - [Global environment variables](#global-environment-variables)
       - [Shared Directories](#shared-directories)
@@ -40,6 +42,17 @@
 **Container64** is a catalog of purpose build container images for infrastructure management, development and testing.
 
 ### Container Catalog
+
+#### Container collection: Base
+
+- Purpose: Base container image for creating Container64 images
+- Packages: sudo
+
+| Image                     | OS          | Base Image                        |
+| ------------------------- | ----------- | --------------------------------- |
+| `base/alpine-3-base`      | alpine      | `docker.io/library/alpine:3.17`   |
+| `base/oraclelinux-9-base` | oraclelinux | `docker.io/library/oraclelinux:9` |
+| `base/ubuntu-22.4-base`   | ubuntu      | `docker.io/library/ubuntu:22.04`  |
 
 #### Container collection: System Administration toolbox
 
@@ -181,6 +194,15 @@
 | `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-20.4-bash-test:latest`   |
 | `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
 | `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
+
+#### Container collection: Static Site Generator linter
+
+- Purpose: Static Site Generator linting
+- Packages: MKDocs
+
+| Image                        | OS     | Base Image                                       |
+| ---------------------------- | ------ | ------------------------------------------------ |
+| `ssg-lint/alpine-3-ssg-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
 ### Container structure
 
