@@ -78,6 +78,7 @@ function cnt64_setup_create_users() {
   local xdg_config="${user_home}/.config"
   local xdg_cache="${user_home}/.cache"
   local xdg_local="${user_home}/.local"
+  local user_profile="${user_home}/.bash_profile"
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add \
