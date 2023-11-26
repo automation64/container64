@@ -90,9 +90,17 @@ function cnt64_bootstrap_create_users() {
   return 0
 }
 
+function cnt64_bootstrap_fix_repository_fedora() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task 'Ignore unavailable repositories (EOL)'
+  bl64_txt_run_sed \
+    -i 's/^skip_if_unavailable=False/skip_if_unavailable=True/g' \
+    /etc/yum.repos.d/fedora*.repo
+}
+
 function cnt64_bootstrap_fix_repository_centos() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'Fix centos repository location to use vault'
+  bl64_msg_show_task 'Fix EOL centos repository location to use vault'
   bl64_txt_run_sed \
     -i 's/mirrorlist/#mirrorlist/g' \
     /etc/yum.repos.d/CentOS-* &&
@@ -103,7 +111,7 @@ function cnt64_bootstrap_fix_repository_centos() {
 
 function cnt64_bootstrap_fix_repository_ubuntu() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'Fix ubuntu repository location to use old-release'
+  bl64_msg_show_task 'Fix EOL ubuntu repository location to use old-release'
   bl64_txt_run_sed \
     -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' \
     /etc/apt/sources.list
@@ -111,7 +119,7 @@ function cnt64_bootstrap_fix_repository_ubuntu() {
 
 function cnt64_bootstrap_fix_repository_debian() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'Fix debian repository location to use archive'
+  bl64_msg_show_task 'Fix EOL debian repository location to use archive'
   local sources='/etc/apt/sources.list'
   printf 'deb http://archive.debian.org/debian/ stretch main contrib non-free\n' >"$sources" &&
     printf 'deb http://archive.debian.org/debian/ stretch-backports main contrib non-free\n' >>"$sources" &&
@@ -126,6 +134,8 @@ function cnt64_bootstrap_prepare_os() {
     cnt64_bootstrap_fix_repository_ubuntu
   elif bl64_os_match "${BL64_OS_DEB}-9"; then
     cnt64_bootstrap_fix_repository_debian
+  elif bl64_os_match "${BL64_OS_FD}-36"; then
+    cnt64_bootstrap_fix_repository_fedora
   fi
 }
 
