@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.0.0
+# Version: 2.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -135,6 +135,8 @@ function cnt64_bootstrap_install_packages() {
   bl64_msg_show_task 'Install sudo'
   if bl64_os_match "${BL64_OS_SLES}"; then
     packages+=' gawk'
+  elif bl64_os_match "${BL64_OS_ALP}"; then
+    packages+=' curl'
   fi
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
