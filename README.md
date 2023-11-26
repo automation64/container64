@@ -21,6 +21,7 @@
       - [Container collection: Bash linting](#container-collection-bash-linting)
       - [Container collection: Bash testing](#container-collection-bash-testing)
       - [Container collection: Terraform linting](#container-collection-terraform-linting)
+      - [Container collection: Container linting](#container-collection-container-linting)
       - [Container collection: Terraform testing](#container-collection-terraform-testing)
       - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
       - [Container collection: Static Site Generator linting](#container-collection-static-site-generator-linting)
@@ -159,9 +160,18 @@
 - Purpose: Terraform code linting
 - Packages: TFLint
 
-| Image                                    | OS     | Base Image                      |
-| ---------------------------------------- | ------ | ------------------------------- |
-| `terraform-lint/alpine-3-terraform-lint` | alpine | `docker.io/library/alpine:3.17` |
+| Image                                    | OS     | Base Image                                       |
+| ---------------------------------------- | ------ | ------------------------------------------------ |
+| `terraform-lint/alpine-3-terraform-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
+#### Container collection: Container linting
+
+- Purpose: Container code linting
+- Packages: Hadolint
+
+| Image                                    | OS     | Base Image                                       |
+| ---------------------------------------- | ------ | ------------------------------------------------ |
+| `container-lint/alpine-3-container-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
 #### Container collection: Terraform testing
 
