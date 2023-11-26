@@ -1,25 +1,24 @@
+# Template: 1.0.0
 # Base image
-FROM ghcr.io/automation64/bash-test/alpine-3-bash-test:latest
+FROM ghcr.io/automation64/base/alpine-3-base:latest
+
+#
+# Environment definition
+#
+# * See docs/base-environment.md for details
+#
+
+ENV CNT64_USER="cnt64"
+ENV CNT64_OPT_ROOT="/opt"
+ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 #
 # Setup image
 #
 
-# Copy image setup script
-COPY helpers/shell-lint/setup /setup
-
-# Set setup parameters
-ENV CNT64_SHELL_LINT_USER="linter"
-
-# Setup image
 RUN \
-    sudo -E /setup && \
-    sudo rm /setup
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck"
 
-# Install applications
-RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-shellcheck
-
-# Run linter against /src
-USER ${CNT64_SHELL_LINT_USER}
+# Set default user and entrypoint
+USER ${CNT64_USER}
 ENTRYPOINT [ "/usr/bin/shellcheck" ]
