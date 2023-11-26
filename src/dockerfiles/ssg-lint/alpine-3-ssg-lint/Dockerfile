@@ -16,10 +16,11 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Install applications
 RUN \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-mkdocs"
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/usr/bin/env" ]
+ENTRYPOINT [ "/bin/bash", "--login", "-c" ]

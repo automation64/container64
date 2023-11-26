@@ -14,16 +14,17 @@
 - [Project: Container64](#project-container64)
   - [Overview](#overview)
     - [Container Catalog](#container-catalog)
-      - [Container collection: Base](#container-collection-base)
+      - [Container collection: Base container image](#container-collection-base-container-image)
       - [Container collection: System Administration toolbox](#container-collection-system-administration-toolbox)
-      - [Container collection: Dev](#container-collection-dev)
-      - [Container collection: Run](#container-collection-run)
-      - [Container collection: Bash Linter](#container-collection-bash-linter)
-      - [Container collection: Bash Testing](#container-collection-bash-testing)
-      - [Container collection: Terraform projects linting](#container-collection-terraform-projects-linting)
-      - [Container collection: Terraform projects testing](#container-collection-terraform-projects-testing)
+      - [Container collection: Development environment](#container-collection-development-environment)
+      - [Container collection: Runtime tool](#container-collection-runtime-tool)
+      - [Container collection: Bash linting](#container-collection-bash-linting)
+      - [Container collection: Bash testing](#container-collection-bash-testing)
+      - [Container collection: Terraform linting](#container-collection-terraform-linting)
+      - [Container collection: Container linting](#container-collection-container-linting)
+      - [Container collection: Terraform testing](#container-collection-terraform-testing)
       - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
-      - [Container collection: Static Site Generator linter](#container-collection-static-site-generator-linter)
+      - [Container collection: Static Site Generator linting](#container-collection-static-site-generator-linting)
     - [Container structure](#container-structure)
       - [Global environment variables](#global-environment-variables)
       - [Shared Directories](#shared-directories)
@@ -43,7 +44,7 @@
 
 ### Container Catalog
 
-#### Container collection: Base
+#### Container collection: Base container image
 
 - Purpose: Base container image for creating Container64 images
 - Packages: sudo
@@ -74,14 +75,14 @@
 | `toolbox/oraclelinux-9-toolbox-terraform`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 
-#### Container collection: Dev
+#### Container collection: Development environment
 
 - Purpose: Development environment
 - Packages: dev tools, languages
 
 | Image                           | OS     | Base Image                                            |
 | ------------------------------- | ------ | ----------------------------------------------------- |
-| `dev/ubuntu-22.4-dev`           | Ubuntu | `docker.io/library/ubuntu:22.04`                      |
+| `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`   |
 | `dev/ubuntu-22.4-dev-ansible`   | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-bash`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-container` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
@@ -90,7 +91,7 @@
 | `dev/ubuntu-22.4-dev-k8s`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 
-#### Container collection: Run
+#### Container collection: Runtime tool
 
 - Purpose: minimal runtime environment for running individual tools
 - Packages: bash, sudo, curl, purpose specific tools
@@ -99,16 +100,16 @@
 | ------------------ | ------ | ---------------------------- |
 | `run/alpine-3-run` | alpine | `docker.io/library/alpine:3` |
 
-#### Container collection: Bash Linter
+#### Container collection: Bash linting
 
 - Purpose: Unix Shell scripts linting
 - Packages: ShellCheck, OS utilities
 
-| Image                            | OS     | Base Image                   |
-| -------------------------------- | ------ | ---------------------------- |
-| `shell-lint/alpine-3-shell-lint` | alpine | `docker.io/library/alpine:3` |
+| Image                            | OS     | Base Image                                       |
+| -------------------------------- | ------ | ------------------------------------------------ |
+| `shell-lint/alpine-3-shell-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
-#### Container collection: Bash Testing
+#### Container collection: Bash testing
 
 - Purpose: Bash scripts testing
 - Packages: Bash, Bats Core, Bash Core plugins
@@ -154,16 +155,25 @@
 | `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
 | `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:23.10`                                |
 
-#### Container collection: Terraform projects linting
+#### Container collection: Terraform linting
 
 - Purpose: Terraform code linting
 - Packages: TFLint
 
-| Image                                    | OS     | Base Image                      |
-| ---------------------------------------- | ------ | ------------------------------- |
-| `terraform-lint/alpine-3-terraform-lint` | alpine | `docker.io/library/alpine:3.17` |
+| Image                                    | OS     | Base Image                                       |
+| ---------------------------------------- | ------ | ------------------------------------------------ |
+| `terraform-lint/alpine-3-terraform-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
-#### Container collection: Terraform projects testing
+#### Container collection: Container linting
+
+- Purpose: Container code linting
+- Packages: Hadolint
+
+| Image                                    | OS     | Base Image                                       |
+| ---------------------------------------- | ------ | ------------------------------------------------ |
+| `container-lint/alpine-3-container-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
+#### Container collection: Terraform testing
 
 - Purpose: Terraform code testing
 - Packages: TFSec, TFLint, Terraform
@@ -195,7 +205,7 @@
 | `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
 | `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
 
-#### Container collection: Static Site Generator linter
+#### Container collection: Static Site Generator linting
 
 - Purpose: Static Site Generator linting
 - Packages: MKDocs
