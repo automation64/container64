@@ -22,4 +22,4 @@ RUN \
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/usr/bin/env" ]
+ENTRYPOINT [ "/bin/bash", "--login", "-c" ]
