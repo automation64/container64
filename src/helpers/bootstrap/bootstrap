@@ -55,8 +55,9 @@ function cnt64_bootstrap_create_users() {
   local xdg_config="${user_home}/.config"
   local xdg_cache="${user_home}/.cache"
   local xdg_local="${user_home}/.local"
+  local user_profile="${user_home}/.bash_profile"
 
-  bl64_dbg_show_comment 'no user creation requested'
+  bl64_dbg_app_show_comments 'no user creation requested'
   [[ -z "$CNT64_USER" ]] && return 0
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
@@ -78,19 +79,34 @@ function cnt64_bootstrap_create_users() {
     "${xdg_local}/share" \
     "${xdg_local}/state" ||
     return $?
+
+  if bl64_os_match "${BL64_OS_ALP}"; then
+    bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
+    # shellcheck disable=SC2016
+    printf 'PATH="$HOME/.local/bin:$HOME/bin:$PATH"\n' >"$user_profile" &&
+      bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile" ||
+      return $?
+  fi
+  return 0
 }
 
 function cnt64_bootstrap_fix_repository_centos() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix centos repository location to use vault'
-  bl64_txt_run_sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&
-    bl64_txt_run_sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+  bl64_txt_run_sed \
+    -i 's/mirrorlist/#mirrorlist/g' \
+    /etc/yum.repos.d/CentOS-* &&
+    bl64_txt_run_sed \
+      -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' \
+      /etc/yum.repos.d/CentOS-*
 }
 
 function cnt64_bootstrap_fix_repository_ubuntu() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix ubuntu repository location to use old-release'
-  bl64_txt_run_sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+  bl64_txt_run_sed \
+    -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' \
+    /etc/apt/sources.list
 }
 
 function cnt64_bootstrap_fix_repository_debian() {
@@ -187,9 +203,9 @@ bl64_msg_show_batch_start "$cnt64_bootstrap_task_title"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_bootstrap_initialize &&
-  cnt64_bootstrap_create_users &&
   cnt64_bootstrap_prepare_os &&
   cnt64_bootstrap_install &&
-  cnt64_bootstrap_configure_os
+  cnt64_bootstrap_configure_os &&
+  cnt64_bootstrap_create_users
 
 bl64_msg_show_batch_finish $? "$cnt64_bootstrap_task_title"
