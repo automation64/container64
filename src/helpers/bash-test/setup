@@ -96,7 +96,17 @@ function cnt64_setup_create_users() {
     "${xdg_local}/bin" \
     "${xdg_local}/lib" \
     "${xdg_local}/share" \
-    "${xdg_local}/state"
+    "${xdg_local}/state" ||
+    return $?
+
+  if bl64_os_match "${BL64_OS_ALP}"; then
+    bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
+    # shellcheck disable=SC2016
+    printf 'PATH="$HOME/.local/bin:$HOME/bin:$PATH"\n' >"$user_profile" &&
+      bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile" ||
+      return $?
+  fi
+  return 0
 }
 
 function cnt64_setup_install_packages() {

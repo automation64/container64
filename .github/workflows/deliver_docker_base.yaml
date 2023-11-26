@@ -1,5 +1,5 @@
 ---
-name: "Deliver / Container / Shell Lint"
+name: "Deliver / Container / Base"
 
 env:
   DEV_CICD_DEBUG: ""
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deliver-docker-shell-lint:
+  deliver-docker-base:
     runs-on: "ubuntu-latest"
 
     permissions:
@@ -28,5 +28,5 @@ jobs:
 
       - name: "Build and publish container images"
         shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-build-container shell_lint ON"
+        run: "./bin/dev-build-container base ON"
 ...

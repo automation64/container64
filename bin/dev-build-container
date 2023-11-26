@@ -8,9 +8,9 @@
 #
 
 # shellcheck source=SCRIPTDIR/dev-set
-source bin/dev-set || exit $?
-# shellcheck source=SCRIPTDIR/../lib/bashlib64.bash
-source "$DEV_CICD_BASHLIB64"
+source ./bin/dev-set || exit 1
+# shellcheck source-path=SCRIPTDIR/../lib/bl64
+source "${DEV_CICD_BASHLIB64}/bashlib64.bash" || exit 1
 
 #
 # Functions
@@ -45,8 +45,9 @@ declare dev_cnt_build_target="${1:-all}"
 declare dev_cnt_publish="${2:-${BL64_VAR_OFF}}"
 declare dev_cnt_delete_first="${3:-${BL64_VAR_OFF}}"
 
-bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
+[[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
+
+bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_REDHAT' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_UBUNTU' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L1' &&
@@ -57,18 +58,24 @@ bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEV_IMAGES_DEV_L2' &&
   bl64_check_export 'DEV_IMAGES_RUN_L0' &&
   bl64_check_export 'DEV_IMAGES_SHELL_LINT_L1' &&
+  bl64_check_export 'DEV_IMAGES_SSG_LINT_L0' &&
+  bl64_check_export 'DEV_IMAGES_TERRAFORM_LINT_L0' &&
   bl64_check_export 'DEV_IMAGES_TERRAFORM_TEST_L3' &&
-  bl64_check_export 'DEV_IMAGES_TFLINT_L0' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L0' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L2' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L3' &&
+  bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
+  bl64_check_export 'DEV_IMAGES_BASE' &&
   bl64_check_export 'DEV_CICD_CNTBUILD' ||
   exit $?
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'build-container'
 case "$dev_cnt_build_target" in
+'base')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_BASE" 'base containers'
+  ;;
 'toolbox_a')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TOOLBOX_L0" 'toolbox containers - level 0'
   ;;
@@ -108,8 +115,11 @@ case "$dev_cnt_build_target" in
 'run')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_RUN_L0" 'run - level 0'
   ;;
-'tflint')
-  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TFLINT_L0" 'tflint - level 0'
+'ssg_lint')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_SSG_LINT_L0" 'ssg-lint - level 0'
+  ;;
+'terraform_lint')
+  dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_TERRAFORM_LINT_L0" 'terraform-lint - level 0'
   ;;
 'container_lint')
   dev_cnt_publish "$dev_cnt_publish" "$dev_cnt_delete_first" "$DEV_IMAGES_CONTAINER_LINT_L0" 'container-lint - level 0'
