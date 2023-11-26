@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.3.0
+# Version: 3.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -78,36 +78,6 @@ function cnt64_setup_select_packages() {
   [[ -n "$packages" ]] && echo "$packages"
 }
 
-function cnt64_setup_create_users() {
-  bl64_dbg_app_show_function
-  local user_mode='0755'
-  local user_shell='/bin/bash'
-  local user_home="/home/${CNT64_USER}"
-  local xdg_config="${user_home}/.config"
-  local xdg_cache="${user_home}/.cache"
-  local xdg_local="${user_home}/.local"
-
-  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add \
-    "$CNT64_USER" \
-    "$user_home" \
-    "$BL64_VAR_DEFAULT" \
-    "$user_shell" &&
-    bl64_rbac_add_root "${CNT64_USER}" ||
-    return $?
-
-  bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
-  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
-    "$xdg_config" \
-    "$xdg_local" \
-    "$xdg_cache" \
-    "${xdg_local}/bin" \
-    "${xdg_local}/lib" \
-    "${xdg_local}/share" \
-    "${xdg_local}/state" ||
-    return $?
-}
-
 function cnt64_setup_install_packages() {
   bl64_dbg_app_show_function
   local packages=''
@@ -132,8 +102,7 @@ function cnt64_setup_install_packages() {
 function cnt64_setup_install() {
   bl64_dbg_app_show_function
 
-  cnt64_setup_create_users &&
-    cnt64_setup_install_packages &&
+  cnt64_setup_install_packages &&
     cnt64_setup_configure_os
 }
 

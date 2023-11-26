@@ -82,7 +82,7 @@
 
 | Image                           | OS     | Base Image                                            |
 | ------------------------------- | ------ | ----------------------------------------------------- |
-| `dev/ubuntu-22.4-dev`           | Ubuntu | `docker.io/library/ubuntu:22.04`                      |
+| `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`   |
 | `dev/ubuntu-22.4-dev-ansible`   | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-bash`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-container` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
