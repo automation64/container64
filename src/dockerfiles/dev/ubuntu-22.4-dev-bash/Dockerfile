@@ -16,6 +16,6 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 RUN \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shftm" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-batscore"
