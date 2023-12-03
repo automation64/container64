@@ -3,16 +3,16 @@
 # Assemble modular script
 #
 # * Use to build script from multiple sources (modular)
-# * Template: 2.0.0
+# * Template: 2.0.1
 #
 
 #
 # Imports
 #
 
-# shellcheck source=SCRIPTDIR/dev-set
+# shellcheck source=bin/dev-set
 source ./bin/dev-set || exit 1
-# shellcheck source-path=SCRIPTDIR/../lib/bl64
+# shellcheck source=lib/bl64/bashlib64.bash
 source "${DEV_CICD_BASHLIB64}/bashlib64.bash" || exit 1
 
 #
@@ -37,7 +37,7 @@ bl64_fs_merge_files \
   "$BL64_VAR_ON" \
   "$DEV_BUILD_FULL_PATH" \
   "${DEV_SRC_CNTBUILD}/header.bash" \
-  "$DEV_CICD_BASHLIB64" \
+  "${DEV_CICD_BASHLIB64}/bashlib64.bash" \
   "${DEV_SRC_CNTBUILD}/env.bash" \
   "${DEV_SRC_CNTBUILD}/functions.bash" \
   "${DEV_SRC_CNTBUILD}/main.bash"

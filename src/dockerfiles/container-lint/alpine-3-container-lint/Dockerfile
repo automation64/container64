@@ -21,4 +21,4 @@ RUN \
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/usr/bin/shellcheck" ]
+ENTRYPOINT [ "/bin/bash", "--login", "-c" ]
