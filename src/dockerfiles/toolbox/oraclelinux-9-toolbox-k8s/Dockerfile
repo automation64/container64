@@ -32,6 +32,8 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-pluto" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-popeye" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-vaultcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeseal" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-krew" && \
     sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
     sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
