@@ -1,3 +1,4 @@
+# Template: 1.0.0
 # Base image
 FROM registry.suse.com/bci/bci-base:15
 
@@ -11,7 +12,7 @@ ENV container="docker"
 #
 
 ENV CNT64_DEBUG=""
-ENV CNT64_USER="test"
+ENV CNT64_USER="cnt64"
 ENV CNT64_TMP="/tmp"
 ENV CNT64_OPT_ROOT="/opt"
 ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
@@ -25,32 +26,13 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
 
 # Copy image setup scripts
 COPY helpers/bootstrap/bootstrap /bootstrap
-COPY helpers/bash-test/setup /setup
 COPY installer/install-installer64 /install-installer64
 
 # Bootstrap
 RUN \
     zypper install --no-confirm tar gzip && \
-    chmod 700 /install-installer64 /bootstrap /setup && \
+    chmod 700 /install-installer64 /bootstrap && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
     rm /install-installer64 /bootstrap
-
-#
-# Setup image
-#
-
-RUN \
-    /setup && \
-    rm /setup
-
-# Install applications
-RUN \
-    "${CNT64_INSTALLER_ROOT}/install-batscore" && \
-    "${CNT64_INSTALLER_ROOT}/install-yq"
-
-# Run bats-core against /test
-CMD [ "/test" ]
-USER ${CNT64_USER}
-ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
