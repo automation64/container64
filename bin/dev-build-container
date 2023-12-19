@@ -47,7 +47,8 @@ declare dev_build_delete_first="${3:-${BL64_VAR_OFF}}"
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
 
-bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
+bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
+  bl64_check_export 'DEV_IMAGES_BASE' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_REDHAT' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_UBUNTU' &&
   bl64_check_export 'DEV_IMAGES_BASH_TEST_L1' &&
@@ -56,6 +57,7 @@ bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEV_IMAGES_DEV_L0' &&
   bl64_check_export 'DEV_IMAGES_DEV_L1' &&
   bl64_check_export 'DEV_IMAGES_DEV_L2' &&
+  bl64_check_export 'DEV_IMAGES_K8S_LINT_L0' &&
   bl64_check_export 'DEV_IMAGES_RUN_L0' &&
   bl64_check_export 'DEV_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEV_IMAGES_SSG_LINT_L0' &&
@@ -65,8 +67,7 @@ bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L1' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L2' &&
   bl64_check_export 'DEV_IMAGES_TOOLBOX_L3' &&
-  bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
-  bl64_check_export 'DEV_IMAGES_BASE' &&
+  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
   bl64_check_export 'DEV_CICD_CNTBUILD' ||
   exit $?
 
@@ -123,6 +124,9 @@ case "$dev_build_target" in
   ;;
 'container_lint')
   dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_IMAGES_CONTAINER_LINT_L0" 'container-lint - level 0'
+  ;;
+'k8s_lint')
+  dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_IMAGES_K8S_LINT_L0" 'k8s-lint - level 0'
   ;;
 *) bl64_check_alert_parameter_invalid 'build_target' ;;
 esac

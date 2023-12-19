@@ -20,8 +20,10 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kube-linter" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeconform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \

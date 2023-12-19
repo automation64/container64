@@ -21,6 +21,7 @@
       - [Container collection: Bash linting](#container-collection-bash-linting)
       - [Container collection: Bash testing](#container-collection-bash-testing)
       - [Container collection: Terraform linting](#container-collection-terraform-linting)
+      - [Container collection: K8S linting](#container-collection-k8s-linting)
       - [Container collection: Container linting](#container-collection-container-linting)
       - [Container collection: Terraform testing](#container-collection-terraform-testing)
       - [Container collection: Ansible playbooks testing](#container-collection-ansible-playbooks-testing)
@@ -165,6 +166,15 @@
 | Image                                    | OS     | Base Image                                       |
 | ---------------------------------------- | ------ | ------------------------------------------------ |
 | `terraform-lint/alpine-3-terraform-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
+#### Container collection: K8S linting
+
+- Purpose: K8s manifests linting
+- Packages: kube-linter, helm, helm-ct, kubectl
+
+| Image                        | OS     | Base Image                                       |
+| ---------------------------- | ------ | ------------------------------------------------ |
+| `k8s-lint/alpine-3-k8s-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
 #### Container collection: Container linting
 
