@@ -1,5 +1,5 @@
 # Base image
-FROM registry.suse.com/bci/bci-base:15
+FROM registry.suse.com/bci/bci-base:15.5
 
 # Prepare package installer
 ENV container="docker"
