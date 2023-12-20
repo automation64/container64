@@ -21,4 +21,5 @@ ARG INST64_PSQLCLI_VERSION="15"
 # Install applications
 RUN \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-mongodbcli && \
+    sudo -E ${CNT64_INSTALLER_ROOT}/install-mysqlcli && \
     sudo -E ${CNT64_INSTALLER_ROOT}/install-psqlcli
