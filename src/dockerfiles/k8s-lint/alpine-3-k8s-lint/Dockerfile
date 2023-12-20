@@ -27,7 +27,7 @@ COPY helpers/dev/setup /setup
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kube-linter" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubelinter" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl"
 
 # Set default user and entrypoint
