@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.3.0
+# Version: 2.4.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -49,14 +49,8 @@ source "${CNT64_BASHLIB64}/bashlib64.bash" || { echo "Error: unable to load bash
 
 function cnt64_bootstrap_create_users() {
   bl64_dbg_app_show_function
-  local user_mode='0750'
-  local user_shell='/bin/bash'
   local user_home="/home/${CNT64_USER}"
-  local xdg_config="${user_home}/.config"
-  local xdg_cache="${user_home}/.cache"
-  local xdg_local="${user_home}/.local"
-  local user_profile=''
-  local user_bashrc_d="${user_home}/.bashrc.d"
+  local user_shell='/bin/bash'
 
   bl64_dbg_app_show_comments 'no user creation requested'
   [[ -z "$CNT64_USER" ]] && return 0
@@ -67,8 +61,18 @@ function cnt64_bootstrap_create_users() {
     "$user_home" \
     "$BL64_VAR_DEFAULT" \
     "$user_shell" &&
-    bl64_rbac_add_root "${CNT64_USER}" ||
-    return $?
+    bl64_rbac_add_root "${CNT64_USER}"
+}
+
+function cnt64_bootstrap_configure_users() {
+  bl64_dbg_app_show_function
+  local user_mode='0750'
+  local user_home="/home/${CNT64_USER}"
+  local xdg_config="${user_home}/.config"
+  local xdg_cache="${user_home}/.cache"
+  local xdg_local="${user_home}/.local"
+  local user_profile=''
+  local user_bashrc_d="${user_home}/.bashrc.d"
 
   bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
   bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
@@ -253,6 +257,7 @@ cnt64_bootstrap_initialize &&
   cnt64_bootstrap_prepare_os &&
   cnt64_bootstrap_install &&
   cnt64_bootstrap_configure_os &&
-  cnt64_bootstrap_create_users
+  cnt64_bootstrap_create_users &&
+  cnt64_bootstrap_configure_users
 
 bl64_msg_show_batch_finish $? "$cnt64_bootstrap_task_title"
