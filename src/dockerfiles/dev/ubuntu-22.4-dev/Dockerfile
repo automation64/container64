@@ -23,6 +23,7 @@ COPY helpers/dev/setup /setup
 # Setup image
 #
 
+# Setup image
 RUN \
     /setup && \
     rm /setup
