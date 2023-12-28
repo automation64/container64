@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 #######################################
-# Lint shell source code
+# Lint Dockerfile code
 #
-# * Check is done using shellcheck
-# * TestManSH is used to manage linting environment
-# * Template: 5.0.0
+# * Check is done using hadolint
+# * Template: 2.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -35,13 +34,11 @@ source "${DEV_CICD_BASHLIB64}/bashlib64-core.bash" || exit 1
 # Functions
 #
 
-function dev_lint_bash() {
-  bl64_dbg_app_show_function "$@"
-  local dev_lint_target="$*"
-  local dev_lint_current=''
+function dev_lint_dockerfile() {
+  bl64_dbg_app_show_function
   for dev_lint_current in $dev_lint_target; do
-    bl64_msg_show_phase "lint Bash target (${dev_lint_current})"
-    "$DEV_LIB_TESTMANSH_BIN" -t -a -c "$dev_lint_current"
+    bl64_msg_show_phase "lint DOCKERFILE target (${dev_lint_current})"
+    "$DEV_LIB_HADOLINT_BIN" --config "$DEV_LIB_HADOLINT_CFG" "$dev_lint_current"
   done
 }
 
@@ -49,18 +46,18 @@ function dev_lint_bash() {
 # Main
 #
 
-declare dev_lint_target="${*:-$DEV_CICD_LINT_BASH_TARGET}"
+declare dev_lint_target="${*:-$DEV_CICD_LINT_DOCKERFILE_TARGET}"
 declare dev_lint_current=''
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
 
 bl64_check_parameter 'dev_lint_target' &&
-  bl64_check_export 'DEV_CICD_LINT_BASH_CFG' &&
-  bl64_check_export 'DEV_LIB_TESTMANSH_BIN' &&
-  bl64_check_command_search_path "$DEV_LIB_TESTMANSH_BIN" ||
+  bl64_check_export 'DEV_LIB_HADOLINT_CFG' &&
+  bl64_check_export 'DEV_CICD_LINT_DOCKERFILE_TARGET' &&
+  bl64_check_export 'DEV_LIB_HADOLINT_BIN' &&
+  bl64_check_command_search_path "$DEV_LIB_HADOLINT_BIN" ||
   exit $?
 
-bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'lint-bash'
-dev_lint_bash "$dev_lint_target"
-bl64_msg_show_batch_finish $? 'lint-bash'
+bl64_msg_show_batch_start 'lint-dockerfile'
+dev_lint_dockerfile
+bl64_msg_show_batch_finish $? 'lint-dockerfile'

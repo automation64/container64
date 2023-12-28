@@ -16,6 +16,10 @@ export DEV_ROOT
 DEV_CICD_DEBUG=''
 export DEV_CICD_DEBUG
 
-# GitHub User
-CNTBUILD_LOGIN_USER='TBD'
-export CNTBUILD_LOGIN_USER
+# Repo / RSync / Command
+DEV_LIB_RSYNC_BIN="/usr/bin/rsync"
+export DEV_LIB_RSYNC_BIN
+
+# Lint / Dockerfile / Command
+DEV_LIB_HADOLINT_BIN="/usr/bin/hadolint"
+export DEV_LIB_HADOLINT_BIN
