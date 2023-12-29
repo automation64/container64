@@ -101,7 +101,6 @@
 
 | Image              | OS     | Base Image                   |
 | ------------------ | ------ | ---------------------------- |
-| `run/alpine-3-run` | alpine | `docker.io/library/alpine:3` |
 
 #### Container collection: Bash linting
 

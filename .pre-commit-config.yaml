@@ -2,9 +2,9 @@
 repos:
   - repo: "local"
     hooks:
-      - id: "lint-bash"
-        name: "Lint / Bash"
-        entry: "bin/dev-lint-bash"
+      - id: "lint-dockerfile"
+        name: "Lint / Dockerfile"
+        entry: "bin/dev-lint-dockerfile"
         language: script
         pass_filenames: true
         fail_fast: true
@@ -15,5 +15,5 @@ repos:
           - "pre-commit"
         types:
           - "bash"
-        files: "(src/helpers|cntbuild)"
+        files: "(src/dockerfiles)"
 ...

@@ -1,0 +1,20 @@
+---
+failure-threshold: "error"
+no-color: false
+strict-labels: true
+disable-ignore-pragma: false
+no-fail: false
+trustedRegistries:
+  - "docker.io"
+  - "ghcr.io"
+  - "quay.io"
+  - "registry.suse.com"
+ignored:
+  - "DL3004" # Sudo is safe to use with bashlib64
+  - "DL3007" # Images are already using OS version labels
+  - "DL3008" # Need the latest version available for the target OS
+  - "DL3018" # Need the latest version available for the target OS
+  - "DL3037" # Need the latest version available for the target OS
+  - "DL3036" # Clean-up done by the setup script
+  - "DL3009" # Clean-up done by the setup script
+...

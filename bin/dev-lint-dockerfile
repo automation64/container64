@@ -27,18 +27,32 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || exit 1
-# shellcheck source=lib/bl64/bashlib64-core.bash
-source "${DEV_CICD_BASHLIB64}/bashlib64-core.bash" || exit 1
+# shellcheck source-path=lib/bl64
+source "${DEV_CICD_BASHLIB64}/bashlib64-module-txt.bash" &&
+  source "${DEV_CICD_BASHLIB64}/bashlib64-module-fmt.bash" &&
+  source "${DEV_CICD_BASHLIB64}/bashlib64-module-fs.bash" &&
+  source "${DEV_CICD_BASHLIB64}/bashlib64-core.bash" ||
+  exit 1
 
 #
 # Functions
 #
 
 function dev_lint_dockerfile() {
-  bl64_dbg_app_show_function
-  for dev_lint_current in $dev_lint_target; do
-    bl64_msg_show_phase "lint DOCKERFILE target (${dev_lint_current})"
-    "$DEV_LIB_HADOLINT_BIN" --config "$DEV_LIB_HADOLINT_CFG" "$dev_lint_current"
+  bl64_dbg_app_show_function "$@"
+  local target="$*"
+  local current=''
+
+  if [[ -z "$target" ]]; then
+    target="$(bl64_fs_find_files "$DEV_CICD_LINT_DOCKERFILE_SOURCE" 'Dockerfile')" ||
+      return $?
+  fi
+  for current in $target; do
+    bl64_msg_show_phase "lint target: ${current}"
+    "$DEV_LIB_HADOLINT_BIN" \
+      --config "$DEV_LIB_HADOLINT_CFG" \
+      "$current" ||
+      return $?
   done
 }
 
@@ -46,18 +60,17 @@ function dev_lint_dockerfile() {
 # Main
 #
 
-declare dev_lint_target="${*:-$DEV_CICD_LINT_DOCKERFILE_TARGET}"
-declare dev_lint_current=''
+declare dev_lint_target="${*:-}"
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
 
-bl64_check_parameter 'dev_lint_target' &&
-  bl64_check_export 'DEV_LIB_HADOLINT_CFG' &&
-  bl64_check_export 'DEV_CICD_LINT_DOCKERFILE_TARGET' &&
+bl64_check_export 'DEV_LIB_HADOLINT_CFG' &&
+  bl64_check_export 'DEV_CICD_LINT_DOCKERFILE_SOURCE' &&
   bl64_check_export 'DEV_LIB_HADOLINT_BIN' &&
+  bl64_check_directory "$DEV_CICD_LINT_DOCKERFILE_SOURCE" &&
   bl64_check_command_search_path "$DEV_LIB_HADOLINT_BIN" ||
   exit $?
 
 bl64_msg_show_batch_start 'lint-dockerfile'
-dev_lint_dockerfile
+dev_lint_dockerfile "$dev_lint_target"
 bl64_msg_show_batch_finish $? 'lint-dockerfile'
