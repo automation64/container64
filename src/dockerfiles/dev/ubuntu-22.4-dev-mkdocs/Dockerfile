@@ -20,6 +20,5 @@ ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-python" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-mkdocs"
+    "${CNT64_INSTALLER_ROOT}/install-mkdocs"
