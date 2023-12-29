@@ -25,14 +25,13 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
 #
 
 # Copy image setup scripts
-COPY helpers/bootstrap/bootstrap /bootstrap
-COPY installer/install-installer64 /install-installer64
+COPY --chmod=700 helpers/bootstrap/bootstrap /bootstrap
+ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/src/install-installer64 /install-installer64
 
 # Bootstrap
 RUN \
     apt-get update && \
-    apt-get install --assume-yes curl && \
-    chmod 700 /install-installer64 /bootstrap && \
+    apt-get install --assume-yes curl --no-install-recommends && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \

@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/redhat/ubi9
+FROM docker.io/redhat/ubi9:latest
 
 # Prepare package installer
 ENV container="docker"
@@ -25,12 +25,11 @@ ENV CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
 #
 
 # Copy image setup scripts
-COPY helpers/bootstrap/bootstrap /bootstrap
-COPY installer/install-installer64 /install-installer64
+COPY --chmod=700 helpers/bootstrap/bootstrap /bootstrap
+ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/src/install-installer64 /install-installer64
 
 # Bootstrap
 RUN \
-    chmod 700 /install-installer64 /bootstrap && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \

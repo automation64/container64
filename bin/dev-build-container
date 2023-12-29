@@ -58,7 +58,7 @@ bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
   bl64_check_export 'DEV_IMAGES_DEV_L1' &&
   bl64_check_export 'DEV_IMAGES_DEV_L2' &&
   bl64_check_export 'DEV_IMAGES_K8S_LINT_L0' &&
-  bl64_check_export 'DEV_IMAGES_RUN_L0' &&
+  # disabled # bl64_check_export 'DEV_IMAGES_RUN_L0' &&
   bl64_check_export 'DEV_IMAGES_SHELL_LINT_L1' &&
   bl64_check_export 'DEV_IMAGES_SSG_LINT_L0' &&
   bl64_check_export 'DEV_IMAGES_TERRAFORM_LINT_L0' &&
@@ -114,7 +114,8 @@ case "$dev_build_target" in
     dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_IMAGES_DEV_L2" 'dev - level 2'
   ;;
 'run')
-  dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_IMAGES_RUN_L0" 'run - level 0'
+  # disabled # dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_IMAGES_RUN_L0" 'run - level 0'
+  :
   ;;
 'ssg_lint')
   dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_IMAGES_SSG_LINT_L0" 'ssg-lint - level 0'

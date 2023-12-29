@@ -34,7 +34,7 @@ RUN \
     printf 'deb http://archive.debian.org/debian/ stretch-backports main contrib non-free\n' >>"/etc/apt/sources.list" && \
     printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"/etc/apt/sources.list" && \
     apt-get update && \
-    apt-get install --assume-yes curl && \
+    apt-get install --assume-yes curl --no-install-recommends && \
     chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \

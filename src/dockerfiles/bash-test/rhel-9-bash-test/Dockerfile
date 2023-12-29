@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/redhat/ubi9
+FROM docker.io/redhat/ubi9:latest
 
 # Prepare package installer
 ENV container="docker"

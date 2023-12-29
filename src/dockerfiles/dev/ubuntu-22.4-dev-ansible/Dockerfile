@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/dev/ubuntu-22.4-dev
+FROM ghcr.io/automation64/dev/ubuntu-22.4-dev:latest
 
 #
 # Environment definition
@@ -20,7 +20,6 @@ ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-python" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansiblelint"
+    "${CNT64_INSTALLER_ROOT}/install-ansible" && \
+    "${CNT64_INSTALLER_ROOT}/install-ansiblelint"

@@ -13,13 +13,6 @@ ENV CNT64_OPT_ROOT="/opt"
 ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 #
-# Bootstrap image
-#
-
-# Copy image setup scripts
-COPY helpers/dev/setup /setup
-
-#
 # Setup image
 #
 

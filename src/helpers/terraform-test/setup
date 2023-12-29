@@ -31,7 +31,7 @@
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
 
-# shellcheck source=SCRIPTDIR/../../../lib/bashlib64.bash
+# shellcheck source=lib/bl64/bashlib64.bash
 source "${CNT64_BASHLIB64}/bashlib64.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 # Setup parameters
