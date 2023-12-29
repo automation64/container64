@@ -31,7 +31,7 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 # Bootstrap
 RUN \
     apt-get update && \
-    apt-get install --assume-yes curl --no-install-recommends && \
+    apt-get install --assume-yes curl openssl ca-certificates --no-install-recommends && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
