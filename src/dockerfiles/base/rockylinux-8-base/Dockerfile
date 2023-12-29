@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/rockylinux:9
+FROM docker.io/rockylinux:8
 
 # Prepare package installer
 ENV container="docker"
