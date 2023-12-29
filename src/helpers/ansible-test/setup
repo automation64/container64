@@ -60,6 +60,60 @@ function cnt64_setup_configure_os() {
   fi
 }
 
+function cnt64_setup_configure_users() {
+  bl64_dbg_app_show_function
+  local user_mode='0750'
+  local user_home="/home/${CNT64_USER}"
+  local xdg_config="${user_home}/.config"
+  local xdg_cache="${user_home}/.cache"
+  local xdg_local="${user_home}/.local"
+  local user_profile=''
+  local user_bashrc_d="${user_home}/.bashrc.d"
+
+  bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
+  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
+    "$xdg_config" \
+    "$xdg_local" \
+    "$xdg_cache" \
+    "${xdg_local}/bin" \
+    "${xdg_local}/lib" \
+    "${xdg_local}/share" \
+    "${xdg_local}/state" ||
+    return $?
+
+  bl64_msg_show_task "Create modular bashr store (${user_bashrc_d})"
+  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
+    "$user_bashrc_d"
+
+  bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
+  if bl64_os_match "${BL64_OS_ALP}"; then
+    user_profile="${user_home}/.bash_profile"
+    # shellcheck disable=SC2016
+    printf \
+      '#!/usr/bin/env bash
+# added-by-installer64 #
+declare module=""
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+if [[ -d "${HOME}/.bashrc.d" ]]; then
+  for module in ${HOME}/.bashrc.d/*; do
+    [[ -r "$module" ]] && source "$module"
+  done
+fi\n' >"$user_profile" &&
+      bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
+  elif bl64_os_match "${BL64_OS_UB}"; then
+    user_profile="${user_home}/.bashrc"
+    # shellcheck disable=SC2016
+    printf \
+      '\n# added-by-installer64 #
+declare module=""
+if [[ -d "${HOME}/.bashrc.d" ]]; then
+  for module in ${HOME}/.bashrc.d/*; do
+    [[ -r "$module" ]] && source "$module"
+  done
+fi\n' >>"$user_profile"
+  fi
+}
+
 function cnt64_setup_create_users() {
   bl64_dbg_app_show_function
   local user_home=''
@@ -78,7 +132,7 @@ function cnt64_setup_create_users() {
     bl64_rbac_add_root "${CNT64_USER}"
 
   if [[ -z "$CNT64_ANSIBLE_USER" ]]; then
-    bl64_dbg_app_show_info "dedicated user not requested. Current will be used ($(id))"
+    bl64_dbg_app_show_info "dedicated user not requested. Current one will be used ($(id))"
     return 0
   fi
 
@@ -97,70 +151,49 @@ function cnt64_setup_select_packages() {
   local packages=''
 
   bl64_dbg_app_show_comments 'prepare packages for systemd, python3 and ansible deps'
-  if bl64_os_match "${BL64_OS_ALM}-8"; then
+  if bl64_os_match "${BL64_OS_RHEL}-8" "${BL64_OS_RCK}-8" "${BL64_OS_OL}-8" "${BL64_OS_ALM}-8"; then
     packages="${packages} kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
     packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
-    packages="${packages} platform-python-pip python3-pip python3-setuptools"
-    packages="${packages} python36"
+    packages="${packages} python3-pip python3-setuptools"
+    packages="${packages} python3"
   elif bl64_os_match "${BL64_OS_CNT}-8"; then
     packages="${packages} xkeyboard-config diffutils kbd"
     packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
-    packages="${packages} platform-python-pip python3-pip python3-setuptools"
-    packages="${packages} python39"
+    packages="${packages} python3-pip python3-setuptools"
+    packages="${packages} python3"
   elif bl64_os_match "${BL64_OS_DEB}-10"; then
     packages="${packages} dbus dmsetup"
     packages="${packages} systemd systemd-sysv"
     packages="${packages} bzip2 file mime-support readline-common xz-utils"
-    packages="${packages} python3 python3-minimal python3.7 python3.7-minimal"
+    packages="${packages} python3 python3-minimal python3.7 python3.7-minimal python3-pip"
   elif bl64_os_match "${BL64_OS_DEB}-11"; then
     packages="${packages} dbus dmsetup"
     packages="${packages} systemd systemd-timesyncd"
     packages="${packages} media-types readline-common"
-    packages="${packages} python3 python3-minimal python3.9 python3.9-minimal"
-  elif bl64_os_match "${BL64_OS_FD}-33"; then
-    packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
+    packages="${packages} python3 python3-minimal python3.9 python3.9-minimal python3-pip"
+  elif bl64_os_match "${BL64_OS_FD}-33" "${BL64_OS_FD}-35" "${BL64_OS_FD}-36"; then
+    packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon python3-pip"
     packages="${packages} systemd systemd-pam systemd-rpm-macros systemd-networkd"
-  elif bl64_os_match "${BL64_OS_FD}-35"; then
-    packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
-    packages="${packages} systemd systemd-pam systemd-rpm-macros systemd-networkd"
-  elif bl64_os_match "${BL64_OS_FD}-36"; then
-    packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
-    packages="${packages} systemd systemd-pam systemd-rpm-macros systemd-networkd"
-  elif bl64_os_match "${BL64_OS_OL}-8"; then
-    packages="${packages} kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
-    packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
-    packages="${packages} platform-python-pip python3-pip python3-setuptools"
-    packages="${packages} python36"
   elif bl64_os_match "${BL64_OS_OL}-9"; then
     packages="${packages} xkeyboard-config diffutils kbd"
     packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
-    packages="${packages} platform-python-pip python3-pip python3-setuptools"
-    packages="${packages} python39"
-  elif bl64_os_match "${BL64_OS_RHEL}-8"; then
-    packages="${packages} kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
-    packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
-    packages="${packages} platform-python-pip python3-pip python3-setuptools"
-    packages="${packages} python36"
-  elif bl64_os_match "${BL64_OS_RCK}-8"; then
-    packages="${packages} kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
-    packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
-    packages="${packages} platform-python-pip python3-pip python3-setuptools"
-    packages="${packages} python36"
+    packages="${packages} python3-pip python3-setuptools"
+    packages="${packages} python3"
   elif bl64_os_match "${BL64_OS_UB}-20.4"; then
     packages="${packages} dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info tzdata xdg-user-dirs locales"
     packages="${packages} systemd systemd-timesyncd"
     packages="${packages} file mime-support readline-common xz-utils"
-    packages="${packages} python3 python3-dbus python3-gi python3-minimal python3.8 python3.8-minimal"
+    packages="${packages} python3 python3-dbus python3-gi python3-minimal python3.8 python3.8-minimal python3-pip"
   elif bl64_os_match "${BL64_OS_UB}-21.4"; then
     packages="${packages} dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs locales"
     packages="${packages} systemd systemd-timesyncd"
     packages="${packages} media-types readline-common tzdata"
-    packages="${packages} python3 python3-minimal python3-dbus python3-gi"
+    packages="${packages} python3 python3-minimal python3-dbus python3-gi python3-pip"
   elif bl64_os_match "${BL64_OS_UB}-22.4"; then
     packages="${packages} dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs locales"
     packages="${packages} systemd systemd-timesyncd"
     packages="${packages} media-types readline-common tzdata"
-    packages="${packages} python3 python3-minimal python3.9 python3-dbus python3-gi"
+    packages="${packages} python3 python3-minimal python3.9 python3-dbus python3-gi python3-pip"
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
@@ -205,6 +238,7 @@ function cnt64_setup_initialize() {
     "${BL64_OS_RHEL}-8" \
     "${BL64_OS_RCK}-8" \
     "${BL64_OS_UB}-20.4" "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.4" &&
+    bl64_check_export 'CNT64_USER' &&
     bl64_check_privilege_root &&
     bl64_pkg_setup
 }
@@ -223,4 +257,5 @@ cnt64_setup_initialize &&
   cnt64_setup_install_packages &&
   cnt64_setup_configure_os &&
   cnt64_setup_create_users &&
+  cnt64_setup_configure_users
 bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
