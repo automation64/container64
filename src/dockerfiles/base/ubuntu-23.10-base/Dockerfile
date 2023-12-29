@@ -31,7 +31,7 @@ COPY installer/install-installer64 /install-installer64
 # Bootstrap
 RUN \
     apt-get update && \
-    apt-get install --assume-yes curl && \
+    apt-get install --assume-yes curl --no-install-recommends && \
     chmod 700 /install-installer64 /bootstrap && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \

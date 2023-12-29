@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/dev/ubuntu-22.4-dev-k8s
+FROM ghcr.io/automation64/dev/ubuntu-22.4-dev-k8s:latest
 
 #
 # Environment definition

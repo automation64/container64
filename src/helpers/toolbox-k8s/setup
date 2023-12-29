@@ -49,6 +49,7 @@ function cnt64_setup_configure_user() {
   local bashrc_d="${user_home}/.bashrc.d"
 
   bl64_msg_show_task "Update user's search path definition (${bashrc_d})"
+  # shellcheck disable=SC2016
   printf 'PATH="${PATH}:%s"\n' "${user_home}/.krew/bin" |
     bl64_rbac_run_command "$CNT64_USER" tee "${bashrc_d}/krew.env"
 }

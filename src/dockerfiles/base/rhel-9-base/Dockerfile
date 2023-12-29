@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/redhat/ubi9
+FROM docker.io/redhat/ubi9:latest
 
 # Prepare package installer
 ENV container="docker"
