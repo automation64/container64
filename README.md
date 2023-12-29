@@ -50,11 +50,38 @@
 - Purpose: Base container image for creating Container64 images
 - Packages: sudo
 
-| Image                     | OS          | Base Image                        |
-| ------------------------- | ----------- | --------------------------------- |
-| `base/alpine-3-base`      | alpine      | `docker.io/library/alpine:3.17`   |
-| `base/oraclelinux-9-base` | oraclelinux | `docker.io/library/oraclelinux:9` |
-| `base/ubuntu-22.4-base`   | ubuntu      | `docker.io/library/ubuntu:22.04`  |
+| Image                     | OS          | Base Image                          |
+| ------------------------- | ----------- | ----------------------------------- |
+| `base/almalinux-8-base`   | almalinux   | `docker.io/library/almalinux:8`     |
+| `base/almalinux-9-base`   | almalinux   | `docker.io/library/almalinux:9`     |
+| `base/alpine-3-base`      | alpine      | `docker.io/library/alpine:3.17`     |
+| `base/centos-7-base`      | centos      | `quay.io/centos/centos:centos7`     |
+| `base/centos-8-base`      | centos      | `quay.io/centos/centos:8`           |
+| `base/centos-9-base`      | centos      | `quay.io/centos/centos:stream9`     |
+| `base/debian-10-base`     | debian      | `docker.io/library/debian:buster`   |
+| `base/debian-11-base`     | debian      | `docker.io/library/debian:bullseye` |
+| `base/debian-9-base`      | debian      | `docker.io/debian/eol:stretch`      |
+| `base/fedora-33-base`     | fedora      | `docker.io/library/fedora:33`       |
+| `base/fedora-34-base`     | fedora      | `docker.io/library/fedora:34`       |
+| `base/fedora-35-base`     | fedora      | `docker.io/library/fedora:35`       |
+| `base/fedora-36-base`     | fedora      | `docker.io/library/fedora:36`       |
+| `base/fedora-37-base`     | fedora      | `docker.io/library/fedora:37`       |
+| `base/fedora-38-base`     | fedora      | `docker.io/library/fedora:38`       |
+| `base/fedora-39-base`     | fedora      | `docker.io/library/fedora:39`       |
+| `base/oraclelinux-7-base` | oraclelinux | `docker.io/library/oraclelinux:7`   |
+| `base/oraclelinux-8-base` | oraclelinux | `docker.io/library/oraclelinux:8`   |
+| `base/oraclelinux-9-base` | oraclelinux | `docker.io/library/oraclelinux:9`   |
+| `base/rhel-8-base`        | rhel        | `docker.io/redhat/ubi8`             |
+| `base/rhel-9-base`        | rhel        | `docker.io/redhat/ubi9`             |
+| `base/rockylinux-8-base`  | rockylinux  | `docker.io/rockylinux:8`            |
+| `base/rockylinux-9-base`  | rockylinux  | `docker.io/rockylinux:9`            |
+| `base/sles-15-base`       | sles        | `registry.suse.com/bci/bci-base:15` |
+| `base/ubuntu-18.4-base`   | ubuntu      | `docker.io/library/ubuntu:18.04`    |
+| `base/ubuntu-20.4-base`   | ubuntu      | `docker.io/library/ubuntu:20.04`    |
+| `base/ubuntu-21.4-base`   | ubuntu      | `docker.io/library/ubuntu:21.04`    |
+| `base/ubuntu-22.4-base`   | ubuntu      | `docker.io/library/ubuntu:22.04`    |
+| `base/ubuntu-22.10-base`  | ubuntu      | `docker.io/library/ubuntu:22.10`    |
+| `base/ubuntu-23.10-base`  | ubuntu      | `docker.io/library/ubuntu:23.10`    |
 
 #### Container collection: System Administration toolbox
 
@@ -99,8 +126,8 @@
 - Purpose: minimal runtime environment for running individual tools
 - Packages: bash, sudo, curl, purpose specific tools
 
-| Image              | OS     | Base Image                   |
-| ------------------ | ------ | ---------------------------- |
+| Image | OS  | Base Image |
+| ----- | --- | ---------- |
 
 #### Container collection: Bash linting
 
@@ -154,7 +181,6 @@
 | `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:21.04`                                |
 | `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:22.10`                                |
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
-| `bash-test/ubuntu-23.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:23.04`                                |
 | `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:23.10`                                |
 
 #### Container collection: Terraform linting
