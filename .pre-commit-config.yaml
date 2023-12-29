@@ -29,5 +29,5 @@ repos:
           - "pre-commit"
         types:
           - "dockerfile"
-        files: "(src/dockerfiles)"
+        files: "src/dockerfiles"
 ...
