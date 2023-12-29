@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Template: 1.2.0
+# Template: 1.5.0
 #######################################
 # Container64 / Setup container image
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.7.0
+# Version: 1.8.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]

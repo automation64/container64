@@ -145,24 +145,24 @@
 
 | Image                                            | OS          | Base Image                                                      |
 | ------------------------------------------------ | ----------- | --------------------------------------------------------------- |
-| `bash-test/almalinux-8-bash-test`                | almalinux   | `docker.io/library/almalinux:8`                                 |
-| `bash-test/almalinux-9-bash-test`                | almalinux   | `docker.io/library/almalinux:9`                                 |
-| `bash-test/alpine-3-bash-test`                   | alpine      | `docker.io/library/alpine:3.17`                                 |
-| `bash-test/centos-7-bash-test`                   | centos      | `quay.io/centos/centos:centos7`                                 |
-| `bash-test/centos-8-bash-test`                   | centos      | `quay.io/centos/centos:8`                                       |
-| `bash-test/centos-9-bash-test`                   | centos      | `quay.io/centos/centos:stream9`                                 |
-| `bash-test/debian-10-bash-test`                  | debian      | `docker.io/library/debian:buster`                               |
-| `bash-test/debian-11-bash-test`                  | debian      | `docker.io/library/debian:bullseye`                             |
-| `bash-test/debian-9-bash-test`                   | debian      | `docker.io/debian/eol:stretch`                                  |
-| `bash-test/fedora-33-bash-test`                  | fedora      | `docker.io/library/fedora:33`                                   |
-| `bash-test/fedora-34-bash-test`                  | fedora      | `docker.io/library/fedora:34`                                   |
-| `bash-test/fedora-35-bash-test`                  | fedora      | `docker.io/library/fedora:35`                                   |
-| `bash-test/fedora-36-bash-test`                  | fedora      | `docker.io/library/fedora:36`                                   |
-| `bash-test/fedora-37-bash-test`                  | fedora      | `docker.io/library/fedora:37`                                   |
-| `bash-test/fedora-38-bash-test`                  | fedora      | `docker.io/library/fedora:38`                                   |
-| `bash-test/fedora-39-bash-test`                  | fedora      | `docker.io/library/fedora:39`                                   |
-| `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `docker.io/library/oraclelinux:7`                               |
-| `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `docker.io/library/oraclelinux:8`                               |
+| `bash-test/almalinux-8-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-8-bash-test`               |
+| `bash-test/almalinux-9-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-9-bash-test`               |
+| `bash-test/alpine-3-bash-test`                   | alpine      | `ghcr.io/automation64/base/alpine-3-bash-test`                  |
+| `bash-test/centos-7-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-7-bash-test`                  |
+| `bash-test/centos-8-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-8-bash-test`                  |
+| `bash-test/centos-9-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-9-bash-test`                  |
+| `bash-test/debian-10-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-10-bash-test`                 |
+| `bash-test/debian-11-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-11-bash-test`                 |
+| `bash-test/debian-9-bash-test`                   | debian      | `ghcr.io/automation64/base/debian-9-bash-test`                  |
+| `bash-test/fedora-33-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-33-bash-test`                 |
+| `bash-test/fedora-34-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-34-bash-test`                 |
+| `bash-test/fedora-35-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-35-bash-test`                 |
+| `bash-test/fedora-36-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-36-bash-test`                 |
+| `bash-test/fedora-37-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-37-bash-test`                 |
+| `bash-test/fedora-38-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-38-bash-test`                 |
+| `bash-test/fedora-39-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-39-bash-test`                 |
+| `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-7-bash-test`             |
+| `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-8-bash-test`             |
 | `bash-test/oraclelinux-9-bash-test-ansible`      | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
 | `bash-test/oraclelinux-9-bash-test-cloud`        | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
 | `bash-test/oraclelinux-9-bash-test-docker`       | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
@@ -170,18 +170,18 @@
 | `bash-test/oraclelinux-9-bash-test-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
 | `bash-test/oraclelinux-9-bash-test-podman`       | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
 | `bash-test/oraclelinux-9-bash-test-terraform`    | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test`              | oraclelinux | `docker.io/library/oraclelinux:9`                               |
-| `bash-test/rhel-8-bash-test`                     | rhel        | `docker.io/redhat/ubi8`                                         |
-| `bash-test/rhel-9-bash-test`                     | rhel        | `docker.io/redhat/ubi9`                                         |
-| `bash-test/rockylinux-8-bash-test`               | rockylinux  | `docker.io/rockylinux:8`                                        |
-| `bash-test/rockylinux-9-bash-test`               | rockylinux  | `docker.io/rockylinux:9`                                        |
-| `bash-test/sles-15-bash-test`                    | sles        | `registry.suse.com/bci/bci-base:15`                             |
-| `bash-test/ubuntu-18.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:18.04`                                |
-| `bash-test/ubuntu-20.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:20.04`                                |
-| `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:21.04`                                |
-| `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:22.10`                                |
-| `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `docker.io/library/ubuntu:22.04`                                |
-| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `docker.io/library/ubuntu:23.10`                                |
+| `bash-test/oraclelinux-9-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-9-bash-test`             |
+| `bash-test/rhel-8-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-8-bash-test`                    |
+| `bash-test/rhel-9-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-9-bash-test`                    |
+| `bash-test/rockylinux-8-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-8-bash-test`              |
+| `bash-test/rockylinux-9-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-9-bash-test`              |
+| `bash-test/sles-15-bash-test`                    | sles        | `ghcr.io/automation64/base/sles-15-bash-test`                   |
+| `bash-test/ubuntu-18.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-18.4-bash-test`               |
+| `bash-test/ubuntu-20.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-20.4-bash-test`               |
+| `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-21.4-bash-test`               |
+| `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.10-bash-test`              |
+| `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.4-bash-test`               |
+| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-23.10-bash-test`              |
 
 #### Container collection: Terraform linting
 

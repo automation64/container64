@@ -16,5 +16,5 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-kubectl && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-helm
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm"

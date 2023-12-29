@@ -19,4 +19,4 @@ ENV CNT64_MONGODBCLI_VERSION=6
 
 # Install applications
 RUN \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongodbcli
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-mongodbcli"

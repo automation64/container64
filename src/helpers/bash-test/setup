@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Template: 1.1.0
+# Template: 1.5.0
 #######################################
 # Container64 / Setup container image
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.5.0
+# Version: 1.6.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -47,13 +47,13 @@ function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_match "${BL64_OS_ALP}"; then
-    packages='git mawk curl python3 py3-pip musl musl-utils musl-locales tzdata gettext jq'
+    packages='git mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq'
   elif bl64_os_match "${BL64_OS_ALM}"; then
     packages='git diffutils python3 python3-pip python3-setuptools unzip wget gettext jq'
   elif bl64_os_match "${BL64_OS_CNT}"; then
     packages='git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext jq'
   elif bl64_os_match "${BL64_OS_DEB}"; then
-    packages='git wget curl gawk python3 python3-pip python3-venv unzip gettext jq'
+    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq'
   elif bl64_os_match "${BL64_OS_FD}"; then
     packages='git diffutils hostname wget python3-pip findutils unzip gettext jq'
   elif bl64_os_match "${BL64_OS_OL}"; then
@@ -65,29 +65,34 @@ function cnt64_setup_select_packages() {
   elif bl64_os_match "${BL64_OS_SLES}"; then
     packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq'
   elif bl64_os_match "${BL64_OS_UB}"; then
-    packages='git wget curl gawk python3 python3-pip python3-venv unzip gettext jq'
+    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq'
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
 
 function cnt64_setup_create_users() {
   bl64_dbg_app_show_function
-  local user_mode='0755'
-  local user_shell='/bin/bash'
   local user_home="/home/${CNT64_USER}"
-  local xdg_config="${user_home}/.config"
-  local xdg_cache="${user_home}/.cache"
-  local xdg_local="${user_home}/.local"
-  local user_profile="${user_home}/.bash_profile"
+  local user_shell='/bin/bash'
 
   bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   bl64_iam_user_add \
     "$CNT64_USER" \
-    "$BL64_VAR_DEFAULT" \
+    "$user_home" \
     "$BL64_VAR_DEFAULT" \
     "$user_shell" &&
-    bl64_rbac_add_root "${CNT64_USER}" ||
-    return $?
+    bl64_rbac_add_root "${CNT64_USER}"
+}
+
+function cnt64_setup_configure_users() {
+  bl64_dbg_app_show_function
+  local user_mode='0750'
+  local user_home="/home/${CNT64_USER}"
+  local xdg_config="${user_home}/.config"
+  local xdg_cache="${user_home}/.cache"
+  local xdg_local="${user_home}/.local"
+  local user_profile=''
+  local user_bashrc_d="${user_home}/.bashrc.d"
 
   bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
   bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
@@ -100,48 +105,47 @@ function cnt64_setup_create_users() {
     "${xdg_local}/state" ||
     return $?
 
+  bl64_msg_show_task "Create modular bashr store (${user_bashrc_d})"
+  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
+    "$user_bashrc_d"
+
+  bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
   if bl64_os_match "${BL64_OS_ALP}"; then
-    bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
+    user_profile="${user_home}/.bash_profile"
     # shellcheck disable=SC2016
-    printf 'PATH="$HOME/.local/bin:$HOME/bin:$PATH"\n' >"$user_profile" &&
-      bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile" ||
-      return $?
+    printf \
+      '#!/usr/bin/env bash
+# added-by-installer64 #
+declare module=""
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+if [[ -d "${HOME}/.bashrc.d" ]]; then
+  for module in ${HOME}/.bashrc.d/*; do
+    [[ -r "$module" ]] && source "$module"
+  done
+fi\n' >"$user_profile" &&
+      bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
+  elif bl64_os_match "${BL64_OS_UB}"; then
+    user_profile="${user_home}/.bashrc"
+    # shellcheck disable=SC2016
+    printf \
+      '\n# added-by-installer64 #
+declare module=""
+if [[ -d "${HOME}/.bashrc.d" ]]; then
+  for module in ${HOME}/.bashrc.d/*; do
+    [[ -r "$module" ]] && source "$module"
+  done
+fi\n' >>"$user_profile"
   fi
-  return 0
 }
 
 function cnt64_setup_install_packages() {
   bl64_dbg_app_show_function
   local packages=''
-
   bl64_msg_show_task 'deploy packages'
   packages="$(cnt64_setup_select_packages)" ||
     return $?
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
-}
-
-#######################################
-# Install application packages
-#
-# Arguments:
-#   None. Parameters are imported from Globals
-# Outputs:
-#   Package installer progress and errors
-# Returns:
-#   0: package installed ok
-#   >0: unable to install package
-#######################################
-function cnt64_setup_install() {
-  bl64_dbg_app_show_function
-
-  cnt64_setup_install_packages &&
-    cnt64_setup_create_users ||
-    return $?
-
-  bl64_msg_show_task 'cleanup temporary files'
-  bl64_fs_cleanup_full
-  return 0
 }
 
 #######################################
@@ -158,6 +162,7 @@ function cnt64_setup_install() {
 function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
+  bl64_dbg_app_show_comments 'no need to specify versions, rely on bashlib64 compatibility check'
   bl64_os_check_version \
     "${BL64_OS_ALM}" \
     "${BL64_OS_ALP}" \
@@ -185,6 +190,7 @@ bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_setup_initialize &&
-  cnt64_setup_install
-
+  cnt64_setup_install_packages &&
+  cnt64_setup_create_users &&
+  cnt64_setup_configure_users
 bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"

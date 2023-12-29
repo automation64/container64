@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
-#
+#######################################
 # Build containers
 #
+# * Template: 2.1.0
+#
+#######################################
+# Copyright [2023] [serdigital64@gmail.com]
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
 
 #
 # Imports
@@ -47,28 +64,7 @@ declare dev_build_delete_first="${3:-${BL64_VAR_OFF}}"
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
 
-bl64_check_export 'DEV_IMAGES_ANSIBLE_L1' &&
-  bl64_check_export 'DEV_IMAGES_BASE' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_REDHAT' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_UBUNTU' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L1' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L2' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L3' &&
-  bl64_check_export 'DEV_IMAGES_DEV_L0' &&
-  bl64_check_export 'DEV_IMAGES_DEV_L1' &&
-  bl64_check_export 'DEV_IMAGES_DEV_L2' &&
-  bl64_check_export 'DEV_IMAGES_K8S_LINT_L0' &&
-  # disabled # bl64_check_export 'DEV_IMAGES_RUN_L0' &&
-  bl64_check_export 'DEV_IMAGES_SHELL_LINT_L1' &&
-  bl64_check_export 'DEV_IMAGES_SSG_LINT_L0' &&
-  bl64_check_export 'DEV_IMAGES_TERRAFORM_LINT_L0' &&
-  bl64_check_export 'DEV_IMAGES_TERRAFORM_TEST_L3' &&
-  bl64_check_export 'DEV_IMAGES_TOOLBOX_L0' &&
-  bl64_check_export 'DEV_IMAGES_TOOLBOX_L1' &&
-  bl64_check_export 'DEV_IMAGES_TOOLBOX_L2' &&
-  bl64_check_export 'DEV_IMAGES_TOOLBOX_L3' &&
-  bl64_check_export 'DEV_IMAGES_BASH_TEST_L0_OTHER' &&
-  bl64_check_export 'DEV_CICD_CNTBUILD' ||
+bl64_check_export 'DEV_CICD_CNTBUILD' ||
   exit $?
 
 bl64_msg_all_enable_verbose

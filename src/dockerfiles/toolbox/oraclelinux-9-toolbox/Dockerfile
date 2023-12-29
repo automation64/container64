@@ -2,9 +2,6 @@
 # Base image
 FROM ghcr.io/automation64/base/oraclelinux-9-base:latest
 
-# Prepare package installer
-ENV container="docker"
-
 #
 # Environment definition
 #
