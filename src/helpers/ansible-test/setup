@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Template: 1.1.0
+# Template: 1.5.0
 #######################################
 # Container64 / Setup container image
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.0.0
+# Version: 2.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -62,21 +62,32 @@ function cnt64_setup_configure_os() {
 
 function cnt64_setup_create_users() {
   bl64_dbg_app_show_function
-  local user=''
-  local home=''
-  local current=''
+  local user_home=''
+  local user_shell=''
+  local user_new=''
+  local user_current=''
+
+  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
+  user_home="/home/${CNT64_USER}"
+  user_shell='/bin/bash'
+  bl64_iam_user_add \
+    "$CNT64_USER" \
+    "$user_home" \
+    "$BL64_VAR_DEFAULT" \
+    "$user_shell" &&
+    bl64_rbac_add_root "${CNT64_USER}"
 
   if [[ -z "$CNT64_ANSIBLE_USER" ]]; then
-    bl64_msg_show_info "dedicated user not requested. Installing to current user ($(id))"
+    bl64_dbg_app_show_info "dedicated user not requested. Current will be used ($(id))"
     return 0
   fi
 
-  for current in $CNT64_ANSIBLE_VERSIONS; do
-    home="${CNT64_ANSIBLE_HOME}-${current}"
-    user="${CNT64_ANSIBLE_USER}-${current}"
-    bl64_msg_show_task "Create ansible installation owner user (${user})"
-    bl64_iam_user_add "$user" "$home" &&
-      bl64_rbac_add_root "$user" ||
+  for user_current in $CNT64_ANSIBLE_VERSIONS; do
+    user_home="${CNT64_ANSIBLE_HOME}-${user_current}"
+    user_new="${CNT64_ANSIBLE_USER}-${user_current}"
+    bl64_msg_show_task "Create ansible installation owner user (${user_new})"
+    bl64_iam_user_add "$user_new" "$user_home" &&
+      bl64_rbac_add_root "$user_new" ||
       return $?
   done
 }
@@ -85,10 +96,7 @@ function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
 
-  # package: SYSTEMD_PREREQS
-  # package: SYSTEMD_PACKAGES
-  # package: PYTHON3_PREREQS
-  # package: PYTHON3_PACKAGES
+  bl64_dbg_app_show_comments 'prepare packages for systemd, python3 and ansible deps'
   if bl64_os_match "${BL64_OS_ALM}-8"; then
     packages="${packages} kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
     packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
@@ -107,23 +115,17 @@ function cnt64_setup_select_packages() {
   elif bl64_os_match "${BL64_OS_DEB}-11"; then
     packages="${packages} dbus dmsetup"
     packages="${packages} systemd systemd-timesyncd"
-    packages="${packages} ca-certificates media-types openssl readline-common"
+    packages="${packages} media-types readline-common"
     packages="${packages} python3 python3-minimal python3.9 python3.9-minimal"
   elif bl64_os_match "${BL64_OS_FD}-33"; then
     packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
     packages="${packages} systemd systemd-pam systemd-rpm-macros systemd-networkd"
-    packages="${packages} "
-    packages="${packages} "
   elif bl64_os_match "${BL64_OS_FD}-35"; then
     packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
     packages="${packages} systemd systemd-pam systemd-rpm-macros systemd-networkd"
-    packages="${packages} "
-    packages="${packages} "
   elif bl64_os_match "${BL64_OS_FD}-36"; then
     packages="${packages} acl dbus device-mapper hwdata pciutils rdma-core xkeyboard-config diffutils kbd-legacy kbd-misc  diffutils kbd libxkbcommon"
     packages="${packages} systemd systemd-pam systemd-rpm-macros systemd-networkd"
-    packages="${packages} "
-    packages="${packages} "
   elif bl64_os_match "${BL64_OS_OL}-8"; then
     packages="${packages} kbd-legacy kbd-misc xkeyboard-config diffutils kbd libxkbcommon"
     packages="${packages} systemd systemd-libs systemd-pam systemd-udev"
@@ -152,12 +154,12 @@ function cnt64_setup_select_packages() {
   elif bl64_os_match "${BL64_OS_UB}-21.4"; then
     packages="${packages} dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs locales"
     packages="${packages} systemd systemd-timesyncd"
-    packages="${packages} ca-certificates media-types openssl readline-common tzdata"
+    packages="${packages} media-types readline-common tzdata"
     packages="${packages} python3 python3-minimal python3-dbus python3-gi"
   elif bl64_os_match "${BL64_OS_UB}-22.4"; then
     packages="${packages} dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs locales"
     packages="${packages} systemd systemd-timesyncd"
-    packages="${packages} ca-certificates media-types openssl readline-common tzdata"
+    packages="${packages} media-types readline-common tzdata"
     packages="${packages} python3 python3-minimal python3.9 python3-dbus python3-gi"
   fi
   [[ -n "$packages" ]] && echo "$packages"
@@ -172,30 +174,6 @@ function cnt64_setup_install_packages() {
     return $?
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
-}
-
-#######################################
-# Install application packages
-#
-# Arguments:
-#   None. Parameters are imported from Globals
-# Outputs:
-#   Package installer progress and errors
-# Returns:
-#   0: package installed ok
-#   >0: unable to install package
-#######################################
-function cnt64_setup_install() {
-  bl64_dbg_app_show_function
-
-  cnt64_setup_install_packages &&
-    cnt64_setup_configure_os &&
-    cnt64_setup_create_users ||
-    return $?
-
-  bl64_msg_show_task 'cleanup temporary files'
-  bl64_fs_cleanup_full
-  return 0
 }
 
 #######################################
@@ -242,6 +220,7 @@ bl64_msg_show_batch_start "$cnt64_setup_installer_description"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
 cnt64_setup_initialize &&
-  cnt64_setup_install
-
+  cnt64_setup_install_packages &&
+  cnt64_setup_configure_os &&
+  cnt64_setup_create_users &&
 bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
