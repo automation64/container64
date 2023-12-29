@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/bash-test/almalinux-8-bash-test:latest
+FROM ghcr.io/automation64/base/almalinux-8-base:latest
 
 #
 # Environment definition
@@ -32,3 +32,4 @@ RUN \
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]
+USER ${CNT64_USER}
