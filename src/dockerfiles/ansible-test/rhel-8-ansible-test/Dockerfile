@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/bash-test/rhel-8-bash-test:latest
+FROM ghcr.io/automation64/base/rhel-8-base:latest
 
 #
 # Environment definition
@@ -31,3 +31,4 @@ RUN \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible"
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]
+USER ${CNT64_USER}
