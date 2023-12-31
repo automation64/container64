@@ -43,12 +43,12 @@ function dev_build_publish() {
   bl64_msg_show_phase "$message"
   # shellcheck disable=SC2086
   for container_name in $image_list; do
-    "$DEV_CICD_CNTBUILD" -b -c "$container_name" || return $?
+    "$DEV_CICD_CNTBUILD_BIN" -b -c "$container_name" || return $?
     if bl64_lib_flag_is_enabled "$publish"; then
       if bl64_lib_flag_is_enabled "$delete_first"; then
-        "$DEV_CICD_CNTBUILD" -x -c "$container_name"
+        "$DEV_CICD_CNTBUILD_BIN" -x -c "$container_name"
       fi
-      "$DEV_CICD_CNTBUILD" -u -c "$container_name" ||
+      "$DEV_CICD_CNTBUILD_BIN" -u -c "$container_name" ||
         return $?
     fi
   done
@@ -64,7 +64,7 @@ declare dev_build_delete_first="${3:-${BL64_VAR_OFF}}"
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
 
-bl64_check_export 'DEV_CICD_CNTBUILD' ||
+bl64_check_export 'DEV_CICD_CNTBUILD_BIN' ||
   exit $?
 
 bl64_msg_all_enable_verbose
