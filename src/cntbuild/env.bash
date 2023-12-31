@@ -7,8 +7,6 @@
 #
 
 # Registry credentials
-export CNTBUILD_LOGIN_USER
-export CNTBUILD_LOGIN_PASSWORD
 export CNTBUILD_REGISTRY
 export CNTBUILD_REGISTRY_OWNER
 

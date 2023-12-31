@@ -8,6 +8,3 @@
 # * Do not include DEV_ROOT as it's already set in the bin/dev-set script
 # * Template version: 1.0.0
 #
-
-CNTBUILD_LOGIN_USER="$GITHUB_ACTOR"
-export CNTBUILD_LOGIN_USER

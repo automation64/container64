@@ -131,15 +131,9 @@ function cntbuild_publish() {
   local tag="$3"
   local target=''
 
-  bl64_check_export 'CNTBUILD_LOGIN_USER' &&
-    bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
-    bl64_check_export 'CNTBUILD_REGISTRY' ||
-    return $?
-
   tag="$(cntbuild_get_version "$container" "$context" "$tag")" || return $?
   target="${CNTBUILD_REGISTRY}/${container}:${tag}"
   bl64_msg_show_task "Publish container image to registry (${target})" &&
-  bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_REGISTRY" &&
     bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
     bl64_cnt_push "${container}:${tag}" "$target" &&
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
@@ -214,14 +208,14 @@ function cntbuild_initialize() {
 
   # shellcheck disable=SC2249
   case "$command" in
-  'cntbuild_publish' | 'cntbuild_delete')
-    bl64_check_export 'CNTBUILD_LOGIN_USER' &&
-      bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
-      bl64_check_export 'CNTBUILD_REGISTRY' &&
+  'cntbuild_delete' | 'cntbuild_publish')
+    bl64_check_export 'CNTBUILD_REGISTRY' &&
       bl64_check_export 'CNTBUILD_REGISTRY_OWNER' ||
       return $?
     ;;
   esac
+
+  return $?
 
   return 0
 }
