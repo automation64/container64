@@ -119,7 +119,7 @@ TERM="${TERM:-vt100}"
 # BashLib64 / Module / Globals / Setup script run-time environment
 #######################################
 
-export BL64_VERSION='18.1.0'
+export BL64_VERSION='18.1.1'
 
 #
 # Imported shell standard variables
@@ -4362,7 +4362,7 @@ function _bl64_os_get_distro_from_os_release() {
   'CENTOS') BL64_OS_DISTRO="${BL64_OS_CNT}-${version_normalized}" ;;
   'DEBIAN') BL64_OS_DISTRO="${BL64_OS_DEB}-${version_normalized}" ;;
   'FEDORA') BL64_OS_DISTRO="${BL64_OS_FD}-${version_normalized}" ;;
-  'DARWIN') BL64_OS_DISTRO="${L64_OS_MCOS}-${version_normalized}" ;;
+  'DARWIN') BL64_OS_DISTRO="${BL64_OS_MCOS}-${version_normalized}" ;;
   'OL') BL64_OS_DISTRO="${BL64_OS_OL}-${version_normalized}" ;;
   'ROCKY') BL64_OS_DISTRO="${BL64_OS_RCK}-${version_normalized}" ;;
   'RHEL') BL64_OS_DISTRO="${BL64_OS_RHEL}-${version_normalized}" ;;
@@ -15557,6 +15557,9 @@ export CNTBUILD_REGISTRY_OWNER="${CNTBUILD_REGISTRY_OWNER:-}"
 # Cosign binary
 export CNTBUILD_COSIGN_BIN="${CNTBUILD_COSIGN_BIN:-/usr/local/bin/cosign}"
 
+# GitHub CLI binary
+export CNTBUILD_GHCLI_BIN="${CNTBUILD_GHCLI_BIN:-/usr/bin/gh}"
+
 # Metadata filename
 export CNTBUILD_METADATA_FILE='Metadata.label'
 
@@ -15661,15 +15664,17 @@ function cntbuild_delete_github() {
   local tag="$2"
   local api_path="/orgs/${CNTBUILD_REGISTRY_OWNER}/packages/container"
   local api_query=''
+  local token=''
   local target="${container}${tag:+:}${tag}"
 
   api_query="/$(bl64_api_url_encode "$target")"
   bl64_msg_show_task "delete container image from GitHub registry ($target})"
+  token="$("$CNTBUILD_GHCLI_BIN" auth token)"
   bl64_vcs_github_run_api \
     "$api_path" \
     "$BL64_API_METHOD_DELETE" \
     "$api_query" \
-    "${CNTBUILD_LOGIN_PASSWORD}"
+    "$token"
 }
 
 function cntbuild_delete() {
@@ -15708,7 +15713,7 @@ function cntbuild_publish() {
     bl64_cnt_push "${container}:${tag}" "$target" &&
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
   status=$?
-  if ((status == 0)) && bl64_lib_flag_is_enabled "$sign" ]]; then
+  if ((status == 0)) && bl64_lib_flag_is_enabled "$sign"; then
     digest="$(bl64_cnt_run_cli inspect --format '{{.ID}}')" &&
       "$CNTBUILD_COSIGN_BIN" \
         sign \
@@ -15790,7 +15795,8 @@ function cntbuild_initialize() {
   # shellcheck disable=SC2249
   case "$command" in
   'cntbuild_delete')
-    bl64_check_export 'CNTBUILD_REGISTRY' &&
+    bl64_check_command_search_path "$CNTBUILD_GHCLI_BIN" &&
+      bl64_check_export 'CNTBUILD_REGISTRY' &&
       bl64_check_export 'CNTBUILD_REGISTRY_OWNER' ||
       return $?
     ;;

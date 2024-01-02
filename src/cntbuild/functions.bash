@@ -94,15 +94,17 @@ function cntbuild_delete_github() {
   local tag="$2"
   local api_path="/orgs/${CNTBUILD_REGISTRY_OWNER}/packages/container"
   local api_query=''
+  local token=''
   local target="${container}${tag:+:}${tag}"
 
   api_query="/$(bl64_api_url_encode "$target")"
   bl64_msg_show_task "delete container image from GitHub registry ($target})"
+  token="$("$CNTBUILD_GHCLI_BIN" auth token)"
   bl64_vcs_github_run_api \
     "$api_path" \
     "$BL64_API_METHOD_DELETE" \
     "$api_query" \
-    "${CNTBUILD_LOGIN_PASSWORD}"
+    "$token"
 }
 
 function cntbuild_delete() {
@@ -141,7 +143,7 @@ function cntbuild_publish() {
     bl64_cnt_push "${container}:${tag}" "$target" &&
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
   status=$?
-  if ((status == 0)) && bl64_lib_flag_is_enabled "$sign" ]]; then
+  if ((status == 0)) && bl64_lib_flag_is_enabled "$sign"; then
     digest="$(bl64_cnt_run_cli inspect --format '{{.ID}}')" &&
       "$CNTBUILD_COSIGN_BIN" \
         sign \
@@ -223,7 +225,8 @@ function cntbuild_initialize() {
   # shellcheck disable=SC2249
   case "$command" in
   'cntbuild_delete')
-    bl64_check_export 'CNTBUILD_REGISTRY' &&
+    bl64_check_command_search_path "$CNTBUILD_GHCLI_BIN" &&
+      bl64_check_export 'CNTBUILD_REGISTRY' &&
       bl64_check_export 'CNTBUILD_REGISTRY_OWNER' ||
       return $?
     ;;
