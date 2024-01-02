@@ -8,3 +8,19 @@
 # * Do not include DEV_ROOT as it's already set in the bin/dev-set script
 # * Template version: 1.0.0
 #
+
+# Repo / RSync / Command
+DEV_LIB_RSYNC_BIN="/usr/bin/rsync"
+export DEV_LIB_RSYNC_BIN
+
+# Lint / Dockerfile / Command
+DEV_LIB_HADOLINT_BIN="/usr/local/bin/hadolint"
+export DEV_LIB_HADOLINT_BIN
+
+# Lib / GitHub / Command
+DEV_LIB_GH_BIN="/usr/bin/gh"
+export DEV_LIB_GH_BIN
+
+# Lib / Cosign / Command
+DEV_LIB_COSIGN_BIN="/usr/local/bin/cosign"
+export DEV_LIB_COSIGN_BIN
