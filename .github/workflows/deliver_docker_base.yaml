@@ -17,6 +17,8 @@ jobs:
 
     env:
       CNTBUILD_LOGIN_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     steps:
 
