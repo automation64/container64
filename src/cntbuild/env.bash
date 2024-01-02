@@ -13,6 +13,9 @@ export CNTBUILD_REGISTRY_OWNER="${CNTBUILD_REGISTRY_OWNER:-}"
 # Cosign binary
 export CNTBUILD_COSIGN_BIN="${CNTBUILD_COSIGN_BIN:-/usr/local/bin/cosign}"
 
+# GitHub CLI binary
+export CNTBUILD_GHCLI_BIN="${CNTBUILD_GHCLI_BIN:-/usr/bin/gh}"
+
 # Metadata filename
 export CNTBUILD_METADATA_FILE='Metadata.label'
 
