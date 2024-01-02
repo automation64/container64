@@ -48,7 +48,7 @@ function dev_build_publish() {
       if bl64_lib_flag_is_enabled "$delete_first"; then
         "$DEV_CICD_CNTBUILD_BIN" -x -c "$container_name"
       fi
-      "$DEV_CICD_CNTBUILD_BIN" -u -c "$container_name" ||
+      "$DEV_CICD_CNTBUILD_BIN" -u -s -c "$container_name" ||
         return $?
     fi
   done
