@@ -144,7 +144,8 @@ function cntbuild_publish() {
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
   status=$?
   if ((status == 0)) && bl64_lib_flag_is_enabled "$sign"; then
-    digest="$(bl64_cnt_run_cli inspect --format '{{.ID}}')" &&
+    bl64_msg_show_task "Sign container image (${target})"
+    digest="$(bl64_cnt_cli inspect --format '{{.ID}}' ${target})" &&
       "$CNTBUILD_COSIGN_BIN" \
         sign \
         --yes \

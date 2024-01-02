@@ -26,7 +26,9 @@ jobs:
       - name: "Prepare build environment"
         run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
 
+      - name: "Login to Registry"
+        run: "./bin/dev-auth-docker"
+
       - name: "Build and publish container images"
-        shell: 'script -q -e -c "bash {0}"'
         run: "./bin/dev-build-container base ON"
 ...

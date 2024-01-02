@@ -15714,7 +15714,8 @@ function cntbuild_publish() {
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
   status=$?
   if ((status == 0)) && bl64_lib_flag_is_enabled "$sign"; then
-    digest="$(bl64_cnt_run_cli inspect --format '{{.ID}}')" &&
+    bl64_msg_show_task "Sign container image (${target})"
+    digest="$(bl64_cnt_cli inspect --format '{{.ID}}' ${target})" &&
       "$CNTBUILD_COSIGN_BIN" \
         sign \
         --yes \
@@ -15883,8 +15884,8 @@ cntbuild_initialize "$cntbuild_command" "$cntbuild_sign" || exit $?
 
 bl64_msg_show_batch_start "$cntbuild_command"
 case "$cntbuild_command" in
-'cntbuild_build') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" "$cntbuild_sign" ;;
-'cntbuild_publish' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" ;;
+'cntbuild_publish') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" "$cntbuild_sign" ;;
+'cntbuild_build' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" ;;
 'cntbuild_list') "$cntbuild_command" "$cntbuild_context" ;;
 'cntbuild_delete') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" ;;
 'cntbuild_reset') "$cntbuild_command" ;;
