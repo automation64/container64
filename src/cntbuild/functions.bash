@@ -129,20 +129,27 @@ function cntbuild_publish() {
   local container="$1"
   local context="$2"
   local tag="$3"
+  local sign="$4"
   local target=''
-
-  bl64_check_export 'CNTBUILD_LOGIN_USER' &&
-    bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
-    bl64_check_export 'CNTBUILD_REGISTRY' ||
-    return $?
+  local digest=''
+  local -i status=0
 
   tag="$(cntbuild_get_version "$container" "$context" "$tag")" || return $?
   target="${CNTBUILD_REGISTRY}/${container}:${tag}"
-  bl64_msg_show_task "Publish container image to registry (${target})" &&
-  bl64_cnt_login "$CNTBUILD_LOGIN_USER" "$CNTBUILD_LOGIN_PASSWORD" "$CNTBUILD_REGISTRY" &&
-    bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
+  bl64_msg_show_task "Publish container image to registry (${target})"
+  bl64_cnt_tag "${container}:${tag}" "${container}:latest" &&
     bl64_cnt_push "${container}:${tag}" "$target" &&
     bl64_cnt_push "${container}:latest" "${CNTBUILD_REGISTRY}/${container}:latest"
+  status=$?
+  if ((status == 0)) && bl64_lib_flag_is_enabled "$sign" ]]; then
+    digest="$(bl64_cnt_run_cli inspect --format '{{.ID}}')" &&
+      "$CNTBUILD_COSIGN_BIN" \
+        sign \
+        --yes \
+        "${CNTBUILD_REGISTRY}/${container}@${digest}"
+    status=$?
+  fi
+  return $status
 }
 
 function cntbuild_reset() {
@@ -206,6 +213,7 @@ function cntbuild_get_version() {
 function cntbuild_initialize() {
   bl64_dbg_app_show_function "@"
   local command="$1"
+  local sign="$2"
 
   bl64_check_parameter 'command' ||
     { cntbuild_help && return 1; }
@@ -214,15 +222,21 @@ function cntbuild_initialize() {
 
   # shellcheck disable=SC2249
   case "$command" in
-  'cntbuild_publish' | 'cntbuild_delete')
-    bl64_check_export 'CNTBUILD_LOGIN_USER' &&
-      bl64_check_export 'CNTBUILD_LOGIN_PASSWORD' &&
-      bl64_check_export 'CNTBUILD_REGISTRY' &&
+  'cntbuild_delete')
+    bl64_check_export 'CNTBUILD_REGISTRY' &&
       bl64_check_export 'CNTBUILD_REGISTRY_OWNER' ||
       return $?
     ;;
+  'cntbuild_publish')
+    bl64_check_export 'CNTBUILD_REGISTRY' &&
+      bl64_check_export 'CNTBUILD_REGISTRY_OWNER' ||
+      return $?
+    if bl64_lib_flag_is_enabled; then
+      bl64_check_command_search_path "$CNTBUILD_COSIGN_BIN" ||
+        return $?
+    fi
+    ;;
   esac
-
   return 0
 }
 
@@ -237,9 +251,8 @@ function cntbuild_initialize() {
 #   0
 #######################################
 function cntbuild_help() {
-
   bl64_msg_show_usage \
-    '<-b|-u|-l|-n|-x|-r> [-c Container] [-e Tag] [-o Context] [-V Verbose] [-D Debug] [-h]' \
+    '<-b|-u|-l|-n|-x|-r> [-c Container] [-e Tag] [-s] [-o Context] [-V Verbose] [-D Debug] [-h]' \
     'Build containers in dev environment' \
     '
   -b          : Build container
@@ -250,6 +263,7 @@ function cntbuild_help() {
   -r          : Reset build environment. Warning: removes local images and containers
     ' '
   -h          : Show help
+  -s          : Sign container (requires cosign)
     ' "
   -c Container: Container name: Format: base directory where the Dockerfile is. Required for -b, -l, -n
   -e Tag      : Container tag. Format: tag. Default: 0.1.0
@@ -257,5 +271,4 @@ function cntbuild_help() {
   -V Verbose  : Set verbosity level. Format: one of BL64_MSG_VERBOSE_*
   -D Debug    : Enable debugging mode. Format: one of BL64_DBG_TARGET_*
   "
-
 }

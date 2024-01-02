@@ -3,7 +3,7 @@
 # Lint Dockerfile code
 #
 # * Check is done using hadolint
-# * Template: 2.0.0
+# * Template: 3.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
