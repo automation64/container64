@@ -25,7 +25,7 @@
 # Globals
 #
 
-# Enable debugging? Set to YES to enable
+# Dev / Enable debugging? Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Increase verbosity? Set to YES to increase
 export DEV_SET_VERBOSE="${DEV_SET_VERBOSE:-}"

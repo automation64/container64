@@ -33,6 +33,8 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Globals
 #
 
+# Dev / Enable debugging? Set to YES to enable
+export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lib / GitHub / Command
 export DEV_LIB_GITHUB_BIN="${DEV_LIB_GITHUB_BIN:-/usr/bin/gh}"
 # Auth / GitHub / Scopes
@@ -52,16 +54,20 @@ function dev_auth_github() {
     --scopes "$DEV_AUTH_GITHUB_SCOPES"
 }
 
+function dev_auth_initialize() {
+  bl64_dbg_app_show_function
+  bl64_check_command_search_path "$DEV_LIB_GITHUB_BIN" ||
+    return $?
+}
+
 #
 # Main
 #
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-bl64_check_command_search_path "$DEV_LIB_GITHUB_BIN" ||
-  exit $?
+dev_auth_initialize || exit $?
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'dev-auth-github'
 dev_auth_github
 bl64_msg_show_batch_finish $? 'dev-auth-github'
-

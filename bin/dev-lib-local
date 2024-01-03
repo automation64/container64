@@ -29,8 +29,10 @@
 # Globals
 #
 
-export DEV_BASE_LOCAL=.local
-export DEV_BASE_SECRETS=.secrets
+# Dev / Enable debugging? Set to YES to enable
+export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
+export DEV_BASE_LOCAL='.local'
+export DEV_BASE_SECRETS='.secrets'
 
 #
 # Functions
@@ -53,6 +55,8 @@ function dev_lib_create() {
 #
 
 declare dev_lib_target=''
+
+[[ -n "$DEV_CICD_DEBUG" ]] && set -x
 
 dev_lib_target="$DEV_BASE_LOCAL"
 dev_lib_create "$dev_lib_target" &&
