@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #######################################
-# Authentication for dev-time resources
+# Authentication for dev-time resources: Container Registry
 #
 # * Version: 1.1.0
 #
@@ -100,6 +100,6 @@ function dev_auth_initialize() {
 dev_auth_initialize || exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'dev-auth-docker'
+bl64_msg_show_batch_start 'dev-auth-container'
 dev_auth_docker
-bl64_msg_show_batch_finish $? 'dev-auth-docker'
+bl64_msg_show_batch_finish $? 'dev-auth-container'
