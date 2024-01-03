@@ -1,22 +1,22 @@
-#
-# Project
-#
-# * Source template: dot.env (v1.0.1)
-#
 
-.tmp/*
-.var/*
+#
+# GIT Ignore
+#
+# * Template version: 1.1.0
+#
 
 # VScode
 .vscode
 *.code-workspace
 
-# Builds for prod/dev/test
+# Code build
 build/*
 
-# Dev libs. Dynamic content update at dev time
+# Dev-time tools
 lib/*
-src/loader/*
+
+# Dev-time temporary files
+tmp/*
 
 # Secrets
 .secrets
@@ -28,5 +28,5 @@ src/loader/*
 !/**/.gitkeep
 
 #
-# Tools
+# Project specific exclusions
 #
