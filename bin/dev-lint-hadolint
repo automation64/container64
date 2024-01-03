@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 #######################################
-# Lint code: bash
+# Lint code: dockerfiles
 #
-# * Check is done using shellcheck
-# * TestManSH is used to manage linting environment
-# * Version: 6.1.0
+# * Check is done using hadolint
+# * Version: 3.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -41,31 +40,31 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
 
 # Dev / Enable debugging? Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Lint / Bash / Configuration
-DEV_CICD_LINT_BASH_CFG="${DEV_PATH_ROOT}/.shellcheckrc"
-export DEV_CICD_LINT_BASH_CFG
-# Lint / Bash / Sources
-DEV_CICD_LINT_BASH_SOURCE="${DEV_CICD_LINT_BASH_SOURCE:-src}"
-export DEV_CICD_LINT_BASH_SOURCE
-# Lib / TestmanSH / Target
-export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
+# Lint / Dockerfile / Configuration
+export DEV_LIB_HADOLINT_CFG="${DEV_PATH_ROOT}/.hadolint.yaml"
+# Lint / Dockerfile / Sources
+export DEV_CICD_LINT_DOCKERFILE_SOURCE="${DEV_CICD_LINT_DOCKERFILE_SOURCE:-$DEV_PATH_SRC}"
+# Lib / Dockerfile / Command
+export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-/usr/local/bin/hadolint}"
 
 #
 # Functions
 #
 
-function dev_lint_testmansh() {
+function dev_lint_hadolint() {
   bl64_dbg_app_show_function "$@"
   local target="$*"
   local current=''
 
   if [[ -z "$target" ]]; then
-    target="$(bl64_fs_find_files "$DEV_CICD_LINT_BASH_SOURCE")" ||
+    target="$(bl64_fs_find_files "$DEV_CICD_LINT_DOCKERFILE_SOURCE" 'Dockerfile')" ||
       return $?
   fi
   for current in $target; do
     bl64_msg_show_phase "lint target: ${current}"
-    "$DEV_LIB_TESTMANSH_BIN" -t -a -V 'NONE' -c "$current" ||
+    "$DEV_LIB_HADOLINT_BIN" \
+      --config "$DEV_LIB_HADOLINT_CFG" \
+      "$current" ||
       return $?
   done
 }
@@ -74,10 +73,10 @@ function dev_lint_initialize() {
   bl64_dbg_app_show_function "$@"
   local sources="$*"
   if [[ -z "$sources" ]]; then
-    bl64_check_directory "$DEV_CICD_LINT_BASH_SOURCE" ||
+    bl64_check_directory "$DEV_CICD_LINT_DOCKERFILE_SOURCE" ||
       return $?
   fi
-  bl64_check_command_search_path "$DEV_LIB_TESTMANSH_BIN"
+  bl64_check_command_search_path "$DEV_LIB_HADOLINT_BIN"
 }
 
 #
@@ -90,6 +89,6 @@ declare dev_lint_target="${*:-}"
 dev_lint_initialize "$dev_lint_target" || exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'dev-lint-bash'
-dev_lint_testmansh "$dev_lint_target"
-bl64_msg_show_batch_finish $? 'dev-lint-bash'
+bl64_msg_show_batch_start 'dev-lint-hadolint'
+dev_lint_hadolint "$dev_lint_target"
+bl64_msg_show_batch_finish $? 'dev-lint-hadolint'
