@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #######################################
-# Authentication for dev-time resources
+# Dev / Auth / Cosign / Login
 #
-# * Template: 1.0.0
+# * Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -25,10 +25,26 @@
 #
 
 # shellcheck source=bin/dev-set
-source ./bin/dev-set || exit 1
+source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
 # shellcheck source-path=lib/bl64
-source "${DEV_CICD_BASHLIB64}/bashlib64-module-cnt.bash" &&
-  source "${DEV_CICD_BASHLIB64}/bashlib64-core.bash" || exit 1
+source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
+
+#
+# Globals
+#
+
+# Lib / Cosign / Command
+export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-/usr/local/bin/cosign}"
+# Lib / GitHub / Command
+export DEV_LIB_GITHUB_BIN="${DEV_LIB_GITHUB_BIN:-/usr/bin/gh}"
+# Auth / Cosign / Server
+export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
+# Auth / Cosign / Server Type
+export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
+# Auth / Cosign / Server User
+export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
+export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
 
 #
 # Functions
@@ -38,7 +54,7 @@ function dev_auth_cosign_ghtoken() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Cosign login with GitHub token'
   bl64_dbg_app_trace_start
-  "$DEV_LIB_GH_BIN" \
+  "$DEV_LIB_GITHUB_BIN" \
     auth token |
     "$DEV_LIB_COSIGN_BIN" \
       login \
@@ -68,29 +84,31 @@ function dev_auth_cosign() {
   esac
 }
 
+function dev_auth_initialize() {
+  bl64_dbg_app_show_function
+  bl64_check_export 'DEV_AUTH_COSIGN_USER' &&
+    bl64_check_export 'DEV_AUTH_COSIGN_SERVER' &&
+    bl64_check_command_search_path "$DEV_LIB_COSIGN_BIN" ||
+    return $?
+
+  if [[ "$DEV_AUTH_COSIGN_TYPE" == 'GITHUB' ]]; then
+    bl64_check_command_search_path "$DEV_LIB_GITHUB_BIN" ||
+      return $?
+  else
+    bl64_check_export 'DEV_AUTH_COSIGN_PASSWORD' ||
+      return $?
+  fi
+  return 0
+}
+
 #
 # Main
 #
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-
-bl64_check_export 'DEV_AUTH_COSIGN_USER' &&
-  bl64_check_export 'DEV_AUTH_COSIGN_SERVER' &&
-  bl64_check_export 'DEV_AUTH_COSIGN_TYPE' &&
-  bl64_check_export 'DEV_LIB_COSIGN_BIN' &&
-  bl64_check_command_search_path "$DEV_LIB_COSIGN_BIN" ||
-  exit $?
-
-if [[ "$DEV_AUTH_COSIGN_TYPE" == 'GITHUB' ]]; then
-  bl64_check_export 'DEV_LIB_GH_BIN' &&
-    bl64_check_command_search_path "$DEV_LIB_GH_BIN" ||
-    exit $?
-else
-  bl64_check_export 'DEV_AUTH_COSIGN_PASSWORD' ||
-    exit $?
-fi
+dev_auth_initialize || exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'auth-cosign'
+bl64_msg_show_batch_start 'dev-auth-cosign'
 dev_auth_cosign
-bl64_msg_show_batch_finish $? 'auth-cosign'
+bl64_msg_show_batch_finish $? 'dev-auth-cosign'

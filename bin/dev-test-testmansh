@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 #######################################
-# Dev / Lib / TestManSH / Download
+# Dev / Test / TestManSH / Test bash scripts
 #
-# * Version: 4.1.0
+# * Test cases are done using bats-core
+# * TestManSH is used to manage test environment
+# * Tests are located in the default path "test/batscore"
+# * Version: 2.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -26,14 +29,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
-# shellcheck source-path=lib/bl64
-source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-api.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-vcs.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-rxtx.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
+# shellcheck source=lib/bl64/bashlib64-core.bash
+source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
 #
 # Globals
@@ -41,8 +38,9 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-api.bash" &&
 
 # Dev / Enable debugging? Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Lib / TestmanSH / Source
-export DEV_LIB_TESTMANSH_REPO='https://raw.githubusercontent.com/automation64/testmansh/main/testmansh'
+# Test / Bash / Container
+DEV_CICD_TEST_CONTAINER="${DEV_CICD_TEST_CONTAINER:-}"
+export DEV_CICD_TEST_CONTAINER
 # Lib / TestmanSH / Target
 export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
 
@@ -50,14 +48,15 @@ export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
 # Functions
 #
 
-function dev_lib_testmansh() {
+function dev_test_bash() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task 'download TestManSH'
-  bl64_rxtx_web_get_file \
-    "$DEV_LIB_TESTMANSH_REPO" \
-    "$DEV_LIB_TESTMANSH_BIN" \
-    "$BL64_VAR_ON" \
-    '0777'
+  "$DEV_LIB_TESTMANSH_BIN" -b -o -e "$DEV_CICD_TEST_CONTAINER"
+}
+
+function dev_test_initialize() {
+  bl64_dbg_app_show_function
+  bl64_check_export 'DEV_CICD_TEST_CONTAINER' &&
+    bl64_check_command_search_path "$DEV_LIB_TESTMANSH_BIN"
 }
 
 #
@@ -65,8 +64,9 @@ function dev_lib_testmansh() {
 #
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
+dev_test_initialize || exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'dev-lib-testmansh'
-dev_lib_testmansh
-bl64_msg_show_batch_finish $? 'dev-lib-testmansh'
+bl64_msg_show_batch_start 'dev-test-bash'
+dev_test_bash
+bl64_msg_show_batch_finish $? 'dev-test-bash'

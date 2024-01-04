@@ -1,6 +1,6 @@
 ---
-# Template: 4.1.0
-name: "Lint / Bash"
+# Template: 4.2.0
+name: "Lint / TestManSH"
 
 env:
   DEV_CICD_DEBUG: ""
@@ -14,11 +14,10 @@ on:
       - "feature/**"
     paths:
       - "src/cntbuild/*"
-      - "src/helper-*/*"
-      - "src/installer/**"
+      - "src/helpers/**"
 
 jobs:
-  lint-bash:
+  lint-testmansh:
     runs-on: "ubuntu-latest"
     steps:
 
@@ -29,10 +28,8 @@ jobs:
         run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64 && ./bin/dev-lib-testmansh"
 
       - name: "Build app"
-        shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-build-cli"
+        run: "./bin/dev-build-bash"
 
       - name: "Lint app"
-        shell: 'script -q -e -c "bash {0}"'
-        run: "./bin/dev-lint-bash"
+        run: "./bin/dev-lint-testmansh"
 ...

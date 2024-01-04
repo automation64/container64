@@ -1,9 +1,8 @@
 #
-# External sources
+# Configuration
 #
 
 external-sources=true
-# source-path=
 
 #
 # Optional checks

@@ -2,9 +2,9 @@
 repos:
   - repo: "local"
     hooks:
-      - id: "lint-bash"
-        name: "Lint / Bash"
-        entry: "bin/dev-lint-bash"
+      - id: "lint-testmansh"
+        name: "Lint / TestManSH"
+        entry: "bin/dev-lint-testmansh"
         language: script
         pass_filenames: true
         fail_fast: true
@@ -15,10 +15,10 @@ repos:
           - "pre-commit"
         types:
           - "bash"
-        files: "src/"
-      - id: "lint-dockerfile"
-        name: "Lint / Dockerfile"
-        entry: "bin/dev-lint-dockerfile"
+        files: "src/helpers"
+      - id: "lint-hadolint"
+        name: "Lint / Hadolint"
+        entry: "bin/dev-lint-hadolint"
         language: script
         pass_filenames: true
         fail_fast: true

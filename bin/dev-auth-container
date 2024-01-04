@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #######################################
-# Authentication for dev-time resources
+# Dev / Auth / Container / Registry Login
 #
-# * Template: 1.0.0
+# * Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -25,10 +25,30 @@
 #
 
 # shellcheck source=bin/dev-set
-source ./bin/dev-set || exit 1
+source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
 # shellcheck source-path=lib/bl64
-source "${DEV_CICD_BASHLIB64}/bashlib64-module-cnt.bash" &&
-  source "${DEV_CICD_BASHLIB64}/bashlib64-core.bash" || exit 1
+source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
+
+#
+# Globals
+#
+
+# Dev / Enable debugging? Set to YES to enable
+export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
+# Auth / Docker / User
+DEV_AUTH_DOCKER_USER="${DEV_AUTH_DOCKER_USER:-}"
+export DEV_AUTH_DOCKER_USER
+DEV_AUTH_DOCKER_PASSWORD="${DEV_AUTH_DOCKER_PASSWORD:-}"
+export DEV_AUTH_DOCKER_PASSWORD
+# Auth / Docker / Registry
+DEV_AUTH_DOCKER_REGISTRY="${DEV_AUTH_DOCKER_REGISTRY:-}"
+export DEV_AUTH_DOCKER_REGISTRY
+# Auth / Docker / Registry Type
+DEV_AUTH_DOCKER_TYPE="${DEV_AUTH_DOCKER_TYPE:-GITHUB}"
+export DEV_AUTH_DOCKER_TYPE
+# Lib / GitHub / Command
+export DEV_LIB_GITHUB_BIN="${DEV_LIB_GITHUB_BIN:-/usr/bin/gh}"
 
 #
 # Functions
@@ -37,7 +57,7 @@ source "${DEV_CICD_BASHLIB64}/bashlib64-module-cnt.bash" &&
 function dev_auth_docker_ghtoken() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Docker login with GitHub token'
-  "$DEV_LIB_GH_BIN" auth token |
+  "$DEV_LIB_GITHUB_BIN" auth token |
     bl64_cnt_login_stdin \
       "$DEV_AUTH_DOCKER_USER" "$DEV_AUTH_DOCKER_REGISTRY"
 }
@@ -57,27 +77,29 @@ function dev_auth_docker() {
   esac
 }
 
+function dev_auth_initialize() {
+  bl64_check_export 'DEV_AUTH_DOCKER_USER' &&
+    bl64_check_export 'DEV_AUTH_DOCKER_REGISTRY' &&
+    bl64_cnt_setup || return $?
+
+  if [[ "$DEV_AUTH_DOCKER_TYPE" == 'GITHUB' ]]; then
+    bl64_check_command_search_path "$DEV_LIB_GITHUB_BIN" ||
+      return $?
+  else
+    bl64_check_export 'DEV_AUTH_DOCKER_PASSWORD' ||
+      return $?
+  fi
+  return 0
+}
+
 #
 # Main
 #
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-
-bl64_check_export 'DEV_AUTH_DOCKER_USER' &&
-  bl64_check_export 'DEV_AUTH_DOCKER_REGISTRY' &&
-  bl64_check_export 'DEV_AUTH_DOCKER_TYPE' &&
-  bl64_cnt_setup || exit $?
-
-if [[ "$DEV_AUTH_DOCKER_TYPE" == 'GITHUB' ]]; then
-  bl64_check_export 'DEV_LIB_GH_BIN' &&
-    bl64_check_command_search_path "$DEV_LIB_GH_BIN" ||
-    exit $?
-else
-  bl64_check_export 'DEV_AUTH_DOCKER_PASSWORD' ||
-    exit $?
-fi
+dev_auth_initialize || exit $?
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'auth-docker'
+bl64_msg_show_batch_start 'dev-auth-container'
 dev_auth_docker
-bl64_msg_show_batch_finish $? 'auth-docker'
+bl64_msg_show_batch_finish $? 'dev-auth-container'

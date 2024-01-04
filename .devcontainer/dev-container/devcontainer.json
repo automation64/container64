@@ -1,5 +1,5 @@
 {
-	"name": "Dev / Container",
+	"name": "dev-container",
 	"image": "ghcr.io/automation64/dev/ubuntu-22.4-dev-container:latest",
 	"features": {},
 	"forwardPorts": [],
