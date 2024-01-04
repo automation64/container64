@@ -35,6 +35,7 @@ source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lib / BashLib64 / Target
 export DEV_LIB_BASHLIB64_TARGET="${DEV_LIB_BASHLIB64_TARGET:-${DEV_PATH_LIB}/bl64}"
+# Lib / BashLib64 / Installer64 parameters
 export INST64_BASHLIB64_TARGET="$DEV_LIB_BASHLIB64_TARGET"
 
 #
