@@ -10,10 +10,7 @@ on:
 jobs:
   deliver-docker-base:
     runs-on: "ubuntu-latest"
-
-    permissions:
-      contents: "read"
-      packages: "write"
+    permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
