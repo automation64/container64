@@ -2,7 +2,7 @@
 #######################################
 # Dev / Auth / Cosign / Login
 #
-# * Version: 1.1.0
+# * Version: 1.1.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -34,8 +34,10 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
 # Globals
 #
 
+# Lib / Cosign / Target
+export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
 # Lib / Cosign / Command
-export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-/usr/local/bin/cosign}"
+export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-${DEV_LIB_COSIGN_TARGET}/cosign}"
 # Lib / GitHub / Command
 export DEV_LIB_GITHUB_BIN="${DEV_LIB_GITHUB_BIN:-/usr/bin/gh}"
 # Auth / Cosign / Server
