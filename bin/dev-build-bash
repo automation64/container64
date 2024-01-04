@@ -55,7 +55,7 @@ DEV_BUILD_BASH_MODULES="${DEV_BUILD_BASH_MODULES:-${DEV_LIB_BASHLIB64_TARGET}/ba
 
 function dev_build_bash() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task "Build app (${DEV_BUILD_BASH_NAME})"
+  bl64_msg_show_task "Build app (${DEV_BUILD_BASH_TARGET})"
   # shellcheck disable=SC2086
   bl64_fs_merge_files \
     '0755' \
