@@ -1,0 +1,88 @@
+---
+name: "Deliver / Container / Bash Test / Base Level"
+
+env:
+  DEV_CICD_DEBUG: ""
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deliver-docker-bash-test-a-redhat:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-container bash_test_a_redhat ON"
+
+  deliver-docker-bash-test-a-ubuntu:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-container bash_test_a_ubuntu ON"
+
+  deliver-docker-bash-test-a-other:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-container bash_test_a_other ON"
+...
