@@ -29,7 +29,7 @@ jobs:
         run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
 
       - name: "Prepare docker tool"
-        run: "./bin/dev-auth-docker"
+        run: "./bin/dev-auth-container"
 
       - name: "Prepare cosign tool"
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
