@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #######################################
-# Create local resources from templates
+# Dev / Lib / Create local resources from templates
 #
 # * Use to create local resources after repository bootstrap
 # * Required on local cloned repository only (i.e.: not on CICD environments)

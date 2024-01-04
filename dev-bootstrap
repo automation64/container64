@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Template: 1.1.0
 #######################################
-# Bootstrap
+# Dev / Bootstrap
 #
 # * Boostrap repository creation:
 #   * create basic directory structure
@@ -32,7 +32,7 @@
 # Globals
 #
 
-# Enable debugging? Set to YES to enable
+# Dev / Enable debugging? Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 export DEV_FILES_MODE='0644'
 export DEV_LIB_BASHLIB64_TARGET='bl64'

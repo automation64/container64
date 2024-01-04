@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #######################################
-# Lint code: dockerfiles
+# Dev / Lint / Hadolint / Lint dockerfiles
 #
 # * Check is done using hadolint
 # * Version: 3.1.0
@@ -43,7 +43,7 @@ export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lint / Dockerfile / Configuration
 export DEV_LIB_HADOLINT_CFG="${DEV_PATH_ROOT}/.hadolint.yaml"
 # Lint / Dockerfile / Sources
-export DEV_CICD_LINT_DOCKERFILE_SOURCE="${DEV_CICD_LINT_DOCKERFILE_SOURCE:-$DEV_PATH_SRC}"
+export DEV_LINT_HADOLINT_SOURCE="${DEV_LINT_HADOLINT_SOURCE:-$DEV_PATH_SRC}"
 # Lib / Dockerfile / Command
 export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-/usr/local/bin/hadolint}"
 
@@ -57,7 +57,7 @@ function dev_lint_hadolint() {
   local current=''
 
   if [[ -z "$target" ]]; then
-    target="$(bl64_fs_find_files "$DEV_CICD_LINT_DOCKERFILE_SOURCE" 'Dockerfile')" ||
+    target="$(bl64_fs_find_files "$DEV_LINT_HADOLINT_SOURCE" 'Dockerfile')" ||
       return $?
   fi
   for current in $target; do
@@ -73,7 +73,7 @@ function dev_lint_initialize() {
   bl64_dbg_app_show_function "$@"
   local sources="$*"
   if [[ -z "$sources" ]]; then
-    bl64_check_directory "$DEV_CICD_LINT_DOCKERFILE_SOURCE" ||
+    bl64_check_directory "$DEV_LINT_HADOLINT_SOURCE" ||
       return $?
   fi
   bl64_check_command_search_path "$DEV_LIB_HADOLINT_BIN"

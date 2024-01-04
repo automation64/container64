@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #######################################
-# Authentication for dev-time resources: Container Registry
+# Dev / Auth / Container / Registry Login
 #
 # * Version: 1.1.0
 #

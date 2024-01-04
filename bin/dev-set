@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #######################################
-# Set development environment variables
+# Dev / Set development environment variables
 #
 # * Source this script from the project's root directory
 # * Version: 7.2.0
