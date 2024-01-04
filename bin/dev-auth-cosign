@@ -2,7 +2,7 @@
 #######################################
 # Dev / Auth / Cosign / Login
 #
-# * Version: 1.1.1
+# * Version: 1.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -34,12 +34,10 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
 # Globals
 #
 
-# Lib / Cosign / Target
-export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
-# Lib / Cosign / Command
-export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-${DEV_LIB_COSIGN_TARGET}/cosign}"
-# Lib / GitHub / Command
-export DEV_LIB_GITHUB_BIN="${DEV_LIB_GITHUB_BIN:-/usr/bin/gh}"
+# Variables defined in .env
+export DEV_LIB_COSIGN_BIN
+export DEV_LIB_GITHUB_BIN
+
 # Auth / Cosign / Server
 export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
 # Auth / Cosign / Server Type
@@ -90,11 +88,13 @@ function dev_auth_initialize() {
   bl64_dbg_app_show_function
   bl64_check_export 'DEV_AUTH_COSIGN_USER' &&
     bl64_check_export 'DEV_AUTH_COSIGN_SERVER' &&
+    bl64_check_export 'DEV_LIB_COSIGN_BIN' &&
     bl64_check_command_search_path "$DEV_LIB_COSIGN_BIN" ||
     return $?
 
   if [[ "$DEV_AUTH_COSIGN_TYPE" == 'GITHUB' ]]; then
-    bl64_check_command_search_path "$DEV_LIB_GITHUB_BIN" ||
+    bl64_check_export 'DEV_LIB_GITHUB_BIN' &&
+      bl64_check_command_search_path "$DEV_LIB_GITHUB_BIN" ||
       return $?
   else
     bl64_check_export 'DEV_AUTH_COSIGN_PASSWORD' ||

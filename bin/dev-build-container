@@ -2,7 +2,7 @@
 #######################################
 # Dev / Build / Container / Build and publish image catalog
 #
-# * Template: 3.0.0
+# * Template: 3.0.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -33,11 +33,16 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Globals
 #
 
+# Variables defined in .env
+export DEV_AUTH_DOCKER_REGISTRY
+export DEV_LIB_COSIGN_BIN
+export DEV_LIB_CNTBUILD_BIN
+
 # Dev / Enable debugging? Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Build / CNTBuild / Command
-DEV_BUILD_CNTBUILD_BIN="${DEV_PATH_ROOT}/cntbuild"
-export DEV_BUILD_CNTBUILD_BIN
+# Build / CNTBuild / Parameters
+export CNTBUILD_REGISTRY="$DEV_AUTH_DOCKER_REGISTRY"
+export CNTBUILD_COSIGN_BIN="$DEV_LIB_COSIGN_BIN"
 
 #
 # Functions
@@ -53,12 +58,12 @@ function dev_build_publish() {
   bl64_msg_show_phase "$message"
   # shellcheck disable=SC2086
   for container_name in $image_list; do
-    "$DEV_BUILD_CNTBUILD_BIN" -b -c "$container_name" || return $?
+    "$DEV_LIB_CNTBUILD_BIN" -b -c "$container_name" || return $?
     if bl64_lib_flag_is_enabled "$publish"; then
       if bl64_lib_flag_is_enabled "$delete_first"; then
-        "$DEV_BUILD_CNTBUILD_BIN" -x -c "$container_name"
+        "$DEV_LIB_CNTBUILD_BIN" -x -c "$container_name"
       fi
-      "$DEV_BUILD_CNTBUILD_BIN" -u -s -c "$container_name" ||
+      "$DEV_LIB_CNTBUILD_BIN" -u -s -c "$container_name" ||
         return $?
     fi
   done

@@ -232,8 +232,7 @@ function cntbuild_initialize() {
       return $?
     ;;
   'cntbuild_publish')
-    bl64_check_export 'CNTBUILD_REGISTRY' &&
-      bl64_check_export 'CNTBUILD_REGISTRY_OWNER' ||
+    bl64_check_export 'CNTBUILD_REGISTRY' ||
       return $?
     if bl64_lib_flag_is_enabled; then
       bl64_check_command_search_path "$CNTBUILD_COSIGN_BIN" ||

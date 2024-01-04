@@ -3,7 +3,7 @@
 # Dev / Build / Bash / Assemble modular script
 #
 # * Use to build script from multiple sources (modular)
-# * Version: 3.0.0
+# * Version: 3.0.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -37,17 +37,14 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
 # Globals
 #
 
-# Lib / Cosign / Command
-export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-/usr/local/bin/cosign}"
-
 # Build / Bash / Target file name
-DEV_BUILD_BASH_NAME="${DEV_BUILD_BASH_NAME:-}"
+export DEV_BUILD_BASH_NAME="${DEV_BUILD_BASH_NAME:-}"
 # Build / Bash / Source full path
-DEV_BUILD_BASH_SOURCE="${DEV_BUILD_BASH_SOURCE:-$DEV_PATH_SRC}"
+export DEV_BUILD_BASH_SOURCE="${DEV_BUILD_BASH_SOURCE:-$DEV_PATH_SRC}"
 # Build / Bash / Target full path
-DEV_BUILD_BASH_TARGET="${DEV_BUILD_BASH_TARGET:-${DEV_PATH_BUILD}/${DEV_BUILD_BASH_NAME}}"
+export DEV_BUILD_BASH_TARGET="${DEV_BUILD_BASH_TARGET:-${DEV_PATH_BUILD}/${DEV_BUILD_BASH_NAME}}"
 # Build / Bash / BashLib64 Modules
-DEV_BUILD_BASH_MODULES="${DEV_BUILD_BASH_MODULES:-${DEV_LIB_BASHLIB64_TARGET}/bashlib64.bash}"
+export DEV_BUILD_BASH_MODULES="${DEV_BUILD_BASH_MODULES:-${DEV_LIB_BASHLIB64_TARGET}/bashlib64.bash}"
 
 #
 # Functions
