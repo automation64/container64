@@ -26,6 +26,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-testmansh || exit 1
 # shellcheck source-path=lib/bl64
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-api.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-vcs.bash" &&
@@ -39,12 +41,8 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-api.bash" &&
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lib / TestmanSH / Source
 export DEV_LIB_TESTMANSH_REPO='https://raw.githubusercontent.com/automation64/testmansh/main/testmansh'
-# Lib / TestmanSH / Target
-export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
 
 #
 # Functions

@@ -27,23 +27,10 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-git || exit 1
 # shellcheck source=lib/bl64/bashlib64-core.bash
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
-
-#
-# Globals
-#
-
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Dev / Changelog
-export DEV_CICD_CHANGELOG="${DEV_CICD_CHANGELOG:-CHANGELOG.md}"0
-# GIT / Main branch name
-export DEV_GIT_BRANCH_MAIN="${DEV_GIT_BRANCH_MAIN:-main}"
-# GIT / Origin remote name
-export DEV_GIT_REMOTE_ORIGIN="${DEV_GIT_REMOTE_ORIGIN:-origin}"
-# GIT / Upstream remote name
-export DEV_GIT_REMOTE_UPSTREAM="${DEV_GIT_REMOTE_UPSTREAM:-upstream}"
 
 #
 # Functions
@@ -70,7 +57,7 @@ function dev_repo_get_changes() {
     print $0
     next
   }
-  ' "$DEV_CICD_CHANGELOG"
+  ' "$DEV_BASE_CHANGELOG"
 }
 
 function dev_git_tag_create() {
@@ -110,6 +97,11 @@ function dev_git_tag_create() {
 function dev_git_initialize() {
   bl64_dbg_app_show_function "$@"
   local dev_repo_new_tag="$1"
+  local dev_repo_include_changelog="$2"
+  if bl64_lib_flag_is_enabled "$include_changelog"; then
+    bl64_check_file "$(pwd)/${DEV_BASE_CHANGELOG}" ||
+      return $?
+  fi
   bl64_check_parameter 'dev_repo_new_tag' &&
     bl64_vcs_setup
 }
@@ -122,7 +114,7 @@ declare dev_repo_new_tag="${1:-}"
 declare dev_repo_include_changelog="${2:-$BL64_VAR_OFF}"
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-dev_git_initialize "$dev_repo_new_tag" || exit $?
+dev_git_initialize "$dev_repo_new_tag" "$dev_repo_include_changelog" || exit $?
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'dev-git-tag-create'

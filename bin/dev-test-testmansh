@@ -29,6 +29,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-testmansh || exit 1
 # shellcheck source=lib/bl64/bashlib64-core.bash
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
@@ -36,13 +38,8 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Test / Bash / Container
-DEV_CICD_TEST_CONTAINER="${DEV_CICD_TEST_CONTAINER:-}"
-export DEV_CICD_TEST_CONTAINER
-# Lib / TestmanSH / Target
-export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
+export DEV_TEST_TESTMANSH_CONTAINER="${DEV_TEST_TESTMANSH_CONTAINER:-}"
 
 #
 # Functions
@@ -50,13 +47,12 @@ export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
 
 function dev_test_bash() {
   bl64_dbg_app_show_function
-  "$DEV_LIB_TESTMANSH_BIN" -b -o -e "$DEV_CICD_TEST_CONTAINER"
+  "$DEV_LIB_TESTMANSH_BIN" -b -o -e "$DEV_TEST_TESTMANSH_CONTAINER"
 }
 
 function dev_test_initialize() {
   bl64_dbg_app_show_function
-  bl64_check_export 'DEV_CICD_TEST_CONTAINER' &&
-    bl64_check_command_search_path "$DEV_LIB_TESTMANSH_BIN"
+  bl64_check_command_search_path "$DEV_LIB_TESTMANSH_BIN"
 }
 
 #

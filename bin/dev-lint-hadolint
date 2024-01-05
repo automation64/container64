@@ -38,8 +38,6 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lint / Dockerfile / Configuration
 export DEV_LIB_HADOLINT_CFG="${DEV_PATH_ROOT}/.hadolint.yaml"
 # Lint / Dockerfile / Sources

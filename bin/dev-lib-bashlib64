@@ -2,7 +2,7 @@
 #######################################
 # Dev / Lib / Bashlib64 / Download
 #
-# * Version: 4.0.0
+# * Version: 4.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -31,7 +31,7 @@ source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
+# CICD / Debug flag for bin/ scripts. Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lib / BashLib64 / Target
 export DEV_LIB_BASHLIB64_TARGET="${DEV_LIB_BASHLIB64_TARGET:-${DEV_PATH_LIB}/bl64}"

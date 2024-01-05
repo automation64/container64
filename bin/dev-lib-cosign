@@ -11,6 +11,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-cosign || exit 1
 # shellcheck source=lib/bl64/bashlib64-core.bash
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
@@ -18,12 +20,6 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Lib / Cosign / Target
-export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
-# Lib / Cosign / Command
-export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_TARGET}/cosign"
 # Lib / Cosign / Installer64 parameters
 export INST64_BASHLIB64="$DEV_LIB_BASHLIB64_TARGET"
 export INST64_COSIGN_TARGET="$DEV_LIB_COSIGN_TARGET"

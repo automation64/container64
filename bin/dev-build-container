@@ -26,6 +26,9 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-container &&
+  source ./bin/dev-env-cosign || exit 1
 # shellcheck source=lib/bl64/bashlib64-core.bash
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
@@ -33,15 +36,10 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Globals
 #
 
-# Variables defined in .env
-export DEV_AUTH_DOCKER_REGISTRY
-export DEV_LIB_COSIGN_BIN
-export DEV_LIB_CNTBUILD_BIN
-
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
+# Lib / CNTBuild / Command
+export DEV_LIB_CNTBUILD_BIN="${DEV_ROOT}/${DEV_BUILD_BASH_NAME}"
 # Build / CNTBuild / Parameters
-export CNTBUILD_REGISTRY="$DEV_AUTH_DOCKER_REGISTRY"
+export CNTBUILD_REGISTRY="$DEV_AUTH_CONTAINER_REGISTRY"
 export CNTBUILD_COSIGN_BIN="$DEV_LIB_COSIGN_BIN"
 
 #

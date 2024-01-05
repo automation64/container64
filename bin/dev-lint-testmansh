@@ -28,6 +28,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-testmansh || exit 1
 # shellcheck source-path=lib/bl64
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
@@ -39,16 +41,12 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lint / Bash / Configuration
 DEV_LINT_TESTMANSH_CFG="${DEV_PATH_ROOT}/.shellcheckrc"
 export DEV_LINT_TESTMANSH_CFG
 # Lint / Bash / Sources
 DEV_LINT_TESTMANSH_SOURCE="${DEV_LINT_TESTMANSH_SOURCE:-src}"
 export DEV_LINT_TESTMANSH_SOURCE
-# Lib / TestmanSH / Target
-export DEV_LIB_TESTMANSH_BIN="${DEV_PATH_LIB}/testmansh"
 
 #
 # Functions
