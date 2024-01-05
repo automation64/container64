@@ -17,7 +17,7 @@ ENV CNT64_USER="test"
 #
 
 # Copy image setup script
-COPY helpers/ansible-test/setup /setup
+COPY --chmod=700 helpers/ansible-test/setup /setup
 
 # Setup image
 RUN \

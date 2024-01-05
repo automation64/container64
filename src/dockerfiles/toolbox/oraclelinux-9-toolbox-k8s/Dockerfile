@@ -15,7 +15,7 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 # Copy image setup script
-COPY helpers/toolbox-k8s/setup /setup
+COPY --chmod=700 helpers/toolbox-k8s/setup /setup
 
 # Setup image
 RUN \
