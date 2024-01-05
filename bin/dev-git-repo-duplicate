@@ -30,17 +30,10 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-git || exit 1
 # shellcheck source=lib/bl64/bashlib64-core.bash
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
-
-#
-# Globals
-#
-
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Lib / RSync / Command
-export DEV_LIB_RSYNC_BIN="${DEV_LIB_RSYNC_BIN:-/usr/bin/rsync}"
 
 #
 # Functions

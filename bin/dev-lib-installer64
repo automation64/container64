@@ -26,17 +26,17 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-installer64 || exit 1
 
 #
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
+# CICD / Debug flag for bin/ scripts. Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 # Lib / Installer64 / Source
 export DEV_LIB_INSTALLER64_URL='https://raw.githubusercontent.com/automation64/installer64/main/src/install-installer64'
-# Lib / Installer64 / Target
-export DEV_LIB_INSTALLER64_TARGET="${DEV_LIB_INSTALLER64_TARGET:-${DEV_PATH_LIB}/inst64}"
 # Lib / Installer64 / Installer64 parameters
 export INST64_INSTALLER64_TARGET="$DEV_LIB_INSTALLER64_TARGET"
 

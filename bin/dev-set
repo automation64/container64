@@ -25,11 +25,11 @@
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
+# CICD / Debug flag for bin/ scripts. Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Increase verbosity? Set to YES to increase
+# Dev / Set / Increase verbosity? Set to YES to increase
 export DEV_SET_VERBOSE="${DEV_SET_VERBOSE:-}"
-# Resource names
+# Dev / Set / Resource names
 export DEV_BASE_LOCAL='.local'
 export DEV_BASE_SECRETS='.secrets'
 export DEV_BASE_ENV='.env'

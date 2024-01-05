@@ -26,6 +26,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-github || exit 1
 # shellcheck source-path=lib/bl64
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
@@ -33,10 +35,6 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# Lib / GitHub / Command
-export DEV_LIB_GITHUB_BIN="${DEV_LIB_GITHUB_BIN:-/usr/bin/gh}"
 # Auth / GitHub / Scopes
 export DEV_AUTH_GITHUB_SCOPES="${DEV_AUTH_GITHUB_SCOPES:-}"
 # Auth / GitHub / Token

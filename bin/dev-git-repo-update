@@ -26,21 +26,10 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-git || exit 1
 # shellcheck source=lib/bl64/bashlib64.bash
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64.bash" || exit 1
-
-#
-# Globals
-#
-
-# Dev / Enable debugging? Set to YES to enable
-export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
-# GIT / Main branch name
-export DEV_GIT_BRANCH_MAIN="${DEV_GIT_BRANCH_MAIN:-main}"
-# GIT / Origin remote name
-export DEV_GIT_REMOTE_ORIGIN="${DEV_GIT_REMOTE_ORIGIN:-origin}"
-# GIT / Upstream remote name
-export DEV_GIT_REMOTE_UPSTREAM="${DEV_GIT_REMOTE_UPSTREAM:-upstream}"
 
 #
 # Functions

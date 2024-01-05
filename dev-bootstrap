@@ -32,7 +32,7 @@
 # Globals
 #
 
-# Dev / Enable debugging? Set to YES to enable
+# CICD / Debug flag for bin/ scripts. Set to YES to enable
 export DEV_CICD_DEBUG="${DEV_CICD_DEBUG:-}"
 export DEV_FILES_MODE='0644'
 export DEV_LIB_BASHLIB64_TARGET='bl64'
@@ -91,6 +91,8 @@ DEV_BASE_SECRETS='.secrets'
 export DEV_BASE_SECRETS
 DEV_BASE_ENV='%s'
 export DEV_BASE_ENV
+DEV_BASE_CHANGELOG='CHANGELOG.md'
+export DEV_BASE_CHANGELOG
 
 # Base path for builds
 DEV_PATH_BUILD="${DEV_PATH_ROOT}/${DEV_BASE_BUILD}"

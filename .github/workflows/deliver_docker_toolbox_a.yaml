@@ -14,7 +14,7 @@ jobs:
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
+      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     steps:
