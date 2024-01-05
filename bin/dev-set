@@ -3,7 +3,7 @@
 # Dev / Set development environment variables
 #
 # * Source this script from the project's root directory
-# * Version: 7.2.0
+# * Version: 7.3.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -52,6 +52,8 @@ function dev_set_message() {
 
 function dev_set_load_local() {
   dev_set_message "Task: load local environment variables ($(pwd)/${DEV_BASE_LOCAL})"
+  export DEV_PATH_ROOT="${DEV_PATH_ROOT:-$(pwd)}"
+
   # shellcheck source=./.local
   source "$DEV_BASE_LOCAL" ||
     {
