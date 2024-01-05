@@ -6,7 +6,7 @@ FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest
 #
 
 # Copy image setup script
-COPY helpers/terraform-test/setup /setup
+COPY --chmod=700 helpers/terraform-test/setup /setup
 
 # Set setup parameters
 ENV CNT64_TERRAFORM_TEST_USER="test"

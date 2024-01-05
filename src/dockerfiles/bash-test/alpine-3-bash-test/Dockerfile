@@ -18,7 +18,7 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 # Copy image setup scripts
-COPY helpers/bash-test/setup /setup
+COPY --chmod=700 helpers/bash-test/setup /setup
 
 # Setup image
 RUN \

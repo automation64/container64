@@ -17,7 +17,7 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 # Copy image setup scripts
-COPY helpers/toolbox/setup /setup
+COPY --chmod=700 helpers/toolbox/setup /setup
 
 # Setup image
 RUN \
