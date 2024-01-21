@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.1.0
+# Version: 2.2.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -30,10 +30,19 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
-export CNT64_USER
 
-# shellcheck source=lib/bl64/bashlib64.bash
-source "${CNT64_BASHLIB64}/bashlib64.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+# shellcheck source-dir=lib/bl64
+source "${CNT64_BASHLIB64}/bashlib64-module-pkg.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-rxtx.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-vcs.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-api.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-rbac.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-iam.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-txt.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-fmt.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
 # Globals
@@ -210,6 +219,12 @@ function cnt64_setup_install_packages() {
   bl64_pkg_deploy $packages
 }
 
+function cnt64_setup_install_applications() {
+  bl64_dbg_app_show_function
+  export INST64_ANSIBLE_PIPX='OFF'
+  sudo -E -H -u "$CNT64_USER" "${CNT64_INSTALLER_ROOT}/install-ansible"
+}
+
 #######################################
 # Initialize environment
 #
@@ -240,6 +255,7 @@ function cnt64_setup_initialize() {
     "${BL64_OS_RCK}-8" \
     "${BL64_OS_UB}-20.4" "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.4" &&
     bl64_check_export 'CNT64_USER' &&
+    bl64_check_export 'CNT64_INSTALLER_ROOT' &&
     bl64_check_privilege_root &&
     bl64_pkg_setup
 }
@@ -258,5 +274,6 @@ cnt64_setup_initialize &&
   cnt64_setup_install_packages &&
   cnt64_setup_configure_os &&
   cnt64_setup_create_users &&
-  cnt64_setup_configure_users
+  cnt64_setup_configure_users &&
+  cnt64_setup_install_applications
 bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
