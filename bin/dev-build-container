@@ -52,20 +52,20 @@ function dev_build_publish() {
   local image_list="$3"
   local message="$4"
   local container_name=''
-  local -i break=10
+  local -i pause=5
 
   bl64_msg_show_phase "$message"
   # shellcheck disable=SC2086
   for container_name in $image_list; do
     "$DEV_LIB_CNTBUILD_BIN" -b -c "$container_name" &&
-      sleep $break ||
+      sleep $pause ||
       return $?
     if bl64_lib_flag_is_enabled "$publish"; then
       if bl64_lib_flag_is_enabled "$delete_first"; then
         "$DEV_LIB_CNTBUILD_BIN" -x -c "$container_name"
       fi
       "$DEV_LIB_CNTBUILD_BIN" -u -s -c "$container_name" &&
-        sleep $break ||
+        sleep $pause ||
         return $?
     fi
   done
@@ -76,8 +76,20 @@ function dev_build_image() {
   local dev_build_publish="$2"
   local dev_build_delete_first="$3"
   case "$dev_build_target" in
-  'base')
-    dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_BASE" 'base containers'
+  'base_rhel')
+    dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_BASE_RHEL" 'base containers - rhel'
+    ;;
+  'base_debian')
+    dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_BASE_DEBIAN" 'base containers - debian'
+    ;;
+  'base_other')
+    dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_BASE_OTHER" 'base containers - other'
+    ;;
+  'base_fedora')
+    dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_BASE_FEDORA" 'base containers - fedora'
+    ;;
+  'base_ubuntu')
+    dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_BASE_UBUNTU" 'base containers - ubuntu'
     ;;
   'toolbox_a')
     dev_build_publish "$dev_build_publish" "$dev_build_delete_first" "$DEV_BUILD_CNTBUILD_CATALOG_TOOLBOX_L0" 'toolbox containers - level 0'

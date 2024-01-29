@@ -17,6 +17,15 @@ jobs:
       DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
+    strategy:
+      matrix:
+        scope:
+          - "base_rhel"
+          - "base_debian"
+          - "base_other"
+          - "base_fedora"
+          - "base_ubuntu"
+
     steps:
 
       - name: "Check out repository code"
@@ -32,5 +41,5 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-container base ON"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 ...
