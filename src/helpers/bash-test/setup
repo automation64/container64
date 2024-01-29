@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.6.0
+# Version: 1.7.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -47,25 +47,25 @@ function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_match "${BL64_OS_ALP}"; then
-    packages='git mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq'
+    packages='git mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq gpg'
   elif bl64_os_match "${BL64_OS_ALM}"; then
-    packages='git diffutils python3 python3-pip python3-setuptools unzip wget gettext jq'
+    packages='git diffutils python3 python3-pip python3-setuptools unzip wget gettext jq gpg'
   elif bl64_os_match "${BL64_OS_CNT}"; then
-    packages='git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext jq'
+    packages='git diffutils hostname wget python3 python3-pip python3-setuptools unzip gettext jq gpg'
   elif bl64_os_match "${BL64_OS_DEB}"; then
-    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq'
+    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq gpg'
   elif bl64_os_match "${BL64_OS_FD}"; then
-    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq'
+    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq gpg'
   elif bl64_os_match "${BL64_OS_OL}"; then
-    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq'
+    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gpg'
   elif bl64_os_match "${BL64_OS_RHEL}"; then
-    packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq'
+    packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gpg'
   elif bl64_os_match "${BL64_OS_RCK}"; then
-    packages='git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext jq'
+    packages='git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext jq gpg'
   elif bl64_os_match "${BL64_OS_SLES}"; then
-    packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq'
+    packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq gpg'
   elif bl64_os_match "${BL64_OS_UB}"; then
-    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq'
+    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq gpg'
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
