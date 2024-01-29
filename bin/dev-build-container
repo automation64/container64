@@ -52,16 +52,20 @@ function dev_build_publish() {
   local image_list="$3"
   local message="$4"
   local container_name=''
+  local -i break=10
 
   bl64_msg_show_phase "$message"
   # shellcheck disable=SC2086
   for container_name in $image_list; do
-    "$DEV_LIB_CNTBUILD_BIN" -b -c "$container_name" || return $?
+    "$DEV_LIB_CNTBUILD_BIN" -b -c "$container_name" &&
+      sleep $break ||
+      return $?
     if bl64_lib_flag_is_enabled "$publish"; then
       if bl64_lib_flag_is_enabled "$delete_first"; then
         "$DEV_LIB_CNTBUILD_BIN" -x -c "$container_name"
       fi
-      "$DEV_LIB_CNTBUILD_BIN" -u -s -c "$container_name" ||
+      "$DEV_LIB_CNTBUILD_BIN" -u -s -c "$container_name" &&
+        sleep $break ||
         return $?
     fi
   done
