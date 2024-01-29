@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.4.0
+# Version: 2.5.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -36,8 +36,19 @@ export CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN:-}"
 export CNT64_INSTALLER_ROOT="${CNT64_INSTALLER_ROOT:-}"
 export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-}"
 
-# shellcheck source=lib/bl64/bashlib64.bash
-source "${CNT64_BASHLIB64}/bashlib64.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+# shellcheck source-path=lib/bl64
+source "${CNT64_BASHLIB64}/bashlib64-module-vcs.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-rxtx.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-api.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-pkg.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-rbac.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-iam.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-txt.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-fmt.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
 # Globals
@@ -239,6 +250,7 @@ function cnt64_bootstrap_initialize() {
     bl64_check_export 'CNT64_LOCAL_ROOT' &&
     bl64_check_export 'CNT64_LOCAL_BIN' &&
     bl64_check_export 'CNT64_OPT_ROOT' &&
+    bl64_cryp_setup &&
     bl64_pkg_setup &&
     bl64_check_privilege_root
 }

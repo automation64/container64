@@ -18,18 +18,13 @@ ENV CNT64_USER="test"
 # Copy image setup script
 COPY --chmod=700 helpers/ansible-test/setup /setup
 
+# Set installer parameters
+ARG INST64_ANSIBLE_VERSION="2.13"
+
 # Setup image
 RUN \
     sudo -E /setup && \
     sudo rm /setup
-
-# Set installer parameters
-ARG INST64_ANSIBLE_PIPX="OFF"
-ARG INST64_ANSIBLE_VERSION="2.13"
-
-# Install applications
-RUN \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible"
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]
