@@ -74,7 +74,7 @@ function cnt64_setup_select_packages() {
   elif bl64_os_match "${BL64_OS_RCK}"; then
     packages='git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext jq gnupg2'
   elif bl64_os_match "${BL64_OS_SLES}"; then
-    packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq gnupg2'
+    packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq gpg2'
   elif bl64_os_match "${BL64_OS_UB}"; then
     packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq gnupg2'
   fi
