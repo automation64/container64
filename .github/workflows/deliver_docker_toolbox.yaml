@@ -1,5 +1,5 @@
 ---
-name: "Deliver / Container / Toolbox / Base Level"
+name: "Deliver / Container / Toolbox"
 
 env:
   DEV_CICD_DEBUG: ""

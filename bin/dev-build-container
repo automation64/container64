@@ -39,7 +39,7 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # Lib / CNTBuild / Command
 declare DEV_LIB_CNTBUILD_BIN="${DEV_PATH_ROOT}/${DEV_BUILD_BASH_NAME}"
 # Build / CNTBuild / Image list name suffix
-declare DEV_BUILD_CNTBUILD_LIST_SUFFIX='DEV_BUILD_CNTBUILD_CATALOG_'
+declare DEV_BUILD_CNTBUILD_LIST_PREFIX='DEV_BUILD_CNTBUILD_CATALOG_'
 # Build / CNTBuild / Parameters
 export CNTBUILD_REGISTRY="$DEV_AUTH_CONTAINER_REGISTRY"
 export CNTBUILD_COSIGN_BIN="$DEV_LIB_COSIGN_BIN"
@@ -53,7 +53,7 @@ function dev_build_image() {
   local publish="$2"
   local delete_first="$3"
   local container_name=''
-  local image_list="DEV_BUILD_CNTBUILD_CATALOG_BASE_${image_list_suffix}"
+  local image_list="DEV_BUILD_CNTBUILD_LIST_PREFIX${image_list_suffix}"
   local -i pause=5
 
   bl64_msg_show_phase "processing container list (${image_list})"
@@ -78,7 +78,7 @@ function dev_build_initialize() {
   local build_target="$*"
   bl64_check_parameter 'build_target' ||
   return $?
-  if [[ ! -v "${DEV_BUILD_CNTBUILD_LIST_SUFFIX}${build_target}" ]]; then
+  if [[ ! -v "${DEV_BUILD_CNTBUILD_LIST_PREFIX}${build_target}" ]]; then
     bl64_msg_show_error "invalid build target (${build_target})"
     return 1
   fi
