@@ -21,5 +21,6 @@ ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
 # Install applications
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
     "${CNT64_INSTALLER_ROOT}/install-ansiblelint"
