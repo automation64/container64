@@ -17,6 +17,11 @@ jobs:
       DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
+    strategy:
+      matrix:
+        scope:
+          - "TERRAFORM_TEST_L3"
+
     steps:
 
       - name: "Check out repository code"
@@ -32,5 +37,5 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-container terraform_test ON"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 ...

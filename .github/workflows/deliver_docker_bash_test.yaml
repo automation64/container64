@@ -1,5 +1,5 @@
 ---
-name: "Deliver / Container / Bash Test / Base Level"
+name: "Deliver / Container / Bash Test"
 
 env:
   DEV_CICD_DEBUG: ""
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deliver-docker-bash-test-a-redhat:
+  deliver-docker-bash-test-l0:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
@@ -16,6 +16,15 @@ jobs:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "BASH_TEST_L0_REDHAT"
+          - "BASH_TEST_L0_FEDORA"
+          - "BASH_TEST_L0_DEBIAN"
+          - "BASH_TEST_L0_UBUNTU"
+          - "BASH_TEST_L0_OTHER"
 
     steps:
 
@@ -32,9 +41,9 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-container bash_test_a_redhat ON"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 
-  deliver-docker-bash-test-a-ubuntu:
+  deliver-docker-bash-test-l1:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
@@ -42,6 +51,14 @@ jobs:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "BASH_TEST_L1"
+
+    needs:
+      - "deliver-docker-bash-test-l0"
 
     steps:
 
@@ -58,9 +75,9 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-container bash_test_a_ubuntu ON"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 
-  deliver-docker-bash-test-a-other:
+  deliver-docker-bash-test-l2:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
@@ -68,6 +85,14 @@ jobs:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "BASH_TEST_L2"
+
+    needs:
+      - "deliver-docker-bash-test-l1"
 
     steps:
 
@@ -84,5 +109,39 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-container bash_test_a_other ON"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
+
+  deliver-docker-bash-test-l3:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "BASH_TEST_L3"
+
+    needs:
+      - "deliver-docker-bash-test-l2"
+
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 ...

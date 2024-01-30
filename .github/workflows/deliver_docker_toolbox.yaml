@@ -1,5 +1,5 @@
 ---
-name: "Deliver / Container / Dev"
+name: "Deliver / Container / Toolbox / Base Level"
 
 env:
   DEV_CICD_DEBUG: ""
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deliver-docker-dev-l0:
+  deliver-docker-toolbox-l0:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         scope:
-          - "DEV_L0"
+          - "TOOLBOX_L0"
 
     steps:
 
@@ -39,7 +39,7 @@ jobs:
       - name: "Build and publish container images"
         run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 
-  deliver-docker-dev-l1:
+  deliver-docker-toolbox-l1:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
@@ -51,12 +51,43 @@ jobs:
     strategy:
       matrix:
         scope:
-          - "DEV_L1_A"
-          - "DEV_L1_B"
+          - "TOOLBOX_L1"
 
     needs:
-      - "deliver-docker-dev-l0"
+        - "deliver-docker-toolbox-l0"
+    steps:
 
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
+
+  deliver-docker-toolbox-l2:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "TOOLBOX_L2"
+
+    needs:
+        - "deliver-docker-toolbox-l1"
     steps:
 
       - name: "Check out repository code"

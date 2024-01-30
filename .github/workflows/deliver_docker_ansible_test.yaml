@@ -17,6 +17,14 @@ jobs:
       DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
+    strategy:
+      matrix:
+        scope:
+          - "ANSIBLE_L0_REDHAT"
+          - "ANSIBLE_L0_FEDORA"
+          - "ANSIBLE_L0_DEBIAN"
+          - "ANSIBLE_L0_UBUNTU"
+
     steps:
 
       - name: "Check out repository code"
@@ -32,5 +40,5 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-container ansible_test ON"
+        run: "./bin/dev-build-container ${{ matrix.scope }} ON"
 ...

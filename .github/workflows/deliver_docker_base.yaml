@@ -20,11 +20,11 @@ jobs:
     strategy:
       matrix:
         scope:
-          - "base_rhel"
-          - "base_debian"
-          - "base_other"
-          - "base_fedora"
-          - "base_ubuntu"
+          - "BASE_REDHAT"
+          - "BASE_FEDORA"
+          - "BASE_DEBIAN"
+          - "BASE_UBUNTU"
+          - "BASE_OTHER"
 
     steps:
 
