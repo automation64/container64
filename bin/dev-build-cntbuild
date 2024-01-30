@@ -53,7 +53,7 @@ function dev_build_image() {
   local publish="$2"
   local delete_first="$3"
   local container_name=''
-  local image_list="DEV_BUILD_CNTBUILD_LIST_PREFIX${image_list_suffix}"
+  local image_list="${DEV_BUILD_CNTBUILD_LIST_PREFIX}${image_list_suffix}"
   local -i pause=5
 
   bl64_msg_show_phase "processing container list (${image_list})"
@@ -95,7 +95,7 @@ declare dev_build_delete_first="${3:-${BL64_VAR_OFF}}"
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
 
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start 'dev-build-container'
+bl64_msg_show_batch_start 'dev-build-cntbuild'
 dev_build_initialize "$dev_build_target" &&
   dev_build_image "$dev_build_target" "$dev_build_publish" "$dev_build_delete_first"
-bl64_msg_show_batch_finish $? 'dev-build-container'
+bl64_msg_show_batch_finish $? 'dev-build-cntbuild'
