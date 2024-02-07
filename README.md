@@ -60,6 +60,7 @@
 | `base/centos-9-base`      | centos      | `quay.io/centos/centos:stream9`     |
 | `base/debian-10-base`     | debian      | `docker.io/library/debian:buster`   |
 | `base/debian-11-base`     | debian      | `docker.io/library/debian:bullseye` |
+| `base/debian-12-base`     | debian      | `docker.io/library/debian:bookworm` |
 | `base/debian-9-base`      | debian      | `docker.io/debian/eol:stretch`      |
 | `base/fedora-33-base`     | fedora      | `docker.io/library/fedora:33`       |
 | `base/fedora-34-base`     | fedora      | `docker.io/library/fedora:34`       |
@@ -121,23 +122,6 @@
 | `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`   |
 
-#### Container collection: Runtime tool
-
-- Purpose: minimal runtime environment for running individual tools
-- Packages: bash, sudo, curl, purpose specific tools
-
-| Image | OS  | Base Image |
-| ----- | --- | ---------- |
-
-#### Container collection: Bash linting
-
-- Purpose: Unix Shell scripts linting
-- Packages: ShellCheck, OS utilities
-
-| Image                            | OS     | Base Image                                       |
-| -------------------------------- | ------ | ------------------------------------------------ |
-| `shell-lint/alpine-3-shell-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
-
 #### Container collection: Bash testing
 
 - Purpose: Bash scripts testing
@@ -183,6 +167,37 @@
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.4-bash-test`               |
 | `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-23.10-bash-test`              |
 
+#### Container collection: Ansible playbooks testing
+
+- Purpose: Ansible playbooks testing
+- Packages: SystemD, Sudo, Python3, Ansible
+
+| Image                                     | OS          | Base Image                                                      |
+| ----------------------------------------- | ----------- | --------------------------------------------------------------- |
+| `ansible-test/almalinux-8-ansible-test`   | almalinux   | `ghcr.io/automation64/bash-test/almalinux-8-bash-test:latest`   |
+| `ansible-test/centos-8-ansible-test`      | centos      | `ghcr.io/automation64/bash-test/centos-8-bash-test:latest`      |
+| `ansible-test/debian-10-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-10-bash-test:latest`     |
+| `ansible-test/debian-11-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-11-bash-test:latest`     |
+| `ansible-test/fedora-33-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-33-bash-test:latest`     |
+| `ansible-test/fedora-35-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-35-bash-test:latest`     |
+| `ansible-test/fedora-36-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-36-bash-test:latest`     |
+| `ansible-test/oraclelinux-8-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-8-bash-test:latest` |
+| `ansible-test/oraclelinux-9-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
+| `ansible-test/rhel-8-ansible-test`        | rhel        | `ghcr.io/automation64/bash-test/rhel-8-bash-test:latest`        |
+| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `ghcr.io/automation64/bash-test/rockylinux-8-bash-test:latest`  |
+| `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-20.4-bash-test:latest`   |
+| `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
+| `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
+
+#### Container collection: Bash linting
+
+- Purpose: Unix Shell scripts linting
+- Packages: ShellCheck, OS utilities
+
+| Image                            | OS     | Base Image                                       |
+| -------------------------------- | ------ | ------------------------------------------------ |
+| `shell-lint/alpine-3-shell-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
 #### Container collection: Terraform linting
 
 - Purpose: Terraform code linting
@@ -218,29 +233,6 @@
 | Image                                         | OS          | Base Image                                                            |
 | --------------------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `terraform-test/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
-| `terraform-lint/oraclelinux-9-terraform-test` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest` |
-
-#### Container collection: Ansible playbooks testing
-
-- Purpose: Ansible playbooks testing
-- Packages: SystemD, Sudo, Python3, Ansible
-
-| Image                                     | OS          | Base Image                                                      |
-| ----------------------------------------- | ----------- | --------------------------------------------------------------- |
-| `ansible-test/almalinux-8-ansible-test`   | almalinux   | `ghcr.io/automation64/bash-test/almalinux-8-bash-test:latest`   |
-| `ansible-test/centos-8-ansible-test`      | centos      | `ghcr.io/automation64/bash-test/centos-8-bash-test:latest`      |
-| `ansible-test/debian-10-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-10-bash-test:latest`     |
-| `ansible-test/debian-11-ansible-test`     | debian      | `ghcr.io/automation64/bash-test/debian-11-bash-test:latest`     |
-| `ansible-test/fedora-33-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-33-bash-test:latest`     |
-| `ansible-test/fedora-35-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-35-bash-test:latest`     |
-| `ansible-test/fedora-36-ansible-test`     | fedora      | `ghcr.io/automation64/bash-test/fedora-36-bash-test:latest`     |
-| `ansible-test/oraclelinux-8-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-8-bash-test:latest` |
-| `ansible-test/oraclelinux-9-ansible-test` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `ansible-test/rhel-8-ansible-test`        | rhel        | `ghcr.io/automation64/bash-test/rhel-8-bash-test:latest`        |
-| `ansible-test/rockylinux-8-ansible-test`  | rhel        | `ghcr.io/automation64/bash-test/rockylinux-8-bash-test:latest`  |
-| `ansible-test/ubuntu-20.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-20.4-bash-test:latest`   |
-| `ansible-test/ubuntu-21.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-21.4-bash-test:latest`   |
-| `ansible-test/ubuntu-22.4-ansible-test`   | ubuntu      | `ghcr.io/automation64/bash-test/ubuntu-22.4-bash-test:latest`   |
 
 #### Container collection: Static Site Generator linting
 
@@ -250,6 +242,15 @@
 | Image                        | OS     | Base Image                                       |
 | ---------------------------- | ------ | ------------------------------------------------ |
 | `ssg-lint/alpine-3-ssg-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
+#### Container collection: Go testing
+
+- Purpose: Go code testing
+- Packages: golang
+
+| Image                                    | OS     | Base Image                                       |
+| ---------------------------------------- | ------ | ------------------------------------------------ |
+| `go-test/alpine-3-container-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
 ### Container structure
 
