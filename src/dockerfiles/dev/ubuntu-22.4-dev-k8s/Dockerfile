@@ -29,4 +29,5 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
     "${CNT64_INSTALLER_ROOT}/install-krew"
