@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/library/debian:bookworm AS base
+FROM docker.io/library/debian:bullseye AS base
 
 # Prepare package installer
 ENV container="docker"

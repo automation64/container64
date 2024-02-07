@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.5.0
+# Version: 2.6.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -235,7 +235,7 @@ function cnt64_bootstrap_install() {
 #######################################
 function cnt64_bootstrap_initialize() {
   bl64_dbg_app_show_function
-  bl64_os_check_version \
+  bl64_os_check_compatibility \
     "${BL64_OS_ALM}" \
     "${BL64_OS_ALP}" \
     "${BL64_OS_CNT}" \
