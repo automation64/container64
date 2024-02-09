@@ -1,32 +1,30 @@
-
 #
 # GIT Ignore
 #
-# * Template version: 1.1.0
+# * Template version: 1.2.1
 #
 
 # VScode
-.vscode
-*.code-workspace
+/.vscode
 
 # Code build
-build/*
+/build/*
 
 # Dev-time tools
-lib/*
+/lib/*
 
 # Dev-time temporary files
-tmp/*
+/tmp/*
 
 # Secrets
-.secrets
+/.secrets
 
 # Local variables
-.local
-
-# Keep placeholder for empty directories
-!/**/.gitkeep
+/.local
 
 #
 # Project specific exclusions
 #
+
+# Keep placeholder for empty directories
+!/**/.gitkeep

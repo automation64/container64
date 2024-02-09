@@ -2,7 +2,7 @@
 #######################################
 # Dev / Env / Container / Shared environment variables
 #
-# * Version: 1.0.0
+# * Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -26,8 +26,12 @@
 # * Use .env file to override values
 #
 
-# Auth / Docker / Registry
+# Auth / Container / Registry
 export DEV_AUTH_CONTAINER_REGISTRY="${DEV_AUTH_CONTAINER_REGISTRY:-}"
+# Lab / Container / Registry
+export DEV_LAB_CONTAINER_REGISTRY="${DEV_LAB_CONTAINER_REGISTRY:-ghcr.io/automation64}"
+# Lab / Container / Default image
+export DEV_LAB_CONTAINER_IMAGE="${DEV_LAB_CONTAINER_IMAGE:-base/alpine-3-base}"
 
 #
 # Locals
