@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.10.0
+# Version: 1.11.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -84,7 +84,7 @@ function cnt64_setup_select_packages() {
     # Code management tools
     packages="${packages} git diffutils patch"
     # Shells
-    packages="${packages} zsh csh"
+    packages="${packages} zsh csh bash-completion"
     # Text utils
     packages="${packages} vim nano less jq gettext gawk"
     # Certificate tools

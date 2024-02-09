@@ -2,7 +2,7 @@
 #######################################
 # Dev / Auth / Cosign / Login
 #
-# * Version: 1.2.0
+# * Version: 1.3.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -32,18 +32,6 @@ source ./bin/dev-env-github &&
 # shellcheck source-path=lib/bl64
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
-
-#
-# Globals
-#
-
-# Auth / Cosign / Server
-export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
-# Auth / Cosign / Server Type
-export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
-# Auth / Cosign / Server User
-export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
-export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
 
 #
 # Functions
@@ -105,9 +93,9 @@ function dev_auth_initialize() {
 #
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-dev_auth_initialize || exit $?
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'dev-auth-cosign'
-dev_auth_cosign
+dev_auth_initialize &&
+  dev_auth_cosign
 bl64_msg_show_batch_finish $? 'dev-auth-cosign'

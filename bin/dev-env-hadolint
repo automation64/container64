@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #######################################
-# Dev / Env / Container / Shared environment variables
+# Dev / Env / Hadolint / Shared environment variables
 #
-# * Version: 1.2.0
+# * Version: 1.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -26,14 +26,12 @@
 # * Use .env file to override values
 #
 
-# Auth / Container / Registry
-export DEV_AUTH_CONTAINER_REGISTRY="${DEV_AUTH_CONTAINER_REGISTRY:-}"
-# Lab / Container / Registry
-export DEV_LAB_CONTAINER_REGISTRY="${DEV_LAB_CONTAINER_REGISTRY:-ghcr.io/automation64}"
-# Lab / Container / Default image
-export DEV_LAB_CONTAINER_IMAGE="${DEV_LAB_CONTAINER_IMAGE:-base/alpine-3-base}"
-# Auth / Docker / Registry Type
-export DEV_AUTH_CONTAINER_TYPE="${DEV_AUTH_CONTAINER_TYPE:-GITHUB}"
+# Lint / Dockerfile / Configuration
+export DEV_LIB_HADOLINT_CFG="${DEV_PATH_ROOT}/.hadolint.yaml"
+# Lint / Dockerfile / Sources
+export DEV_LINT_HADOLINT_SOURCE="${DEV_LINT_HADOLINT_SOURCE:-$DEV_PATH_SRC}"
+# Lib / Dockerfile / Command
+export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-/usr/local/bin/hadolint}"
 
 #
 # Locals
@@ -46,7 +44,3 @@ export DEV_AUTH_CONTAINER_TYPE="${DEV_AUTH_CONTAINER_TYPE:-GITHUB}"
 #
 # * Use .secrets file or CICD secrets to override values
 #
-
-# Auth / Docker / User
-export DEV_AUTH_CONTAINER_USER="${DEV_AUTH_CONTAINER_USER:-}"
-export DEV_AUTH_CONTAINER_PASSWORD="${DEV_AUTH_CONTAINER_PASSWORD:-}"

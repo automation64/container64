@@ -3,7 +3,7 @@
 # Dev / Build / Bash / Assemble modular script
 #
 # * Use to build script from multiple sources (modular)
-# * Version: 3.0.1
+# * Version: 4.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -27,6 +27,9 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-bash || exit 1
+
 # shellcheck source-path=lib/bl64
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
@@ -34,32 +37,19 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
 #
-# Globals
-#
-
-# Build / Bash / Target file name
-export DEV_BUILD_BASH_NAME="${DEV_BUILD_BASH_NAME:-}"
-# Build / Bash / Source full path
-export DEV_BUILD_BASH_SOURCE="${DEV_BUILD_BASH_SOURCE:-$DEV_PATH_SRC}"
-# Build / Bash / Target full path
-export DEV_BUILD_BASH_TARGET="${DEV_BUILD_BASH_TARGET:-${DEV_PATH_BUILD}/${DEV_BUILD_BASH_NAME}}"
-# Build / Bash / BashLib64 Modules
-export DEV_BUILD_BASH_MODULES="${DEV_BUILD_BASH_MODULES:-${DEV_LIB_BASHLIB64_TARGET}/bashlib64.bash}"
-
-#
 # Functions
 #
 
 function dev_build_bash() {
   bl64_dbg_app_show_function
-  bl64_msg_show_task "Build app (${DEV_BUILD_BASH_TARGET})"
+  bl64_msg_show_task "Build app (${DEV_BUILD_BASH_FILE})"
   # shellcheck disable=SC2086
   bl64_fs_merge_files \
     '0755' \
     "$BL64_VAR_DEFAULT" \
     "$BL64_VAR_DEFAULT" \
     "$BL64_VAR_ON" \
-    "$DEV_BUILD_BASH_TARGET" \
+    "$DEV_BUILD_BASH_FILE" \
     "${DEV_BUILD_BASH_SOURCE}/header.bash" \
     $DEV_BUILD_BASH_MODULES \
     "${DEV_BUILD_BASH_SOURCE}/env.bash" \
@@ -70,7 +60,9 @@ function dev_build_bash() {
 function dev_build_initialize() {
   bl64_dbg_app_show_function
   bl64_check_export 'DEV_BUILD_BASH_NAME' &&
-    bl64_check_directory "$DEV_BUILD_BASH_SOURCE"
+    bl64_check_directory "$DEV_BUILD_BASH_SOURCE" &&
+    bl64_fs_create_dir \
+      '0755' "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$DEV_BUILD_BASH_TARGET"
 }
 
 #
@@ -78,9 +70,9 @@ function dev_build_initialize() {
 #
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-dev_build_initialize || exit $?
 
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start 'dev-build-bash'
-dev_build_bash
+dev_build_initialize &&
+  dev_build_bash
 bl64_msg_show_batch_finish $? 'dev-build-bash'
