@@ -28,7 +28,7 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Prepare base tools"
-        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+        run: "./bin/dev-lib-installer64"
 
       - name: "Prepare docker tool"
         run: "./bin/dev-auth-container"
@@ -63,7 +63,41 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Prepare base tools"
-        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-bashlib64"
+        run: "./bin/dev-lib-installer64"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-cntbuild ${{ matrix.scope }} ON"
+
+  deliver-docker-dev-l2:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "DEV_L2"
+
+    needs:
+      - "deliver-docker-dev-l1"
+
+    steps:
+
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-installer64"
 
       - name: "Prepare docker tool"
         run: "./bin/dev-auth-container"
