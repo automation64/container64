@@ -10,7 +10,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/installer64
-# Version: 1.3.1
+# Version: 1.4.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -196,9 +196,7 @@ function dev_bootstrap_gitignore_create() {
     echo 'Warning: file already create, no further action will be taken' 2>&1 &&
     return 0
   # shellcheck disable=SC2016
-  printf '
-
-#
+  printf '#
 # GIT Ignore
 #
 # * Template version: 1.2.1
@@ -307,7 +305,7 @@ dev_bootstrap_initializer &&
   dev_bootstrap_dot_secrets_create &&
   dev_bootstrap_dot_env_load &&
   dev_bootstrap_gitignore_create &&
-  dev_bootstrap_installer64_deploy
+  dev_bootstrap_bin_populate
 dev_bootstrap_status=$?
 
 if ((dev_bootstrap_status == 0)); then

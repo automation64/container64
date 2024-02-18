@@ -33,6 +33,8 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-ghcli" && \
     "${CNT64_INSTALLER_ROOT}/install-gitui" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    "${CNT64_INSTALLER_ROOT}/install-fzf" && \
+    "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit"
 

@@ -15,6 +15,10 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_SHELLCHECK_METHOD="BINARY"
+
+# Install applications
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
@@ -30,5 +34,6 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-httpie" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
     "${CNT64_INSTALLER_ROOT}/install-krew"

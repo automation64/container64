@@ -16,6 +16,9 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_SHELLCHECK_METHOD="BINARY"
+
 # Install applications
 RUN \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck"

@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.11.0
+# Version: 1.12.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -78,15 +78,15 @@ function cnt64_setup_select_packages() {
     # Networking tools
     packages="${packages} hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
     # File transfer tools
-    packages="${packages} ftp wget rsync"
+    packages="${packages} ftp wget rsync restic rclone"
     # Performance tools
-    packages="${packages} sysstat strace ltrace btop"
+    packages="${packages} sysstat strace ltrace btop htop stress-ng"
     # Code management tools
     packages="${packages} git diffutils patch"
     # Shells
-    packages="${packages} zsh csh bash-completion"
+    packages="${packages} zsh csh bash-completion screen tmux fish"
     # Text utils
-    packages="${packages} vim nano less jq gettext gawk"
+    packages="${packages} ripgrep bat vim neovim nano less jq gettext gawk tldr"
     # Certificate tools
     packages="${packages} dirmngr gnupg2 openssl"
   fi
