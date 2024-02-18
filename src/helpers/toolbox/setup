@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.12.0
+# Version: 1.13.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -72,28 +72,29 @@ function cnt64_setup_select_packages() {
   # Distro specific
   if bl64_os_match "${BL64_OS_OL}"; then
     # Python3
-    packages="${packages} python3 python3-pip python3-setuptools"
+    packages+=" python3 python3-pip python3-setuptools"
     # File management tools
-    packages="${packages} tar unzip bzip2 xz mc file lsof"
+    packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
-    packages="${packages} hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
+    packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
     # File transfer tools
-    packages="${packages} ftp wget rsync restic rclone"
+    packages+=" ftp wget rsync restic rclone"
     # Performance tools
-    packages="${packages} sysstat strace ltrace btop htop stress-ng"
+    packages+=" sysstat strace ltrace btop htop stress-ng"
     # Code management tools
-    packages="${packages} git diffutils patch"
+    packages+=" git diffutils patch"
     # Shells
-    packages="${packages} zsh csh bash-completion screen tmux fish"
+    packages+=" zsh csh bash-completion screen tmux fish"
     # Text utils
-    packages="${packages} ripgrep bat vim neovim nano less jq gettext gawk tldr"
+    packages+=" ripgrep vim neovim nano less jq gettext gawk tldr"
     # Certificate tools
-    packages="${packages} dirmngr gnupg2 openssl"
+    packages+=" dirmngr gnupg2 openssl"
   fi
-
-  # OS release specific
   if bl64_os_match "${BL64_OS_OL}-9"; then
-    packages="${packages} pipx"
+    # Text utils
+    packages+=" bat"
+    # Python3
+    packages+=" pipx"
   fi
 
   [[ -n "$packages" ]] && echo "$packages"
