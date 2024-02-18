@@ -29,6 +29,8 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubelinter" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeconform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-pluto" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-popeye" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
