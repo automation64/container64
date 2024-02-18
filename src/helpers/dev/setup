@@ -68,23 +68,23 @@ function cnt64_setup_select_packages() {
   local packages=''
   if bl64_os_match "${BL64_OS_UB}"; then
     # OS dependant tools
-    packages="${packages} apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
+    packages+=" apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
     # File management tools
-    packages="${packages} tar unzip bzip2 xz-utils mc file lsof"
+    packages+=" tar unzip bzip2 xz-utils mc file lsof"
     # Networking tools
-    packages="${packages} tcpdump dnsutils net-tools telnet nmap openssh-client iptraf-ng"
+    packages+=" tcpdump dnsutils net-tools telnet nmap openssh-client iptraf-ng"
     # File transfer tools
-    packages="${packages} ftp wget rsync"
+    packages+=" ftp wget rsync"
     # Performance tools
-    packages="${packages} hostname sysstat strace ltrace procps psmisc htop btop glance stress-ng"
+    packages+=" hostname sysstat strace ltrace procps psmisc htop btop glance stress-ng"
     # Shells
-    packages="${packages} zsh csh bash-completion screen tmux fish"
+    packages+=" zsh csh bash-completion screen tmux fish"
     # Code management tools
-    packages="${packages} git diffutils patch"
+    packages+=" git diffutils patch"
     # Text utils
-    packages="${packages} ripgrep bat vim neovim nano less jq gettext gawk readline-common tldr"
+    packages+=" ripgrep bat vim neovim nano less jq gettext gawk readline-common tldr"
     # Certificate tools
-    packages="${packages} dirmngr gnupg2 ca-certificates openssl"
+    packages+=" dirmngr gnupg2 ca-certificates openssl"
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
