@@ -3,7 +3,7 @@
 # Dev / Lint / Hadolint / Lint dockerfiles
 #
 # * Check is done using hadolint
-# * Version: 3.2.0
+# * Version: 3.2.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -27,6 +27,8 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-hadolint || exit 1
 # shellcheck source-path=lib/bl64
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
