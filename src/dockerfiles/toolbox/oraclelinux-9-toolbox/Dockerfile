@@ -27,6 +27,7 @@ RUN \
 # Install applications
 RUN \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
+    "${CNT64_INSTALLER_ROOT}/install-bat" && \
     "${CNT64_INSTALLER_ROOT}/install-fzf" && \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
     "${CNT64_INSTALLER_ROOT}/install-duf" && \
