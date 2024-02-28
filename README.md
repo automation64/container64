@@ -97,6 +97,7 @@
 | `toolbox/oraclelinux-9-toolbox-container`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-db`           | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-gitops`       | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-k8s:latest`     |
+| `toolbox/oraclelinux-9-toolbox-iac`          | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-k8s`          | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-mongodbcli-5` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
@@ -117,6 +118,7 @@
 | `dev/ubuntu-22.4-dev-gitops`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-k8s:latest` |
 | `dev/ubuntu-22.4-dev-go`        | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-hugo`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-iac`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-jekyll`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-k8s`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
