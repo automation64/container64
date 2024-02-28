@@ -26,14 +26,16 @@ RUN \
 
 # Install applications
 RUN \
-    "${CNT64_INSTALLER_ROOT}/install-lnav" && \
     "${CNT64_INSTALLER_ROOT}/install-bat" && \
+    "${CNT64_INSTALLER_ROOT}/install-duf" && \
+    "${CNT64_INSTALLER_ROOT}/install-fd" && \
     "${CNT64_INSTALLER_ROOT}/install-fzf" && \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
-    "${CNT64_INSTALLER_ROOT}/install-duf" && \
     "${CNT64_INSTALLER_ROOT}/install-gping" && \
     "${CNT64_INSTALLER_ROOT}/install-httpie" && \
-    "${CNT64_INSTALLER_ROOT}/install-yq"
+    "${CNT64_INSTALLER_ROOT}/install-lnav" && \
+    "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    "${CNT64_INSTALLER_ROOT}/install-zoxide"
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
