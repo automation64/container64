@@ -8,13 +8,13 @@ env:
 on:
   pull_request:
     branches:
-      - "main"
+      - "master"
   push:
     branches:
       - "feature/**"
     paths:
       - "src/cntbuild/*"
-      - "src/helpers/**"
+      - "src/helpers/*/*"
 
 jobs:
   lint-testmansh:
