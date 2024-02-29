@@ -30,8 +30,10 @@
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_INSTALLER_ROOT="${CNT64_INSTALLER_ROOT:-}"
+export CNT64_USER
 
-# shellcheck source-path=lib/bl64
+# shellcheck source-path=lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-pkg.bash" &&
