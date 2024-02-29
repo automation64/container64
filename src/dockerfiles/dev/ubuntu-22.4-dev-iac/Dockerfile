@@ -28,7 +28,7 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
