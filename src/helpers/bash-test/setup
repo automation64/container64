@@ -66,7 +66,7 @@ function cnt64_setup_select_packages() {
   elif bl64_os_is_distro "${BL64_OS_FD}"; then
     packages='git diffutils hostname wget python3-pip findutils unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
-    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq gnupg2 patch'
+    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq patch'
   elif bl64_os_is_distro "${BL64_OS_OL}"; then
     packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
