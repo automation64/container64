@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -46,7 +46,7 @@ source "${CNT64_BASHLIB64}/bashlib64.bash" || { echo "Error: unable to load bash
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
-  if bl64_os_match "${BL64_OS_ALP}"; then
+  if bl64_os_is_distro "${BL64_OS_ALP}"; then
     # Required by Installer64 to perform API calls
     packages+=" curl"
   fi

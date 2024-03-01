@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.7.0
+# Version: 2.8.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -101,7 +101,7 @@ function cnt64_bootstrap_configure_users() {
     "$user_bashrc_d"
 
   bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
-  if bl64_os_match "${BL64_OS_ALP}"; then
+  if bl64_os_is_distro "${BL64_OS_ALP}"; then
     user_profile="${user_home}/.bash_profile"
     # shellcheck disable=SC2016
     printf \
@@ -115,7 +115,7 @@ if [[ -d "${HOME}/.bashrc.d" ]]; then
   done
 fi\n' >"$user_profile" &&
       bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
-  elif bl64_os_match "${BL64_OS_UB}"; then
+  elif bl64_os_is_distro "${BL64_OS_UB}"; then
     user_profile="${user_home}/.bashrc"
     # shellcheck disable=SC2016
     printf \
@@ -167,13 +167,13 @@ function cnt64_bootstrap_fix_repository_debian() {
 
 function cnt64_bootstrap_prepare_os() {
   bl64_dbg_app_show_function
-  if bl64_os_match "${BL64_OS_CNT}-8"; then
+  if bl64_os_is_distro "${BL64_OS_CNT}-8"; then
     cnt64_bootstrap_fix_repository_centos
-  elif bl64_os_match "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.10"; then
+  elif bl64_os_is_distro "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.10"; then
     cnt64_bootstrap_fix_repository_ubuntu
-  elif bl64_os_match "${BL64_OS_DEB}-9"; then
+  elif bl64_os_is_distro "${BL64_OS_DEB}-9"; then
     cnt64_bootstrap_fix_repository_debian
-  elif bl64_os_match "${BL64_OS_FD}-36"; then
+  elif bl64_os_is_distro "${BL64_OS_FD}-36"; then
     cnt64_bootstrap_fix_repository_fedora
   fi
 }
@@ -182,11 +182,11 @@ function cnt64_bootstrap_install_packages() {
   bl64_dbg_app_show_function
   local packages='sudo'
   bl64_msg_show_task 'Install sudo'
-  if bl64_os_match "${BL64_OS_SLES}"; then
+  if bl64_os_is_distro "${BL64_OS_SLES}"; then
     packages+=' gawk'
-  elif bl64_os_match "${BL64_OS_ALP}"; then
+  elif bl64_os_is_distro "${BL64_OS_ALP}"; then
     packages+=' curl'
-  elif bl64_os_match "${BL64_OS_AMZ}"; then
+  elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
     packages+=' shadow-utils'
   fi
   # shellcheck disable=SC2086

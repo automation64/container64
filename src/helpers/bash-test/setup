@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.10.0
+# Version: 1.11.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -57,21 +57,23 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
-  if bl64_os_match "${BL64_OS_ALP}"; then
+  if bl64_os_is_distro "${BL64_OS_ALP}"; then
     packages='git mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq gnupg patch'
-  elif bl64_os_match "${BL64_OS_ALM}"; then
+  elif bl64_os_is_distro "${BL64_OS_ALM}"; then
     packages='git diffutils python3 python3-pip python3-setuptools unzip wget gettext jq gnupg2 patch'
-  elif bl64_os_match "${BL64_OS_DEB}" "${BL64_OS_UB}"; then
+  elif bl64_os_is_distro "${BL64_OS_DEB}" "${BL64_OS_UB}"; then
     packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq gnupg2 patch'
-  elif bl64_os_match "${BL64_OS_FD}" "${BL64_OS_AMZ}"; then
+  elif bl64_os_is_distro "${BL64_OS_FD}"; then
     packages='git diffutils hostname wget python3-pip findutils unzip gettext jq gnupg2 patch'
-  elif bl64_os_match "${BL64_OS_OL}"; then
+  elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
+    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq gnupg2 patch'
+  elif bl64_os_is_distro "${BL64_OS_OL}"; then
     packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
-  elif bl64_os_match "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
+  elif bl64_os_is_distro "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
     packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
-  elif bl64_os_match "${BL64_OS_RCK}"; then
+  elif bl64_os_is_distro "${BL64_OS_RCK}"; then
     packages='git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext jq gnupg2 patch'
-  elif bl64_os_match "${BL64_OS_SLES}"; then
+  elif bl64_os_is_distro "${BL64_OS_SLES}"; then
     packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq gpg2 patch'
   fi
   [[ -n "$packages" ]] && echo "$packages"
@@ -117,7 +119,7 @@ function cnt64_setup_configure_users() {
     "$user_bashrc_d"
 
   bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
-  if bl64_os_match "${BL64_OS_ALP}"; then
+  if bl64_os_is_distro "${BL64_OS_ALP}"; then
     user_profile="${user_home}/.bash_profile"
     # shellcheck disable=SC2016
     printf \
@@ -131,7 +133,7 @@ if [[ -d "${HOME}/.bashrc.d" ]]; then
   done
 fi\n' >"$user_profile" &&
       bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
-  elif bl64_os_match "${BL64_OS_UB}"; then
+  elif bl64_os_is_distro "${BL64_OS_UB}"; then
     user_profile="${user_home}/.bashrc"
     # shellcheck disable=SC2016
     printf \
