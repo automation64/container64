@@ -34,6 +34,5 @@ RUN \
     apt-get update && \
     apt-get install --assume-yes curl openssl ca-certificates --no-install-recommends && \
     /install-installer64 && \
-    "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
     rm /install-installer64 /bootstrap
