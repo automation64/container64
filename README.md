@@ -135,6 +135,7 @@
 | `bash-test/almalinux-8-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-8-bash-test`               |
 | `bash-test/almalinux-9-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-9-bash-test`               |
 | `bash-test/alpine-3-bash-test`                   | alpine      | `ghcr.io/automation64/base/alpine-3-bash-test`                  |
+| `bash-test/amazonlinux-2023-bash-test`           | almalinux   | `ghcr.io/automation64/base/amazonlinux-2023-bash-test`          |
 | `bash-test/centos-7-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-7-bash-test`                  |
 | `bash-test/centos-8-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-8-bash-test`                  |
 | `bash-test/centos-9-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-9-bash-test`                  |
