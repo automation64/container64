@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.6.0
+# Version: 2.7.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -186,6 +186,8 @@ function cnt64_bootstrap_install_packages() {
     packages+=' gawk'
   elif bl64_os_match "${BL64_OS_ALP}"; then
     packages+=' curl'
+  elif bl64_os_match "${BL64_OS_AMZ}"; then
+    packages+=' shadow-utils'
   fi
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
@@ -237,6 +239,7 @@ function cnt64_bootstrap_initialize() {
   bl64_dbg_app_show_function
   bl64_os_check_compatibility \
     "${BL64_OS_ALM}" \
+    "${BL64_OS_AMZ}" \
     "${BL64_OS_ALP}" \
     "${BL64_OS_CNT}" \
     "${BL64_OS_DEB}" \

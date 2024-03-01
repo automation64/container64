@@ -31,6 +31,5 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 # Bootstrap
 RUN \
     /install-installer64 && \
-    "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
     rm /install-installer64 /bootstrap

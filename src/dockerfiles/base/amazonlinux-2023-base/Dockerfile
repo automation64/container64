@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/library/fedora:34
+FROM docker.io/amazonlinux:2023
 
 # Prepare package installer
 ENV container="docker"
@@ -30,6 +30,7 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 
 # Bootstrap
 RUN \
+    dnf --assumeyes install tar gzip && \
     /install-installer64 && \
     /bootstrap && \
     rm /install-installer64 /bootstrap
