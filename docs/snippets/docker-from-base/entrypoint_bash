@@ -1,0 +1,2 @@
+# X_PLACEHOLDER_ENTRYPOINT_APPS_X
+ENTRYPOINT [ "/bin/bash", "--login" ]

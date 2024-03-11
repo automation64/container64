@@ -220,6 +220,15 @@
 | ---------------------------- | ------ | ------------------------------------------------ |
 | `k8s-lint/alpine-3-k8s-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
+#### Container collection: YAML linting
+
+- Purpose: YAML code linting
+- Packages: YAMLLint
+
+| Image                                    | OS     | Base Image                                       |
+| ---------------------------------------- | ------ | ------------------------------------------------ |
+| `yaml-lint/alpine-3-yaml-lint`           | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
 #### Container collection: Container linting
 
 - Purpose: Container code linting
