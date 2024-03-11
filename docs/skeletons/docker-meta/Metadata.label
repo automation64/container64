@@ -1,0 +1,9 @@
+org.opencontainers.image.authors=serdigital64@gmail.com
+org.opencontainers.image.url=https://github.com/automation64/container64
+org.opencontainers.image.documentation=https://github.com/automation64/container64
+org.opencontainers.image.source=https://github.com/automation64/container64
+org.opencontainers.image.version=X_CONTAINER_VERSION_X
+org.opencontainers.image.vendor=https://github.com/automation64/container64
+org.opencontainers.image.licenses=Apache-2.0
+org.opencontainers.image.title=X_IMAGE_NAME_X
+org.opencontainers.image.description=X__IMAGE_DESCRIPTION_X
