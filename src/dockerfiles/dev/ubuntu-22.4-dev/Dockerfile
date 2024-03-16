@@ -40,7 +40,6 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-gitui" && \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
     "${CNT64_INSTALLER_ROOT}/install-httpie" && \
-    "${CNT64_INSTALLER_ROOT}/install-precommit" && \
     "${CNT64_INSTALLER_ROOT}/install-taskfile" && \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
