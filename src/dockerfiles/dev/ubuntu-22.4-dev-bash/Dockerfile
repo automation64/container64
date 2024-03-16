@@ -20,6 +20,4 @@ ARG INST64_SHELLCHECK_METHOD="BINARY"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-batscore"

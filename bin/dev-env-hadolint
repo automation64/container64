@@ -2,7 +2,7 @@
 #######################################
 # Dev / Env / Hadolint / Shared environment variables
 #
-# * Version: 1.0.0
+# * Version: 2.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -26,18 +26,31 @@
 # * Use .env file to override values
 #
 
-# Lint / Dockerfile / Configuration
-export DEV_LIB_HADOLINT_CFG="${DEV_PATH_ROOT}/.hadolint.yaml"
-# Lint / Dockerfile / Sources
-export DEV_LINT_HADOLINT_SOURCE="${DEV_LINT_HADOLINT_SOURCE:-$DEV_PATH_SRC}"
-# Lib / Dockerfile / Command
-export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-/usr/local/bin/hadolint}"
+# Env / Hadolint / Container Registry for tools
+export DEV_ENV_HADOLINT_REGISTRY="${DEV_ENV_HADOLINT_REGISTRY:-ghcr.io/automation64}"
+# Env / Hadolint / Container path for project mounts
+export DEV_ENV_HADOLINT_CONTAINER_PATH_ROOT='/project'
+# Lib / Hadolint / Installer
+export DEV_LIB_HADOLINT_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-hadolint"
+# Lib / Hadolint / Target
+export DEV_LIB_HADOLINT_TARGET="${DEV_LIB_HADOLINT_TARGET:-${DEV_PATH_LIB}/taskfile}"
+# Lint / Hadolint / Configuration
+export DEV_LIB_HADOLINT_CFG='.hadolint.yaml'
+# Lint / Hadolint / Sources
+export DEV_LINT_HADOLINT_SOURCE="${DEV_LINT_HADOLINT_SOURCE:-$DEV_BASE_SRC}"
+# Lint / Hadolint / Container with linting tool
+export DEV_LINT_HADOLINT_CONTAINER="${DEV_LINT_HADOLINT_CONTAINER:-container-lint/alpine-3-container-lint}"
+# Lint / Hadolint / Container entrypoint
+export DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT="${DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT:-/usr/local/bin/hadolint}"
 
 #
 # Locals
 #
 # * Use .local file or CICD variables to override values
 #
+
+# Lib / Hadolint / Command
+export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-${DEV_LIB_HADOLINT_TARGET}/hadolint}"
 
 #
 # Secrets

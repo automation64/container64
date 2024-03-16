@@ -24,7 +24,7 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Prepare dev environment"
-        run: "./bin/dev-lib-installer64"
+        run: "./bin/dev-lib-installer64 && ./bin/dev-lib-project"
 
       - name: "Run tests"
         run: "./bin/dev-lint-hadolint"
