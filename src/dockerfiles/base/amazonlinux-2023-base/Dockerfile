@@ -29,6 +29,7 @@ COPY --chmod=700 helpers/bootstrap/bootstrap /bootstrap
 ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/src/install-installer64 /install-installer64
 
 # Bootstrap
+# hadolint ignore=DL3040,DL3041
 RUN \
     dnf --assumeyes install tar gzip && \
     /install-installer64 && \
