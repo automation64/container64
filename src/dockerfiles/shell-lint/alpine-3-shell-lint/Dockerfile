@@ -21,6 +21,7 @@ ARG INST64_SHELLCHECK_METHOD="BINARY"
 
 # Install applications
 RUN \
+    "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck"
 
 # Set default user and entrypoint

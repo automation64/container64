@@ -35,4 +35,5 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-httpie" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-go"
