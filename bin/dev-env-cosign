@@ -2,7 +2,7 @@
 #######################################
 # Dev / Env / Cosign / Shared environment variables
 #
-# * Version: 1.1.0
+# * Version: 1.1.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -32,14 +32,17 @@
 # * Use .local file or CICD variables to override values
 #
 
-# Lib / Cosign / Target
-export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
-# Lib / Cosign / Command
-export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_TARGET}/cosign"
-# Auth / Cosign / Server
-export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
-# Auth / Cosign / Server Type
-export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
+# shellcheck disable=2154
+{
+    # Lib / Cosign / Target
+    export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
+    # Lib / Cosign / Command
+    export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_TARGET}/cosign"
+    # Auth / Cosign / Server
+    export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
+    # Auth / Cosign / Server Type
+    export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
+}
 
 #
 # Secrets
@@ -47,6 +50,9 @@ export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
 # * Use .secrets file or CICD secrets to override values
 #
 
-# Auth / Cosign / Server User
-export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
-export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
+# shellcheck disable=2154
+{
+    # Auth / Cosign / Server User
+    export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
+    export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
+}

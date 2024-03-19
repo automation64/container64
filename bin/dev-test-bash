@@ -22,13 +22,6 @@
 #######################################
 
 #
-# Globals
-#
-
-# Dev / Test / Base / Flag for marking container environment
-export _DEV_TEST_BASH_CONTAINER_ENVIRONMENT='OFF'
-
-#
 # Imports
 #
 
@@ -42,6 +35,13 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
+
+#
+# Globals
+#
+
+# Dev / Test / Base / Flag for marking container environment
+export _DEV_TEST_BASH_CONTAINER_ENVIRONMENT='OFF'
 
 #
 # Functions
@@ -63,7 +63,8 @@ function dev_test_run() {
     --mount "type=bind,source=${DEV_PATH_ROOT},target=${DEV_ENV_BASH_CONTAINER_PATH_ROOT},readonly" \
     --mount "type=bind,source=${DEV_PATH_TEST},target=${DEV_ENV_BASH_CONTAINER_PATH_TEST},readonly" \
     --entrypoint="${DEV_ENV_BASH_CONTAINER_PATH_ROOT}/${test_file}" \
-    "${DEV_ENV_BASH_REGISTRY}/${container_path}"
+    "${DEV_ENV_BASH_REGISTRY}/${container_path}" ||
+    return $?
 }
 
 function dev_test_bash() {
