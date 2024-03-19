@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #######################################
-# Dev / Env / Container / Shared environment variables
+# Dev / Env / BashLib64 / Shared environment variables
 #
-# * Version: 1.2.2
+# * Version: 1.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -28,14 +28,8 @@
 
 # shellcheck disable=2154
 {
-    # Auth / Container / Registry
-    export DEV_AUTH_CONTAINER_REGISTRY="${DEV_AUTH_CONTAINER_REGISTRY:-}"
-    # Lab / Container / Registry
-    export DEV_LAB_CONTAINER_REGISTRY="${DEV_LAB_CONTAINER_REGISTRY:-ghcr.io/automation64}"
-    # Lab / Container / Default image
-    export DEV_LAB_CONTAINER_IMAGE="${DEV_LAB_CONTAINER_IMAGE:-dev/ubuntu-22.4-dev-container}"
-    # Auth / Docker / Registry Type
-    export DEV_AUTH_CONTAINER_TYPE="${DEV_AUTH_CONTAINER_TYPE:-GITHUB}"
+    # Lib / BashLib64 / Location
+    export DEV_LIB_BASHLIB64_TARGET="${DEV_LIB_BASHLIB64_TARGET:-${DEV_PATH_LIB}/bl64}"
 }
 
 #
@@ -49,10 +43,3 @@
 #
 # * Use .secrets file or CICD secrets to override values
 #
-
-# shellcheck disable=2154
-{
-    # Auth / Docker / User
-    export DEV_AUTH_CONTAINER_USER="${DEV_AUTH_CONTAINER_USER:-}"
-    export DEV_AUTH_CONTAINER_PASSWORD="${DEV_AUTH_CONTAINER_PASSWORD:-}"
-}
