@@ -17,4 +17,6 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Install applications
 RUN \
     sudo -E -H -u "${CNT64_USER}" ${CNT64_INSTALLER_ROOT}/install-ansible && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt"

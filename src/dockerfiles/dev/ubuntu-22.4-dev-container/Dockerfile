@@ -24,6 +24,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-crane" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-dockle" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-hadolint" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-lazydocker" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-lazydocker"

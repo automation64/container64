@@ -31,8 +31,6 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeconform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-httpie" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \

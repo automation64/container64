@@ -97,4 +97,5 @@ cnt64_setup_initialize &&
 cnt64_setup_status=$?
 
 bl64_msg_show_batch_finish "$cnt64_setup_status" "$cnt64_setup_installer_description"
+# shellcheck disable=SC2086
 exit $cnt64_setup_status
