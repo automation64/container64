@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 3.7.0
+# Version: 4.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -82,7 +82,7 @@ function cnt64_setup_select_packages() {
     # Code management tools
     packages+=" git diffutils patch make"
     # Text utils
-    packages+=" ripgrep bat vim neovim nano less jq gettext gawk readline-common tldr most"
+    packages+=" ripgrep bat nano less jq gettext gawk readline-common tldr most"
     # Certificate tools
     packages+=" dirmngr gnupg2 ca-certificates openssl"
   fi

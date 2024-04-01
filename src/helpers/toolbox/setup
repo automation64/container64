@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.16.0
+# Version: 2.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -86,7 +86,7 @@ function cnt64_setup_select_packages() {
     # Shells
     packages+=" zsh csh bash-completion screen tmux fish"
     # Text utils
-    packages+=" ripgrep vim neovim nano less jq gettext gawk tldr most"
+    packages+=" ripgrep nano less jq gettext gawk tldr most"
     # Certificate tools
     packages+=" dirmngr gnupg2 openssl"
   fi
