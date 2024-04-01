@@ -54,6 +54,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-bashit" && \
+    sudo -E -H -u "${CNT64_USER}" "/home/${CNT64_USER}/.bash_it/install.sh" --silent --append-to-config && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit"
 
 # Set default user and entrypoint
