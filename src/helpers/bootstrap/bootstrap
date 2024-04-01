@@ -83,7 +83,11 @@ function cnt64_bootstrap_configure_users() {
   local user_bashrc_d="${user_home}/.bashrc.d"
 
   bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
-  bl64_iam_xdg_create "$user_home" ||
+  bl64_iam_xdg_create \
+    "$user_home" \
+    "$user_mode" \
+    "$CNT64_USER" \
+    "$CNT64_USER" ||
     return $?
 
   bl64_msg_show_task "Create modular bashr store (${user_bashrc_d})"
