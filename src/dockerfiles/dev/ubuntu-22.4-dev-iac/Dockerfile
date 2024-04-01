@@ -25,9 +25,9 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
