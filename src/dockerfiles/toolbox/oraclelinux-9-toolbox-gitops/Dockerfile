@@ -21,4 +21,8 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-ghcli"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-ghcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
+    sudo -E -H -u "${CNT64_USER}" ${CNT64_INSTALLER_ROOT}/install-ansible
