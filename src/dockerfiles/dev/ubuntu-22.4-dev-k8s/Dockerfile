@@ -22,6 +22,7 @@ ARG INST64_SHELLCHECK_METHOD="BINARY"
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
