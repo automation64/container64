@@ -22,6 +22,7 @@
       - [Container collection: Bash linting](#container-collection-bash-linting)
       - [Container collection: Terraform linting](#container-collection-terraform-linting)
       - [Container collection: K8S linting](#container-collection-k8s-linting)
+      - [Container collection: YAML linting](#container-collection-yaml-linting)
       - [Container collection: Container linting](#container-collection-container-linting)
       - [Container collection: Terraform testing](#container-collection-terraform-testing)
       - [Container collection: Static Site Generator linting](#container-collection-static-site-generator-linting)
@@ -69,6 +70,7 @@
 | `base/fedora-37-base`        | fedora      | `docker.io/library/fedora:37`       |
 | `base/fedora-38-base`        | fedora      | `docker.io/library/fedora:38`       |
 | `base/fedora-39-base`        | fedora      | `docker.io/library/fedora:39`       |
+| `base/fedora-40-base`        | fedora      | `docker.io/library/fedora:40`       |
 | `base/oraclelinux-7-base`    | oraclelinux | `docker.io/library/oraclelinux:7`   |
 | `base/oraclelinux-8-base`    | oraclelinux | `docker.io/library/oraclelinux:8`   |
 | `base/oraclelinux-9-base`    | oraclelinux | `docker.io/library/oraclelinux:9`   |
@@ -83,6 +85,7 @@
 | `base/ubuntu-22.4-base`      | ubuntu      | `docker.io/library/ubuntu:22.04`    |
 | `base/ubuntu-22.10-base`     | ubuntu      | `docker.io/library/ubuntu:22.10`    |
 | `base/ubuntu-23.10-base`     | ubuntu      | `docker.io/library/ubuntu:23.10`    |
+| `base/ubuntu-24.4-base`      | ubuntu      | `docker.io/library/ubuntu:24.04`    |
 
 #### Container collection: System Administration toolbox
 
@@ -121,6 +124,8 @@
 | `dev/ubuntu-22.4-dev-iac`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-jekyll`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-k8s`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-nodejs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
+| `dev/ubuntu-22.4-dev-python`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev-terraform` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
 | `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`   |
@@ -130,46 +135,48 @@
 - Purpose: Bash scripts testing
 - Packages: Bash, Bats Core, Bash Core plugins
 
-| Image                                            | OS          | Base Image                                                      |
-| ------------------------------------------------ | ----------- | --------------------------------------------------------------- |
-| `bash-test/almalinux-8-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-8-bash-test`               |
-| `bash-test/almalinux-9-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-9-bash-test`               |
-| `bash-test/alpine-3-bash-test`                   | alpine      | `ghcr.io/automation64/base/alpine-3-bash-test`                  |
-| `bash-test/amazonlinux-2023-bash-test`           | almalinux   | `ghcr.io/automation64/base/amazonlinux-2023-bash-test`          |
-| `bash-test/centos-7-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-7-bash-test`                  |
-| `bash-test/centos-8-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-8-bash-test`                  |
-| `bash-test/centos-9-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-9-bash-test`                  |
-| `bash-test/debian-10-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-10-bash-test`                 |
-| `bash-test/debian-11-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-11-bash-test`                 |
-| `bash-test/debian-9-bash-test`                   | debian      | `ghcr.io/automation64/base/debian-9-bash-test`                  |
-| `bash-test/fedora-33-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-33-bash-test`                 |
-| `bash-test/fedora-34-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-34-bash-test`                 |
-| `bash-test/fedora-35-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-35-bash-test`                 |
-| `bash-test/fedora-36-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-36-bash-test`                 |
-| `bash-test/fedora-37-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-37-bash-test`                 |
-| `bash-test/fedora-38-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-38-bash-test`                 |
-| `bash-test/fedora-39-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-39-bash-test`                 |
-| `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-7-bash-test`             |
-| `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-8-bash-test`             |
-| `bash-test/oraclelinux-9-bash-test-ansible`      | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test-cloud`        | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test-docker`       | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test-k8s`          | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test-podman`       | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test-terraform`    | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest` |
-| `bash-test/oraclelinux-9-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-9-bash-test`             |
-| `bash-test/rhel-8-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-8-bash-test`                    |
-| `bash-test/rhel-9-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-9-bash-test`                    |
-| `bash-test/rockylinux-8-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-8-bash-test`              |
-| `bash-test/rockylinux-9-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-9-bash-test`              |
-| `bash-test/sles-15-bash-test`                    | sles        | `ghcr.io/automation64/base/sles-15-bash-test`                   |
-| `bash-test/ubuntu-18.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-18.4-bash-test`               |
-| `bash-test/ubuntu-20.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-20.4-bash-test`               |
-| `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-21.4-bash-test`               |
-| `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.10-bash-test`              |
-| `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.4-bash-test`               |
-| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-23.10-bash-test`              |
+| Image                                            | OS          | Base Image                                                 |
+| ------------------------------------------------ | ----------- | ---------------------------------------------------------- |
+| `bash-test/almalinux-8-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-8-base:latest`        |
+| `bash-test/almalinux-9-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-9-base:latest`        |
+| `bash-test/alpine-3-bash-test`                   | alpine      | `ghcr.io/automation64/base/alpine-3-base:latest`           |
+| `bash-test/amazonlinux-2023-bash-test`           | almalinux   | `ghcr.io/automation64/base/amazonlinux-2023-base:latest`   |
+| `bash-test/centos-7-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-7-base:latest`           |
+| `bash-test/centos-8-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-8-base:latest`           |
+| `bash-test/centos-9-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-9-base:latest`           |
+| `bash-test/debian-10-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-10-base:latest`          |
+| `bash-test/debian-11-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-11-base:latest`          |
+| `bash-test/debian-9-bash-test`                   | debian      | `ghcr.io/automation64/base/debian-9-base:latest`           |
+| `bash-test/fedora-33-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-33-base:latest`          |
+| `bash-test/fedora-34-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-34-base:latest`          |
+| `bash-test/fedora-35-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-35-base:latest`          |
+| `bash-test/fedora-36-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-36-base:latest`          |
+| `bash-test/fedora-37-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-37-base:latest`          |
+| `bash-test/fedora-38-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-38-base:latest`          |
+| `bash-test/fedora-39-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-39-base:latest`          |
+| `bash-test/fedora-40-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-40-base:latest`          |
+| `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-7-base:latest`      |
+| `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-8-base:latest`      |
+| `bash-test/oraclelinux-9-bash-test-ansible`      | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test-cloud`        | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test-docker`       | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test-k8s`          | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test-podman`       | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test-terraform`    | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
+| `bash-test/oraclelinux-9-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-9-base:latest`      |
+| `bash-test/rhel-8-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-8-base:latest`             |
+| `bash-test/rhel-9-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-9-base:latest`             |
+| `bash-test/rockylinux-8-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-8-base:latest`       |
+| `bash-test/rockylinux-9-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-9-base:latest`       |
+| `bash-test/sles-15-bash-test`                    | sles        | `ghcr.io/automation64/base/sles-15-base:latest`            |
+| `bash-test/ubuntu-18.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-18.4-base:latest`        |
+| `bash-test/ubuntu-20.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-20.4-base:latest`        |
+| `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-21.4-base:latest`        |
+| `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.10-base:latest`       |
+| `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`        |
+| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-23.10-base:latest`       |
+| `bash-test/ubuntu-24.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-24.4-base:latest`        |
 
 #### Container collection: Ansible playbooks testing
 
@@ -225,9 +232,9 @@
 - Purpose: YAML code linting
 - Packages: YAMLLint
 
-| Image                                    | OS     | Base Image                                       |
-| ---------------------------------------- | ------ | ------------------------------------------------ |
-| `yaml-lint/alpine-3-yaml-lint`           | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+| Image                          | OS     | Base Image                                       |
+| ------------------------------ | ------ | ------------------------------------------------ |
+| `yaml-lint/alpine-3-yaml-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
 
 #### Container collection: Container linting
 

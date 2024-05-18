@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.9.0
+# Version: 2.10.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -27,15 +27,7 @@
 # Imports
 #
 
-# Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
-export CNT64_DEBUG="${CNT64_DEBUG:-}"
-export CNT64_USER="${CNT64_USER:-}"
-export CNT64_LOCAL_ROOT="${CNT64_LOCAL_ROOT:-}"
-export CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN:-}"
-export CNT64_INSTALLER_ROOT="${CNT64_INSTALLER_ROOT:-}"
-export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-}"
-
 # shellcheck source-path=lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64-module-vcs.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-rxtx.bash" &&
@@ -54,6 +46,16 @@ source "${CNT64_BASHLIB64}/bashlib64-module-vcs.bash" &&
 # Globals
 #
 
+# Environment Definition. See docs/base-environment.md for details
+export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_USER="${CNT64_USER:-}"
+export CNT64_USER_UID="${CNT64_USER_UID:-6464}"
+export CNT64_USER_GID="${CNT64_USER_GID:-6464}"
+export CNT64_LOCAL_ROOT="${CNT64_LOCAL_ROOT:-}"
+export CNT64_LOCAL_BIN="${CNT64_LOCAL_BIN:-}"
+export CNT64_INSTALLER_ROOT="${CNT64_INSTALLER_ROOT:-}"
+export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-}"
+
 #
 # Functions
 #
@@ -62,16 +64,22 @@ function cnt64_bootstrap_create_users() {
   bl64_dbg_app_show_function
   local user_home="/home/${CNT64_USER}"
   local user_shell='/bin/bash'
+  local user_geco='Container64'
 
   bl64_dbg_app_show_comments 'no user creation requested'
   [[ -z "$CNT64_USER" ]] && return 0
 
-  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
-  bl64_iam_user_add \
+  bl64_msg_show_task "Create entrypoint user and group (${CNT64_USER}:${CNT64_USER})"
+  bl64_iam_group_add \
     "$CNT64_USER" \
-    "$user_home" \
-    "$BL64_VAR_DEFAULT" \
-    "$user_shell" &&
+    "$CNT64_USER_GID" &&
+    bl64_iam_user_add \
+      "$CNT64_USER" \
+      "$user_home" \
+      "$CNT64_USER_GID" \
+      "$user_shell" \
+      "$user_geco" \
+      "$CNT64_USER_UID" &&
     bl64_rbac_add_root "${CNT64_USER}"
 }
 
