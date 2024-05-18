@@ -25,7 +25,7 @@
 - Download dev support scripts
 
   ```shell
-  ./bin/dev-lib
+  ./bin/dev-lib-base
   ```
 
 ## Update source code
