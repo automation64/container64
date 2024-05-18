@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.10.0
+# Version: 2.10.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -76,7 +76,7 @@ function cnt64_bootstrap_create_users() {
     bl64_iam_user_add \
       "$CNT64_USER" \
       "$user_home" \
-      "$CNT64_USER_GID" \
+      "$CNT64_USER" \
       "$user_shell" \
       "$user_geco" \
       "$CNT64_USER_UID" &&
