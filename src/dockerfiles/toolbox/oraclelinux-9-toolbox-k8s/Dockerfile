@@ -14,14 +14,6 @@ ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
-# Copy image setup script
-COPY --chmod=700 helpers/toolbox-k8s/setup /setup
-
-# Setup image
-RUN \
-    sudo -E /setup && \
-    sudo rm /setup
-
 # Install applications
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
@@ -31,6 +23,7 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeconform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubelinter" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubent" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeseal" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-pluto" && \
