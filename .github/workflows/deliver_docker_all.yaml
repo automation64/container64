@@ -8,64 +8,79 @@ jobs:
   call_deliver_docker_base:
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_base.yaml"
+    secrets: inherit
+
   call_deliver_docker_dev:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_dev.yaml"
+    secrets: inherit
   call_deliver_docker_ansible_test:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_ansible_test.yaml"
+    secrets: inherit
   call_deliver_docker_bash_test:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_bash_test.yaml"
+    secrets: inherit
   call_deliver_docker_toolbox:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_toolbox.yaml"
+    secrets: inherit
+
   call_deliver_docker_container_lint:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_container_lint.yaml"
+    secrets: inherit
   call_deliver_docker_go_test:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_go_test.yaml"
+    secrets: inherit
   call_deliver_docker_k8s_lint:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_k8s_lint.yaml"
+    secrets: inherit
   call_deliver_docker_shell_lint:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_shell_lint.yaml"
+    secrets: inherit
   call_deliver_docker_ssg_lint:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_ssg_lint.yaml"
+    secrets: inherit
   call_deliver_docker_terraform_lint:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_terraform_lint.yaml"
+    secrets: inherit
   call_deliver_docker_terraform_test:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_terraform_test.yaml"
+    secrets: inherit
   call_deliver_docker_yaml_lint:
     needs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_yaml_lint.yaml"
+    secrets: inherit
 ...
