@@ -30,6 +30,7 @@ RUN \
 
 # Set installer parameters
 ARG INST64_SHELLCHECK_METHOD="BINARY"
+ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
 
 # Install applications
 RUN \

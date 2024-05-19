@@ -15,6 +15,9 @@ ARG CNT64_USER="sysadmin"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_ANSIBLE_PIPX="OFF"
+
 # Install applications
 RUN \
-    sudo -E -H -u "${CNT64_USER}" ${CNT64_INSTALLER_ROOT}/install-ansible
+    ${CNT64_INSTALLER_ROOT}/install-ansible
