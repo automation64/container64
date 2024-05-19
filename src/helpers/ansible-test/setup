@@ -108,6 +108,7 @@ function cnt64_setup_create_users() {
   local user_shell=''
   local user_new=''
   local user_current=''
+  local user_geco='Container64 Ansible'
 
   user_home="/home/${CNT64_USER}"
   user_shell='/bin/bash'
