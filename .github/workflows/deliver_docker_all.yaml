@@ -1,13 +1,6 @@
 ---
 name: "Deliver / Container / All"
 
-concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: true
-
-env:
-  DEV_CICD_DEBUG: ""
-
 on:
   workflow_dispatch:
 
