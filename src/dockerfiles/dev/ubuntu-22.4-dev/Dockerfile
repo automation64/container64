@@ -30,7 +30,6 @@ RUN \
 
 # Set installer parameters
 ARG INST64_SHELLCHECK_METHOD="BINARY"
-ARG INST64_DEBUG=ON
 
 # Install applications
 RUN \
