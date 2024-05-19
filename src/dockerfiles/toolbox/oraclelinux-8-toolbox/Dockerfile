@@ -8,9 +8,9 @@ FROM ghcr.io/automation64/base/oraclelinux-8-base:latest
 # * See docs/base-environment.md for details
 #
 
-ENV CNT64_USER="sysadmin"
-ENV CNT64_OPT_ROOT="/opt"
-ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
+ARG CNT64_USER="sysadmin"
+ARG CNT64_OPT_ROOT="/opt"
+ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 #
 # Setup image

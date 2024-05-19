@@ -87,6 +87,7 @@ function cnt64_setup_create_users() {
   bl64_dbg_app_show_function
   local user_home="/home/${CNT64_USER}"
   local user_shell='/bin/bash'
+  local user_geco='Container64 Bash Test'
 
   bl64_msg_show_task "Create entrypoint user and group (${CNT64_USER}:${CNT64_USER})"
   bl64_iam_group_add \

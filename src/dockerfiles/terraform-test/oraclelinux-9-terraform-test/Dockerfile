@@ -9,7 +9,7 @@ FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-terraform:latest
 COPY --chmod=700 helpers/terraform-test/setup /setup
 
 # Set setup parameters
-ENV CNT64_TERRAFORM_TEST_USER="test"
+ARG CNT64_TERRAFORM_TEST_USER="test"
 
 # Setup image
 RUN \
