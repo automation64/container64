@@ -30,7 +30,7 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-popeye" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-vaultcli" && \
-    sudo -E -u "${CNT64_USER}" -H "${CNT64_INSTALLER_ROOT}/install-krew" && \
-    sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
-    sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
-    sudo -E -u "${CNT64_USER}" /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug"
+    "${CNT64_INSTALLER_ROOT}/install-krew" && \
+    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
+    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
+    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug"

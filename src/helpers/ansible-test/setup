@@ -91,7 +91,8 @@ function cnt64_setup_configure_users() {
 
   bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
   user_profile="${user_home}/.bashrc"
-  bl64_bsh_env_store_create "$user_home" &&
+  # shellcheck disable=SC2119
+  bl64_bsh_env_store_create "$user_home" "$CNT64_USER" "$CNT64_USER" &&
     bl64_bsh_profile_rc_generate >"$user_profile" &&
     bl64_bsh_profile_path_generate >>"$user_profile" &&
     bl64_bsh_env_store_generate >>"$user_profile" &&

@@ -37,4 +37,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-httpie" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
-    sudo -E -u "${CNT64_USER}" -H "${CNT64_INSTALLER_ROOT}/install-krew"
+    "${CNT64_INSTALLER_ROOT}/install-krew"
