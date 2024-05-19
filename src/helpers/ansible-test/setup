@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.4.0
+# Version: 3.0.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -27,12 +27,7 @@
 # Imports
 #
 
-# Environment Definition. See docs/base-environment.md for details
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
-export CNT64_DEBUG="${CNT64_DEBUG:-}"
-export CNT64_INSTALLER_ROOT="${CNT64_INSTALLER_ROOT:-}"
-export CNT64_USER
-
 # shellcheck source-path=lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
@@ -50,6 +45,13 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
 #
 # Globals
 #
+
+# Environment Definition. See docs/base-environment.md for details
+export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_INSTALLER_ROOT="${CNT64_INSTALLER_ROOT:-}"
+export CNT64_USER
+export CNT64_USER_UID="${CNT64_USER_UID:-6467}"
+export CNT64_USER_GID="${CNT64_USER_GID:-6467}"
 
 # Se the following three variables to create dedicate users for ansible installation
 export CNT64_ANSIBLE_USER="${CNT64_ANSIBLE_USER:-}"
@@ -77,54 +79,27 @@ function cnt64_setup_configure_users() {
   bl64_dbg_app_show_function
   local user_mode='0750'
   local user_home="/home/${CNT64_USER}"
-  local xdg_config="${user_home}/.config"
-  local xdg_cache="${user_home}/.cache"
-  local xdg_local="${user_home}/.local"
   local user_profile=''
-  local user_bashrc_d="${user_home}/.bashrc.d"
 
   bl64_msg_show_task "Initialize user's XDG directories (${CNT64_USER})"
-  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
-    "$xdg_config" \
-    "$xdg_local" \
-    "$xdg_cache" \
-    "${xdg_local}/bin" \
-    "${xdg_local}/lib" \
-    "${xdg_local}/share" \
-    "${xdg_local}/state" ||
+  bl64_iam_xdg_create \
+    "$user_home" \
+    "$user_mode" \
+    "$CNT64_USER" \
+    "$CNT64_USER" ||
     return $?
 
-  bl64_msg_show_task "Create modular bashr store (${user_bashrc_d})"
-  bl64_fs_create_dir "$user_mode" "$CNT64_USER" "$CNT64_USER" \
-    "$user_bashrc_d"
-
   bl64_msg_show_task "Setup user's bash environment (${CNT64_USER})"
-  if bl64_os_is_distro "${BL64_OS_ALP}"; then
-    user_profile="${user_home}/.bash_profile"
-    # shellcheck disable=SC2016
-    printf \
-      '#!/usr/bin/env bash
-# added-by-installer64 #
-declare module=""
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-if [[ -d "${HOME}/.bashrc.d" ]]; then
-  for module in ${HOME}/.bashrc.d/*; do
-    [[ -r "$module" ]] && source "$module"
-  done
-fi\n' >"$user_profile" &&
-      bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
-  elif bl64_os_is_distro "${BL64_OS_UB}"; then
-    user_profile="${user_home}/.bashrc"
-    # shellcheck disable=SC2016
-    printf \
-      '\n# added-by-installer64 #
-declare module=""
-if [[ -d "${HOME}/.bashrc.d" ]]; then
-  for module in ${HOME}/.bashrc.d/*; do
-    [[ -r "$module" ]] && source "$module"
-  done
-fi\n' >>"$user_profile"
-  fi
+  user_profile="${user_home}/.bashrc"
+  bl64_bsh_env_store_create "$user_home" &&
+    bl64_bsh_profile_rc_generate >"$user_profile" &&
+    bl64_bsh_profile_path_generate >>"$user_profile" &&
+    bl64_bsh_env_store_generate >>"$user_profile" &&
+    bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile" ||
+    return $?
+  user_profile="${user_home}/.bash_profile"
+  bl64_bsh_profile_bash_generate >"$user_profile" &&
+    bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
 }
 
 function cnt64_setup_create_users() {
@@ -134,14 +109,20 @@ function cnt64_setup_create_users() {
   local user_new=''
   local user_current=''
 
-  bl64_msg_show_task "Create entrypoint user (${CNT64_USER})"
   user_home="/home/${CNT64_USER}"
   user_shell='/bin/bash'
-  bl64_iam_user_add \
+
+  bl64_msg_show_task "Create entrypoint user and group (${CNT64_USER}:${CNT64_USER})"
+  bl64_iam_group_add \
     "$CNT64_USER" \
-    "$user_home" \
-    "$BL64_VAR_DEFAULT" \
-    "$user_shell" &&
+    "$CNT64_USER_GID" &&
+    bl64_iam_user_add \
+      "$CNT64_USER" \
+      "$user_home" \
+      "$CNT64_USER" \
+      "$user_shell" \
+      "$user_geco" \
+      "$CNT64_USER_UID" &&
     bl64_rbac_add_root "${CNT64_USER}"
 
   if [[ -z "$CNT64_ANSIBLE_USER" ]]; then
