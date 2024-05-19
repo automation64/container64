@@ -26,6 +26,7 @@ RUN \
 
 # Install applications
 RUN \
+    "${CNT64_INSTALLER_ROOT}/install-gcc" && \
     "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
     "${CNT64_INSTALLER_ROOT}/install-bat" && \
     "${CNT64_INSTALLER_ROOT}/install-duf" && \

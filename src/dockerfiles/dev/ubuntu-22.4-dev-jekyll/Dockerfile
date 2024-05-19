@@ -23,5 +23,5 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcc" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-ruby" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
-    sudo ln -s "/usr/local/bin/installer64-ruby.env" "/home/${CNT64_USER}/.bashrc.d/installer64-ruby.env" && \
-    /bin/bash --login -c ". /usr/local/bin/installer64-ruby.env; ${CNT64_INSTALLER_ROOT}/install-jekyll"
+    sudo ln -s "/usr/local/bin/ruby.env" "/home/${CNT64_USER}/.env.d/64_ruby.env" && \
+    /bin/bash --login -c ". /usr/local/bin/ruby.env; ${CNT64_INSTALLER_ROOT}/install-jekyll"
