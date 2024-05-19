@@ -75,8 +75,6 @@ function cnt64_setup_select_packages() {
 
   # Distro specific
   if bl64_os_is_distro "${BL64_OS_OL}"; then
-    # Python3
-    packages+=" python3 python3-pip python3-setuptools"
     # File management tools
     packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
@@ -97,8 +95,6 @@ function cnt64_setup_select_packages() {
   if bl64_os_is_distro "${BL64_OS_OL}-9"; then
     # Text utils
     packages+=" bat"
-    # Python3
-    packages+=" pipx"
   fi
 
   [[ -n "$packages" ]] && echo "$packages"
