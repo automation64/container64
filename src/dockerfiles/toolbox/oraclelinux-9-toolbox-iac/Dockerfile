@@ -14,9 +14,12 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_ANSIBLE_PIPX="OFF"
+
 # Install applications
 RUN \
-    sudo -E -H -u "${CNT64_USER}" ${CNT64_INSTALLER_ROOT}/install-ansible && \
+    "${CNT64_INSTALLER_ROOT}/install-ansible" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt"
