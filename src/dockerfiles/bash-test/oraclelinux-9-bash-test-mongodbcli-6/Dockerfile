@@ -7,15 +7,15 @@ FROM ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest
 # * See docs/base-environment.md for details
 #
 
-ENV CNT64_OPT_ROOT="/opt"
-ENV CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
+ARG CNT64_OPT_ROOT="/opt"
+ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 #
 # Setup image
 #
 
 # Set setup parameters
-ENV CNT64_MONGODBCLI_VERSION=6
+ARG CNT64_MONGODBCLI_VERSION=6
 
 # Install applications
 RUN \
