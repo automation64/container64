@@ -40,6 +40,8 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-txt.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fmt.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
+  source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
