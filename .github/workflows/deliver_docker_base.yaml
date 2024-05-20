@@ -2,7 +2,7 @@
 name: "Deliver / Container / Base"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-base"
   cancel-in-progress: true
 
 env:

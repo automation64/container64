@@ -2,7 +2,7 @@
 name: "Deliver / Container / Container Lint"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-container-lint"
   cancel-in-progress: true
 
 env:

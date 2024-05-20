@@ -2,7 +2,7 @@
 name: "Deliver / Container / SSG Lint"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-ssg-lint"
   cancel-in-progress: true
 
 env:

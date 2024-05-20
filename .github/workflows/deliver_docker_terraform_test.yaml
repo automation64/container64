@@ -2,7 +2,7 @@
 name: "Deliver / Container / Terraform Test"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-terraform-test"
   cancel-in-progress: true
 
 env:

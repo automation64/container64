@@ -40,6 +40,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
     "${CNT64_INSTALLER_ROOT}/install-starship" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    "${CNT64_INSTALLER_ROOT}/install-zoho-vault" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide"
 
 # Set default user and entrypoint

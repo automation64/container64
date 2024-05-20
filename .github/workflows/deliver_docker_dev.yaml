@@ -2,7 +2,7 @@
 name: "Deliver / Container / Dev"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-dev"
   cancel-in-progress: true
 
 env:
