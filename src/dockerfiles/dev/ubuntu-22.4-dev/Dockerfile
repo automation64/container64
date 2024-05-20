@@ -53,7 +53,9 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     "${CNT64_INSTALLER_ROOT}/install-starship" && \
     "${CNT64_INSTALLER_ROOT}/install-taskfile" && \
+    "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    "${CNT64_INSTALLER_ROOT}/install-zoho-vault" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit"
 
