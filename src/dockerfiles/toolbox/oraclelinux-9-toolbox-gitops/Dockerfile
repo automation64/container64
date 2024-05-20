@@ -14,6 +14,8 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_ANSIBLE_PIPX="OFF"
 
 # Install applications
 ARG INST64_ARGOCDCLI_VERSION="v2.8.7"
