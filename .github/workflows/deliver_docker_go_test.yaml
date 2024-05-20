@@ -2,7 +2,7 @@
 name: "Deliver / Container / Go Test"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-go-test"
   cancel-in-progress: true
 
 env:

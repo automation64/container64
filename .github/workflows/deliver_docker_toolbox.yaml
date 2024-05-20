@@ -2,7 +2,7 @@
 name: "Deliver / Container / Toolbox"
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
+  group: "deliver-docker-toolbox"
   cancel-in-progress: true
 
 env:
