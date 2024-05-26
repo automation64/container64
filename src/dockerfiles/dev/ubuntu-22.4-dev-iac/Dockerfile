@@ -1,5 +1,5 @@
 # Base image
-FROM ghcr.io/automation64/dev/ubuntu-22.4-dev:latest
+FROM ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest
 
 #
 # Environment definition
@@ -15,16 +15,8 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
-# Set installer parameters
-ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
-ARG INST64_SHELLCHECK_METHOD="BINARY"
-
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \

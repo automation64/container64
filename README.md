@@ -113,22 +113,25 @@
 - Purpose: Development environment
 - Packages: dev tools, languages
 
-| Image                           | OS     | Base Image                                            |
-| ------------------------------- | ------ | ----------------------------------------------------- |
-| `dev/ubuntu-22.4-dev-ansible`   | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-bash`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-container` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-gitops`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-k8s:latest` |
-| `dev/ubuntu-22.4-dev-go`        | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-hugo`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-iac`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-jekyll`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-k8s`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-nodejs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-python`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev-terraform` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`     |
-| `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`   |
+| Image                           | OS     | Base Image                                              |
+| ------------------------------- | ------ | ------------------------------------------------------- |
+| `dev/ubuntu-22.4-dev-ansible`   | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-bash`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-cloud`     | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-container` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-iac`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest` |
+| `dev/ubuntu-22.4-dev-gitops`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest` |
+| `dev/ubuntu-22.4-dev-go`        | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-hugo`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-iac`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest` |
+| `dev/ubuntu-22.4-dev-jekyll`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-k8s`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest` |
+| `dev/ubuntu-22.4-dev-nodejs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-python`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
+| `dev/ubuntu-22.4-dev-sql`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest` |
+| `dev/ubuntu-22.4-dev-terraform` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-cloud:latest`     |
+| `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`     |
 
 #### Container collection: Bash testing
 
