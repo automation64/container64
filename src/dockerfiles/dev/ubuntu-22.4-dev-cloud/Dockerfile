@@ -20,4 +20,6 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-go"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
+    "${CNT64_INSTALLER_ROOT}/install-localstack" && \
+    "${CNT64_INSTALLER_ROOT}/install-awsshell"
