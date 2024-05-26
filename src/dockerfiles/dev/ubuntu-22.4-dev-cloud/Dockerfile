@@ -17,4 +17,7 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-batscore"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-go"

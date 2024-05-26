@@ -57,6 +57,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zoho-vault" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit"
 
 # Set default user and entrypoint

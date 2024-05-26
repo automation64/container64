@@ -17,7 +17,5 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint"
+    ${CNT64_INSTALLER_ROOT}/install-pgcli && \
+    ${CNT64_INSTALLER_ROOT}/install-pgadmin
