@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.10.1
+# Version: 2.11.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -172,6 +172,10 @@ function cnt64_bootstrap_install_packages() {
     packages+=' curl'
   elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
     packages+=' shadow-utils findutils'
+  elif bl64_os_is_distro "${BL64_OS_FD}"; then
+    packages+=' findutils'
+  elif bl64_os_is_distro "${BL64_OS_RCK}"; then
+    packages+=' findutils'
   fi
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages

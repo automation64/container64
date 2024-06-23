@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.0.0
+# Version: 2.1.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -68,17 +68,17 @@ function cnt64_setup_select_packages() {
   elif bl64_os_is_distro "${BL64_OS_DEB}" "${BL64_OS_UB}"; then
     packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_FD}"; then
-    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq gnupg2 patch'
+    packages='git diffutils hostname wget python3-pip unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
-    packages='git diffutils hostname wget python3-pip findutils unzip gettext jq patch'
+    packages='git diffutils hostname wget python3-pip unzip gettext jq patch'
   elif bl64_os_is_distro "${BL64_OS_OL}"; then
     packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
     packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RCK}"; then
-    packages='git hostname diffutils wget python3 python3-pip python3-setuptools findutils unzip gettext jq gnupg2 patch'
+    packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_SLES}"; then
-    packages='git hostname wget gawk gettext-runtime python3 python3-pip unzip tar jq gpg2 patch'
+    packages='git hostname wget gettext-runtime python3 python3-pip unzip tar jq gpg2 patch'
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
