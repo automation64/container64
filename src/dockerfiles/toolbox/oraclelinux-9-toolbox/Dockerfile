@@ -43,6 +43,9 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zoho-vault" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
+    "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
+    "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx"
 
 # Set default user and entrypoint
