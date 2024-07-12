@@ -2,7 +2,7 @@
 #######################################
 # Dev / Auth / Container / Registry Login
 #
-# * Version: 1.2.0
+# * Version: 1.2.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -30,7 +30,12 @@ source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2
 source ./bin/dev-env-github &&
   source ./bin/dev-env-container || exit 1
 # shellcheck source-path=lib/bl64
-source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
+source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-xsv.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-bsh.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 
 #

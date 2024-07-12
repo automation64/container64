@@ -29,10 +29,10 @@
 #
 # Locals
 #
-# * Use .local file or CICD variables to override values
+# * Use .local.env file or CICD variables to override values
 #
 
-# shellcheck disable=2154
+# shellcheck disable=SC2154
 {
     # Lib / Cosign / Target
     export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
@@ -47,10 +47,10 @@
 #
 # Secrets
 #
-# * Use .secrets file or CICD secrets to override values
+# * Use .secrets.env file or CICD secrets to override values
 #
 
-# shellcheck disable=2154
+# shellcheck disable=SC2154
 {
     # Auth / Cosign / Server User
     export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
