@@ -17,6 +17,7 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 # Set installer parameters
 ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
+ARG INST64_MKDOCS_METHOD="PIPX"
 
 # Install applications
 RUN \
