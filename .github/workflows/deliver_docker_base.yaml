@@ -37,7 +37,7 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Prepare base tools"
-        run: "./bin/dev-lib-installer64"
+        run: "./bin/dev-lib-base"
 
       - name: "Prepare docker tool"
         run: "./bin/dev-auth-container"
