@@ -2,7 +2,7 @@
 #######################################
 # Dev / Lib / Project / Download
 #
-# * Version: 1.1.0
+# * Version: 1.2.0
 # * Template: 2.0.0
 #
 #######################################
@@ -41,12 +41,15 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
 
 function dev_lib_download() {
   bl64_dbg_app_show_function
+  ./bin/dev-lib-testmansh &&
+    ./bin/dev-lib-hadolint &&
+    ./bin/dev-lib-cosign
 }
 
 function dev_lib_normalize() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Normalize repository permissions'
-  bl64_fs_path_permission_set '0755' '0755' "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$BL64_VAR_ON"\
+  bl64_fs_path_permission_set '0755' '0755' "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" "$BL64_VAR_ON" \
     "$DEV_PATH_BIN" \
     "$DEV_PATH_SRC" \
     "$DEV_PATH_TEST"
