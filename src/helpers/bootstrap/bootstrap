@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.11.0
+# Version: 2.12.0
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -232,6 +232,7 @@ function cnt64_bootstrap_initialize() {
     "${BL64_OS_CNT}" \
     "${BL64_OS_DEB}" \
     "${BL64_OS_FD}" \
+    "${BL64_OS_KL}" \
     "${BL64_OS_OL}" \
     "${BL64_OS_RCK}" \
     "${BL64_OS_RHEL}" \
