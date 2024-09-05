@@ -5,11 +5,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  # L0
   call_deliver_docker_base:
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_base.yaml"
     secrets: inherit
-
+  # L1
   call_deliver_docker_dev:
     needs:
       - "call_deliver_docker_base"
@@ -34,7 +35,7 @@ jobs:
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_toolbox.yaml"
     secrets: inherit
-
+  # L2
   call_deliver_docker_container_lint:
     needs:
       - "call_deliver_docker_base"
@@ -52,6 +53,12 @@ jobs:
       - "call_deliver_docker_base"
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_k8s_lint.yaml"
+    secrets: inherit
+  call_deliver_docker_pen_test:
+    needs:
+      - "call_deliver_docker_base"
+    permissions: "write-all"
+    uses: "./.github/workflows/deliver_docker_pen_test.yaml"
     secrets: inherit
   call_deliver_docker_shell_lint:
     needs:
