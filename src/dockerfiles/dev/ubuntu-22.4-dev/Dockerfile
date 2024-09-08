@@ -50,7 +50,6 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
     "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
-    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
