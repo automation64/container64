@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/kalilinux/kali-last-release AS base
+FROM ghcr.io/automation64/mirror/kalilinux-2024.3-mirror:latest
 
 # Prepare package installer
 ENV container="docker"
