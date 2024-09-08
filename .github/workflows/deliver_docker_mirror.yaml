@@ -1,0 +1,46 @@
+---
+name: "Deliver / Container / Mirror"
+
+concurrency:
+  group: "deliver-docker-mirror"
+  cancel-in-progress: true
+
+env:
+  DEV_CICD_DEBUG: ""
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        required: true
+        type: choice
+        description: Name of the mirror container
+        options:
+          - kalilinux-2024.3-mirror
+
+jobs:
+  deliver-docker-mirror:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    steps:
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Prepare base tools"
+        run: "./bin/dev-lib-base"
+
+      - name: "Prepare docker tool"
+        run: "./bin/dev-auth-container"
+
+      - name: "Prepare cosign tool"
+        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
+
+      - name: "Build and publish container images"
+        run: "./bin/dev-build-cntbuild mirror/${{ github.event.inputs.target }} ON"
+...

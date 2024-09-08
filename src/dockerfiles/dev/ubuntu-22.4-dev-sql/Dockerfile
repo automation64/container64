@@ -15,6 +15,9 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_PGADMIN_METHOD="PIPX"
+
 # Install applications
 RUN \
     ${CNT64_INSTALLER_ROOT}/install-pgcli && \
