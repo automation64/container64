@@ -17,6 +17,7 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
 # Set installer parameters
 ARG INST64_PGADMIN_METHOD="PIPX"
+ARG PATH="/bin:/usr/bin:/usr/local/bin:/home/${CNT64_USER}/bin:/home/${CNT64_USER}/.local/bin"
 
 # Install applications
 RUN \
