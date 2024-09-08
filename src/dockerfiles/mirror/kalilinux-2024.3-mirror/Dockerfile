@@ -1,2 +1,2 @@
 # Base image
-FROM docker.io/kalilinux/kali-last-release AS base
+FROM docker.io/kalilinux/kali-last-release AS mirror

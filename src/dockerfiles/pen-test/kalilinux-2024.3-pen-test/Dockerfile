@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM ghcr.io/automation64/base/kalilinux-latest-base:latest
+FROM ghcr.io/automation64/base/kalilinux-2024.3-base:latest
 
 #
 # Environment definition
@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/base/kalilinux-latest-base:latest
 # * See docs/base-environment.md for details
 #
 
-ARG CNT64_USER="test"
+ARG CNT64_USER="cnt64"
 ARG CNT64_OPT_ROOT="/opt"
 ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 
@@ -17,21 +17,13 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 #
 
 # Copy image setup scripts
-COPY --chmod=700 helpers/bash-test/setup /setup
+COPY --chmod=700 helpers/pen-test/setup /setup
 
 # Setup image
 RUN \
     /setup && \
     rm /setup
 
-# Install applications
-RUN \
-    "${CNT64_INSTALLER_ROOT}/install-batscore" && \
-    "${CNT64_INSTALLER_ROOT}/install-yq"
-
-# Run bats-core against /test
-CMD [ "/test" ]
-
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
+ENTRYPOINT [ "/bin/bash", "--login", "-c" ]

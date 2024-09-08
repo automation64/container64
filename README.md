@@ -46,46 +46,55 @@
 
 ### Container Catalog
 
+#### Container collection: Mirror container image
+
+- Purpose: Mirror container image for freezing unversioned sources
+
+| Image                            | OS        | Base Image                              |
+| -------------------------------- | --------- | --------------------------------------- |
+| `mirror/kalilinux-2024.3-mirror` | kalilinux | `docker.io/kalilinux/kali-last-release` |
+
 #### Container collection: Base container image
 
 - Purpose: Base container image for creating Container64 images
 - Packages: sudo
 
-| Image                        | OS          | Base Image                          |
-| ---------------------------- | ----------- | ----------------------------------- |
-| `base/almalinux-8-base`      | almalinux   | `docker.io/library/almalinux:8`     |
-| `base/alpine-3-base`         | alpine      | `docker.io/library/alpine:3.17`     |
-| `base/amazonlinux-2023-base` | almalinux   | `docker.io/amazonlinux:2023`        |
-| `base/centos-7-base`         | centos      | `quay.io/centos/centos:centos7`     |
-| `base/centos-8-base`         | centos      | `quay.io/centos/centos:8`           |
-| `base/centos-9-base`         | centos      | `quay.io/centos/centos:stream9`     |
-| `base/debian-10-base`        | debian      | `docker.io/library/debian:buster`   |
-| `base/debian-11-base`        | debian      | `docker.io/library/debian:bullseye` |
-| `base/debian-12-base`        | debian      | `docker.io/library/debian:bookworm` |
-| `base/debian-9-base`         | debian      | `docker.io/debian/eol:stretch`      |
-| `base/fedora-33-base`        | fedora      | `docker.io/library/fedora:33`       |
-| `base/fedora-34-base`        | fedora      | `docker.io/library/fedora:34`       |
-| `base/fedora-35-base`        | fedora      | `docker.io/library/fedora:35`       |
-| `base/fedora-36-base`        | fedora      | `docker.io/library/fedora:36`       |
-| `base/fedora-37-base`        | fedora      | `docker.io/library/fedora:37`       |
-| `base/fedora-38-base`        | fedora      | `docker.io/library/fedora:38`       |
-| `base/fedora-39-base`        | fedora      | `docker.io/library/fedora:39`       |
-| `base/fedora-40-base`        | fedora      | `docker.io/library/fedora:40`       |
-| `base/oraclelinux-7-base`    | oraclelinux | `docker.io/library/oraclelinux:7`   |
-| `base/oraclelinux-8-base`    | oraclelinux | `docker.io/library/oraclelinux:8`   |
-| `base/oraclelinux-9-base`    | oraclelinux | `docker.io/library/oraclelinux:9`   |
-| `base/rhel-8-base`           | rhel        | `docker.io/redhat/ubi8`             |
-| `base/rhel-9-base`           | rhel        | `docker.io/redhat/ubi9`             |
-| `base/rockylinux-8-base`     | rockylinux  | `docker.io/rockylinux:8`            |
-| `base/rockylinux-9-base`     | rockylinux  | `docker.io/rockylinux:9`            |
-| `base/sles-15-base`          | sles        | `registry.suse.com/bci/bci-base:15` |
-| `base/ubuntu-18.4-base`      | ubuntu      | `docker.io/library/ubuntu:18.04`    |
-| `base/ubuntu-20.4-base`      | ubuntu      | `docker.io/library/ubuntu:20.04`    |
-| `base/ubuntu-21.4-base`      | ubuntu      | `docker.io/library/ubuntu:21.04`    |
-| `base/ubuntu-22.4-base`      | ubuntu      | `docker.io/library/ubuntu:22.04`    |
-| `base/ubuntu-22.10-base`     | ubuntu      | `docker.io/library/ubuntu:22.10`    |
-| `base/ubuntu-23.10-base`     | ubuntu      | `docker.io/library/ubuntu:23.10`    |
-| `base/ubuntu-24.4-base`      | ubuntu      | `docker.io/library/ubuntu:24.04`    |
+| Image                        | OS          | Base Image                                            |
+| ---------------------------- | ----------- | ----------------------------------------------------- |
+| `base/almalinux-8-base`      | almalinux   | `docker.io/library/almalinux:8`                       |
+| `base/alpine-3-base`         | alpine      | `docker.io/library/alpine:3.17`                       |
+| `base/amazonlinux-2023-base` | almalinux   | `docker.io/amazonlinux:2023`                          |
+| `base/centos-7-base`         | centos      | `quay.io/centos/centos:centos7`                       |
+| `base/centos-8-base`         | centos      | `quay.io/centos/centos:8`                             |
+| `base/centos-9-base`         | centos      | `quay.io/centos/centos:stream9`                       |
+| `base/debian-10-base`        | debian      | `docker.io/library/debian:buster`                     |
+| `base/debian-11-base`        | debian      | `docker.io/library/debian:bullseye`                   |
+| `base/debian-12-base`        | debian      | `docker.io/library/debian:bookworm`                   |
+| `base/debian-9-base`         | debian      | `docker.io/debian/eol:stretch`                        |
+| `base/fedora-33-base`        | fedora      | `docker.io/library/fedora:33`                         |
+| `base/fedora-34-base`        | fedora      | `docker.io/library/fedora:34`                         |
+| `base/fedora-35-base`        | fedora      | `docker.io/library/fedora:35`                         |
+| `base/fedora-36-base`        | fedora      | `docker.io/library/fedora:36`                         |
+| `base/fedora-37-base`        | fedora      | `docker.io/library/fedora:37`                         |
+| `base/fedora-38-base`        | fedora      | `docker.io/library/fedora:38`                         |
+| `base/fedora-39-base`        | fedora      | `docker.io/library/fedora:39`                         |
+| `base/fedora-40-base`        | fedora      | `docker.io/library/fedora:40`                         |
+| `base/kalilinux-2024.3-base` | kalilinux   | `ghcr.io/automation64/mirror/kalilinux-2024.3-mirror` |
+| `base/oraclelinux-7-base`    | oraclelinux | `docker.io/library/oraclelinux:7`                     |
+| `base/oraclelinux-8-base`    | oraclelinux | `docker.io/library/oraclelinux:8`                     |
+| `base/oraclelinux-9-base`    | oraclelinux | `docker.io/library/oraclelinux:9`                     |
+| `base/rhel-8-base`           | rhel        | `docker.io/redhat/ubi8`                               |
+| `base/rhel-9-base`           | rhel        | `docker.io/redhat/ubi9`                               |
+| `base/rockylinux-8-base`     | rockylinux  | `docker.io/rockylinux:8`                              |
+| `base/rockylinux-9-base`     | rockylinux  | `docker.io/rockylinux:9`                              |
+| `base/sles-15-base`          | sles        | `registry.suse.com/bci/bci-base:15`                   |
+| `base/ubuntu-18.4-base`      | ubuntu      | `docker.io/library/ubuntu:18.04`                      |
+| `base/ubuntu-20.4-base`      | ubuntu      | `docker.io/library/ubuntu:20.04`                      |
+| `base/ubuntu-21.4-base`      | ubuntu      | `docker.io/library/ubuntu:21.04`                      |
+| `base/ubuntu-22.4-base`      | ubuntu      | `docker.io/library/ubuntu:22.04`                      |
+| `base/ubuntu-22.10-base`     | ubuntu      | `docker.io/library/ubuntu:22.10`                      |
+| `base/ubuntu-23.10-base`     | ubuntu      | `docker.io/library/ubuntu:23.10`                      |
+| `base/ubuntu-24.4-base`      | ubuntu      | `docker.io/library/ubuntu:24.04`                      |
 
 #### Container collection: System Administration toolbox
 
@@ -158,6 +167,7 @@
 | `bash-test/fedora-38-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-38-base:latest`          |
 | `bash-test/fedora-39-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-39-base:latest`          |
 | `bash-test/fedora-40-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-40-base:latest`          |
+| `bash-test/kalilinux-2024.3-bash-test`           | fedora      | `ghcr.io/automation64/base/kalilinux-2024.3-base:latest`   |
 | `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-7-base:latest`      |
 | `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-8-base:latest`      |
 | `bash-test/oraclelinux-9-bash-test-ansible`      | oraclelinux | `ghcr.io/automation64/bash-test/oraclelinux-9-base:latest` |
@@ -274,6 +284,14 @@
 | Image                             | OS     | Base Image                                       |
 | --------------------------------- | ------ | ------------------------------------------------ |
 | `go-test/alpine-3-container-lint` | alpine | `ghcr.io/automation64/base/alpine-3-base:latest` |
+
+#### Container collection: Penetration testing
+
+- Purpose: Penetration testing tools for security compliance checking
+
+| Image                                | OS        | Base Image                                               |
+| ------------------------------------ | --------- | -------------------------------------------------------- |
+| `pen-test/kalilinux-2024.3-pen-test` | kalilinux | `ghcr.io/automation64/base/kalilinux-2024.3-base:latest` |
 
 ### Container structure
 
