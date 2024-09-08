@@ -16,7 +16,7 @@ on:
         type: choice
         description: Name of the mirror container
         options:
-          - kalilinux-2024.3-mirror
+          - "KALILINUX"
 
 jobs:
   deliver-docker-mirror:
@@ -42,5 +42,5 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-cntbuild mirror/${{ github.event.inputs.target }} ON"
+        run: "./bin/dev-build-cntbuild MIRROR_${{ github.event.inputs.target }} ON"
 ...
