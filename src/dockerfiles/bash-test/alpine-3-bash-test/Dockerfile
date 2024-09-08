@@ -32,5 +32,7 @@ RUN \
 
 # Run bats-core against /test
 CMD [ "/test" ]
+
+# Set default user and entrypoint
 USER ${CNT64_USER}
 ENTRYPOINT [ "/opt/bats-core/bin/bats" ]
