@@ -16,6 +16,14 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
+# Copy image setup scripts
+COPY --chmod=700 helpers/pen-test/setup /setup
+
+# Setup image
+RUN \
+    /setup && \
+    rm /setup
+
 # Set default user and entrypoint
 USER ${CNT64_USER}
 ENTRYPOINT [ "/bin/bash", "--login", "-c" ]
