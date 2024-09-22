@@ -32,7 +32,7 @@ export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
 export CNT64_USER
 
-# shellcheck source=lib/bl64/bashlib64.bash
+# shellcheck source-path=SCRIPTDIR/../../../lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #

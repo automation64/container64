@@ -1,13 +1,6 @@
 ---
-# Template: 1.2.0
-name: "Lint / Hadolint"
-
-concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: true
-
-env:
-  DEV_CICD_DEBUG: ""
+# Template: 1.0.0
+name: "SAST / GitLeaks"
 
 on:
   pull_request:
@@ -16,11 +9,9 @@ on:
   push:
     branches:
       - "feature/**"
-    paths:
-      - "src/dockerfiles/*/*"
 
 jobs:
-  lint-hadolint:
+  sast-GitLeaks:
     runs-on: "ubuntu-latest"
     steps:
 
@@ -31,8 +22,8 @@ jobs:
         run: "./bin/dev-lib-base"
 
       - name: "Download tools"
-        run: "./bin/dev-lib-hadolint"
+        run: "./bin/dev-lib-gitleaks"
 
-      - name: "Run tests"
-        run: "./bin/dev-lint-hadolint"
+      - name: "Run SAST"
+        run: "./bin/dev-sast-gitleaks"
 ...

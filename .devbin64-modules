@@ -3,5 +3,7 @@ container
 cosign
 git
 github
+gitleaks
 hadolint
 testmansh
+trivy
