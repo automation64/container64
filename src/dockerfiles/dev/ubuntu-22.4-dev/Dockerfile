@@ -31,6 +31,12 @@ RUN \
 # Set installer parameters
 ARG INST64_SHELLCHECK_METHOD="BINARY"
 ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
+ARG INST64_ACT_VERSION="v0.2.66" # TODO: Remove once package latest release is available
+ARG INST64_BAT_VERSION="v0.23.0" # TODO: Remove once package latest release is available
+ARG INST64_GITLEAKS_VERSION="v8.19.2" # TODO: Remove once package latest release is available
+ARG INST64_TRUFFLEHOG_VERSION="v3.82.2" # TODO: Remove once package latest release is available
+ARG INST64_ZELLIJ_VERSION="v0.40.1" # TODO: Remove once package latest release is available
+ARG INST64_ZOXIDE_VERSION="v0.9.4" # TODO: Remove once package latest release is available
 
 # Install applications
 RUN \
@@ -54,17 +60,19 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     "${CNT64_INSTALLER_ROOT}/install-starship" && \
+    "${CNT64_INSTALLER_ROOT}/install-syft" && \
     "${CNT64_INSTALLER_ROOT}/install-taskfile" && \
     "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
-    "${CNT64_INSTALLER_ROOT}/install-zoho-vault" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
+    "${CNT64_INSTALLER_ROOT}/install-zellij" && \
     "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit"
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit" && \
+    sudo -E -H -u "${CNT64_USER}" "/opt/sysden64/bin/sysden64" -l
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash", "--login" ]
+ENTRYPOINT [ "/bin/zsh", "--login" ]

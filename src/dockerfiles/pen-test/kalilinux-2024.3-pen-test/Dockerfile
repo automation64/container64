@@ -24,6 +24,25 @@ RUN \
     /setup && \
     rm /setup
 
+# Set installer parameters
+ARG INST64_GITLEAKS_VERSION="v8.19.2" # TODO: Remove once package latest release is available
+ARG INST64_HWATCH_VERSION="0.3.15" # TODO: Remove once package latest release is available
+ARG INST64_TRUFFLEHOG_VERSION="v3.82.2" # TODO: Remove once package latest release is available
+ARG INST64_ZELLIJ_VERSION="v0.40.1" # TODO: Remove once package latest release is available
+
+# Install applications
+RUN \
+    "${CNT64_INSTALLER_ROOT}/install-gitleaks" && \
+    "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
+    "${CNT64_INSTALLER_ROOT}/install-lynis" && \
+    "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
+    "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    "${CNT64_INSTALLER_ROOT}/install-zellij" && \
+    "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
+    "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
+    sudo -E -H -u "${CNT64_USER}" "/opt/sysden64/bin/sysden64" -l
+
 # Set default user and entrypoint
 USER ${CNT64_USER}
-ENTRYPOINT [ "/bin/bash", "--login", "-c" ]
+ENTRYPOINT [ "/bin/zsh", "--login" ]
