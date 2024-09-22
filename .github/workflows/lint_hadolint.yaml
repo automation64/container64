@@ -1,5 +1,5 @@
 ---
-# Template: 1.1.0
+# Template: 1.2.0
 name: "Lint / Hadolint"
 
 concurrency:
@@ -27,8 +27,11 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Prepare dev environment"
+      - name: "Prepare environment"
         run: "./bin/dev-lib-base"
+
+      - name: "Download tools"
+        run: "./bin/dev-lib-hadolint"
 
       - name: "Run tests"
         run: "./bin/dev-lint-hadolint"
