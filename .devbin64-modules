@@ -6,3 +6,4 @@ github
 gitleaks
 hadolint
 testmansh
+trivy

@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# Dev / SAST / Trivy / Static code analysis
+#
+# * Version: 1.0.0
+# * Template: 1.6.0
+#
+
+#
+# Imports
+#
+
+# shellcheck source=bin/dev-set
+source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+# shellcheck source-path=bin
+source ./bin/dev-env-trivy || exit 1
+# shellcheck source-path=lib/bl64
+source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
+
+#
+# Functions
+#
+
+function dev_sast() {
+  bl64_dbg_app_show_function "$@"
+  local image_location="$1"
+  "$DEV_LIB_TRIVY_BIN" \
+    image \
+    --exit-code=1 \
+    --format="$DEV_SAST_TRIVY_FORMAT" \
+    --scanners=vuln \
+    "$image"
+}
+
+function dev_initialize() {
+  bl64_dbg_app_show_function "$@"
+  local image_location="$1"
+  bl64_check_parameter 'image_location'
+}
+
+#
+# Main
+#
+
+[[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
+declare image_location="${1:-}"
+
+bl64_msg_all_enable_verbose
+bl64_msg_show_batch_start 'dev-sast-trivy'
+dev_initialize "$image_location" &&
+  dev_sast "$image_location"
+bl64_msg_show_batch_finish $? 'dev-sast-trivy'
