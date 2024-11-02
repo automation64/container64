@@ -17,8 +17,6 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Set installer parameters
 ARG INST64_ANSIBLE_PIPX="OFF"
 
-# Install applications
-ARG INST64_ARGOCDCLI_VERSION="v2.8.7"
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
