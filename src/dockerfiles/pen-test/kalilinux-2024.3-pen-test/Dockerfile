@@ -25,10 +25,7 @@ RUN \
     rm /setup
 
 # Set installer parameters
-ARG INST64_GITLEAKS_VERSION="v8.19.2" # TODO: Remove once package latest release is available
 ARG INST64_HWATCH_VERSION="0.3.15" # TODO: Remove once package latest release is available
-ARG INST64_TRUFFLEHOG_VERSION="v3.82.2" # TODO: Remove once package latest release is available
-ARG INST64_ZELLIJ_VERSION="v0.40.1" # TODO: Remove once package latest release is available
 
 # Install applications
 RUN \

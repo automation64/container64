@@ -15,7 +15,6 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
 # Setup image
 #
 
-ARG INST64_ARGOCDCLI_VERSION="v2.8.7"
 RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \

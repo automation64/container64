@@ -31,11 +31,6 @@ RUN \
 # Set installer parameters
 ARG INST64_SHELLCHECK_METHOD="BINARY"
 ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
-ARG INST64_ACT_VERSION="v0.2.66" # TODO: Remove once package latest release is available
-ARG INST64_BAT_VERSION="v0.23.0" # TODO: Remove once package latest release is available
-ARG INST64_GITLEAKS_VERSION="v8.19.2" # TODO: Remove once package latest release is available
-ARG INST64_TRUFFLEHOG_VERSION="v3.82.2" # TODO: Remove once package latest release is available
-ARG INST64_ZELLIJ_VERSION="v0.40.1" # TODO: Remove once package latest release is available
 ARG INST64_ZOXIDE_VERSION="v0.9.4" # TODO: Remove once package latest release is available
 
 # Install applications

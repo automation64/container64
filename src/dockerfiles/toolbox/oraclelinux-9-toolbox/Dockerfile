@@ -25,9 +25,6 @@ RUN \
     rm /setup
 
 # Set installer parameters
-ARG INST64_BAT_VERSION="v0.23.0" # TODO: Remove once package latest release is available
-ARG INST64_HWATCH_VERSION="0.3.15" # TODO: Remove once package latest release is available
-ARG INST64_ZELLIJ_VERSION="v0.40.1" # TODO: Remove once package latest release is available
 ARG INST64_ZOXIDE_VERSION="v0.9.4" # TODO: Remove once package latest release is available
 
 # Install applications
