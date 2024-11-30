@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/library/ubuntu:22.10 AS base
+FROM docker.io/library/fedora:41
 
 # Prepare package installer
 ENV container="docker"
@@ -30,9 +30,6 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 
 # Bootstrap
 RUN \
-    sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get install --assume-yes curl openssl ca-certificates --no-install-recommends && \
     /install-installer64 && \
     /bootstrap && \
     rm /install-installer64 /bootstrap

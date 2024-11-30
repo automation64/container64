@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 2.12.0
+# Version: 2.12.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -106,11 +106,11 @@ function cnt64_bootstrap_configure_users() {
     bl64_bsh_profile_rc_generate >"$user_profile" &&
     bl64_bsh_profile_path_generate >>"$user_profile" &&
     bl64_bsh_env_store_generate >>"$user_profile" &&
-    bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile" ||
+    bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile" ||
     return $?
   user_profile="${user_home}/.bash_profile"
   bl64_bsh_profile_bash_generate >"$user_profile" &&
-    bl64_fs_set_permissions "$user_mode" "$CNT64_USER" "$CNT64_USER" "$user_profile"
+    bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile"
 }
 
 function cnt64_bootstrap_fix_repository_fedora() {
@@ -187,7 +187,7 @@ function cnt64_bootstrap_configure_os() {
   local public_owner='root'
 
   bl64_msg_show_task 'Create shared paths'
-  bl64_fs_create_dir "$public_mode" "$public_owner" "$public_owner" \
+  bl64_fs_dir_create "$public_mode" "$public_owner" "$public_owner" \
     "$CNT64_LOCAL_ROOT" \
     "$CNT64_LOCAL_BIN" \
     "$CNT64_OPT_ROOT"

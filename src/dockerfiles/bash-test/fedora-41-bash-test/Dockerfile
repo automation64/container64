@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM ghcr.io/automation64/base/ubuntu-22.10-base:latest
+FROM ghcr.io/automation64/base/fedora-41-base:latest
 
 #
 # Environment definition

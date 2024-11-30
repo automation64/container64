@@ -79,6 +79,7 @@
 | `base/fedora-38-base`        | fedora      | `docker.io/library/fedora:38`                         |
 | `base/fedora-39-base`        | fedora      | `docker.io/library/fedora:39`                         |
 | `base/fedora-40-base`        | fedora      | `docker.io/library/fedora:40`                         |
+| `base/fedora-41-base`        | fedora      | `docker.io/library/fedora:41`                         |
 | `base/kalilinux-2024.3-base` | kalilinux   | `ghcr.io/automation64/mirror/kalilinux-2024.3-mirror` |
 | `base/oraclelinux-7-base`    | oraclelinux | `docker.io/library/oraclelinux:7`                     |
 | `base/oraclelinux-8-base`    | oraclelinux | `docker.io/library/oraclelinux:8`                     |
@@ -92,7 +93,6 @@
 | `base/ubuntu-20.4-base`      | ubuntu      | `docker.io/library/ubuntu:20.04`                      |
 | `base/ubuntu-21.4-base`      | ubuntu      | `docker.io/library/ubuntu:21.04`                      |
 | `base/ubuntu-22.4-base`      | ubuntu      | `docker.io/library/ubuntu:22.04`                      |
-| `base/ubuntu-22.10-base`     | ubuntu      | `docker.io/library/ubuntu:22.10`                      |
 | `base/ubuntu-23.10-base`     | ubuntu      | `docker.io/library/ubuntu:23.10`                      |
 | `base/ubuntu-24.4-base`      | ubuntu      | `docker.io/library/ubuntu:24.04`                      |
 
@@ -167,6 +167,7 @@
 | `bash-test/fedora-38-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-38-base:latest`          |
 | `bash-test/fedora-39-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-39-base:latest`          |
 | `bash-test/fedora-40-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-40-base:latest`          |
+| `bash-test/fedora-41-bash-test`                  | fedora      | `ghcr.io/automation64/base/fedora-41-base:latest`          |
 | `bash-test/kalilinux-2024.3-bash-test`           | fedora      | `ghcr.io/automation64/base/kalilinux-2024.3-base:latest`   |
 | `bash-test/oraclelinux-7-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-7-base:latest`      |
 | `bash-test/oraclelinux-8-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-8-base:latest`      |
@@ -186,7 +187,6 @@
 | `bash-test/ubuntu-18.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-18.4-base:latest`        |
 | `bash-test/ubuntu-20.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-20.4-base:latest`        |
 | `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-21.4-base:latest`        |
-| `bash-test/ubuntu-22.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.10-base:latest`       |
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`        |
 | `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-23.10-base:latest`       |
 | `bash-test/ubuntu-24.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-24.4-base:latest`        |

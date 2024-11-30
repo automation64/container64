@@ -16,7 +16,7 @@
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
-  if bl64_os_match "${X_TARGET_OS_X}"; then
+  if bl64_os_is_distro "${X_TARGET_OS_X}"; then
     packages="${packages} X_PACKAGE_LIST_X"
   fi
   [[ -z "$packages" ]] && bl64_msg_show_error 'unable to determine package name' && return 1
