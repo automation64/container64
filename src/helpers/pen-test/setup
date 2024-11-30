@@ -5,7 +5,7 @@
 #
 # Author: SerDigital64 (https://github.com/serdigital64)
 # Repository: https://github.com/automation64/container64
-# Version: 1.0.0
+# Version: 1.0.1
 #
 #######################################
 # Copyright [2023] [serdigital64@gmail.com]
@@ -57,7 +57,7 @@ source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
-  if bl64_os_match "${BL64_OS_KL}"; then
+  if bl64_os_is_distro "${BL64_OS_KL}"; then
     packages="${packages} kali-linux-headless"
   fi
   [[ -z "$packages" ]] && bl64_msg_show_error 'unable to determine package name' && return 1
