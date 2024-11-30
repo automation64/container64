@@ -93,7 +93,6 @@
 | `base/ubuntu-20.4-base`      | ubuntu      | `docker.io/library/ubuntu:20.04`                      |
 | `base/ubuntu-21.4-base`      | ubuntu      | `docker.io/library/ubuntu:21.04`                      |
 | `base/ubuntu-22.4-base`      | ubuntu      | `docker.io/library/ubuntu:22.04`                      |
-| `base/ubuntu-23.10-base`     | ubuntu      | `docker.io/library/ubuntu:23.10`                      |
 | `base/ubuntu-24.4-base`      | ubuntu      | `docker.io/library/ubuntu:24.04`                      |
 
 #### Container collection: System Administration toolbox
@@ -188,7 +187,6 @@
 | `bash-test/ubuntu-20.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-20.4-base:latest`        |
 | `bash-test/ubuntu-21.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-21.4-base:latest`        |
 | `bash-test/ubuntu-22.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`        |
-| `bash-test/ubuntu-23.10-bash-test`               | ubuntu      | `ghcr.io/automation64/base/ubuntu-23.10-base:latest`       |
 | `bash-test/ubuntu-24.4-bash-test`                | ubuntu      | `ghcr.io/automation64/base/ubuntu-24.4-base:latest`        |
 
 #### Container collection: Ansible playbooks testing
