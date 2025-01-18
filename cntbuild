@@ -98,16 +98,16 @@
 #######################################
 function bl64_xsv_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
   local search_paths=("${@:-}")
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_TXT_MODULE' &&
-    bl64_lib_module_imported 'BL64_BSH_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_TXT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_BSH_MODULE' &&
     _bl64_xsv_set_command "${search_paths[@]}" &&
     BL64_XSV_MODULE="$BL64_VAR_ON"
   bl64_check_alert_module_setup 'xsv'
@@ -355,17 +355,17 @@ function bl64_xsv_run_yq() {
 #######################################
 function bl64_bsh_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_FMT_MODULE' &&
-    bl64_lib_module_imported 'BL64_XSV_MODULE' &&
-    bl64_lib_module_imported 'BL64_TXT_MODULE' &&
-    bl64_lib_module_imported 'BL64_FS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_FMT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_XSV_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_TXT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_FS_MODULE' &&
     _bl64_bsh_set_version &&
     BL64_BSH_MODULE="$BL64_VAR_ON"
   bl64_check_alert_module_setup 'bsh'
@@ -413,14 +413,8 @@ function _bl64_bsh_set_version() {
 # * Needed to maintain compatibility up to N-2 versions
 #
 
-function bl64_bsh_script_set_id() {
-  bl64_msg_show_deprecated 'bl64_bsh_script_set_id' 'bl64_lib_script_set_id'
-  bl64_lib_script_set_id "$@"
-}
-function bl64_bsh_script_set_identity() {
-  bl64_msg_show_deprecated 'bl64_bsh_script_set_identity' 'bl64_lib_script_set_identity'
-  bl64_lib_script_set_identity "$@"
-}
+function bl64_bsh_script_set_id() { bl64_msg_show_deprecated 'bl64_bsh_script_set_id' 'bl64_lib_script_set_id'; bl64_lib_script_set_id "$@"; }
+function bl64_bsh_script_set_identity() { bl64_msg_show_deprecated 'bl64_bsh_script_set_identity' 'bl64_lib_script_set_identity'; bl64_lib_script_set_identity "$@"; }
 
 #
 # Public functions
@@ -638,7 +632,7 @@ function bl64_bsh_env_store_create() {
   local mode='0750'
 
   [[ "$mode" == "$BL64_VAR_DEFAULT" ]] && mode='0750'
-  bl64_fs_create_dir "$mode" "$user" "$group" \
+  bl64_fs_dir_create "$mode" "$user" "$group" \
     "${home}/${BL64_BSH_ENV_STORE}"
 }
 
@@ -954,7 +948,7 @@ function bl64_bsh_command_locate() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_RXTX_VERSION='2.4.0'
+  declare BL64_RXTX_VERSION='2.4.3'
 
   declare BL64_RXTX_MODULE='0'
 
@@ -983,13 +977,6 @@ function bl64_bsh_command_locate() {
 
   # Public server
   declare BL64_RXTX_GITHUB_URL='https://github.com'
-
-  declare _BL64_RXTX_TXT_MISSING_COMMAND='no web transfer command was found on the system'
-  declare _BL64_RXTX_TXT_EXISTING_DESTINATION='destination path is not empty. No action taken.'
-  declare _BL64_RXTX_TXT_CREATION_PROBLEM='unable to create temporary git repo'
-  declare _BL64_RXTX_TXT_DOWNLOAD_FILE='download file'
-  declare _BL64_RXTX_TXT_ERROR_DOWNLOAD_FILE='file download failed'
-  declare _BL64_RXTX_TXT_ERROR_DOWNLOAD_DIR='directory download failed'
 }
 
 #######################################
@@ -1012,18 +999,18 @@ function bl64_bsh_command_locate() {
 #######################################
 function bl64_rxtx_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_OS_MODULE' &&
-    bl64_lib_module_imported 'BL64_FS_MODULE' &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
-    bl64_lib_module_imported 'BL64_VCS_MODULE' &&
-    bl64_lib_module_imported 'BL64_BSH_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_OS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_FS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_VCS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_BSH_MODULE' &&
     _bl64_rxtx_set_command &&
     _bl64_rxtx_set_options &&
     _bl64_rxtx_set_alias &&
@@ -1283,9 +1270,9 @@ function bl64_rxtx_web_get_file() {
 
   bl64_check_overwrite_skip "$destination" "$replace" && return
 
-  bl64_fs_safeguard "$destination" >/dev/null || return $?
+  bl64_fs_path_archive "$destination" >/dev/null || return $?
 
-  bl64_msg_show_lib_subtask "$_BL64_RXTX_TXT_DOWNLOAD_FILE (${source})"
+  bl64_msg_show_lib_subtask "download file (${source})"
   # shellcheck disable=SC2086
   if [[ -x "$BL64_RXTX_CMD_CURL" ]]; then
     bl64_rxtx_run_curl \
@@ -1300,18 +1287,18 @@ function bl64_rxtx_web_get_file() {
       "$source"
     status=$?
   else
-    bl64_msg_show_error "$_BL64_RXTX_TXT_MISSING_COMMAND (wget or curl)" &&
+    bl64_msg_show_error "no web transfer command was found on the system (wget or curl)" &&
       return $BL64_LIB_ERROR_APP_MISSING
   fi
 
   if (( status != 0 )); then
-    bl64_msg_show_error "$_BL64_RXTX_TXT_ERROR_DOWNLOAD_FILE"
+    bl64_msg_show_error 'file download failed'
   else
     bl64_fs_path_permission_set "$file_mode" "$BL64_VAR_DEFAULT" "$file_user" "$file_group" "$BL64_VAR_OFF" "$destination"
     status=$?
   fi
 
-  bl64_fs_restore "$destination" "$status" || return $?
+  bl64_fs_path_recover "$destination" "$status" || return $?
   return $status
 }
 
@@ -1356,7 +1343,7 @@ function bl64_rxtx_git_get_dir() {
 
   # shellcheck disable=SC2086
   bl64_check_overwrite_skip "$destination" "$replace" && return $?
-  bl64_fs_safeguard "$destination" || return $?
+  bl64_fs_path_archive "$destination" || return $?
 
   bl64_msg_show_lib_subtask "clone source repository (${source_url})"
   if [[ "$source_path" == '.' || "$source_path" == './' ]]; then
@@ -1365,17 +1352,17 @@ function bl64_rxtx_git_get_dir() {
     _bl64_rxtx_git_get_dir_sub "$source_url" "$source_path" "$destination" "$branch"
   fi
   status=$?
-  (( status != 0 )) && bl64_msg_show_error "$_BL64_RXTX_TXT_ERROR_DOWNLOAD_DIR"
+  (( status != 0 )) && bl64_msg_show_error 'directory download failed'
 
   if [[ "$status" == '0' && -d "${destination}/.git" ]]; then
     bl64_msg_show_lib_subtask "remove git metadata (${destination}/.git)"
     # shellcheck disable=SC2164
     bl64_bsh_run_pushd "$destination" || return $?
-    bl64_fs_rm_full '.git' >/dev/null
+    bl64_fs_path_remove '.git' >/dev/null
     bl64_bsh_run_popd
   fi
 
-  bl64_fs_restore "$destination" "$status" || return $?
+  bl64_fs_path_recover "$destination" "$status" || return $?
   return $status
 }
 
@@ -1401,8 +1388,8 @@ function bl64_rxtx_run_curl() {
     bl64_check_module 'BL64_RXTX_MODULE' &&
     bl64_check_command "$BL64_RXTX_CMD_CURL" || return $?
 
-  bl64_msg_lib_verbose_enabled && debug=''
-  bl64_dbg_lib_command_enabled && debug="$BL64_RXTX_SET_CURL_VERBOSE"
+  bl64_msg_lib_verbose_is_enabled && debug=''
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_RXTX_SET_CURL_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -1433,7 +1420,7 @@ function bl64_rxtx_run_wget() {
     bl64_check_module 'BL64_RXTX_MODULE' &&
     bl64_check_command "$BL64_RXTX_CMD_WGET" || return $?
 
-  bl64_dbg_lib_command_enabled && verbose="$BL64_RXTX_SET_WGET_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && verbose="$BL64_RXTX_SET_WGET_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -1456,7 +1443,7 @@ function _bl64_rxtx_git_get_dir_root() {
   bl64_check_module 'BL64_RXTX_MODULE' || return $?
 
   repo="$($BL64_FS_ALIAS_MKTEMP_DIR)"
-  bl64_check_directory "$repo" "$_BL64_RXTX_TXT_CREATION_PROBLEM" || return $BL64_LIB_ERROR_TASK_TEMP
+  bl64_check_directory "$repo" 'unable to create temporary git repo' || return $BL64_LIB_ERROR_TASK_TEMP
 
   git_name="$(bl64_fmt_basename "$source_url")"
   git_name="${git_name/.git/}"
@@ -1469,7 +1456,7 @@ function _bl64_rxtx_git_get_dir_root() {
     bl64_fs_run_mv "$transition" "$destination"
   status=$?
 
-  [[ -d "$repo" ]] && bl64_fs_rm_full "$repo" >/dev/null
+  [[ -d "$repo" ]] && bl64_fs_path_remove "$repo" >/dev/null
   return $status
 }
 
@@ -1489,7 +1476,7 @@ function _bl64_rxtx_git_get_dir_sub() {
 
   repo="$($BL64_FS_ALIAS_MKTEMP_DIR)"
   # shellcheck disable=SC2086
-  bl64_check_directory "$repo" "$_BL64_RXTX_TXT_CREATION_PROBLEM" || return $BL64_LIB_ERROR_TASK_TEMP
+  bl64_check_directory "$repo" 'unable to create temporary git repo' || return $BL64_LIB_ERROR_TASK_TEMP
 
   bl64_dbg_lib_show_comments 'Use transition path to get to the final target path'
   source="${repo}/${source_path}"
@@ -1504,7 +1491,7 @@ function _bl64_rxtx_git_get_dir_sub() {
     bl64_fs_run_mv "${transition}" "$destination" >/dev/null
   status=$?
 
-  [[ -d "$repo" ]] && bl64_fs_rm_full "$repo" >/dev/null
+  [[ -d "$repo" ]] && bl64_fs_path_remove "$repo" >/dev/null
   return $status
 }
 
@@ -1617,15 +1604,15 @@ function bl64_rxtx_github_get_asset() {
 #######################################
 function bl64_api_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_TXT_MODULE' &&
-    bl64_lib_module_imported 'BL64_RXTX_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_TXT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_RXTX_MODULE' &&
     BL64_API_MODULE="$BL64_VAR_ON"
   bl64_check_alert_module_setup 'api'
 }
@@ -1675,7 +1662,7 @@ function bl64_api_call() {
   shift
   shift
 
-  bl64_dbg_lib_command_enabled && debug="${BL64_RXTX_SET_CURL_VERBOSE} ${BL64_RXTX_SET_CURL_INCLUDE}"
+  bl64_dbg_lib_command_is_enabled && debug="${BL64_RXTX_SET_CURL_VERBOSE} ${BL64_RXTX_SET_CURL_INCLUDE}"
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
   "$BL64_RXTX_CMD_CURL" \
@@ -1782,7 +1769,7 @@ function bl64_api_url_encode() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_TXT_VERSION='2.2.0'
+  declare BL64_TXT_VERSION='2.2.1'
 
   declare BL64_TXT_MODULE='0'
 
@@ -1832,14 +1819,14 @@ function bl64_api_url_encode() {
 #######################################
 function bl64_txt_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_OS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_OS_MODULE' &&
     _bl64_txt_set_command &&
     _bl64_txt_set_options &&
     BL64_TXT_MODULE="$BL64_VAR_ON"
@@ -1929,7 +1916,7 @@ function _bl64_txt_set_command() {
     if [[ -x '/usr/bin/gawk' ]]; then
       BL64_TXT_CMD_AWK_POSIX='/usr/bin/gawk'
     else
-      bl64_dbg_show_comment 'no GAWK present. AWK bundled with busybox is not posix compliant'
+      bl64_dbg_lib_show_comments 'no GAWK present. AWK bundled with busybox is not posix compliant'
     fi
     ;;
   ${BL64_OS_MCOS}-*)
@@ -2396,13 +2383,9 @@ function bl64_txt_run_sort() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_FMT_VERSION='3.0.0'
+  declare BL64_FMT_VERSION='3.0.1'
 
   declare BL64_FMT_MODULE='0'
-
-  declare _BL64_FMT_TXT_ERROR_VALUE_LIST_EMPTY='please provide at least one value to check against'
-  declare _BL64_FMT_TXT_ERROR_VALUE_LIST_WRONG='invalid value'
-  declare _BL64_FMT_TXT_VALUE_LIST_VALID='Value must be one of'
 }
 
 #######################################
@@ -2425,15 +2408,15 @@ function bl64_txt_run_sort() {
 #######################################
 function bl64_fmt_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
-    bl64_lib_module_imported 'BL64_TXT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_TXT_MODULE' &&
     BL64_FMT_MODULE="$BL64_VAR_ON"
   bl64_check_alert_module_setup 'fmt'
 }
@@ -2680,9 +2663,9 @@ function bl64_fmt_check_value_in_list() {
   shift
   shift
   bl64_check_parameter 'target_value' &&
-    bl64_check_parameters_none $# "$_BL64_FMT_TXT_ERROR_VALUE_LIST_EMPTY" ||
+    bl64_check_parameters_none $# 'please provide at least one value to check against' ||
     return $?
-  [[ "$error_message" == "$BL64_VAR_DEFAULT" ]] && error_message="$_BL64_FMT_TXT_ERROR_VALUE_LIST_WRONG"
+  [[ "$error_message" == "$BL64_VAR_DEFAULT" ]] && error_message='invalid value'
 
   for valid_value in "$@"; do
     [[ "$target_value" == "$valid_value" ]] &&
@@ -2690,7 +2673,7 @@ function bl64_fmt_check_value_in_list() {
       break
   done
   ((is_valid != 0)) &&
-    bl64_msg_show_error "${error_message}. ${_BL64_FMT_TXT_VALUE_LIST_VALID}: [${*}] (${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${error_message}. Value must be one of: [${*}] (caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
 
   return $is_valid
 }
@@ -2724,7 +2707,7 @@ function bl64_fmt_check_value_in_list() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_VCS_VERSION='2.5.1'
+  declare BL64_VCS_VERSION='2.5.2'
 
   declare BL64_VCS_MODULE='0'
 
@@ -2765,20 +2748,20 @@ function bl64_fmt_check_value_in_list() {
 #######################################
 function bl64_vcs_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_OS_MODULE' &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
-    bl64_lib_module_imported 'BL64_API_MODULE' &&
-    bl64_lib_module_imported 'BL64_FS_MODULE' &&
-    bl64_lib_module_imported 'BL64_TXT_MODULE' &&
-    bl64_lib_module_imported 'BL64_OS_MODULE' &&
-    bl64_lib_module_imported 'BL64_BSH_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_OS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_API_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_FS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_TXT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_OS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_BSH_MODULE' &&
     _bl64_vcs_set_command &&
     _bl64_vcs_set_options &&
     BL64_VCS_MODULE="$BL64_VAR_ON"
@@ -2871,7 +2854,7 @@ function bl64_vcs_run_git() {
   bl64_vcs_blank_git
 
   bl64_dbg_lib_show_info "current path: $(pwd)"
-  if bl64_dbg_lib_command_enabled; then
+  if bl64_dbg_lib_command_is_enabled; then
     debug=''
     export GIT_TRACE='2'
   else
@@ -2949,7 +2932,7 @@ function bl64_vcs_git_clone() {
     return $?
 
   bl64_msg_show_lib_subtask "clone single branch (${source}/${branch} -> ${destination})"
-  bl64_fs_create_dir "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "$destination" &&
+  bl64_fs_dir_create "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "$destination" &&
     bl64_bsh_run_pushd "$destination" ||
     return $?
 
@@ -3004,7 +2987,7 @@ function bl64_vcs_git_sparse() {
     bl64_check_parameter 'destination' &&
     bl64_check_parameter 'search_pattern' || return $?
 
-  bl64_fs_create_dir "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "$destination" &&
+  bl64_fs_dir_create "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "${BL64_VAR_DEFAULT}" "$destination" &&
     bl64_bsh_run_pushd "$destination" ||
     return $?
 
@@ -3234,7 +3217,7 @@ function _bl64_vcs_changelog_get_release() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_CNT_VERSION='3.4.1'
+  declare BL64_CNT_VERSION='3.4.2'
 
   declare BL64_CNT_MODULE='0'
 
@@ -3271,8 +3254,6 @@ function _bl64_vcs_changelog_get_release() {
   declare BL64_CNT_SET_STATUS_RUNNING=''
 
   declare BL64_CNT_PATH_DOCKER_SOCKET=''
-
-  declare _BL64_CNT_TXT_LOGIN_REGISTRY='loging to container registry'
 }
 
 #######################################
@@ -3296,16 +3277,16 @@ function _bl64_vcs_changelog_get_release() {
 #######################################
 function bl64_cnt_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_OS_MODULE' &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
-    bl64_lib_module_imported 'BL64_BSH_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_OS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_BSH_MODULE' &&
     _bl64_cnt_set_command &&
     bl64_cnt_set_paths &&
     _bl64_cnt_set_options &&
@@ -3538,7 +3519,7 @@ function bl64_cnt_login_stdin() {
     bl64_check_parameter 'registry' ||
     return $?
 
-  bl64_msg_show_lib_subtask "${_BL64_CNT_TXT_LOGIN_REGISTRY} (${user}@${registry})"
+  bl64_msg_show_lib_subtask "login to container registry (${user}@${registry})"
   "_bl64_cnt_${BL64_CNT_DRIVER}_login" "$user" "$BL64_VAR_DEFAULT" "$BL64_CNT_FLAG_STDIN" "$registry"
 }
 
@@ -3569,7 +3550,7 @@ function bl64_cnt_login_file() {
     bl64_check_file "$file" ||
     return $?
 
-  bl64_msg_show_lib_subtask "${_BL64_CNT_TXT_LOGIN_REGISTRY} (${user}@${registry})"
+  bl64_msg_show_lib_subtask "login to container registry (${user}@${registry})"
   "_bl64_cnt_${BL64_CNT_DRIVER}_login" "$user" "$BL64_VAR_DEFAULT" "$file" "$registry"
 }
 
@@ -3599,7 +3580,7 @@ function bl64_cnt_login() {
     bl64_check_parameter 'registry' ||
     return $?
 
-  bl64_msg_show_lib_subtask "${_BL64_CNT_TXT_LOGIN_REGISTRY} (${user}@${registry})"
+  bl64_msg_show_lib_subtask "login to container registry (${user}@${registry})"
   "_bl64_cnt_${BL64_CNT_DRIVER}_login" "$user" "$password" "$BL64_VAR_DEFAULT" "$registry"
 }
 
@@ -4009,7 +3990,7 @@ function bl64_cnt_run_docker() {
     bl64_check_command "$BL64_CNT_CMD_DOCKER" ||
     return $?
 
-  if bl64_dbg_lib_command_enabled; then
+  if bl64_dbg_lib_command_is_enabled; then
     verbose="$BL64_CNT_SET_LOG_LEVEL_DEBUG"
     debug="$BL64_CNT_SET_DEBUG"
   fi
@@ -4324,7 +4305,7 @@ function bl64_cnt_run_podman() {
     bl64_check_command "$BL64_CNT_CMD_PODMAN" ||
     return $?
 
-  bl64_dbg_lib_command_enabled && verbose="$BL64_CNT_SET_LOG_LEVEL_DEBUG"
+  bl64_dbg_lib_command_is_enabled && verbose="$BL64_CNT_SET_LOG_LEVEL_DEBUG"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -4609,7 +4590,7 @@ function bl64_cnt_check_not_in_container() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_FS_VERSION='5.7.0'
+  declare BL64_FS_VERSION='5.9.1'
 
   declare BL64_FS_MODULE='0'
 
@@ -4677,33 +4658,10 @@ function bl64_cnt_check_not_in_container() {
   declare BL64_FS_UMASK_RW_USER_RO_ALL='u=rwx,g=rx,o=rx'
   declare BL64_FS_UMASK_RW_GROUP_RO_ALL='u=rwx,g=rwx,o=rx'
 
-  declare BL64_FS_SAFEGUARD_POSTFIX='.bl64_fs_safeguard'
+  declare BL64_FS_ARCHIVE_POSTFIX='-ARCHIVE'
+  declare BL64_FS_BACKUP_POSTFIX='-BACKUP'
 
   declare BL64_FS_TMP_PREFIX='bl64tmp'
-
-  declare _BL64_FS_TXT_CLEANUP_CACHES='clean up OS cache contents'
-  declare _BL64_FS_TXT_CLEANUP_LOGS='clean up OS logs'
-  declare _BL64_FS_TXT_CLEANUP_TEMP='clean up OS temporary files'
-  declare _BL64_FS_TXT_CREATE_DIR_PATH='create directory'
-  declare _BL64_FS_TXT_MERGE_ADD_SOURCE='merge content from source'
-  declare _BL64_FS_TXT_MERGE_DIRS='merge directories content'
-  declare _BL64_FS_TXT_RESTORE_OBJECT='restore original file from backup'
-  declare _BL64_FS_TXT_SAFEGUARD_FAILED='unable to safeguard requested path'
-  declare _BL64_FS_TXT_SAFEGUARD_OBJECT='backup original file'
-  declare _BL64_FS_TXT_SYMLINK_CREATE='create symbolick link'
-  declare _BL64_FS_TXT_SYMLINK_EXISTING='target symbolick link is already present. No further action taken'
-  declare _BL64_FS_TXT_CREATE_FILE='create empty regular file'
-  declare _BL64_FS_TXT_UMASK_SET='temporary change current script umask'
-
-  declare _BL64_FS_TXT_WARN_EXISTING_FILE='target file is already created'
-  declare _BL64_FS_TXT_ERROR_NOT_TMPDIR='provided directory was not created by bl64_fs_create_tmpdir'
-  declare _BL64_FS_TXT_ERROR_NOT_TMPFILE='provided directory was not created by bl64_fs_create_tmpfile'
-  declare _BL64_FS_TXT_ERROR_INVALID_FILE_TARGET='invalid file destination. Provided path exists and is a directory'
-  declare _BL64_FS_TXT_ERROR_INVALID_DIR_TARGET='invalid directory destination. Provided path exists and is a file'
-
-  declare _BL64_FS_TXT_SET_MODE='set new file permissions'
-  declare _BL64_FS_TXT_SET_OWNER='set new file owner'
-  declare _BL64_FS_TXT_SET_GROUP='set new file group'
 }
 
 #######################################
@@ -4726,16 +4684,16 @@ function bl64_cnt_check_not_in_container() {
 #######################################
 function bl64_fs_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_OS_MODULE' &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
-    bl64_lib_module_imported 'BL64_FMT_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_OS_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_FMT_MODULE' &&
     _bl64_fs_set_command &&
     _bl64_fs_set_alias &&
     _bl64_fs_set_options &&
@@ -5039,37 +4997,54 @@ function _bl64_fs_set_alias() {
 #
 # Deprecation aliases
 #
-# * Aliases to deprecated functions 
+# * Aliases to deprecated functions
 # * Needed to maintain compatibility up to N-2 versions
 #
 
-function bl64_fs_create_dir() { bl64_msg_show_deprecated 'bl64_fs_create_dir' 'bl64_fs_dir_create'; bl64_fs_dir_create "$@"; }
-function bl64_fs_cp_file() { bl64_msg_show_deprecated 'bl64_fs_cp_file' 'bl64_fs_run_cp'; bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$@"; }
-function bl64_fs_cp_dir() { bl64_msg_show_deprecated 'bl64_fs_cp_dir' 'bl64_fs_run_cp'; bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" "$@"; }
-function bl64_fs_ln_symbolic() { bl64_msg_show_deprecated 'bl64_fs_ln_symbolic' 'bl64_fs_create_symlink'; bl64_fs_create_symlink "$1" "$2"; }
-function bl64_fs_rm_file() { bl64_msg_show_deprecated 'bl64_fs_rm_file' 'bl64_fs_file_remove'; bl64_fs_file_remove "$@"; }
-function bl64_fs_rm_full() { bl64_msg_show_deprecated 'bl64_fs_rm_full' 'bl64_fs_path_remove'; bl64_fs_path_remove "$@"; }
-
-#######################################
-# Set object permissions and ownership
-#
-# * DEPRECATED: to be removed in future versions. Migrate to bl64_fs_path_permission_set
-# * work on individual files
-# * no recurse option
-# * all files get the same permissions, user, group
-#
-# Arguments:
-#   $1: permissions. Format: chown format. Default: use current umask
-#   $2: user name. Default: none
-#   $3: group name. Default: current
-#   $@: list of objects. Must use full path for each
-# Outputs:
-#   STDOUT: command stdin
-#   STDERR: command stderr
-# Returns:
-#   0: operation completed ok
-#   >0: operation failed
-#######################################
+function bl64_fs_create_dir() {
+  bl64_msg_show_deprecated 'bl64_fs_create_dir' 'bl64_fs_dir_create'
+  bl64_fs_dir_create "$@"
+}
+function bl64_fs_cp_file() {
+  bl64_msg_show_deprecated 'bl64_fs_cp_file' 'bl64_fs_file_copy'
+  bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$@"
+}
+function bl64_fs_cp_dir() {
+  bl64_msg_show_deprecated 'bl64_fs_cp_dir' 'bl64_fs_path_copy'
+  bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" "$@"
+}
+function bl64_fs_ln_symbolic() {
+  bl64_msg_show_deprecated 'bl64_fs_ln_symbolic' 'bl64_fs_symlink_create'
+  bl64_fs_symlink_create "$@"
+}
+function bl64_fs_create_symlink() {
+  bl64_msg_show_deprecated 'bl64_fs_create_symlink' 'bl64_fs_symlink_create'
+  bl64_fs_symlink_create "$@"
+}
+function bl64_fs_rm_file() {
+  bl64_msg_show_deprecated 'bl64_fs_rm_file' 'bl64_fs_file_remove'
+  bl64_fs_file_remove "$@"
+}
+function bl64_fs_rm_full() {
+  bl64_msg_show_deprecated 'bl64_fs_rm_full' 'bl64_fs_path_remove'
+  bl64_fs_path_remove "$@"
+}
+function bl64_fs_create_file() {
+  bl64_msg_show_deprecated 'bl64_fs_create_file' 'bl64_fs_file_create'
+  bl64_fs_file_create "$@"
+}
+function bl64_fs_copy_files() {
+  bl64_msg_show_deprecated 'bl64_fs_copy_files' 'bl64_fs_file_copy'
+  bl64_fs_file_copy "$@"
+}
+function bl64_fs_safeguard() {
+  bl64_msg_show_deprecated 'bl64_fs_safeguard' 'bl64_fs_path_archive'
+  bl64_fs_path_archive "$@"
+}
+function bl64_fs_restore() {
+  bl64_msg_show_deprecated 'bl64_fs_restore' 'bl64_fs_path_recover'
+  bl64_fs_path_recover "$@"
+}
 function bl64_fs_set_permissions() {
   bl64_dbg_lib_show_function "$@"
   bl64_msg_show_deprecated 'bl64_fs_set_permissions' 'bl64_fs_path_permission_set'
@@ -5078,7 +5053,6 @@ function bl64_fs_set_permissions() {
   local group="${3:-${BL64_VAR_DEFAULT}}"
   local path=''
 
-  # Remove consumed parameters
   shift
   shift
   shift
@@ -5092,24 +5066,6 @@ function bl64_fs_set_permissions() {
     "$@"
 }
 
-#######################################
-# Fix path permissions
-#
-# * DEPRECATED: to be removed in future versions. Migrate to bl64_fs_path_permission_set
-# * allow different permissions for files and directories
-# * recursive
-#
-# Arguments:
-#   $1: file permissions. Format: chown format. Default: no action
-#   $2: directory permissions. Format: chown format. Default: no action
-#   $@: list of paths. Must use full path for each
-# Outputs:
-#   STDOUT: command stdin
-#   STDERR: command stderr
-# Returns:
-#   0: operation completed ok
-#   >0: operation failed
-#######################################
 function bl64_fs_fix_permissions() {
   bl64_dbg_lib_show_function "$@"
   bl64_msg_show_deprecated 'bl64_fs_fix_permissions' 'bl64_fs_path_permission_set'
@@ -5117,7 +5073,6 @@ function bl64_fs_fix_permissions() {
   local dir_mode="${2:-${BL64_VAR_DEFAULT}}"
   local path=''
 
-  # Remove consumed parameters
   shift
   shift
 
@@ -5130,50 +5085,84 @@ function bl64_fs_fix_permissions() {
     "$@"
 }
 
-#######################################
-# Copy one ore more files to a single destination, then set owner and permissions
 #
-# * DEPRECATED: to be removed in future versions. Migrate to bl64_fs_path_copy
+# Private functions
 #
-# Requirements:
-#   * Destination path should be present
-#   * root privilege (sudo) if paths are restricted or change owner is requested
-# Limitations:
-#   * No rollback in case of errors. The process will not remove already copied files
-# Arguments:
-#   $1: permissions. Format: chown format. Default: use current umask
-#   $2: user name. Default: current
-#   $3: group name. Default: current
-#   $4: destination path
-#   $@: full file paths
-# Outputs:
-#   STDOUT: verbose operation
-#   STDOUT: command errors
-# Returns:
-#   0: Operation completed ok
-#   >0: Operation failed
-#######################################
-function bl64_fs_copy_files() {
+
+function _bl64_fs_path_permission_set_file() {
   bl64_dbg_lib_show_function "$@"
-  bl64_msg_show_deprecated 'bl64_fs_copy_files' 'bl64_fs_path_copy'
-  local mode="${1:-${BL64_VAR_DEFAULT}}"
-  local user="${2:-${BL64_VAR_DEFAULT}}"
-  local group="${3:-${BL64_VAR_DEFAULT}}"
-  local destination="${4:-${BL64_VAR_DEFAULT}}"
+  local mode="$1"
+  local recursive="$2"
+  local path="$3"
 
-  # Remove consumed parameters
-  shift
-  shift
-  shift
-  shift
+  [[ "$mode" == "$BL64_VAR_DEFAULT" ]] && return 0
+  bl64_msg_show_lib_subtask "set file permissions (${file_mode} ${BL64_MSG_COSMETIC_ARROW} ${path})"
+  if bl64_lib_flag_is_enabled "$recursive"; then
+    # shellcheck disable=SC2086
+    bl64_fs_run_find \
+      "$path" \
+      ${BL64_FS_SET_FIND_STAY} \
+      ${BL64_FS_SET_FIND_TYPE_FILE} \
+      ${BL64_FS_SET_FIND_RUN} "$BL64_FS_CMD_CHMOD" "$file_mode" "{}" \;
+  else
+    [[ ! -f "$path" ]] && return 0
+    bl64_fs_run_chmod "$mode" "$path"
+  fi
+}
 
-  bl64_fs_path_copy \
-    "$mode" \
-    "$BL64_VAR_DEFAULT" \
-    "$user" \
-    "$group" \
-    "$destination" \
-    "$@"
+function _bl64_fs_path_permission_set_dir() {
+  bl64_dbg_lib_show_function "$@"
+  local mode="$1"
+  local recursive="$2"
+  local path="$3"
+
+  [[ "$mode" == "$BL64_VAR_DEFAULT" ]] && return 0
+  bl64_msg_show_lib_subtask "set directory permissions (${dir_mode} ${BL64_MSG_COSMETIC_ARROW} ${path})"
+  if bl64_lib_flag_is_enabled "$recursive"; then
+    # shellcheck disable=SC2086
+    bl64_fs_run_find \
+      "$path" \
+      ${BL64_FS_SET_FIND_STAY} \
+      ${BL64_FS_SET_FIND_TYPE_DIR} \
+      ${BL64_FS_SET_FIND_RUN} "$BL64_FS_CMD_CHMOD" "$dir_mode" "{}" \;
+  else
+    [[ ! -d "$path" ]] && return 0
+    bl64_fs_run_chmod "$mode" "$path"
+  fi
+}
+
+function _bl64_fs_path_permission_set_user() {
+  bl64_dbg_lib_show_function "$@"
+  local user="$1"
+  local recursive="$2"
+  local path="$3"
+  local cli_options=' '
+
+  [[ "$user" == "$BL64_VAR_DEFAULT" ]] && return 0
+  bl64_lib_flag_is_enabled "$recursive" && cli_options="$BL64_FS_SET_CHOWN_RECURSIVE"
+  bl64_msg_show_lib_subtask "set new file owner (${user} ${BL64_MSG_COSMETIC_ARROW2} ${path})"
+  # shellcheck disable=SC2086
+  bl64_fs_run_chown \
+    $cli_options \
+    "${user}" \
+    "$path"
+}
+
+function _bl64_fs_path_permission_set_group() {
+  bl64_dbg_lib_show_function "$@"
+  local group="$1"
+  local recursive="$2"
+  local path="$3"
+  local cli_options=' '
+
+  [[ "$group" == "$BL64_VAR_DEFAULT" ]] && return 0
+  bl64_lib_flag_is_enabled "$recursive" && cli_options="$BL64_FS_SET_CHOWN_RECURSIVE"
+  bl64_msg_show_lib_subtask "set new file group (${group} ${BL64_MSG_COSMETIC_ARROW2} ${path})"
+  # shellcheck disable=SC2086
+  bl64_fs_run_chown \
+    $cli_options \
+    ":${group}" \
+    "$path"
 }
 
 #
@@ -5218,7 +5207,7 @@ function bl64_fs_dir_create() {
   for path in "$@"; do
     bl64_check_path_absolute "$path" || return $?
     [[ -d "$path" ]] && continue
-    bl64_msg_show_lib_subtask "${_BL64_FS_TXT_CREATE_DIR_PATH} (${path})"
+    bl64_msg_show_lib_subtask "create directory (${path})"
     bl64_fs_run_mkdir "$path" &&
       bl64_fs_path_permission_set "$BL64_VAR_DEFAULT" "$mode" "$user" "$group" "$BL64_VAR_OFF" "$path" ||
       return $?
@@ -5261,7 +5250,7 @@ function bl64_fs_path_remove() {
 }
 
 #######################################
-# Copy one ore more paths to a single destination. Optinally set owner and permissions
+# Copy one ore more paths to a single destination. Optionally set owner and permissions
 #
 # * Wildcards are not allowed. Use run_cp instead if needed
 # * Path can be directory and/or file only
@@ -5328,6 +5317,67 @@ function bl64_fs_path_copy() {
 }
 
 #######################################
+# Copy one ore more files to a single destination. Optionally set owner and permissions
+#
+# * Wildcards are not allowed. Use run_cp instead if needed
+# * Destination path should be present
+# * Root privilege (sudo) needed if paths are restricted or change owner is requested
+# * No rollback in case of errors. The process will not remove already copied files
+#
+# Arguments:
+#   $1: file permissions. Format: chown format. Default: use current umask
+#   $2: user name. Default: current
+#   $3: group name. Default: current
+#   $4: destination path
+#   $@: full file paths. No wildcards allowed
+# Outputs:
+#   STDOUT: verbose operation
+#   STDERR: command errors
+# Returns:
+#   0: Operation completed ok
+#   >0: Operation failed
+#######################################
+function bl64_fs_file_copy() {
+  bl64_dbg_lib_show_function "$@"
+  local file_mode="${1:-${BL64_VAR_DEFAULT}}"
+  local user="${2:-${BL64_VAR_DEFAULT}}"
+  local group="${3:-${BL64_VAR_DEFAULT}}"
+  local destination="${4:-${BL64_VAR_DEFAULT}}"
+  local path_current=''
+  local path_base=
+
+  bl64_check_directory "$destination" || return $?
+
+  # Remove consumed parameters
+  shift
+  shift
+  shift
+  shift
+
+  # shellcheck disable=SC2086
+  bl64_check_parameters_none "$#" || return $?
+  bl64_msg_show_lib_subtask "copy files (${*} ${BL64_MSG_COSMETIC_ARROW2} ${destination})"
+  # shellcheck disable=SC2086
+  bl64_fs_run_cp \
+    $BL64_FS_SET_CP_FORCE \
+    "$@" \
+    "$destination" ||
+    return $?
+
+  for path_current in "$@"; do
+    path_base="$(bl64_fmt_basename "$path_current")"
+    bl64_fs_path_permission_set \
+      "$file_mode" \
+      "$BL64_VAR_DEFAULT" \
+      "$user" \
+      "$group" \
+      "$BL64_VAR_OFF" \
+      "${destination}/${path_base}" ||
+      return $?
+  done
+}
+
+#######################################
 # Merge 2 or more files into a new one, then set owner and permissions
 #
 # * If the destination is already present no update is done unless requested
@@ -5375,7 +5425,7 @@ function bl64_fs_merge_files() {
   bl64_dbg_lib_show_info "source files:[${*}]"
 
   for path in "$@"; do
-    bl64_msg_show_lib_subtask "${_BL64_FS_TXT_MERGE_ADD_SOURCE} (${path} ${BL64_MSG_COSMETIC_ARROW2} ${destination})"
+    bl64_msg_show_lib_subtask "merge content from source (${path} ${BL64_MSG_COSMETIC_ARROW2} ${destination})"
     if ((first == 1)); then
       first=0
       bl64_check_path_absolute "$path" &&
@@ -5395,7 +5445,7 @@ function bl64_fs_merge_files() {
     status=$?
   else
     bl64_dbg_lib_show_comments "merge failed, removing incomplete file (${destination})"
-    [[ -f "$destination" ]] && bl64_fs_rm_file "$destination"
+    bl64_fs_file_remove "$destination"
   fi
 
   return $status
@@ -5427,26 +5477,26 @@ function bl64_fs_merge_dir() {
     bl64_check_directory "$target" ||
     return $?
 
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_MERGE_DIRS} (${source} ${BL64_MSG_COSMETIC_ARROW2} ${target})"
+  bl64_msg_show_lib_subtask "merge directories content (${source} ${BL64_MSG_COSMETIC_ARROW2} ${target})"
   case "$BL64_OS_DISTRO" in
   ${BL64_OS_UB}-* | ${BL64_OS_DEB}-* | ${BL64_OS_KL}-*)
-    bl64_fs_cp_dir --no-target-directory "$source" "$target"
+    bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" --no-target-directory "$source" "$target"
     ;;
   ${BL64_OS_FD}-* | ${BL64_OS_AMZ}-* | ${BL64_OS_CNT}-* | ${BL64_OS_RHEL}-* | ${BL64_OS_ALM}-* | ${BL64_OS_OL}-* | ${BL64_OS_RCK}-*)
-    bl64_fs_cp_dir --no-target-directory "$source" "$target"
+    bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" --no-target-directory "$source" "$target"
     ;;
   ${BL64_OS_SLES}-*)
-    bl64_fs_cp_dir --no-target-directory "$source" "$target"
+    bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" --no-target-directory "$source" "$target"
     ;;
   ${BL64_OS_ALP}-*)
     # shellcheck disable=SC2086
     shopt -sq dotglob &&
-      bl64_fs_cp_dir ${source}/* -t "$target" &&
+      bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" ${source}/* -t "$target" &&
       shopt -uq dotglob
     ;;
   ${BL64_OS_MCOS}-*)
     # shellcheck disable=SC2086
-    bl64_fs_cp_dir ${source}/ "$target"
+    bl64_fs_run_cp "$BL64_FS_SET_CP_FORCE" "$BL64_FS_SET_CP_RECURSIVE" ${source}/ "$target"
     ;;
   *) bl64_check_alert_unsupported ;;
   esac
@@ -5471,7 +5521,7 @@ function bl64_fs_run_chown() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_CHOWN_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_CHOWN_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -5524,7 +5574,7 @@ function bl64_fs_run_chmod() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_CHMOD_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_CHMOD_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -5593,7 +5643,7 @@ function bl64_fs_run_mkdir() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_MKDIR_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_MKDIR_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -5638,7 +5688,7 @@ function bl64_fs_run_mv() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_MV_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_MV_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -5664,12 +5714,12 @@ function bl64_fs_cleanup_tmps() {
   local target=''
 
   target='/tmp'
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_CLEANUP_TEMP} (${target})"
-  bl64_fs_rm_full -- ${target}/[[:alnum:]]*
+  bl64_msg_show_lib_subtask "clean up OS temporary files (${target})"
+  bl64_fs_path_remove -- ${target}/[[:alnum:]]*
 
   target='/var/tmp'
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_CLEANUP_TEMP} (${target})"
-  bl64_fs_rm_full -- ${target}/[[:alnum:]]*
+  bl64_msg_show_lib_subtask "clean up OS temporary files (${target})"
+  bl64_fs_path_remove -- ${target}/[[:alnum:]]*
   return 0
 }
 
@@ -5691,8 +5741,8 @@ function bl64_fs_cleanup_logs() {
   local target='/var/log'
 
   if [[ -d "$target" ]]; then
-    bl64_msg_show_lib_subtask "${_BL64_FS_TXT_CLEANUP_LOGS} (${target})"
-    bl64_fs_rm_full ${target}/[[:alnum:]]*
+    bl64_msg_show_lib_subtask "clean up OS logs (${target})"
+    bl64_fs_path_remove ${target}/[[:alnum:]]*
   fi
   return 0
 }
@@ -5715,8 +5765,8 @@ function bl64_fs_cleanup_caches() {
   local target='/var/cache/man'
 
   if [[ -d "$target" ]]; then
-    bl64_msg_show_lib_subtask "${_BL64_FS_TXT_CLEANUP_CACHES} (${target})"
-    bl64_fs_rm_full ${target}/[[:alnum:]]*
+    bl64_msg_show_lib_subtask "clean up OS cache contents (${target})"
+    bl64_fs_path_remove ${target}/[[:alnum:]]*
   fi
   return 0
 }
@@ -5823,14 +5873,14 @@ function bl64_fs_find_files() {
 }
 
 #######################################
-# Safeguard path to a temporary location
+# Archive path to a temporary location
 #
 # * Use for file/dir operations that will alter or replace the content and requires a quick rollback mechanism
-# * The original path is renamed until bl64_fs_restore is called to either remove or restore it
-# * If the destination is not present nothing is done. Return with no error. This is to cover for first time path creation
+# * The original path is renamed until bl64_fs_path_recover is called to either remove or restore it
+# * If the source is not present nothing is done. Return with no error. This is to cover for first time path creation
 #
 # Arguments:
-#   $1: safeguard path (produced by bl64_fs_safeguard)
+#   $1: safeguard path (produced by bl64_fs_path_archive)
 #   $2: task status (exit status from last operation)
 # Outputs:
 #   STDOUT: Task progress
@@ -5839,23 +5889,23 @@ function bl64_fs_find_files() {
 #   0: task executed ok
 #   >0: task failed
 #######################################
-function bl64_fs_safeguard() {
+function bl64_fs_path_archive() {
   bl64_dbg_lib_show_function "$@"
-  local destination="${1:-}"
-  local backup="${destination}${BL64_FS_SAFEGUARD_POSTFIX}"
+  local source="${1:-}"
+  local backup="${source}${BL64_FS_ARCHIVE_POSTFIX}"
 
-  bl64_check_parameter 'destination' ||
+  bl64_check_parameter 'source' ||
     return $?
 
   # Return if not present
-  if [[ ! -e "$destination" ]]; then
-    bl64_dbg_lib_show_comments "path is not yet created, nothing to do (${destination})"
+  if [[ ! -e "$source" ]]; then
+    bl64_dbg_lib_show_comments "path is not yet created, nothing to do (${source})"
     return 0
   fi
 
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_SAFEGUARD_OBJECT} ([${destination}]->[${backup}])"
-  if ! bl64_fs_run_mv "$destination" "$backup"; then
-    bl64_msg_show_error "$_BL64_FS_TXT_SAFEGUARD_FAILED ($destination)"
+  bl64_msg_show_lib_subtask "backup source path ([${source}]->[${backup}])"
+  if ! bl64_fs_run_mv "$source" "$backup"; then
+    bl64_msg_show_error "unable to archive source path ($source)"
     return $BL64_LIB_ERROR_TASK_BACKUP
   fi
 
@@ -5863,14 +5913,14 @@ function bl64_fs_safeguard() {
 }
 
 #######################################
-# Restore path from safeguard if operation failed or remove if operation was ok
+# Recover path from safeguard if operation failed or remove if operation was ok
 #
 # * Use as a quick rollback for file/dir operations
-# * Called after bl64_fs_safeguard creates the backup
+# * Called after bl64_fs_path_archive creates the backup
 # * If the backup is not there nothing is done, no error returned. This is to cover for first time path creation
 #
 # Arguments:
-#   $1: safeguard path (produced by bl64_fs_safeguard)
+#   $1: safeguard path (produced by bl64_fs_path_archive)
 #   $2: task status (exit status from last operation)
 # Outputs:
 #   STDOUT: Task progress
@@ -5879,13 +5929,13 @@ function bl64_fs_safeguard() {
 #   0: task executed ok
 #   >0: task failed
 #######################################
-function bl64_fs_restore() {
+function bl64_fs_path_recover() {
   bl64_dbg_lib_show_function "$@"
-  local destination="${1:-}"
+  local source="${1:-}"
   local -i result=$2
-  local backup="${destination}${BL64_FS_SAFEGUARD_POSTFIX}"
+  local backup="${source}${BL64_FS_ARCHIVE_POSTFIX}"
 
-  bl64_check_parameter 'destination' &&
+  bl64_check_parameter 'source' &&
     bl64_check_parameter 'result' ||
     return $?
 
@@ -5897,22 +5947,16 @@ function bl64_fs_restore() {
 
   # Check if restore is needed based on the operation result
   if ((result == 0)); then
-    bl64_dbg_lib_show_comments 'operation was ok, backup no longer needed, remove it'
-    [[ -e "$backup" ]] && bl64_fs_rm_full "$backup"
-
-    # shellcheck disable=SC2086
+    bl64_msg_show_lib_subtask "remove obsolete backup (${backup})"
+    bl64_fs_path_remove "$backup"
     return 0
   else
-    bl64_dbg_lib_show_comments 'operation was NOT ok, remove invalid content'
-    [[ -e "$destination" ]] && bl64_fs_rm_full "$destination"
-
-    bl64_msg_show_lib_subtask "${_BL64_FS_TXT_RESTORE_OBJECT} ([${backup}]->[${destination}])"
+    bl64_msg_show_lib_subtask "restore original path from backup ([${backup}]->[${source}])"
     # shellcheck disable=SC2086
-    bl64_fs_run_mv "$backup" "$destination" ||
+    bl64_fs_run_mv "$backup" "$source" ||
       return $BL64_LIB_ERROR_TASK_RESTORE
   fi
 }
-
 
 #######################################
 # Set path permissions and ownership
@@ -5966,82 +6010,6 @@ function bl64_fs_path_permission_set() {
   done
 }
 
-function _bl64_fs_path_permission_set_file() {
-  bl64_dbg_lib_show_function "$@"
-  local mode="$1"
-  local recursive="$2"
-  local path="$3"
-
-  [[ "$mode" == "$BL64_VAR_DEFAULT" ]] && return 0
-  bl64_msg_show_lib_subtask "set file permissions (${file_mode} ${BL64_MSG_COSMETIC_ARROW} ${path})"
-  if bl64_lib_flag_is_enabled "$recursive"; then
-    # shellcheck disable=SC2086
-    bl64_fs_run_find \
-      "$path" \
-      ${BL64_FS_SET_FIND_STAY} \
-      ${BL64_FS_SET_FIND_TYPE_FILE} \
-      ${BL64_FS_SET_FIND_RUN} "$BL64_FS_CMD_CHMOD" "$file_mode" "{}" \;
-  else
-    [[ ! -f "$path" ]] && return 0
-    bl64_fs_run_chmod "$mode" "$path"
-  fi
-}
-
-function _bl64_fs_path_permission_set_dir() {
-  bl64_dbg_lib_show_function "$@"
-  local mode="$1"
-  local recursive="$2"
-  local path="$3"
-
-  [[ "$mode" == "$BL64_VAR_DEFAULT" ]] && return 0
-  bl64_msg_show_lib_subtask "set directory permissions (${dir_mode} ${BL64_MSG_COSMETIC_ARROW} ${path})"
-  if bl64_lib_flag_is_enabled "$recursive"; then
-    # shellcheck disable=SC2086
-    bl64_fs_run_find \
-      "$path" \
-      ${BL64_FS_SET_FIND_STAY} \
-      ${BL64_FS_SET_FIND_TYPE_DIR} \
-      ${BL64_FS_SET_FIND_RUN} "$BL64_FS_CMD_CHMOD" "$dir_mode" "{}" \;
-  else
-    [[ ! -d "$path" ]] && return 0
-    bl64_fs_run_chmod "$mode" "$path"
-  fi
-}
-
-function _bl64_fs_path_permission_set_user() {
-  bl64_dbg_lib_show_function "$@"
-  local user="$1"
-  local recursive="$2"
-  local path="$3"
-  local cli_options=' '
-
-  [[ "$user" == "$BL64_VAR_DEFAULT" ]] && return 0
-  bl64_lib_flag_is_enabled "$recursive" && cli_options="$BL64_FS_SET_CHOWN_RECURSIVE"
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_SET_OWNER} (${user} ${BL64_MSG_COSMETIC_ARROW2} ${path})"
-  # shellcheck disable=SC2086
-  bl64_fs_run_chown \
-    $cli_options \
-    "${user}" \
-    "$path"
-}
-
-function _bl64_fs_path_permission_set_group() {
-  bl64_dbg_lib_show_function "$@"
-  local group="$1"
-  local recursive="$2"
-  local path="$3"
-  local cli_options=' '
-
-  [[ "$group" == "$BL64_VAR_DEFAULT" ]] && return 0
-  bl64_lib_flag_is_enabled "$recursive" && cli_options="$BL64_FS_SET_CHOWN_RECURSIVE"
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_SET_GROUP} (${group} ${BL64_MSG_COSMETIC_ARROW2} ${path})"
-  # shellcheck disable=SC2086
-  bl64_fs_run_chown \
-    $cli_options \
-    ":${group}" \
-    "$path"
-}
-
 #######################################
 # Command wrapper with verbose, debug and common options
 #
@@ -6061,7 +6029,7 @@ function bl64_fs_run_cp() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_CP_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_CP_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -6088,7 +6056,7 @@ function bl64_fs_run_rm() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_CP_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_CP_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -6139,7 +6107,7 @@ function bl64_fs_run_ln() {
   bl64_check_parameters_none "$#" &&
     bl64_check_module 'BL64_FS_MODULE' ||
     return $?
-  bl64_dbg_lib_command_enabled && debug="$BL64_FS_SET_LN_VERBOSE"
+  bl64_dbg_lib_command_is_enabled && debug="$BL64_FS_SET_LN_VERBOSE"
 
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
@@ -6167,7 +6135,7 @@ function bl64_fs_set_umask() {
   bl64_dbg_lib_show_function "$@"
   local permissions="${1:-${BL64_FS_UMASK_RW_USER}}"
 
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_UMASK_SET} (${permissions})"
+  bl64_msg_show_lib_subtask "temporary change current script umask (${permissions})"
   umask -S "$permissions" >/dev/null
 }
 
@@ -6199,13 +6167,13 @@ function bl64_fs_set_ephemeral() {
   local group="${5:-${BL64_VAR_DEFAULT}}"
 
   if [[ "$temporal" != "$BL64_VAR_DEFAULT" ]]; then
-    bl64_fs_create_dir "$mode" "$user" "$group" "$temporal" &&
+    bl64_fs_dir_create "$mode" "$user" "$group" "$temporal" &&
       BL64_FS_PATH_TEMPORAL="$temporal" ||
       return $?
   fi
 
   if [[ "$cache" != "$BL64_VAR_DEFAULT" ]]; then
-    bl64_fs_create_dir "$mode" "$user" "$group" "$cache" &&
+    bl64_fs_dir_create "$mode" "$user" "$group" "$cache" &&
       BL64_FS_PATH_CACHE="$cache" ||
       return $?
   fi
@@ -6281,11 +6249,11 @@ function bl64_fs_rm_tmpdir() {
     return $?
 
   if [[ "$tmpdir" != ${BL64_FS_PATH_TMP}/${BL64_FS_TMP_PREFIX}-*.* ]]; then
-    bl64_msg_show_error "${_BL64_FS_TXT_ERROR_NOT_TMPDIR} (${tmpdir})"
+    bl64_msg_show_error "provided directory was not created by bl64_fs_create_tmpdir (${tmpdir})"
     return $BL64_LIB_ERROR_TASK_FAILED
   fi
 
-  bl64_fs_rm_full "$tmpdir"
+  bl64_fs_path_remove "$tmpdir"
 }
 
 #######################################
@@ -6309,11 +6277,11 @@ function bl64_fs_rm_tmpfile() {
     return $?
 
   if [[ "$tmpfile" != ${BL64_FS_PATH_TMP}/${BL64_FS_TMP_PREFIX}-*.* ]]; then
-    bl64_msg_show_error "${_BL64_FS_TXT_ERROR_NOT_TMPFILE} (${tmpfile})"
+    bl64_msg_show_error "provided directory was not created by bl64_fs_create_tmpfile (${tmpfile})"
     return $BL64_LIB_ERROR_TASK_FAILED
   fi
 
-  bl64_fs_rm_file "$tmpfile"
+  bl64_fs_file_remove "$tmpfile"
 }
 
 #######################################
@@ -6339,7 +6307,7 @@ function bl64_fs_check_new_file() {
     return $?
 
   if [[ -d "$file" ]]; then
-    bl64_msg_show_error "${_BL64_FS_TXT_ERROR_INVALID_FILE_TARGET} (${file})"
+    bl64_msg_show_error "invalid file destination. Provided path exists and is a directory (${file})"
     return $BL64_LIB_ERROR_PARAMETER_INVALID
   fi
 
@@ -6369,7 +6337,7 @@ function bl64_fs_check_new_dir() {
     return $?
 
   if [[ -f "$directory" ]]; then
-    bl64_msg_show_error "${_BL64_FS_TXT_ERROR_INVALID_DIR_TARGET} (${directory})"
+    bl64_msg_show_error "invalid directory destination. Provided path exists and is a file (${directory})"
     return $BL64_LIB_ERROR_PARAMETER_INVALID
   fi
 
@@ -6393,7 +6361,7 @@ function bl64_fs_check_new_dir() {
 #   0: operation completed ok
 #   >0: operation failed
 #######################################
-function bl64_fs_create_symlink() {
+function bl64_fs_symlink_create() {
   bl64_dbg_lib_show_function "$@"
   local source="${1:-}"
   local destination="${2:-}"
@@ -6406,14 +6374,14 @@ function bl64_fs_create_symlink() {
 
   if [[ -e "$destination" ]]; then
     if [[ "$overwrite" == "$BL64_VAR_ON" ]]; then
-      bl64_fs_rm_file "$destination" ||
+      bl64_fs_file_remove "$destination" ||
         return $?
     else
-      bl64_msg_show_warning "${_BL64_FS_TXT_SYMLINK_EXISTING} (${destination})"
+      bl64_msg_show_warning "target symbolic link is already present. No further action taken (${destination})"
       return 0
     fi
   fi
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_SYMLINK_CREATE} (${source} ${BL64_MSG_COSMETIC_ARROW2} ${destination})"
+  bl64_msg_show_lib_subtask "create symbolic link (${source} ${BL64_MSG_COSMETIC_ARROW2} ${destination})"
   bl64_fs_run_ln "$BL64_FS_SET_LN_SYMBOLIC" "$source" "$destination"
 }
 
@@ -6421,7 +6389,6 @@ function bl64_fs_create_symlink() {
 # Creates an empty regular file
 #
 # * Creates file if not existing only
-# * If existing, warn and return with no error
 #
 # Arguments:
 #   $1: full path to the file
@@ -6435,7 +6402,7 @@ function bl64_fs_create_symlink() {
 #   0: task executed ok
 #   >0: task failed
 #######################################
-function bl64_fs_create_file() {
+function bl64_fs_file_create() {
   bl64_dbg_lib_show_function "$@"
   local file_path="$1"
   local mode="${2:-${BL64_VAR_DEFAULT}}"
@@ -6445,12 +6412,10 @@ function bl64_fs_create_file() {
   bl64_check_parameter 'file_path' ||
     return $?
 
-  bl64_msg_show_lib_subtask "${_BL64_FS_TXT_CREATE_FILE} (${file_path})"
-  [[ -f "$file_path" ]] &&
-    bl64_msg_show_warning "$_BL64_FS_TXT_WARN_EXISTING_FILE" &&
-    return 0
+  [[ -f "$file_path" ]] && return 0
 
-  "$BL64_FS_CMD_TOUCH" "$file_path" &&
+  bl64_msg_show_lib_subtask "create empty regular file (${file_path})"
+  bl64_fs_run_touch "$file_path" &&
     bl64_fs_path_permission_set "$mode" "$BL64_VAR_DEFAULT" "$user" "$group" "$BL64_VAR_OFF" "$file_path"
 }
 
@@ -6459,6 +6424,7 @@ function bl64_fs_create_file() {
 #
 # * No error if the path is not present
 # * No backup previous to removal
+# * Will only remove files and links
 #
 # Arguments:
 #   $@: list of full file paths
@@ -6477,8 +6443,17 @@ function bl64_fs_file_remove() {
     return $?
 
   for path_current in "$@"; do
-    [[ ! -f "$path_current" ]] && continue
     bl64_msg_show_lib_subtask "remove file (${path_current})"
+    if [[ ! -e "$path_current" ]]; then
+      bl64_msg_show_warning 'file already removed, no further action taken'
+      continue
+    fi
+
+    if [[ ! -f "$path_current" && ! -L "$path_current" ]]; then
+      bl64_msg_show_error 'invalid file type. Must be regular file or link. No further action taken.'
+      return $BL64_LIB_ERROR_TASK_FAILED
+    fi
+
     bl64_fs_run_rm \
       "$BL64_FS_SET_RM_FORCE" \
       "$path_current" ||
@@ -6518,6 +6493,113 @@ function bl64_fs_dir_reset() {
 
   bl64_fs_path_remove "$@" &&
     bl64_fs_dir_create "$mode" "$user" "$group" "$@"
+}
+
+#######################################
+# Command wrapper with verbose, debug and common options
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: operation completed ok
+#   >0: operation failed
+#######################################
+function bl64_fs_run_touch() {
+  bl64_dbg_lib_show_function "$@"
+  local debug=''
+
+  bl64_check_parameters_none "$#" &&
+    bl64_check_module 'BL64_FS_MODULE' ||
+    return $?
+
+  bl64_dbg_lib_trace_start
+  # shellcheck disable=SC2086
+  "$BL64_FS_CMD_TOUCH" \
+    "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Backup path
+#
+# * Use for file  operations that will alter or replace the content and requires a quick rollback mechanism
+# * The original file is copied until bl64_fs_file_restore is called to either remove or restore it
+# * If the source is not present nothing is done. Return with no error. This is to cover for first time path creation
+#
+# Arguments:
+#   $1: file path
+# Outputs:
+#   STDOUT: Task progress
+#   STDERR: Task errors
+# Returns:
+#   0: task executed ok
+#   >0: task failed
+#######################################
+function bl64_fs_file_backup() {
+  bl64_dbg_lib_show_function "$@"
+  local source="${1:-}"
+  local backup="${source}${BL64_FS_BACKUP_POSTFIX}"
+
+  bl64_check_parameter 'source' || return $?
+  [[ ! -f "$source" ]] && bl64_dbg_lib_show_comments "file is not yet created, nothing to do (${source})" && return 0
+
+  bl64_msg_show_lib_subtask "backup original file ([${source}]->[${backup}])"
+  if ! bl64_fs_run_cp "$source" "$backup"; then
+    bl64_msg_show_error 'failed to create file backup'
+    return $BL64_LIB_ERROR_TASK_BACKUP
+  fi
+
+  return 0
+}
+
+#######################################
+# Restore path from safeguard if operation failed or remove if operation was ok
+#
+# * Use as a quick rollback for file/dir operations
+# * Called after bl64_fs_file_archive creates the backup
+# * If the backup is not there nothing is done, no error returned. This is to cover for first time path creation
+#
+# Arguments:
+#   $1: safeguard path (produced by bl64_fs_file_backup)
+#   $2: task status (exit status from last operation)
+# Outputs:
+#   STDOUT: Task progress
+#   STDERR: Task errors
+# Returns:
+#   0: task executed ok
+#   >0: task failed
+#######################################
+function bl64_fs_file_restore() {
+  bl64_dbg_lib_show_function "$@"
+  local source="${1:-}"
+  local -i result=$2
+  local backup="${source}${BL64_FS_BACKUP_POSTFIX}"
+
+  bl64_check_parameter 'source' &&
+    bl64_check_parameter 'result' ||
+    return $?
+
+  bl64_dbg_lib_show_comments 'Return if not present'
+  if [[ ! -f "$backup" ]]; then
+    bl64_dbg_lib_show_info "backup was not created, nothing to do (${backup})"
+    return 0
+  fi
+
+  bl64_dbg_lib_show_comments 'Check if restore is needed based on the operation result'
+  if ((result == 0)); then
+    bl64_msg_show_lib_subtask 'discard obsolete backup'
+    bl64_fs_file_remove "$backup"
+    return 0
+  else
+    bl64_msg_show_lib_subtask "restore original file from backup ([${backup}]->[${source}])"
+    # shellcheck disable=SC2086
+    bl64_os_run_cat "$backup" >"$source" &&
+      bl64_fs_file_remove "$backup" ||
+      return $BL64_LIB_ERROR_TASK_RESTORE
+  fi
 }
 
 #!/usr/bin/env bash
@@ -6614,7 +6696,7 @@ TERM="${TERM:-vt100}"
 
 # shellcheck disable=SC2034
 {
-  declare BL64_VERSION='20.6.0'
+  declare BL64_VERSION='20.9.1'
 
   #
   # Imported shell standard variables
@@ -6755,6 +6837,7 @@ TERM="${TERM:-vt100}"
   declare BL64_SCRIPT_NAME=''
   declare BL64_SCRIPT_SID=''
   declare BL64_SCRIPT_ID=''
+  declare BL64_SCRIPT_VERSION='1.0.0'
 
   #
   # Set Signal traps
@@ -6771,6 +6854,13 @@ TERM="${TERM:-vt100}"
 # BashLib64 / Module / Functions / Setup script run-time environment
 #######################################
 
+#
+# Deprecation aliases
+#
+# * Aliases to deprecated functions 
+# * Needed to maintain compatibility up to N-2 versions
+#
+
 function bl64_lib_mode_command_is_enabled { bl64_lib_flag_is_enabled "$BL64_LIB_CMD"; }
 function bl64_lib_mode_compability_is_enabled { bl64_lib_flag_is_enabled "$BL64_LIB_COMPATIBILITY"; }
 function bl64_lib_mode_strict_is_enabled { bl64_lib_flag_is_enabled "$BL64_LIB_STRICT"; }
@@ -6779,6 +6869,81 @@ function bl64_lib_lang_is_enabled { bl64_lib_flag_is_enabled "$BL64_LIB_LANG"; }
 function bl64_lib_trap_is_enabled { bl64_lib_flag_is_enabled "$BL64_LIB_TRAPS"; }
 
 function bl64_lib_var_is_default { local value="${1:-}"; [[ "$value" == "$BL64_VAR_DEFAULT" || "$value" == "$BL64_VAR_DEFAULT_LEGACY" ]]; }
+
+#
+# Private functions
+#
+
+function _bl64_lib_script_get_path() {
+  local -i main=${#BASH_SOURCE[*]}
+  local caller=''
+
+  ((main > 0)) && main=$((main - 1))
+  caller="${BASH_SOURCE[${main}]}"
+
+  unset CDPATH &&
+    [[ -n "$caller" ]] &&
+    cd -- "${caller%/*}" >/dev/null &&
+    pwd -P ||
+    return $?
+}
+
+function _bl64_lib_script_get_name() {
+  local -i main=0
+  local path=''
+  local base=''
+
+  main=${#BASH_SOURCE[*]}
+  ((main > 0)) && main=$((main - 1))
+  path="${BASH_SOURCE[${main}]}"
+
+  if [[ -n "$path" && "$path" != '/' ]]; then
+    base="${path##*/}"
+  fi
+  if [[ -z "$base" || "$base" == */* ]]; then
+    # shellcheck disable=SC2086
+    return $BL64_LIB_ERROR_PARAMETER_INVALID
+  else
+    printf '%s' "$base"
+  fi
+}
+
+#######################################
+# Check that the module is imported
+#
+# * Used for the modular version of bashlib64 to ensure dependant modules are loaded (sourced)
+# * A module is considered imported if the associated shell environment variable BL64_XXX_MODULE is defined
+# * This check will not verify if the module was also initialized. Use the function 'bl64_check_module' instead
+#
+# Arguments:
+#   $1: module id (eg: BL64_XXXX_MODULE)
+# Outputs:
+#   STDOUT: none
+#   STDERR: message
+# Returns:
+#   0: check ok
+#   BL64_LIB_ERROR_MODULE_NOT_IMPORTED
+#######################################
+function _bl64_lib_module_is_imported() {
+  local module="${1:-}"
+  [[ -z "$module" ]] && return $BL64_LIB_ERROR_PARAMETER_MISSING
+
+  if [[ ! -v "$module" ]]; then
+    module="${module##BL64_}"
+    module="${module%%_MODULE}"
+    printf 'Error: required BashLib64 module not found. Please source the module before using it. (module: %s | caller: %s)\n' \
+      "${module%%BL64_}" \
+      "${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}" \
+      >&2
+    # shellcheck disable=SC2086
+    return $BL64_LIB_ERROR_MODULE_NOT_IMPORTED
+  fi
+  return 0
+}
+
+#
+# Public functions
+#
 
 #######################################
 # Determines if the flag variable is enabled or not
@@ -6860,105 +7025,23 @@ function bl64_lib_script_set_identity() {
     bl64_lib_script_set_id "$BL64_SCRIPT_NAME"
 }
 
-function _bl64_lib_script_get_path() {
-  local -i main=${#BASH_SOURCE[*]}
-  local caller=''
-
-  ((main > 0)) && main=$((main - 1))
-  caller="${BASH_SOURCE[${main}]}"
-
-  unset CDPATH &&
-    [[ -n "$caller" ]] &&
-    cd -- "${caller%/*}" >/dev/null &&
-    pwd -P ||
-    return $?
-}
-
-function _bl64_lib_script_get_name() {
-  local -i main=0
-  local path=''
-  local base=''
-
-  main=${#BASH_SOURCE[*]}
-  ((main > 0)) && main=$((main - 1))
-  path="${BASH_SOURCE[${main}]}"
-
-  if [[ -n "$path" && "$path" != '/' ]]; then
-    base="${path##*/}"
-  fi
-  if [[ -z "$base" || "$base" == */* ]]; then
-    # shellcheck disable=SC2086
-    return $BL64_LIB_ERROR_PARAMETER_INVALID
-  else
-    printf '%s' "$base"
-  fi
-}
-
 #######################################
-# Check that the module is imported
-#
-# * Used for the modular version of bashlib64 to ensure dependant modules are loaded (sourced)
-# * A module is considered imported if the associated shell environment variable BL64_XXX_MODULE is defined
-# * This check will not verify if the module was also initialized. Use the function 'bl64_check_module' instead
+# Define current script version
 #
 # Arguments:
-#   $1: module id (eg: BL64_XXXX_MODULE)
+#   $1: semver
 # Outputs:
-#   STDOUT: none
-#   STDERR: message
+#   STDOUT: None
+#   STDERR: Error messages
 # Returns:
-#   0: check ok
-#   BL64_LIB_ERROR_MODULE_NOT_IMPORTED
+#   0: seted ok
+#   >0: failed to set
 #######################################
-function bl64_lib_module_imported() {
-  local module="${1:-}"
-  [[ -z "$module" ]] && return $BL64_LIB_ERROR_PARAMETER_MISSING
-
-  if [[ ! -v "$module" ]]; then
-    module="${module##BL64_}"
-    module="${module%%_MODULE}"
-    printf 'Error: required BashLib64 module not found. Please source the module before using it. (module: %s | caller: %s)\n' \
-      "${module%%BL64_}" \
-      "${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}" \
-      >&2
-    # shellcheck disable=SC2086
-    return $BL64_LIB_ERROR_MODULE_NOT_IMPORTED
-  fi
-  return 0
-}
-
-function bl64_lib_alert_parameter_invalid() {
-  local parameter="${1:-${BL64_VAR_DEFAULT}}"
-  local message="${2:-${BL64_VAR_DEFAULT}}"
-  local value="${3:-${BL64_VAR_DEFAULT}}"
-
-  [[ "$parameter" == "$BL64_VAR_DEFAULT" ]] && parameter=''
-  [[ "$message" == "$BL64_VAR_DEFAULT" ]] && message='Error: the requested operation was provided with an invalid parameter value'
-  [[ "$value" == "$BL64_VAR_DEFAULT" ]] && value=''
-  printf '%s (%s%scaller: %s)\n' \
-    "$message" \
-    "${parameter:+parameter: ${parameter} | }" \
-    "${value:+value: ${value} | }" \
-    "${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}" \
-    >&2
-  return $BL64_LIB_ERROR_PARAMETER_INVALID
-}
-
-function bl64_lib_module_is_setup() {
-  local module="${1:-}"
-  local setup_status=''
-  [[ -z "$module" ]] && return $BL64_LIB_ERROR_PARAMETER_MISSING
-  bl64_lib_module_imported "$module" || return $?
-
-  setup_status="${!module}"
-  if [[ "$setup_status" == "$BL64_VAR_OFF" ]]; then
-    printf 'Error: required BashLib64 module is not setup. Call the bl64_<MODULE>_setup function before using the module (module-id: %s | function: %s)\n' \
-    "${module}" \
-    "${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}" \
-    >&2
-    return $BL64_LIB_ERROR_MODULE_SETUP_MISSING
-  fi
-  return 0
+function bl64_lib_script_version_set() {
+  local script_version="$1"
+  # shellcheck disable=SC2086
+  [[ -z "$script_version" ]] && return $BL64_LIB_ERROR_PARAMETER_MISSING
+  BL64_SCRIPT_VERSION="$script_version"
 }
 #######################################
 # BashLib64 / Module / Globals / Check for conditions and report status
@@ -6966,63 +7049,9 @@ function bl64_lib_module_is_setup() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_CHECK_VERSION='6.1.1'
+  declare BL64_CHECK_VERSION='6.1.2'
 
   declare BL64_CHECK_MODULE='0'
-
-  declare _BL64_CHECK_TXT_PARAMETER_MISSING='required parameter is missing'
-  declare _BL64_CHECK_TXT_PARAMETER_NOT_SET='required shell variable is not set'
-  declare _BL64_CHECK_TXT_PARAMETER_DEFAULT='required parameter value must be other than default'
-  declare _BL64_CHECK_TXT_PARAMETER_INVALID='the requested operation was provided with an invalid parameter value'
-
-  declare _BL64_CHECK_TXT_COMMAND_NOT_FOUND='required command is not present'
-  declare _BL64_CHECK_TXT_COMMAND_NOT_EXECUTABLE='required command is present but has no execution permission'
-  declare _BL64_CHECK_TXT_COMMAND_NOT_INSTALLED='required command is not installed'
-  declare _BL64_CHECK_TXT_COMMAND_NOT_IN_PATH='required command is not found in any of the search paths'
-
-  declare _BL64_CHECK_TXT_FILE_NOT_FOUND='required file is not present'
-  declare _BL64_CHECK_TXT_FILE_NOT_FILE='path is present but is not a regular file'
-  declare _BL64_CHECK_TXT_FILE_NOT_READABLE='required file is present but has no read permission'
-
-  declare _BL64_CHECK_TXT_DIRECTORY_NOT_FOUND='required directory is not present'
-  declare _BL64_CHECK_TXT_DIRECTORY_NOT_DIR='path is present but is not a directory'
-  declare _BL64_CHECK_TXT_DIRECTORY_NOT_READABLE='required directory is present but has no read permission'
-
-  declare _BL64_CHECK_TXT_EXPORT_EMPTY='required shell exported variable is empty'
-  declare _BL64_CHECK_TXT_EXPORT_SET='required shell exported variable is not set'
-
-  declare _BL64_CHECK_TXT_PATH_NOT_FOUND='required path is not present'
-  declare _BL64_CHECK_TXT_PATH_NOT_RELATIVE='required path must be relative'
-  declare _BL64_CHECK_TXT_PATH_NOT_ABSOLUTE='required path must be absolute'
-  declare _BL64_CHECK_TXT_PATH_PRESENT='requested path is already present'
-
-  declare _BL64_CHECK_TXT_PRIVILEGE_IS_NOT_ROOT='the task requires root privilege. Please run the script as root or with SUDO'
-  declare _BL64_CHECK_TXT_PRIVILEGE_IS_ROOT='the task should not be run with root privilege. Please run the script as a regular user and not using SUDO'
-
-  declare _BL64_CHECK_TXT_OVERWRITE_NOT_PERMITED='target is already present and overwrite is not permitted. Unable to continue'
-  declare _BL64_CHECK_TXT_OVERWRITE_SKIP_EXISTING='target is already present and overwrite is not requested. Target is left as is'
-
-  declare _BL64_CHECK_TXT_INCOMPATIBLE='the requested operation is not supported on the current OS'
-  declare _BL64_CHECK_TXT_UNDEFINED='requested command is not defined or implemented'
-  declare _BL64_CHECK_TXT_NOARGS='the requested operation requires at least one parameter and none was provided'
-  declare _BL64_CHECK_TXT_FAILED='task execution failed'
-
-  declare _BL64_CHECK_TXT_MODULE_SETUP_FAILED='failed to setup the requested BashLib64 module'
-  declare _BL64_CHECK_TXT_MODULE_NOT_SETUP='required BashLib64 module is not setup. Call the bl64_<MODULE>_setup function before using the module'
-
-  declare _BL64_CHECK_TXT_HOME_MISSING='standard shell variable HOME is not defined'
-  declare _BL64_CHECK_TXT_HOME_DIR_MISSING="unable to find user's HOME directory"
-
-  declare _BL64_CHECK_TXT_RESOURCE_NOT_FOUND='required resource was not found on the system'
-  declare _BL64_CHECK_TXT_STATUS_ERROR='task execution failed'
-  declare _BL64_CHECK_TXT_COMPATIBILITY_MODE='using generic compatibility mode for untested command version'
-
-  declare _BL64_CHECK_TXT_COMMAND='command'
-  declare _BL64_CHECK_TXT_FILE='file'
-  declare _BL64_CHECK_TXT_PATH='path'
-  declare _BL64_CHECK_TXT_FUNCTION='caller'
-  declare _BL64_CHECK_TXT_MODULE='module'
-  declare _BL64_CHECK_TXT_PARAMETER='parameter'
 }
 
 #######################################
@@ -7031,12 +7060,15 @@ function bl64_lib_module_is_setup() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_DBG_VERSION='3.1.2'
+  declare BL64_DBG_VERSION='3.2.0'
 
   declare BL64_DBG_MODULE='0'
 
   # Debug target
   declare BL64_DBG_TARGET=''
+
+  # Dry-Run Flag
+  declare BL64_DBG_DRYRUN=''
 
   #
   # Debug targets. Use to select what to debug and how
@@ -7068,9 +7100,9 @@ function bl64_lib_module_is_setup() {
   declare BL64_DBG_TARGET_ALL='ALL'
 
   #
-  # Debugging exclussions
+  # Debugging exclusions
   #
-  # * Used to excluded non-esential debugging information from general output
+  # * Used to excluded non-essential debugging information from general output
   # * Each variable represents a module
   # * Default is to exclude declared modules
   #
@@ -7079,6 +7111,14 @@ function bl64_lib_module_is_setup() {
   declare BL64_DBG_EXCLUDE_MSG="$BL64_VAR_ON"
   declare BL64_DBG_EXCLUDE_LOG="$BL64_VAR_ON"
 
+  #
+  # Dry-Run options
+  #
+  declare BL64_DBG_DRYRUN_NONE='NONE'
+  declare BL64_DBG_DRYRUN_APP='APP'
+  declare BL64_DBG_DRYRUN_LIB='LIB'
+  declare BL64_DBG_DRYRUN_ALL='ALL'
+
   declare _BL64_DBG_TXT_FUNCTION_START='start-function-tracing'
   declare _BL64_DBG_TXT_FUNCTION_STOP='stop-function-tracing'
   declare _BL64_DBG_TXT_SHELL_VAR='shell-variable'
@@ -7086,7 +7126,6 @@ function bl64_lib_module_is_setup() {
   declare _BL64_DBG_TXT_INFO='dev-info'
 
   declare _BL64_DBG_TXT_LABEL_BASH_RUNTIME='[bash-runtime]'
-  declare _BL64_DBG_TXT_LABEL_BL64_RUNTIME='[bl64-runtime]'
   declare _BL64_DBG_TXT_LABEL_BASH_VARIABLE='[bash-variable]'
   declare _BL64_DBG_TXT_LABEL_FUNCTION='>>>'
   declare _BL64_DBG_TXT_LABEL_INFO='==='
@@ -7101,7 +7140,7 @@ function bl64_lib_module_is_setup() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_LOG_VERSION='2.1.1'
+  declare BL64_LOG_VERSION='3.0.0'
 
   declare BL64_LOG_MODULE='0'
 
@@ -7119,6 +7158,10 @@ function bl64_lib_module_is_setup() {
   declare BL64_LOG_REPOSITORY_MODE='0755'
   declare BL64_LOG_TARGET_MODE='0644'
 
+  # Log Target Type
+  declare BL64_LOG_TYPE_SINGLE='S'
+  declare BL64_LOG_TYPE_MULTIPLE='M'
+
   # Module variables
   declare BL64_LOG_FS=''
   declare BL64_LOG_FORMAT=''
@@ -7126,10 +7169,6 @@ function bl64_lib_module_is_setup() {
   declare BL64_LOG_REPOSITORY=''
   declare BL64_LOG_DESTINATION=''
   declare BL64_LOG_RUNTIME=''
-
-  declare _BL64_LOG_TXT_INVALID_TYPE='invalid log type. Please use any of BL64_LOG_TYPE_*'
-  declare _BL64_LOG_TXT_SET_TARGET_FAILED='failed to set log target'
-  declare _BL64_LOG_TXT_CREATE_REPOSITORY='create log repository'
 }
 
 #######################################
@@ -7138,7 +7177,7 @@ function bl64_lib_module_is_setup() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_MSG_VERSION='5.3.0'
+  declare BL64_MSG_VERSION='5.5.0'
 
   declare BL64_MSG_MODULE='0'
 
@@ -7166,6 +7205,7 @@ function bl64_lib_module_is_setup() {
   declare BL64_MSG_TYPE_BATCHERR='BATCHERR'
   declare BL64_MSG_TYPE_BATCHOK='BATCHOK'
   declare BL64_MSG_TYPE_ERROR='ERROR'
+  declare BL64_MSG_TYPE_HELP='HELP'
   declare BL64_MSG_TYPE_INFO='INFO'
   declare BL64_MSG_TYPE_INIT='INIT'
   declare BL64_MSG_TYPE_INPUT='INPUT'
@@ -7213,6 +7253,7 @@ function bl64_lib_module_is_setup() {
   declare BL64_MSG_THEME_ASCII_STD_FMTCALLER=''
   declare BL64_MSG_THEME_ASCII_STD_FMTHOST=''
   declare BL64_MSG_THEME_ASCII_STD_FMTTIME=''
+  declare BL64_MSG_THEME_ASCII_STD_HELP='(?)'
   declare BL64_MSG_THEME_ASCII_STD_INFO='(I)'
   declare BL64_MSG_THEME_ASCII_STD_INIT='(:)'
   declare BL64_MSG_THEME_ASCII_STD_INPUT='(?)'
@@ -7233,6 +7274,7 @@ function bl64_lib_module_is_setup() {
   declare BL64_MSG_THEME_ANSI_STD_FMTCALLER='33'
   declare BL64_MSG_THEME_ANSI_STD_FMTHOST='34'
   declare BL64_MSG_THEME_ANSI_STD_FMTTIME='36'
+  declare BL64_MSG_THEME_ANSI_STD_HELP='36'
   declare BL64_MSG_THEME_ANSI_STD_INFO='36'
   declare BL64_MSG_THEME_ANSI_STD_INIT='36'
   declare BL64_MSG_THEME_ANSI_STD_INPUT='5;30;47'
@@ -7309,6 +7351,16 @@ function bl64_lib_module_is_setup() {
   declare BL64_MSG_COSMETIC_PHASE_SUFIX=']==='
   declare BL64_MSG_COSMETIC_PIPE='|'
   declare BL64_MSG_COSMETIC_ARROW='-->'
+
+  #
+  # Internal
+  #
+
+  declare BL64_MSG_HELP_USAGE="$BL64_VAR_DEFAULT"
+  declare BL64_MSG_HELP_ABOUT="$BL64_VAR_DEFAULT"
+  declare BL64_MSG_HELP_DESCRIPTION="$BL64_VAR_DEFAULT"
+  declare BL64_MSG_HELP_PARAMETERS="$BL64_VAR_DEFAULT"
+
 }
 
 #######################################
@@ -7317,7 +7369,7 @@ function bl64_lib_module_is_setup() {
 
 # shellcheck disable=SC2034
 {
-  declare BL64_OS_VERSION='5.4.1'
+  declare BL64_OS_VERSION='5.5.0'
 
   declare BL64_OS_MODULE='0'
 
@@ -7396,14 +7448,14 @@ function bl64_lib_module_is_setup() {
 #######################################
 function bl64_check_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
     BL64_CHECK_MODULE="$BL64_VAR_ON"
   bl64_check_alert_module_setup 'check'
 }
@@ -7419,7 +7471,7 @@ function bl64_check_setup() {
 # * Needed to maintain compatibility up to N-2 versions
 #
 
-function bl64_check_module_imported() { bl64_msg_show_deprecated 'bl64_check_module_imported' 'bl64_lib_module_imported'; bl64_lib_module_imported "$@"; }
+function bl64_check_module_imported() { bl64_msg_show_deprecated 'bl64_check_module_imported' '_bl64_lib_module_is_imported'; _bl64_lib_module_is_imported "$@"; }
 
 #
 # Public functions
@@ -7430,7 +7482,7 @@ function bl64_check_module_imported() { bl64_msg_show_deprecated 'bl64_check_mod
 #
 # Arguments:
 #   $1: Full path to the command to check
-#   $2: (optional) Not found error message. Default: _BL64_CHECK_TXT_COMMAND_NOT_FOUND
+#   $2: (optional) Not found error message
 #   $3: (optional) Command name. Displayed in the error message when not found
 # Outputs:
 #   STDOUT: None
@@ -7444,34 +7496,34 @@ function bl64_check_module_imported() { bl64_msg_show_deprecated 'bl64_check_mod
 #   $BL64_LIB_ERROR_FILE_NOT_EXECUTE
 #######################################
 function bl64_check_command() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
   local message="${2:-$BL64_VAR_DEFAULT}"
   local command_name="${3:-}"
 
   bl64_check_parameter 'path' || return $?
-  [[ "$message" == "$BL64_VAR_DEFAULT" ]] && message="$_BL64_CHECK_TXT_COMMAND_NOT_FOUND"
+  [[ "$message" == "$BL64_VAR_DEFAULT" ]] && message='required command is not present'
 
   if [[ "$path" == "$BL64_VAR_INCOMPATIBLE" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_INCOMPATIBLE} (OS: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "the requested operation is not supported on the current OS (OS: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_APP_INCOMPATIBLE
   fi
 
   if [[ "$path" == "$BL64_VAR_UNAVAILABLE" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_COMMAND_NOT_INSTALLED} (${command_name:+${_BL64_CHECK_TXT_COMMAND}: ${command_name} ${BL64_MSG_COSMETIC_PIPE} }${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required command is not installed (${command_name:+command: ${command_name} ${BL64_MSG_COSMETIC_PIPE} }caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_APP_MISSING
   fi
 
   if [[ ! -e "$path" ]]; then
-    bl64_msg_show_error "${message} (${_BL64_CHECK_TXT_COMMAND}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (command: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_FILE_NOT_FOUND
   fi
 
   if [[ ! -x "$path" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_COMMAND_NOT_EXECUTABLE} (${_BL64_CHECK_TXT_COMMAND}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required command is present but has no execution permission (command: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_FILE_NOT_EXECUTE
   fi
@@ -7484,7 +7536,7 @@ function bl64_check_command() {
 #
 # Arguments:
 #   $1: Full path to the file
-#   $2: Not found error message. Default: _BL64_CHECK_TXT_FILE_NOT_FOUND
+#   $2: Not found error message
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -7495,23 +7547,23 @@ function bl64_check_command() {
 #   $BL64_LIB_ERROR_FILE_NOT_READ
 #######################################
 function bl64_check_file() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_FILE_NOT_FOUND}}"
+  local message="${2:-required file is not present}"
 
   bl64_check_parameter 'path' || return $?
   if [[ ! -e "$path" ]]; then
-    bl64_msg_show_error "${message} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_FILE_NOT_FOUND
   fi
   if [[ ! -f "$path" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_FILE_NOT_FILE} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "path is present but is not a regular file (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_FILE_NOT_FOUND
   fi
   if [[ ! -r "$path" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_FILE_NOT_READABLE} (${_BL64_CHECK_TXT_FILE}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required file is present but has no read permission (file: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_FILE_NOT_READ
   fi
@@ -7523,7 +7575,7 @@ function bl64_check_file() {
 #
 # Arguments:
 #   $1: Full path to the directory
-#   $2: Not found error message. Default: _BL64_CHECK_TXT_DIRECTORY_NOT_FOUND
+#   $2: Not found error message
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -7534,23 +7586,23 @@ function bl64_check_file() {
 #   $BL64_LIB_ERROR_DIRECTORY_NOT_READ
 #######################################
 function bl64_check_directory() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_DIRECTORY_NOT_FOUND}}"
+  local message="${2:-required directory is not present}"
 
   bl64_check_parameter 'path' || return $?
   if [[ ! -e "$path" ]]; then
-    bl64_msg_show_error "${message} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_DIRECTORY_NOT_FOUND
   fi
   if [[ ! -d "$path" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_DIRECTORY_NOT_DIR} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "path is present but is not a directory (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_DIRECTORY_NOT_FOUND
   fi
   if [[ ! -r "$path" || ! -x "$path" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_DIRECTORY_NOT_READABLE} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required directory is present but has no read permission (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_DIRECTORY_NOT_READ
   fi
@@ -7564,7 +7616,7 @@ function bl64_check_directory() {
 #
 # Arguments:
 #   $1: Full path
-#   $2: Not found error message. Default: _BL64_CHECK_TXT_PATH_NOT_FOUND
+#   $2: Not found error message.
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -7574,13 +7626,13 @@ function bl64_check_directory() {
 #   $BL64_LIB_ERROR_PATH_NOT_FOUND
 #######################################
 function bl64_check_path() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_PATH_NOT_FOUND}}"
+  local message="${2:-required path is not present}"
 
   bl64_check_parameter 'path' || return $?
   if [[ ! -e "$path" ]]; then
-    bl64_msg_show_error "${message} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_PATH_NOT_FOUND
   fi
@@ -7608,29 +7660,29 @@ function bl64_check_path() {
 #   $BL64_LIB_ERROR_PARAMETER_EMPTY
 #######################################
 function bl64_check_parameter() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local parameter_name="${1:-}"
   local description="${2:-parameter: ${parameter_name}}"
   local parameter_ref=''
 
   if [[ -z "$parameter_name" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PARAMETER_MISSING} (${_BL64_CHECK_TXT_PARAMETER}: ${parameter_name} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required parameter is missing (parameter: ${parameter_name} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $BL64_LIB_ERROR_PARAMETER_EMPTY
   fi
 
   if [[ ! -v "$parameter_name" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PARAMETER_NOT_SET} (${description} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required shell variable is not set (${description} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $BL64_LIB_ERROR_PARAMETER_MISSING
   fi
 
   parameter_ref="${!parameter_name}"
   if [[ -z "$parameter_ref" || "$parameter_ref" == "${BL64_VAR_NULL}" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PARAMETER_MISSING} (${description} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required parameter is missing (${description} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $BL64_LIB_ERROR_PARAMETER_EMPTY
   fi
 
   if [[ "$parameter_ref" == "${BL64_VAR_DEFAULT}" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PARAMETER_DEFAULT} (${description} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required parameter value must be other than default (${description} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $BL64_LIB_ERROR_PARAMETER_INVALID
   fi
   return 0
@@ -7654,7 +7706,7 @@ function bl64_check_parameter() {
 #   $BL64_LIB_ERROR_EXPORT_SET
 #######################################
 function bl64_check_export() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local export_name="${1:-}"
   local description="${2:-export: $export_name}"
   local export_ref=''
@@ -7662,14 +7714,14 @@ function bl64_check_export() {
   bl64_check_parameter 'export_name' || return $?
 
   if [[ ! -v "$export_name" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_EXPORT_SET} (${description} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required shell exported variable is not set (${description} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_EXPORT_SET
   fi
 
   export_ref="${!export_name}"
   if [[ -z "$export_ref" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_EXPORT_EMPTY} (${description} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required shell exported variable is empty (${description} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_EXPORT_EMPTY
   fi
@@ -7684,7 +7736,7 @@ function bl64_check_export() {
 #
 # Arguments:
 #   $1: Path string
-#   $2: Failed check error message. Default: _BL64_CHECK_TXT_PATH_NOT_RELATIVE
+#   $2: Failed check error message
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -7694,13 +7746,13 @@ function bl64_check_export() {
 #   $BL64_LIB_ERROR_PATH_NOT_RELATIVE
 #######################################
 function bl64_check_path_relative() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_PATH_NOT_RELATIVE}}"
+  local message="${2:-required path must be relative}"
 
   bl64_check_parameter 'path' || return $?
   if [[ "$path" == '/' || "$path" == /* ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PATH_NOT_RELATIVE} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_PATH_NOT_RELATIVE
   fi
@@ -7714,7 +7766,7 @@ function bl64_check_path_relative() {
 #
 # Arguments:
 #   $1: Full path
-#   $2: Failed check error message. Default: _BL64_CHECK_TXT_PATH_PRESENT
+#   $2: Failed check error message
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -7724,13 +7776,13 @@ function bl64_check_path_relative() {
 #   $BL64_LIB_ERROR_PATH_PRESENT
 #######################################
 function bl64_check_path_not_present() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_PATH_PRESENT}}"
+  local message="${2:-requested path is already present}"
 
   bl64_check_parameter 'path' || return $?
   if [[ -e "$path" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PATH_PRESENT} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_PATH_PRESENT
   fi
@@ -7745,7 +7797,7 @@ function bl64_check_path_not_present() {
 #
 # Arguments:
 #   $1: Path string
-#   $2: Failed check error message. Default: _BL64_CHECK_TXT_PATH_NOT_ABSOLUTE
+#   $2: Failed check error message
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -7755,13 +7807,13 @@ function bl64_check_path_not_present() {
 #   $BL64_LIB_ERROR_PATH_NOT_ABSOLUTE
 #######################################
 function bl64_check_path_absolute() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_PATH_NOT_ABSOLUTE}}"
+  local message="${2:-required path must be absolute}"
 
   bl64_check_parameter 'path' || return $?
   if [[ "$path" != '/' && "$path" != /* ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PATH_NOT_ABSOLUTE} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_PATH_NOT_ABSOLUTE
   fi
@@ -7781,9 +7833,9 @@ function bl64_check_path_absolute() {
 #   $BL64_LIB_ERROR_PRIVILEGE_IS_ROOT
 #######################################
 function bl64_check_privilege_root() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function
   if [[ "$EUID" != '0' ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PRIVILEGE_IS_NOT_ROOT} (current id: $EUID ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "the task requires root privilege. Please run the script as root or with SUDO (current id: $EUID ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_PRIVILEGE_IS_NOT_ROOT
   fi
@@ -7803,10 +7855,10 @@ function bl64_check_privilege_root() {
 #   $BL64_LIB_ERROR_PRIVILEGE_IS_NOT_ROOT
 #######################################
 function bl64_check_privilege_not_root() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function
 
   if [[ "$EUID" == '0' ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_PRIVILEGE_IS_ROOT} (${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "the task should not be run with root privilege. Please run the script as a regular user and not using SUDO (caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_PRIVILEGE_IS_ROOT
   fi
@@ -7832,16 +7884,16 @@ function bl64_check_privilege_not_root() {
 #   $BL64_LIB_ERROR_OVERWRITE_NOT_PERMITED
 #######################################
 function bl64_check_overwrite() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
   local overwrite="${2:-$BL64_VAR_OFF}"
-  local message="${3:-$_BL64_CHECK_TXT_OVERWRITE_NOT_PERMITED}"
+  local message="${3:-target is already present and overwrite is not permitted. Unable to continue}"
 
   bl64_check_parameter 'path' || return $?
 
   if [[ "$overwrite" == "$BL64_VAR_OFF" || "$overwrite" == "$BL64_VAR_DEFAULT" ]]; then
     if [[ -e "$path" ]]; then
-      bl64_msg_show_error "${message:-$_BL64_CHECK_TXT_OVERWRITE_NOT_PERMITED} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+      bl64_msg_show_error "${message} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
       return $BL64_LIB_ERROR_OVERWRITE_NOT_PERMITED
     fi
   fi
@@ -7868,7 +7920,7 @@ function bl64_check_overwrite() {
 #   1: no previous file/dir present or overwrite is requested
 #######################################
 function bl64_check_overwrite_skip() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local path="${1:-}"
   local overwrite="${2:-$BL64_VAR_OFF}"
   local message="${3:-}"
@@ -7877,7 +7929,7 @@ function bl64_check_overwrite_skip() {
 
   if [[ "$overwrite" == "$BL64_VAR_OFF" || "$overwrite" == "$BL64_VAR_DEFAULT" ]]; then
     if [[ -e "$path" ]]; then
-      bl64_msg_show_warning "${message:-$_BL64_CHECK_TXT_OVERWRITE_SKIP_EXISTING} (${_BL64_CHECK_TXT_PATH}: ${path} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+      bl64_msg_show_warning "${message:-target is already present and overwrite is not requested. Target is left as is} (path: ${path} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
       return 0
     fi
   fi
@@ -7903,12 +7955,12 @@ function bl64_check_overwrite_skip() {
 #######################################
 # shellcheck disable=SC2120
 function bl64_check_alert_parameter_invalid() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local parameter="${1:-${BL64_VAR_DEFAULT}}"
-  local message="${2:-${_BL64_CHECK_TXT_PARAMETER_INVALID}}"
+  local message="${2:-the requested operation was provided with an invalid parameter value}"
 
   [[ "$parameter" == "$BL64_VAR_DEFAULT" ]] && parameter=''
-  bl64_msg_show_error "${message} (${parameter:+${_BL64_CHECK_TXT_PARAMETER}: ${parameter} ${BL64_MSG_COSMETIC_PIPE} }${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+  bl64_msg_show_error "${message} (${parameter:+parameter: ${parameter} ${BL64_MSG_COSMETIC_PIPE} }caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
   return $BL64_LIB_ERROR_PARAMETER_INVALID
 }
 
@@ -7924,10 +7976,10 @@ function bl64_check_alert_parameter_invalid() {
 #   BL64_LIB_ERROR_OS_INCOMPATIBLE
 #######################################
 function bl64_check_alert_unsupported() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local extra="${1:-}"
 
-  bl64_msg_show_error "${_BL64_CHECK_TXT_INCOMPATIBLE} (${extra:+${extra} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+  bl64_msg_show_error "the requested operation is not supported on the current OS (${extra:+${extra} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
   return $BL64_LIB_ERROR_OS_INCOMPATIBLE
 }
 
@@ -7947,11 +7999,11 @@ function bl64_check_alert_unsupported() {
 #   >0: command is incompatible and compatibility mode is disabled
 #######################################
 function bl64_check_compatibility_mode() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local extra="${1:-}"
 
   if bl64_lib_mode_compability_is_enabled; then
-    bl64_msg_show_warning "${_BL64_CHECK_TXT_COMPATIBILITY_MODE} (${extra:+${extra} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_warning "using generic compatibility mode for untested command version (${extra:+${extra} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
   else
     bl64_check_alert_unsupported "$extra"
     return $?
@@ -7973,10 +8025,10 @@ function bl64_check_compatibility_mode() {
 #   BL64_LIB_ERROR_APP_MISSING
 #######################################
 function bl64_check_alert_resource_not_found() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local resource="${1:-}"
 
-  bl64_msg_show_error "${_BL64_CHECK_TXT_RESOURCE_NOT_FOUND} (${resource:+resource: ${resource} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+  bl64_msg_show_error "required resource was not found on the system (${resource:+resource: ${resource} ${BL64_MSG_COSMETIC_PIPE} }os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
   return $BL64_LIB_ERROR_APP_MISSING
 }
 
@@ -7995,10 +8047,10 @@ function bl64_check_alert_resource_not_found() {
 #######################################
 # shellcheck disable=SC2119,SC2120
 function bl64_check_alert_undefined() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local target="${1:-}"
 
-  bl64_msg_show_error "${_BL64_CHECK_TXT_UNDEFINED} (${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}${target:+ ${BL64_MSG_COSMETIC_PIPE} command: ${target}})"
+  bl64_msg_show_error "requested command is not defined or implemented (caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}${target:+ ${BL64_MSG_COSMETIC_PIPE} command: ${target}})"
   return $BL64_LIB_ERROR_TASK_UNDEFINED
 }
 
@@ -8019,13 +8071,13 @@ function bl64_check_alert_undefined() {
 #######################################
 function bl64_check_alert_module_setup() {
   local -i last_status=$? # must be first line to catch $?
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local module="${1:-}"
 
   bl64_check_parameter 'module' || return $?
 
   if [[ "$last_status" != '0' ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_MODULE_SETUP_FAILED} (${_BL64_CHECK_TXT_MODULE}: ${module} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "failed to setup the requested BashLib64 module (module: ${module} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $last_status
   else
     return 0
@@ -8046,14 +8098,14 @@ function bl64_check_alert_module_setup() {
 #   BL64_LIB_ERROR_TASK_UNDEFINED
 #######################################
 function bl64_check_parameters_none() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local count="$1"
-  local message="${2:-${_BL64_CHECK_TXT_NOARGS}}"
+  local message="${2:-the requested operation requires at least one parameter and none was provided}"
 
   bl64_check_parameter 'count' || return $?
 
   if [[ "$count" == '0' ]]; then
-    bl64_msg_show_error "${message} (${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $BL64_LIB_ERROR_PARAMETER_MISSING
   else
     return 0
@@ -8075,17 +8127,17 @@ function bl64_check_parameters_none() {
 #   BL64_LIB_ERROR_MODULE_SETUP_MISSING
 #######################################
 function bl64_check_module() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local module="${1:-}"
   local setup_status=''
 
   bl64_check_parameter 'module' &&
-    bl64_lib_module_imported "$module" ||
+    _bl64_lib_module_is_imported "$module" ||
     return $?
 
   setup_status="${!module}"
   if [[ "$setup_status" == "$BL64_VAR_OFF" ]]; then
-    bl64_msg_show_error "${_BL64_CHECK_TXT_MODULE_NOT_SETUP} (${_BL64_CHECK_TXT_MODULE}: ${module} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "required BashLib64 module is not setup. Call the bl64_<MODULE>_setup function before using the module (module: ${module} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     return $BL64_LIB_ERROR_MODULE_SETUP_MISSING
   fi
 
@@ -8108,14 +8160,14 @@ function bl64_check_module() {
 #   $status
 #######################################
 function bl64_check_status() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local status="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_STATUS_ERROR}}"
+  local message="${2:-task execution failed}"
 
   bl64_check_parameter 'status' || return $?
 
   if [[ "$status" != '0' ]]; then
-    bl64_msg_show_error "${message} (status: ${status} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (status: ${status} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return "$status"
   else
@@ -8138,10 +8190,10 @@ function bl64_check_status() {
 #   >0: home is not valid
 #######################################
 function bl64_check_home() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function
 
-  bl64_check_export 'HOME' "$_BL64_CHECK_TXT_HOME_MISSING" &&
-    bl64_check_directory "$HOME" "$_BL64_CHECK_TXT_HOME_DIR_MISSING"
+  bl64_check_export 'HOME' 'standard shell variable HOME is not defined' &&
+    bl64_check_directory "$HOME" "unable to find user's HOME directory"
 }
 
 #######################################
@@ -8153,7 +8205,7 @@ function bl64_check_home() {
 #
 # Arguments:
 #   $1: command file name
-#   $2: Not found error message. Default: _BL64_CHECK_TXT_COMMAND_NOT_IN_PATH
+#   $2: Not found error message.
 # Outputs:
 #   STDOUT: None
 #   STDERR: Error message
@@ -8162,9 +8214,9 @@ function bl64_check_home() {
 #   BL64_LIB_ERROR_FILE_NOT_FOUND
 #######################################
 function bl64_check_command_search_path() {
-  bl64_dbg_lib_check_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_check_is_enabled && bl64_dbg_lib_show_function "$@"
   local file="${1:-}"
-  local message="${2:-${_BL64_CHECK_TXT_COMMAND_NOT_IN_PATH}}"
+  local message="${2:-required command is not found in any of the search paths}"
   local full_path=''
 
   bl64_check_parameter 'file' || return $?
@@ -8172,7 +8224,7 @@ function bl64_check_command_search_path() {
   full_path="$(type -p "${file}")"
   # shellcheck disable=SC2181
   if (($? != 0)); then
-    bl64_msg_show_error "${message} (command: ${file} ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    bl64_msg_show_error "${message} (command: ${file} ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
     # shellcheck disable=SC2086
     return $BL64_LIB_ERROR_FILE_NOT_FOUND
   fi
@@ -8187,18 +8239,18 @@ function bl64_check_command_search_path() {
 #
 # Debugging level status
 #
-function bl64_dbg_app_task_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_TASK" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_ALL" ]]; }
-function bl64_dbg_lib_task_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_TASK" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_ALL" ]]; }
-function bl64_dbg_app_command_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CMD" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_ALL" ]]; }
-function bl64_dbg_lib_command_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_CMD" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_ALL" ]]; }
-function bl64_dbg_app_trace_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_TRACE" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_ALL" ]]; }
-function bl64_dbg_lib_trace_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_TRACE" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_ALL" ]]; }
-function bl64_dbg_app_custom_1_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CUSTOM_1" ]]; }
-function bl64_dbg_app_custom_2_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CUSTOM_2" ]]; }
-function bl64_dbg_app_custom_3_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CUSTOM_3" ]]; }
-function bl64_dbg_lib_check_enabled { [[ "$BL64_DBG_EXCLUDE_CHECK" == "$BL64_VAR_OFF" ]]; }
-function bl64_dbg_lib_log_enabled { [[ "$BL64_DBG_EXCLUDE_LOG" == "$BL64_VAR_OFF" ]]; }
-function bl64_dbg_lib_msg_enabled { [[ "$BL64_DBG_EXCLUDE_MSG" == "$BL64_VAR_OFF" ]]; }
+function bl64_dbg_app_task_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_TASK" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_ALL" ]]; }
+function bl64_dbg_lib_task_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_TASK" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_ALL" ]]; }
+function bl64_dbg_app_command_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CMD" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_ALL" ]]; }
+function bl64_dbg_lib_command_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_CMD" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_ALL" ]]; }
+function bl64_dbg_app_trace_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_TRACE" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_ALL" ]]; }
+function bl64_dbg_lib_trace_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_ALL" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_TRACE" || "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_LIB_ALL" ]]; }
+function bl64_dbg_app_custom_1_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CUSTOM_1" ]]; }
+function bl64_dbg_app_custom_2_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CUSTOM_2" ]]; }
+function bl64_dbg_app_custom_3_is_enabled { [[ "$BL64_DBG_TARGET" == "$BL64_DBG_TARGET_APP_CUSTOM_3" ]]; }
+function _bl64_dbg_lib_check_is_enabled { [[ "$BL64_DBG_EXCLUDE_CHECK" == "$BL64_VAR_OFF" ]]; }
+function _bl64_dbg_lib_log_is_enabled { [[ "$BL64_DBG_EXCLUDE_LOG" == "$BL64_VAR_OFF" ]]; }
+function _bl64_dbg_lib_msg_is_enabled { [[ "$BL64_DBG_EXCLUDE_MSG" == "$BL64_VAR_OFF" ]]; }
 
 #
 # Debugging level control
@@ -8216,9 +8268,20 @@ function bl64_dbg_lib_trace_enable { BL64_DBG_TARGET="$BL64_DBG_TARGET_LIB_TRACE
 function bl64_dbg_app_custom_1_enable { BL64_DBG_TARGET="$BL64_DBG_TARGET_APP_CUSTOM_1"; }
 function bl64_dbg_app_custom_2_enable { BL64_DBG_TARGET="$BL64_DBG_TARGET_APP_CUSTOM_2"; }
 function bl64_dbg_app_custom_3_enable { BL64_DBG_TARGET="$BL64_DBG_TARGET_APP_CUSTOM_3"; }
-function bl64_dbg_lib_check_enable { BL64_DBG_EXCLUDE_CHECK="$BL64_VAR_OFF"; }
-function bl64_dbg_lib_log_enable { BL64_DBG_EXCLUDE_LOG="$BL64_VAR_OFF"; }
-function bl64_dbg_lib_msg_enable { BL64_DBG_EXCLUDE_MSG="$BL64_VAR_OFF"; }
+
+function _bl64_dbg_lib_check_enable { BL64_DBG_EXCLUDE_CHECK="$BL64_VAR_OFF"; }
+function _bl64_dbg_lib_log_enable { BL64_DBG_EXCLUDE_LOG="$BL64_VAR_OFF"; }
+function _bl64_dbg_lib_msg_enable { BL64_DBG_EXCLUDE_MSG="$BL64_VAR_OFF"; }
+
+#
+# Dry-Run execution control
+#
+function bl64_dbg_app_dryrun_is_enabled { [[ "$BL64_DBG_DRYRUN" == "$BL64_DBG_DRYRUN_ALL" || "$BL64_DBG_DRYRUN" == "$BL64_DBG_DRYRUN_APP" ]]; }
+function bl64_dbg_lib_dryrun_is_enabled { [[ "$BL64_DBG_DRYRUN" == "$BL64_DBG_DRYRUN_ALL" || "$BL64_DBG_DRYRUN" == "$BL64_DBG_DRYRUN_LIB" ]]; }
+function bl64_dbg_all_dryrun_disable { BL64_DBG_DRYRUN="$BL64_DBG_DRYRUN_NONE"; }
+function bl64_dbg_all_dryrun_enable { BL64_DBG_DRYRUN="$BL64_DBG_DRYRUN_ALL"; }
+function bl64_dbg_app_dryrun_enable { BL64_DBG_DRYRUN="$BL64_DBG_DRYRUN_APP"; }
+function bl64_dbg_lib_dryrun_enable { BL64_DBG_DRYRUN="$BL64_DBG_DRYRUN_LIB"; }
 
 #######################################
 # Setup the bashlib64 module
@@ -8238,11 +8301,12 @@ function bl64_dbg_lib_msg_enable { BL64_DBG_EXCLUDE_MSG="$BL64_VAR_OFF"; }
 #######################################
 function bl64_dbg_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   # shellcheck disable=SC2034
   bl64_dbg_all_disable &&
+    bl64_dbg_all_dryrun_disable &&
     BL64_DBG_MODULE="$BL64_VAR_ON"
 }
 
@@ -8294,6 +8358,18 @@ function bl64_dbg_set_level() {
 
 function bl64_dbg_app_show_variables() { bl64_msg_show_deprecated 'bl64_dbg_app_show_variables' 'bl64_dbg_app_show_globals'; bl64_dbg_app_show_globals "$@"; }
 function bl64_dbg_lib_show_variables() { bl64_msg_show_deprecated 'bl64_dbg_lib_show_variables' 'bl64_dbg_lib_show_globals'; bl64_dbg_lib_show_globals "$@"; }
+function bl64_dbg_app_task_enabled { bl64_msg_show_deprecated 'bl64_dbg_app_task_enabled' 'bl64_dbg_app_task_is_enabled'; bl64_dbg_app_task_is_enabled; }
+function bl64_dbg_lib_task_enabled { bl64_msg_show_deprecated 'bl64_dbg_lib_task_enabled' 'bl64_dbg_lib_task_is_enabled'; bl64_dbg_lib_task_is_enabled; }
+function bl64_dbg_app_command_enabled { bl64_msg_show_deprecated 'bl64_dbg_app_command_enabled' 'bl64_dbg_app_command_is_enabled'; bl64_dbg_app_command_is_enabled; }
+function bl64_dbg_lib_command_enabled { bl64_msg_show_deprecated 'bl64_dbg_lib_command_enabled' 'bl64_dbg_lib_command_is_enabled'; bl64_dbg_lib_command_is_enabled; }
+function bl64_dbg_app_trace_enabled { bl64_msg_show_deprecated 'bl64_dbg_app_trace_enabled' 'bl64_dbg_app_trace_is_enabled'; bl64_dbg_app_trace_is_enabled; }
+function bl64_dbg_lib_trace_enabled { bl64_msg_show_deprecated 'bl64_dbg_lib_trace_enabled' 'bl64_dbg_lib_trace_is_enabled'; bl64_dbg_lib_trace_is_enabled; }
+function bl64_dbg_app_custom_1_enabled { bl64_msg_show_deprecated 'bl64_dbg_app_custom_1_enabled' 'bl64_dbg_app_custom_1_is_enabled'; bl64_dbg_app_custom_1_is_enabled; }
+function bl64_dbg_app_custom_2_enabled { bl64_msg_show_deprecated 'bl64_dbg_app_custom_2_enabled' 'bl64_dbg_app_custom_2_is_enabled'; bl64_dbg_app_custom_2_is_enabled; }
+function bl64_dbg_app_custom_3_enabled { bl64_msg_show_deprecated 'bl64_dbg_app_custom_3_enabled' 'bl64_dbg_app_custom_3_is_enabled'; bl64_dbg_app_custom_3_is_enabled; }
+function bl64_dbg_lib_check_enabled { bl64_msg_show_deprecated 'bl64_dbg_lib_check_enabled' '_bl64_dbg_lib_check_is_enabled'; _bl64_dbg_lib_check_is_enabled; }
+function bl64_dbg_lib_log_enabled { bl64_msg_show_deprecated 'bl64_dbg_lib_log_enabled' '_bl64_dbg_lib_log_is_enabled'; _bl64_dbg_lib_log_is_enabled; }
+function bl64_dbg_lib_msg_enabled { bl64_msg_show_deprecated 'bl64_dbg_lib_msg_enabled' '_bl64_dbg_lib_msg_is_enabled'; _bl64_dbg_lib_msg_is_enabled; }
 
 #
 # Internal functions
@@ -8301,8 +8377,12 @@ function bl64_dbg_lib_show_variables() { bl64_msg_show_deprecated 'bl64_dbg_lib_
 
 function _bl64_dbg_show() {
   local message="$1"
+  printf '%s: %s\n' '[Debug]' "$message" >&2
+}
 
-  printf '%s: %s\n' 'Debug' "$message" >&2
+function _bl64_dbg_dryrun_show() {
+  local message="$1"
+  printf '%s: %s\n' '[Dry-Run]' "$message"
 }
 
 #
@@ -8325,7 +8405,7 @@ function _bl64_dbg_show() {
 function bl64_dbg_runtime_show() {
   local -i last_status=$?
   local label="${_BL64_DBG_TXT_LABEL_BASH_RUNTIME}"
-  bl64_dbg_app_command_enabled || return $last_status
+  bl64_dbg_app_command_is_enabled || return $last_status
 
   _bl64_dbg_show "${label} Bash / Interpreter path: [${BASH}]"
   _bl64_dbg_show "${label} Bash / ShOpt Options: [${BASHOPTS:-NONE}]"
@@ -8361,10 +8441,11 @@ function bl64_dbg_runtime_show() {
 #######################################
 function bl64_dbg_runtime_show_bashlib64() {
   local label='[bl64-runtime]'
-  bl64_dbg_app_task_enabled || bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || bl64_dbg_lib_task_is_enabled || return 0
   _bl64_dbg_show "${label} BL64_SCRIPT_NAME: [${BL64_SCRIPT_NAME:-NOTSET}]"
   _bl64_dbg_show "${label} BL64_SCRIPT_SID: [${BL64_SCRIPT_SID:-NOTSET}]"
   _bl64_dbg_show "${label} BL64_SCRIPT_ID: [${BL64_SCRIPT_ID:-NOTSET}]"
+  _bl64_dbg_show "${label} BL64_SCRIPT_VERSION: [${BL64_SCRIPT_VERSION:-NOTSET}]"
 }
 
 #######################################
@@ -8382,7 +8463,7 @@ function bl64_dbg_runtime_show_bashlib64() {
 #######################################
 function bl64_dbg_runtime_show_callstack() {
   local label="${_BL64_DBG_TXT_LABEL_BASH_RUNTIME}"
-  bl64_dbg_app_task_enabled || bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || bl64_dbg_lib_task_is_enabled || return 0
   _bl64_dbg_show "${label} ${_BL64_DBG_TXT_CALLSTACK}(2): [${BASH_SOURCE[1]:-NONE}:${FUNCNAME[2]:-NONE}:${BASH_LINENO[2]:-0}]"
   _bl64_dbg_show "${label} ${_BL64_DBG_TXT_CALLSTACK}(3): [${BASH_SOURCE[2]:-NONE}:${FUNCNAME[3]:-NONE}:${BASH_LINENO[3]:-0}]"
   _bl64_dbg_show "${label} ${_BL64_DBG_TXT_CALLSTACK}(4): [${BASH_SOURCE[3]:-NONE}:${FUNCNAME[4]:-NONE}:${BASH_LINENO[4]:-0}]"
@@ -8402,7 +8483,7 @@ function bl64_dbg_runtime_show_callstack() {
 #######################################
 function bl64_dbg_runtime_show_paths() {
   local label="${_BL64_DBG_TXT_LABEL_BASH_RUNTIME}"
-  bl64_dbg_app_task_enabled || bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || bl64_dbg_lib_task_is_enabled || return 0
   _bl64_dbg_show "${label} Initial script path (BL64_SCRIPT_PATH): [${BL64_SCRIPT_PATH:-EMPTY}]"
   _bl64_dbg_show "${label} Home directory (HOME): [${HOME:-EMPTY}]"
   _bl64_dbg_show "${label} Search path (PATH): [${PATH:-EMPTY}]"
@@ -8427,7 +8508,7 @@ function bl64_dbg_runtime_show_paths() {
 #######################################
 function bl64_dbg_app_trace_stop() {
   local -i state=$?
-  bl64_dbg_app_trace_enabled || return $state
+  bl64_dbg_app_trace_is_enabled || return $state
   set +x
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_TRACE} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_FUNCTION_STOP}"
   return $state
@@ -8445,7 +8526,7 @@ function bl64_dbg_app_trace_stop() {
 #   0: always ok
 #######################################
 function bl64_dbg_app_trace_start() {
-  bl64_dbg_app_trace_enabled || return 0
+  bl64_dbg_app_trace_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_TRACE} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_FUNCTION_START}"
   set -x
   return 0
@@ -8466,7 +8547,7 @@ function bl64_dbg_app_trace_start() {
 #######################################
 function bl64_dbg_lib_trace_stop() {
   local -i state=$?
-  bl64_dbg_lib_trace_enabled || return $state
+  bl64_dbg_lib_trace_is_enabled || return $state
 
   set +x
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_TRACE} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_FUNCTION_STOP}"
@@ -8486,7 +8567,7 @@ function bl64_dbg_lib_trace_stop() {
 #   0: always ok
 #######################################
 function bl64_dbg_lib_trace_start() {
-  bl64_dbg_lib_trace_enabled || return 0
+  bl64_dbg_lib_trace_is_enabled || return 0
 
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_TRACE} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_FUNCTION_START}"
   set -x
@@ -8506,7 +8587,7 @@ function bl64_dbg_lib_trace_start() {
 #   0: always ok
 #######################################
 function bl64_dbg_lib_show_info() {
-  bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_lib_task_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_INFO} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_INFO}: ${*}"
   return 0
 }
@@ -8523,7 +8604,7 @@ function bl64_dbg_lib_show_info() {
 #   0: always ok
 #######################################
 function bl64_dbg_app_show_info() {
-  bl64_dbg_app_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_INFO} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_INFO}: ${*}"
   return 0
 }
@@ -8541,7 +8622,7 @@ function bl64_dbg_app_show_info() {
 #######################################
 function bl64_dbg_lib_show_vars() {
   local variable=''
-  bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_lib_task_is_enabled || return 0
 
   for variable in "$@"; do
     eval "_bl64_dbg_show \"${_BL64_DBG_TXT_LABEL_INFO} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_SHELL_VAR}: [${variable}=\$${variable}]\""
@@ -8563,7 +8644,7 @@ function bl64_dbg_lib_show_vars() {
 #######################################
 function bl64_dbg_app_show_vars() {
   local variable=''
-  bl64_dbg_app_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || return 0
 
   for variable in "$@"; do
     eval "_bl64_dbg_show \"${_BL64_DBG_TXT_LABEL_INFO} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_SHELL_VAR}: [${variable}=\$${variable}]\""
@@ -8585,7 +8666,7 @@ function bl64_dbg_app_show_vars() {
 #######################################
 # shellcheck disable=SC2120
 function bl64_dbg_lib_show_function() {
-  bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_lib_task_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_FUNCTION} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] run bashlib64 function. Parameters: ${*}"
   return 0
 }
@@ -8603,7 +8684,7 @@ function bl64_dbg_lib_show_function() {
 #######################################
 # shellcheck disable=SC2120
 function bl64_dbg_app_show_function() {
-  bl64_dbg_app_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_FUNCTION} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] run app function. Parameters: (${*})"
   return 0
 }
@@ -8623,7 +8704,7 @@ function bl64_dbg_app_show_function() {
 #######################################
 function bl64_dbg_lib_command_trace_stop() {
   local -i state=$?
-  bl64_dbg_lib_task_enabled || return $state
+  bl64_dbg_lib_task_is_enabled || return $state
 
   set +x
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_TRACE} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_FUNCTION_STOP}"
@@ -8645,7 +8726,7 @@ function bl64_dbg_lib_command_trace_stop() {
 #   0: always ok
 #######################################
 function bl64_dbg_lib_command_trace_start() {
-  bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_lib_task_is_enabled || return 0
 
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_TRACE} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_FUNCTION_START}"
   set -x
@@ -8665,7 +8746,7 @@ function bl64_dbg_lib_command_trace_start() {
 #   0: always ok
 #######################################
 function bl64_dbg_lib_show_comments() {
-  bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_lib_task_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_INFO} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_COMMENTS}: ${*}"
   return 0
 }
@@ -8682,7 +8763,7 @@ function bl64_dbg_lib_show_comments() {
 #   0: always ok
 #######################################
 function bl64_dbg_app_show_comments() {
-  bl64_dbg_app_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || return 0
   _bl64_dbg_show "${_BL64_DBG_TXT_LABEL_INFO} (${#FUNCNAME[*]})[${FUNCNAME[1]:-NONE}] ${_BL64_DBG_TXT_COMMENTS}: ${*}"
   return 0
 }
@@ -8699,7 +8780,7 @@ function bl64_dbg_app_show_comments() {
 #   0: always ok
 #######################################
 function bl64_dbg_app_show_globals() {
-  bl64_dbg_app_task_enabled || return 0
+  bl64_dbg_app_task_is_enabled || return 0
   local filter='^declare .*BL64_.*=.*'
 
   IFS=$'\n'
@@ -8723,7 +8804,7 @@ function bl64_dbg_app_show_globals() {
 #   0: always ok
 #######################################
 function bl64_dbg_lib_show_globals() {
-  bl64_dbg_lib_task_enabled || return 0
+  bl64_dbg_lib_task_is_enabled || return 0
   local filter='^declare .*BL64_.*=.*'
 
   IFS=$'\n'
@@ -8736,8 +8817,64 @@ function bl64_dbg_lib_show_globals() {
 }
 
 #######################################
+# Show app level dryrun information
+#
+# Arguments:
+#   $@: messages
+# Outputs:
+#   STDOUT: Dryrun message
+#   STDERR: None
+# Returns:
+#   0: always ok
+#######################################
+function bl64_dbg_app_dryrun_show() {
+  bl64_dbg_app_dryrun_is_enabled || return 0
+  _bl64_dbg_dryrun_show "$@"
+  return 0
+}
+
+#######################################
+# Show lib level dryrun information
+#
+# Arguments:
+#   $@: messages
+# Outputs:
+#   STDOUT: Dryrun message
+#   STDERR: None
+# Returns:
+#   0: always ok
+#######################################
+function bl64_dbg_lib_dryrun_show() {
+  bl64_dbg_lib_dryrun_is_enabled || return 0
+  _bl64_dbg_dryrun_show "$@"
+  return 0
+}
+
+#######################################
 # BashLib64 / Module / Setup / Write messages to logs
 #######################################
+
+function _bl64_log_set_target_single() {
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local target="$1"
+  local destination="${BL64_LOG_REPOSITORY}/${target}.log"
+
+  [[ "$BL64_LOG_DESTINATION" == "$destination" ]] && return 0
+  bl64_fs_file_create "$destination" "$BL64_LOG_TARGET_MODE" &&
+    BL64_LOG_DESTINATION="$destination"
+}
+
+function _bl64_log_set_target_multiple() {
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local target="$1"
+  local destination="${BL64_LOG_REPOSITORY}/${target}_"
+
+  destination+="$(printf '%(%FT%TZ%z)T' '-1').log" || return $?
+  [[ "$BL64_LOG_DESTINATION" == "$destination" ]] && return 0
+
+  bl64_fs_file_create "$destination" "$BL64_LOG_TARGET_MODE" &&
+    BL64_LOG_DESTINATION="$destination"
+}
 
 #######################################
 # Setup the bashlib64 module
@@ -8745,8 +8882,9 @@ function bl64_dbg_lib_show_globals() {
 # Arguments:
 #   $1: log repository. Full path
 #   $2: log target. Default: BL64_SCRIPT_ID
-#   $2: level. One of BL64_LOG_CATEGORY_*
-#   $3: format. One of BL64_LOG_FORMAT_*
+#   $3: target type. One of BL64_LOG_TYPE_*
+#   $4: level. One of BL64_LOG_CATEGORY_*
+#   $5: format. One of BL64_LOG_FORMAT_*
 # Outputs:
 #   STDOUT: None
 #   STDERR: None
@@ -8757,24 +8895,33 @@ function bl64_dbg_lib_show_globals() {
 #######################################
 function bl64_log_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
-  local repository="${1:-}"
-  local target="${2:-${BL64_SCRIPT_ID}}"
-  local level="${3:-${BL64_LOG_CATEGORY_NONE}}"
-  local format="${4:-${BL64_LOG_FORMAT_CSV}}"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local log_repository="${1:-}"
+  local log_target="${2:-${BL64_VAR_DEFAULT}}"
+  local log_type="${3:-${BL64_VAR_DEFAULT}}"
+  local log_level="${4:-${BL64_VAR_DEFAULT}}"
+  local log_format="${5:-${BL64_VAR_DEFAULT}}"
 
-  [[ -z "$repository" ]] && return $BL64_LIB_ERROR_PARAMETER_MISSING
+  bl64_check_parameter 'log_repository' ||
+    return $?
+
+  [[ "$log_target" == "$BL64_VAR_DEFAULT" ]] && log_target="$BL64_SCRIPT_ID"
+  [[ "$log_type" == "$BL64_VAR_DEFAULT" ]] && log_type="$BL64_LOG_TYPE_SINGLE"
+  [[ "$log_level" == "$BL64_VAR_DEFAULT" ]] && log_level="$BL64_LOG_CATEGORY_NONE"
+  [[ "$log_format" == "$BL64_VAR_DEFAULT" ]] && log_format="$BL64_LOG_FORMAT_CSV"
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_log_set_repository "$repository" &&
-    bl64_log_set_target "$target" &&
-    bl64_log_set_level "$level" &&
-    bl64_log_set_format "$format" &&
+    _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_FS_MODULE' &&
+    bl64_log_set_repository "$log_repository" &&
+    bl64_log_set_target "$log_target" "$log_type" &&
+    bl64_log_set_level "$log_level" &&
+    bl64_log_set_format "$log_format" &&
     BL64_LOG_MODULE="$BL64_VAR_ON"
   bl64_check_alert_module_setup 'log'
 }
@@ -8794,19 +8941,18 @@ function bl64_log_setup() {
 #   >0: unable to set
 #######################################
 function bl64_log_set_repository() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
-  local repository="$1"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local log_repository="$1"
 
-  if [[ ! -d "$repository" ]]; then
-    "$BL64_FS_CMD_MKDIR" "$repository" &&
-      "$BL64_FS_CMD_CHMOD" "$BL64_LOG_REPOSITORY_MODE" "$repository" ||
-      return $BL64_LIB_ERROR_TASK_FAILED
-  else
-    [[ -w "$repository" ]] || return $BL64_LIB_ERROR_TASK_FAILED
-  fi
+  bl64_check_parameter 'log_repository' || return $?
+  [[ "$BL64_LOG_REPOSITORY" == "$log_repository" ]] && return 0
 
-  BL64_LOG_REPOSITORY="$repository"
-  return 0
+  bl64_fs_dir_create \
+    "$BL64_LOG_REPOSITORY_MODE" "$BL64_VAR_DEFAULT" "$BL64_VAR_DEFAULT" \
+    "$log_repository" ||
+    return $?
+
+  BL64_LOG_REPOSITORY="$log_repository"
 }
 
 #######################################
@@ -8822,16 +8968,16 @@ function bl64_log_set_repository() {
 #   >0: unable to set
 #######################################
 function bl64_log_set_level() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
-  local level="$1"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local log_level="$1"
 
-  case "$level" in
+  case "$log_level" in
   "$BL64_LOG_CATEGORY_NONE") BL64_LOG_LEVEL="$BL64_LOG_CATEGORY_NONE" ;;
   "$BL64_LOG_CATEGORY_INFO") BL64_LOG_LEVEL="$BL64_LOG_CATEGORY_INFO" ;;
   "$BL64_LOG_CATEGORY_DEBUG") BL64_LOG_LEVEL="$BL64_LOG_CATEGORY_DEBUG" ;;
   "$BL64_LOG_CATEGORY_WARNING") BL64_LOG_LEVEL="$BL64_LOG_CATEGORY_WARNING" ;;
   "$BL64_LOG_CATEGORY_ERROR") BL64_LOG_LEVEL="$BL64_LOG_CATEGORY_ERROR" ;;
-  *) return $BL64_LIB_ERROR_PARAMETER_INVALID ;;
+  *) bl64_check_alert_parameter_invalid 'log_level' ;;
   esac
 }
 
@@ -8848,26 +8994,26 @@ function bl64_log_set_level() {
 #   >0: unable to set
 #######################################
 function bl64_log_set_format() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
-  local format="$1"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local log_format="$1"
 
-  case "$format" in
+  case "$log_format" in
   "$BL64_LOG_FORMAT_CSV")
     BL64_LOG_FORMAT="$BL64_LOG_FORMAT_CSV"
     BL64_LOG_FS=':'
     ;;
-  *) return $BL64_LIB_ERROR_PARAMETER_INVALID ;;
+  *) bl64_check_alert_parameter_invalid 'log_format' ;;
   esac
 }
 
 #######################################
 # Set log target
 #
-# * Log target is the file where logs will be written to
-# * File is created or appended in the log repository
+# * Target is created or appended on the log repository
 #
 # Arguments:
 #   $1: log target. Format: file name
+#   $2: target type
 # Outputs:
 #   STDOUT: None
 #   STDERR: commands stderr
@@ -8876,67 +9022,47 @@ function bl64_log_set_format() {
 #   >0: unable to set
 #######################################
 function bl64_log_set_target() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
-  local target="$1"
-  local destination="${BL64_LOG_REPOSITORY}/${target}"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
+  local log_target="$1"
+  local log_type="$2"
 
-  # Check if there is a new target to set
-  [[ "$BL64_LOG_DESTINATION" == "$destination" ]] && return 0
+  bl64_check_parameter 'log_target' &&
+    bl64_check_parameter 'log_type' ||
+    return $?
 
-  if [[ ! -w "$destination" ]]; then
-    "$BL64_FS_CMD_TOUCH" "$destination" &&
-      "$BL64_FS_CMD_CHMOD" "$BL64_LOG_TARGET_MODE" "$destination" ||
-      return $BL64_LIB_ERROR_TASK_FAILED
-  fi
-
-  BL64_LOG_DESTINATION="$destination"
-  return 0
-}
-
-#######################################
-# Set runtime log target
-#
-# * Use to save output from commands using one file per execution
-# * The target name is used as the directory for each execution
-# * The target directory is created in the log repository
-# * The calling script is responsible for redirecting the command's output to the target path BL64_LOG_RUNTIME
-#
-# Arguments:
-#   $1: runtime log target. Format: directory name
-# Outputs:
-#   STDOUT: None
-#   STDERR: commands stderr
-# Returns:
-#   0: set ok
-#   >0: unable to set
-#######################################
-function bl64_log_set_runtime() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
-  local target="$1"
-  local destination="${BL64_LOG_REPOSITORY}/${target}"
-  local log=''
-
-  # Check if there is a new target to set
-  [[ "$BL64_LOG_RUNTIME" == "$destination" ]] && return 0
-
-  if [[ ! -d "$destination" ]]; then
-    "$BL64_FS_CMD_MKDIR" "$destination" &&
-      "$BL64_FS_CMD_CHMOD" "$BL64_LOG_REPOSITORY_MODE" "$destination" ||
-      return $BL64_LIB_ERROR_TASK_FAILED
-  fi
-
-  [[ ! -w "$destination" ]] && return $BL64_LIB_ERROR_TASK_FAILED
-
-  log="$(printf '%(%FT%TZ%z)T' '-1')" &&
-    BL64_LOG_RUNTIME="${destination}/${log}.log" ||
-    return 0
-
-  return 0
+  case "$log_type" in
+  "$BL64_LOG_TYPE_SINGLE")
+    _bl64_log_set_target_single "$log_target"
+    ;;
+  "$BL64_LOG_TYPE_MULTIPLE")
+    _bl64_log_set_target_multiple "$log_target"
+    ;;
+  *)
+    bl64_check_alert_parameter_invalid 'log_type'
+    return $?
+    ;;
+  esac
 }
 
 #######################################
 # BashLib64 / Module / Functions / Write messages to logs
 #######################################
+
+#
+# Deprecation aliases
+#
+# * Aliases to deprecated functions
+# * Needed to maintain compatibility up to N-2 versions
+#
+
+function bl64_log_set_runtime() {
+  bl64_msg_show_deprecated 'bl64_log_set_runtime' 'bl64_log_set_target'
+  bl64_log_set_target "$1" "$BL64_LOG_TYPE_MULTIPLE"
+}
+
+#
+# Private functions
+#
 
 #######################################
 # Save a log record to the logs repository
@@ -8955,7 +9081,7 @@ function bl64_log_set_runtime() {
 #   BL64_LIB_ERROR_MODULE_SETUP_INVALID
 #######################################
 function _bl64_log_register() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
   local source="$1"
   local category="$2"
   local payload="$3"
@@ -8984,6 +9110,10 @@ function _bl64_log_register() {
   esac
 }
 
+#
+# Public functions
+#
+
 #######################################
 # Save a single log record of type 'info' to the logs repository.
 #
@@ -8998,7 +9128,7 @@ function _bl64_log_register() {
 #   >0: failed to save the log record
 #######################################
 function bl64_log_info() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
   local source="$1"
   local payload="$2"
 
@@ -9027,7 +9157,7 @@ function bl64_log_info() {
 #   >0: failed to save the log record
 #######################################
 function bl64_log_error() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
   local source="$1"
   local payload="$2"
 
@@ -9053,7 +9183,7 @@ function bl64_log_error() {
 #   >0: failed to save the log record
 #######################################
 function bl64_log_warning() {
-  bl64_dbg_lib_log_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_log_is_enabled && bl64_dbg_lib_show_function "$@"
   local source="$1"
   local payload="$2"
 
@@ -9087,15 +9217,15 @@ function bl64_log_warning() {
 #######################################
 function bl64_msg_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_LOG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_LOG_MODULE' &&
     bl64_msg_set_output "$BL64_MSG_OUTPUT_ANSI" &&
     bl64_msg_app_enable_verbose &&
     BL64_MSG_MODULE="$BL64_VAR_ON"
@@ -9115,7 +9245,7 @@ function bl64_msg_setup() {
 #   >0: unable to set
 #######################################
 function bl64_msg_set_level() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local level="$1"
 
   bl64_check_parameter 'level' || return $?
@@ -9154,7 +9284,7 @@ function bl64_msg_set_level() {
 #   BL64_LIB_ERROR_PARAMETER_INVALID
 #######################################
 function bl64_msg_set_format() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local format="$1"
 
   bl64_check_parameter 'format' || return $?
@@ -9181,7 +9311,7 @@ function bl64_msg_set_format() {
     return $?
     ;;
   esac
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_vars 'BL64_MSG_FORMAT'
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_vars 'BL64_MSG_FORMAT'
   return 0
 }
 
@@ -9198,7 +9328,7 @@ function bl64_msg_set_format() {
 #   BL64_LIB_ERROR_PARAMETER_INVALID
 #######################################
 function bl64_msg_set_theme() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local theme="$1"
 
   bl64_check_parameter 'theme' || return $?
@@ -9216,7 +9346,7 @@ function bl64_msg_set_theme() {
     return $?
     ;;
   esac
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_vars 'BL64_MSG_THEME'
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_vars 'BL64_MSG_THEME'
   return 0
 }
 
@@ -9237,7 +9367,7 @@ function bl64_msg_set_theme() {
 #   BL64_LIB_ERROR_PARAMETER_INVALID
 #######################################
 function bl64_msg_set_output() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local output="${1:-}"
   local theme="${2:-${BL64_VAR_DEFAULT}}"
 
@@ -9258,7 +9388,7 @@ function bl64_msg_set_output() {
     return $?
     ;;
   esac
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_vars 'BL64_MSG_OUTPUT'
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_vars 'BL64_MSG_OUTPUT'
   bl64_msg_set_theme "$theme"
 }
 
@@ -9266,30 +9396,58 @@ function bl64_msg_set_output() {
 # Verbosity control
 #
 
-function bl64_msg_app_verbose_enabled {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+function bl64_msg_app_verbose_is_enabled {
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
   [[ "$BL64_MSG_VERBOSE" == "$BL64_MSG_VERBOSE_APP" || "$BL64_MSG_VERBOSE" == "$BL64_MSG_VERBOSE_ALL" ]]
 }
-function bl64_msg_lib_verbose_enabled {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+function bl64_msg_lib_verbose_is_enabled {
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
   [[ "$BL64_MSG_VERBOSE" == "$BL64_MSG_VERBOSE_LIB" || "$BL64_MSG_VERBOSE" == "$BL64_MSG_VERBOSE_ALL" ]]
 }
 
 function bl64_msg_all_disable_verbose {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
   BL64_MSG_VERBOSE="$BL64_MSG_VERBOSE_NONE"
 }
 function bl64_msg_all_enable_verbose {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
   BL64_MSG_VERBOSE="$BL64_MSG_VERBOSE_ALL"
 }
 function bl64_msg_lib_enable_verbose {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
   BL64_MSG_VERBOSE="$BL64_MSG_VERBOSE_LIB"
 }
 function bl64_msg_app_enable_verbose {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
   BL64_MSG_VERBOSE="$BL64_MSG_VERBOSE_APP"
+}
+
+#
+# Help attributes
+#
+
+function bl64_msg_help_usage_set(){
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
+  local content="${1:-$BL64_VAR_DEFAULT}"
+  BL64_MSG_HELP_USAGE="$content"
+}
+
+function bl64_msg_help_about_set(){
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
+  local content="${1:-$BL64_VAR_DEFAULT}"
+  BL64_MSG_HELP_ABOUT="$content"
+}
+
+function bl64_msg_help_description_set(){
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
+  local content="${1:-$BL64_VAR_DEFAULT}"
+  BL64_MSG_HELP_DESCRIPTION="$content"
+}
+
+function bl64_msg_help_parameters_set(){
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
+  local content="${1:-$BL64_VAR_DEFAULT}"
+  BL64_MSG_HELP_PARAMETERS="$content"
 }
 
 #######################################
@@ -9297,8 +9455,68 @@ function bl64_msg_app_enable_verbose {
 #######################################
 
 #
+# Deprecation aliases
+#
+# * Aliases to deprecated functions
+# * Needed to maintain compatibility up to N-2 versions
+#
+
+function bl64_msg_app_verbose_enabled { bl64_msg_show_deprecated 'bl64_msg_app_verbose_enabled' 'bl64_msg_app_verbose_is_enabled'; bl64_msg_app_verbose_is_enabled; }
+function bl64_msg_lib_verbose_enabled { bl64_msg_show_deprecated 'bl64_msg_lib_verbose_enabled' 'bl64_msg_lib_verbose_is_enabled'; bl64_msg_lib_verbose_is_enabled; }
+function bl64_msg_show_usage() {
+  bl64_msg_show_deprecated 'bl64_msg_show_usage' 'bl64_msg_help_show'
+  local usage="${1:-${BL64_VAR_NULL}}"
+  local description="${2:-${BL64_VAR_DEFAULT}}"
+  local commands="${3:-}"
+  local flags="${4:-}"
+  local parameters="${5:-}"
+
+  bl64_msg_help_usage_set "$usage"
+  bl64_msg_help_description_set "$description"
+  bl64_msg_help_parameters_set \
+"${commands}
+${flags}
+${parameters}"
+  bl64_msg_help_show
+}
+
+#
 # Internal functions
 #
+
+function _bl64_msg_module_check_setup() {
+  local module="${1:-}"
+  local setup_status=''
+  [[ -z "$module" ]] && return $BL64_LIB_ERROR_PARAMETER_MISSING
+  _bl64_lib_module_is_imported "$module" || return $?
+
+  setup_status="${!module}"
+  if [[ "$setup_status" == "$BL64_VAR_OFF" ]]; then
+    printf 'Error: required BashLib64 module is not setup. Call the bl64_<MODULE>_setup function before using the module (module-id: %s | function: %s)\n' \
+    "${module}" \
+    "${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}" \
+    >&2
+    return $BL64_LIB_ERROR_MODULE_SETUP_MISSING
+  fi
+  return 0
+}
+
+function _bl64_msg_alert_show_parameter() {
+  local parameter="${1:-${BL64_VAR_DEFAULT}}"
+  local message="${2:-${BL64_VAR_DEFAULT}}"
+  local value="${3:-${BL64_VAR_DEFAULT}}"
+
+  [[ "$parameter" == "$BL64_VAR_DEFAULT" ]] && parameter=''
+  [[ "$message" == "$BL64_VAR_DEFAULT" ]] && message='Error: the requested operation was provided with an invalid parameter value'
+  [[ "$value" == "$BL64_VAR_DEFAULT" ]] && value=''
+  printf '%s (%s%scaller: %s)\n' \
+    "$message" \
+    "${parameter:+parameter: ${parameter} | }" \
+    "${value:+value: ${value} | }" \
+    "${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE}" \
+    >&2
+  return $BL64_LIB_ERROR_PARAMETER_INVALID
+}
 
 #######################################
 # Display message helper
@@ -9306,7 +9524,7 @@ function bl64_msg_app_enable_verbose {
 # Arguments:
 #   $1: stetic attribute
 #   $2: type of message
-#   $2: message to show
+#   $3: message to show
 # Outputs:
 #   STDOUT: message
 #   STDERR: message when type is error or warning
@@ -9315,23 +9533,23 @@ function bl64_msg_app_enable_verbose {
 #   BL64_LIB_ERROR_MODULE_SETUP_INVALID
 #######################################
 function _bl64_msg_print() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local attribute="${1:-}"
   local type="${2:-}"
   local message="${3:-}"
 
-  bl64_lib_module_is_setup 'BL64_MSG_MODULE' || return $?
-  [[ -n "$attribute" && -n "$type" && -n "$message" ]] || return $BL64_LIB_ERROR_PARAMETER_MISSING
+  _bl64_msg_module_check_setup 'BL64_MSG_MODULE' || return $?
+  [[ -n "$attribute" && -n "$type" ]] || return $BL64_LIB_ERROR_PARAMETER_MISSING
 
   case "$BL64_MSG_OUTPUT" in
   "$BL64_MSG_OUTPUT_ASCII") _bl64_msg_format_ascii "$attribute" "$type" "$message" ;;
   "$BL64_MSG_OUTPUT_ANSI") _bl64_msg_format_ansi "$attribute" "$type" "$message" ;;
-  *) bl64_lib_alert_parameter_invalid 'BL64_MSG_OUTPUT' "$BL64_VAR_DEFAULT" "$BL64_MSG_OUTPUT" ;;
+  *) _bl64_msg_alert_show_parameter 'BL64_MSG_OUTPUT' "$BL64_VAR_DEFAULT" "$BL64_MSG_OUTPUT" ;;
   esac
 }
 
 function _bl64_msg_format_ansi() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local attribute="${1:-}"
   local type="${2:-}"
   local message="${3:-}"
@@ -9341,7 +9559,6 @@ function _bl64_msg_format_ansi() {
   local style_fmtcaller="${BL64_MSG_THEME}_FMTCALLER"
   local linefeed='\n'
 
-  [[ -n "$attribute" && -n "$type" && -n "$message" ]] || return $BL64_LIB_ERROR_PARAMETER_MISSING
   style="${BL64_MSG_THEME}_${attribute}"
   [[ "$attribute" == "$BL64_MSG_TYPE_INPUT" ]] && linefeed=''
 
@@ -9377,12 +9594,12 @@ function _bl64_msg_format_ansi() {
       "\e[${!style}m${type}\e[${BL64_MSG_ANSI_CHAR_NORMAL}m" \
       "$message"
     ;;
-  *) bl64_lib_alert_parameter_invalid 'BL64_MSG_FORMAT' "$BL64_VAR_DEFAULT" "$BL64_MSG_FORMAT" ;;
+  *) _bl64_msg_alert_show_parameter 'BL64_MSG_FORMAT' "$BL64_VAR_DEFAULT" "$BL64_MSG_FORMAT" ;;
   esac
 }
 
 function _bl64_msg_format_ascii() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local attribute="${1:-}"
   local type="${2:-}"
   local message="${3:-}"
@@ -9392,7 +9609,6 @@ function _bl64_msg_format_ascii() {
   local style_fmtcaller="${BL64_MSG_THEME}_FMTCALLER"
   local linefeed='\n'
 
-  [[ -n "$attribute" && -n "$type" && -n "$message" ]] || return $BL64_LIB_ERROR_PARAMETER_MISSING
   style="${BL64_MSG_THEME}_${attribute}"
   [[ "$attribute" == "$BL64_MSG_TYPE_INPUT" ]] && linefeed=''
 
@@ -9428,60 +9644,13 @@ function _bl64_msg_format_ascii() {
       "${!style} $type" \
       "$message"
     ;;
-  *) bl64_lib_alert_parameter_invalid 'BL64_MSG_FORMAT' "$BL64_VAR_DEFAULT" "$BL64_MSG_FORMAT" ;;
+  *) _bl64_msg_alert_show_parameter 'BL64_MSG_FORMAT' "$BL64_VAR_DEFAULT" "$BL64_MSG_FORMAT" ;;
   esac
 }
 
 #
 # Public functions
 #
-
-#######################################
-# Show script usage information
-#
-# Arguments:
-#   $1: script command line. Include all required and optional components
-#   $2: full script usage description
-#   $3: list of script commands
-#   $4: list of script flags
-#   $5: list of script parameters
-# Outputs:
-#   STDOUT: usage info
-#   STDERR: None
-# Returns:
-#   0: successfull execution
-#   >0: printf error
-#######################################
-function bl64_msg_show_usage() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
-  local usage="${1:-${BL64_VAR_NULL}}"
-  local description="${2:-${BL64_VAR_DEFAULT}}"
-  local commands="${3:-${BL64_VAR_DEFAULT}}"
-  local flags="${4:-${BL64_VAR_DEFAULT}}"
-  local parameters="${5:-${BL64_VAR_DEFAULT}}"
-
-  bl64_check_parameter 'usage' || return $?
-
-  printf '\n%s: %s %s\n\n' 'Usage' "$BL64_SCRIPT_ID" "$usage"
-
-  if [[ "$description" != "$BL64_VAR_DEFAULT" ]]; then
-    printf '%s\n\n' "$description"
-  fi
-
-  if [[ "$commands" != "$BL64_VAR_DEFAULT" ]]; then
-    printf '%s\n%s\n' 'Commands' "$commands"
-  fi
-
-  if [[ "$flags" != "$BL64_VAR_DEFAULT" ]]; then
-    printf '%s\n%s\n' 'Flags' "$flags"
-  fi
-
-  if [[ "$parameters" != "$BL64_VAR_DEFAULT" ]]; then
-    printf '%s\n%s\n' 'Parameters' "$parameters"
-  fi
-
-  return 0
-}
 
 #######################################
 # Display error message
@@ -9496,7 +9665,7 @@ function bl64_msg_show_usage() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_error() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_error "${FUNCNAME[1]:-MAIN}" "$message" &&
@@ -9516,7 +9685,7 @@ function bl64_msg_show_error() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_warning() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_warning "${FUNCNAME[1]:-MAIN}" "$message" &&
@@ -9536,11 +9705,11 @@ function bl64_msg_show_warning() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_init() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "$message" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_INIT" 'Init' "$message"
 }
@@ -9558,11 +9727,11 @@ function bl64_msg_show_init() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_info() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "$message" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_INFO" 'Info' "$message"
 }
@@ -9580,11 +9749,11 @@ function bl64_msg_show_info() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_phase() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_PHASE}:${message}" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_PHASE" 'Phase' "${BL64_MSG_COSMETIC_PHASE_PREFIX} ${message} ${BL64_MSG_COSMETIC_PHASE_SUFIX}"
 }
@@ -9602,11 +9771,11 @@ function bl64_msg_show_phase() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_task() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_TASK}:${message}" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_TASK" 'Task' "$message"
 }
@@ -9624,11 +9793,11 @@ function bl64_msg_show_task() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_subtask() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_SUBTASK}:${message}" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_SUBTASK" 'Subtask' "${BL64_MSG_COSMETIC_ARROW2} ${message}"
 }
@@ -9646,11 +9815,11 @@ function bl64_msg_show_subtask() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_lib_task() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_LIBTASK}:${message}" &&
-    bl64_msg_lib_verbose_enabled || return 0
+    bl64_msg_lib_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_LIBTASK" 'Task' "$message"
 }
@@ -9668,11 +9837,11 @@ function bl64_msg_show_lib_task() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_lib_subtask() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_LIBSUBTASK}:${message}" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_LIBSUBTASK" 'Subtask' "${BL64_MSG_COSMETIC_ARROW2} ${message}"
 }
@@ -9690,11 +9859,11 @@ function bl64_msg_show_lib_subtask() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_lib_info() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_LIBINFO}:${message}" &&
-    bl64_msg_lib_verbose_enabled || return 0
+    bl64_msg_lib_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_LIBINFO" 'Info' "$message"
 }
@@ -9712,11 +9881,11 @@ function bl64_msg_show_lib_info() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_text() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "$message" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   printf '%s\n' "$message"
 }
@@ -9736,11 +9905,11 @@ function bl64_msg_show_text() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_batch_start() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_BATCH}:${message}" &&
-    bl64_msg_app_verbose_enabled || return 0
+    bl64_msg_app_verbose_is_enabled || return 0
 
   _bl64_msg_print "$BL64_MSG_TYPE_BATCH" 'Process' "[${message}] started"
 }
@@ -9763,12 +9932,12 @@ function bl64_msg_show_batch_start() {
 #######################################
 function bl64_msg_show_batch_finish() {
   local -i status=$1
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="${2-}"
 
   # shellcheck disable=SC2086
   bl64_log_info "${FUNCNAME[1]:-MAIN}" "${BL64_MSG_TYPE_BATCH}:${status}:${message}" &&
-    bl64_msg_app_verbose_enabled ||
+    bl64_msg_app_verbose_is_enabled ||
     return $status
 
   if ((status == 0)); then
@@ -9795,7 +9964,7 @@ function bl64_msg_show_batch_finish() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_input() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="$1"
 
   _bl64_msg_print "$BL64_MSG_TYPE_INPUT" 'Input' "$message"
@@ -9816,7 +9985,7 @@ function bl64_msg_show_input() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_separator() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="${1:-$BL64_VAR_DEFAULT}"
   local separator="${2:-$BL64_VAR_DEFAULT}"
   local length="${3:-$BL64_VAR_DEFAULT}"
@@ -9852,7 +10021,7 @@ function bl64_msg_show_separator() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_deprecated() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local feature="${1:-}"
   local replacement="${2:-non-available}"
 
@@ -9874,7 +10043,7 @@ function bl64_msg_show_deprecated() {
 #   >0: printf error
 #######################################
 function bl64_msg_show_setup() {
-  bl64_dbg_lib_msg_enabled && bl64_dbg_lib_show_function "$@"
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function "$@"
   local message="${1:-$BL64_VAR_DEFAULT}"
   local variable=''
 
@@ -9885,6 +10054,66 @@ function bl64_msg_show_setup() {
   for variable in "$@"; do
     eval "bl64_msg_show_info \"${BL64_MSG_COSMETIC_TAB2}${variable}=\$${variable}\""
   done
+}
+
+#######################################
+# Show help message
+#
+# Arguments:
+#   NONE
+# Outputs:
+#   STDOUT: help message
+#   STDERR: NONE
+# Returns:
+#   0: Always OK
+#######################################
+function bl64_msg_help_show(){
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
+  local current_format="$BL64_MSG_FORMAT"
+  bl64_msg_set_format "$BL64_MSG_FORMAT_PLAIN"
+  if [[ "$BL64_MSG_HELP_USAGE" != "$BL64_VAR_DEFAULT" ]]; then
+    _bl64_msg_print "$BL64_MSG_TYPE_HELP" 'Usage' "${BL64_SCRIPT_ID} ${BL64_MSG_HELP_USAGE}"
+  fi
+
+  if [[ "$BL64_MSG_HELP_ABOUT" != "$BL64_VAR_DEFAULT" ]]; then
+    _bl64_msg_print "$BL64_MSG_TYPE_HELP" 'About' "$BL64_MSG_HELP_ABOUT"
+  fi
+
+  if [[ "$BL64_MSG_HELP_DESCRIPTION" != "$BL64_VAR_DEFAULT" ]]; then
+    _bl64_msg_print "$BL64_MSG_TYPE_HELP" 'Description'
+    printf '\n%s\n\n' "$BL64_MSG_HELP_DESCRIPTION"
+  fi
+
+  if [[ "$BL64_MSG_HELP_PARAMETERS" != "$BL64_VAR_DEFAULT" ]]; then
+    _bl64_msg_print "$BL64_MSG_TYPE_HELP" 'Parameters'
+    printf '\n%s\n' "$BL64_MSG_HELP_PARAMETERS"
+  fi
+  bl64_msg_set_format "$current_format"
+  return 0
+}
+
+#######################################
+# Display about the script message
+#
+# * bl64_msg_help_about_set must be run before
+#
+# Arguments:
+#   None
+# Outputs:
+#   STDOUT: message
+#   STDERR: None
+# Returns:
+#   0: Always ok
+#######################################
+function bl64_msg_show_about() {
+  _bl64_dbg_lib_msg_is_enabled && bl64_dbg_lib_show_function
+
+  bl64_msg_app_verbose_is_enabled || return 0
+
+  if [[ "$BL64_MSG_HELP_ABOUT" != "$BL64_VAR_DEFAULT" ]]; then
+    _bl64_msg_print "$BL64_MSG_TYPE_HELP" 'About' "$BL64_MSG_HELP_ABOUT"
+  fi
+  return 0
 }
 
 #######################################
@@ -9907,7 +10136,7 @@ function bl64_msg_show_setup() {
 #######################################
 function bl64_os_setup() {
   [[ -z "$BL64_VERSION" ]] &&
-    echo 'Error: bashlib64-module-core.bash should the last module to be sourced' &&
+    echo 'Error: bashlib64-module-core.bash should the last sourced module' &&
     return 21
 
   [[ "${BASH_VERSINFO[0]}" != '4' && "${BASH_VERSINFO[0]}" != '5' ]] &&
@@ -9915,10 +10144,10 @@ function bl64_os_setup() {
     return $BL64_LIB_ERROR_OS_BASH_VERSION
 
   # shellcheck disable=SC2034
-  bl64_lib_module_imported 'BL64_CHECK_MODULE' &&
-    bl64_lib_module_imported 'BL64_DBG_MODULE' &&
+  _bl64_lib_module_is_imported 'BL64_CHECK_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_DBG_MODULE' &&
     bl64_dbg_lib_show_function &&
-    bl64_lib_module_imported 'BL64_MSG_MODULE' &&
+    _bl64_lib_module_is_imported 'BL64_MSG_MODULE' &&
     _bl64_os_set_distro &&
     _bl64_os_set_runtime &&
     _bl64_os_set_command &&
@@ -10457,7 +10686,7 @@ function bl64_os_is_compatible() {
         break
       elif ((status == 1)); then
         bl64_msg_show_warning \
-          "current OS version is not supported. Execution will continue since compatibility-mode was requested. (current-os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} supported-os: ${*}) ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+          "current OS version is not supported. Execution will continue since compatibility-mode was requested. (current-os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} supported-os: ${*}) ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
         status=0
         break
       fi
@@ -10549,7 +10778,7 @@ function bl64_os_check_version() {
   bl64_os_is_distro "$@" && return 0
 
   bl64_msg_show_error \
-    "task not supported on the current OS version (current-os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} supported-os: ${*}) ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    "task not supported on the current OS version (current-os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} supported-os: ${*}) ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
   return $BL64_LIB_ERROR_APP_INCOMPATIBLE
 }
 
@@ -10573,7 +10802,7 @@ function bl64_os_check_compatibility() {
   bl64_os_is_compatible "$@" && return 0
 
   bl64_msg_show_error \
-    "task not supported on the current OS version (current-os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} supported-os: ${*}) ${BL64_MSG_COSMETIC_PIPE} ${_BL64_CHECK_TXT_FUNCTION}: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
+    "task not supported on the current OS version (current-os: ${BL64_OS_DISTRO} ${BL64_MSG_COSMETIC_PIPE} supported-os: ${*}) ${BL64_MSG_COSMETIC_PIPE} caller: ${FUNCNAME[1]:-NONE}@${BASH_LINENO[1]:-NONE}.${FUNCNAME[2]:-NONE}@${BASH_LINENO[2]:-NONE})"
   return $BL64_LIB_ERROR_APP_INCOMPATIBLE
 }
 
@@ -10627,6 +10856,62 @@ function bl64_os_run_getent() {
   bl64_dbg_lib_trace_start
   # shellcheck disable=SC2086
   "$BL64_OS_CMD_GETENT" \
+    "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Command wrapper with verbose, debug and common options
+#
+# * Trust no one. Ignore inherited config and use explicit config
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: operation completed ok
+#   >0: operation failed
+#######################################
+function bl64_os_run_date() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_module 'BL64_OS_MODULE' &&
+    bl64_check_command "$BL64_OS_CMD_DATE" ||
+    return $?
+
+  bl64_dbg_lib_trace_start
+  # shellcheck disable=SC2086
+  "$BL64_OS_CMD_DATE" \
+    "$@"
+  bl64_dbg_lib_trace_stop
+}
+
+#######################################
+# Command wrapper with verbose, debug and common options
+#
+# * Trust no one. Ignore inherited config and use explicit config
+#
+# Arguments:
+#   $@: arguments are passed as-is to the command
+# Outputs:
+#   STDOUT: command output
+#   STDERR: command stderr
+# Returns:
+#   0: operation completed ok
+#   >0: operation failed
+#######################################
+function bl64_os_run_cat() {
+  bl64_dbg_lib_show_function "$@"
+
+  bl64_check_module 'BL64_OS_MODULE' &&
+    bl64_check_command "$BL64_OS_CMD_CAT" ||
+    return $?
+
+  bl64_dbg_lib_trace_start
+  # shellcheck disable=SC2086
+  "$BL64_OS_CMD_CAT" \
     "$@"
   bl64_dbg_lib_trace_stop
 }
