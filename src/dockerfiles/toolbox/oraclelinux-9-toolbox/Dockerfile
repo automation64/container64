@@ -36,10 +36,10 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-delta" && \
     "${CNT64_INSTALLER_ROOT}/install-duf" && \
     "${CNT64_INSTALLER_ROOT}/install-eza" && \
+    "${CNT64_INSTALLER_ROOT}/install-lsd" && \
     "${CNT64_INSTALLER_ROOT}/install-fd" && \
     "${CNT64_INSTALLER_ROOT}/install-fzf" && \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
-    "${CNT64_INSTALLER_ROOT}/install-gping" && \
     "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \

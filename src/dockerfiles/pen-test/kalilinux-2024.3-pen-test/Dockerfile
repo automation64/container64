@@ -29,15 +29,30 @@ ARG INST64_HWATCH_VERSION="0.3.15" # TODO: Remove once package latest release is
 
 # Install applications
 RUN \
-    "${CNT64_INSTALLER_ROOT}/install-gitleaks" && \
-    "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
+    "${CNT64_INSTALLER_ROOT}/install-bat" && \
+    "${CNT64_INSTALLER_ROOT}/install-capa" && \
+    "${CNT64_INSTALLER_ROOT}/install-eza" && \
+    "${CNT64_INSTALLER_ROOT}/install-lsd" && \
+    "${CNT64_INSTALLER_ROOT}/install-fd" && \
+    "${CNT64_INSTALLER_ROOT}/install-gcc" && \
+    "${CNT64_INSTALLER_ROOT}/install-go" && \
+    "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
     "${CNT64_INSTALLER_ROOT}/install-lynis" && \
+    "${CNT64_INSTALLER_ROOT}/install-neovim" && \
+    "${CNT64_INSTALLER_ROOT}/install-sqlmap" && \
     "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zellij" && \
+    "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
+    "${CNT64_INSTALLER_ROOT}/install-fzf" && \
+    "${CNT64_INSTALLER_ROOT}/install-gitleaks" && \
+    "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
+    "${CNT64_INSTALLER_ROOT}/install-lnav" && \
     "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-testssl" && \
     sudo -E -H -u "${CNT64_USER}" "/opt/sysden64/bin/sysden64" -l
 
 # Set default user and entrypoint
