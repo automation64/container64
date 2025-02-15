@@ -52,7 +52,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     "${CNT64_INSTALLER_ROOT}/install-testssl" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/sysden64/bin/sysden64" -l
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l
 
 # Set default user and entrypoint
 USER ${CNT64_USER}

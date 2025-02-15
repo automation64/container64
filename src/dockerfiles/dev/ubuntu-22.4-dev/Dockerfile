@@ -67,7 +67,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/sysden64/bin/sysden64" -l
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
