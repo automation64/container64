@@ -21,6 +21,13 @@ ARG CNT64_LOCAL_BIN="${CNT64_LOCAL_ROOT}/bin"
 ARG CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
 
 #
+# Setup image
+#
+
+# Set installer parameters
+ARG INST64_SYSTEM_WIDE="YES"
+
+#
 # Bootstrap image
 #
 
