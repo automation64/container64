@@ -10,7 +10,7 @@ FROM ghcr.io/automation64/base/X_BASE_IMAGE_X
 
 ARG CNT64_USER="cnt64"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
+ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image

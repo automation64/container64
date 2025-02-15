@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/base/debian-11-base:latest
 #
 
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/installer64"
+ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 ARG CNT64_USER="test"
 
 #
