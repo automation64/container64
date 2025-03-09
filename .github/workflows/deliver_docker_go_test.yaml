@@ -7,6 +7,7 @@ concurrency:
 
 env:
   DEV_CICD_DEBUG: ""
+  BL64_LIB_CICD: "YES"
 
 on:
   workflow_dispatch:
