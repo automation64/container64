@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
-#######################################
-# Dev / CLI / Hadolint / Command runner for interactive shell
-#
-# * Use to run the command in an interactive shell
-# * Associated shell environment is loaded before command execution
-# * Any other dev task that needs to use the command should call it directly, not using this wrapper
 # * Version: 1.0.0
-#
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -26,11 +19,15 @@
 
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
-# shellcheck source=bin/dev-env-hadolint
-source ./bin/dev-env-hadolint || exit 1
+# shellcheck source=bin/dev-env-bash
+source ./bin/dev-env-bash || exit 1
 
 #
 # Main
 #
 
-"$DEV_LIB_HADOLINT_BIN" "$@"
+[[ -n "$DEV_CICD_DEBUG" ]] && set -x
+
+echo 'dev-lib-bash: Task: install Bash Latest'
+[[ "$(uname -s)" != 'Darwin' ]] && exit 0
+brew install bash
