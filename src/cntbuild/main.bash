@@ -11,8 +11,25 @@ declare cntbuild_container=''
 declare cntbuild_tag=''
 declare cntbuild_context=''
 cntbuild_context="$(pwd)/src"
+bl64_lib_script_version_set '3.0.1'
+bl64_msg_help_usage_set '<-b|-u|-l|-n|-x|-r> [-c Container] [-e Tag] [-s] [-o Context] [-V Verbose] [-D Debug] [-h]'
+bl64_msg_help_about_set 'Container build manager'
+# shellcheck disable=SC2016
+bl64_msg_help_parameters_set \
+  '-b          : Build container
+-u          : Publish container to public registry
+-l          : List container sources
+-n          : Open local container
+-x          : Delete container from registry. Supported registries: GitHub
+-r          : Reset build environment. Warning: removes local images and containers
+-h          : Show help
+-s          : Sign container (requires cosign)
+-c Container: Container name: Format: base directory where the Dockerfile is. Required for -b, -l, -n
+-e Tag      : Container tag. Format: tag. Default: 0.1.0
+-o Context  : Build context. Format: full path. Default: PWD/src
+-V Verbose  : Set verbosity level. Format: one of BL64_MSG_VERBOSE_*
+-D Debug    : Enable debugging mode. Format: one of BL64_DBG_TARGET_*'
 
-(($# == 0)) && cntbuild_help && exit 1
 while getopts ':bulnsrxc:e:o:V:D:h' cntbuild_option; do
   case "$cntbuild_option" in
   b) cntbuild_command='cntbuild_build' ;;
@@ -27,12 +44,11 @@ while getopts ':bulnsrxc:e:o:V:D:h' cntbuild_option; do
   s) cntbuild_sign="$BL64_VAR_ON" ;;
   V) cntbuild_verbose="$OPTARG" ;;
   D) cntbuild_debug="$OPTARG" ;;
-  h) cntbuild_help && exit 0 ;;
-  *) cntbuild_help && exit 1 ;;
+  h) bl64_msg_help_show && exit 0 ;;
+  *) bl64_msg_help_show && exit 1 ;;
   esac
 done
-bl64_dbg_set_level "$cntbuild_debug" && bl64_msg_set_level "$cntbuild_verbose" || exit $?
-cntbuild_initialize "$cntbuild_command" "$cntbuild_sign" || exit $?
+bl64_dbg_set_level "$cntbuild_debug" && bl64_msg_set_level "$cntbuild_verbose" && cntbuild_initialize || exit $?
 
 bl64_msg_show_batch_start "$cntbuild_command"
 case "$cntbuild_command" in
