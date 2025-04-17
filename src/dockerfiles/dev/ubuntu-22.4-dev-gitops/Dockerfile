@@ -33,6 +33,8 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform-docs" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint" && \

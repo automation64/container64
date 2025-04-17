@@ -18,11 +18,13 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 ARG INST64_ANSIBLE_PIPX="OFF"
 
 RUN \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-act" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-ghcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
     ${CNT64_INSTALLER_ROOT}/install-ansible

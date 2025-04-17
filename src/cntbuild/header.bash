@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
 #######################################
-# CntBuild
-#
-# Container images build tool
-#
-# Author: serdigital64 (https://github.com/serdigital64)
-# Repository: https://github.com/automation64/container64
-# Version: 3.0.0
-#
-#######################################
-# Copyright [X_COPYRIGHT_YEAR_X] [X_COPYRIGHT_OWNER_X]
+# Copyright [2024] [serdigital64@gmail.com]
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
