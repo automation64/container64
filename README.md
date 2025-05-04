@@ -53,6 +53,7 @@
 | Image                            | OS        | Base Image                              |
 | -------------------------------- | --------- | --------------------------------------- |
 | `mirror/kalilinux-2024.3-mirror` | kalilinux | `docker.io/kalilinux/kali-last-release` |
+| `mirror/kalilinux-2025.5-mirror` | kalilinux | `docker.io/kalilinux/kali-last-release` |
 
 #### Container collection: Base container image
 

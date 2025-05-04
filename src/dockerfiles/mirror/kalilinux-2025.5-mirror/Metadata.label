@@ -5,5 +5,5 @@ org.opencontainers.image.source=https://github.com/automation64/container64
 org.opencontainers.image.version=1.0.0
 org.opencontainers.image.vendor=https://github.com/automation64/container64
 org.opencontainers.image.licenses=Apache-2.0
-org.opencontainers.image.title=kalilinux-2024.3
+org.opencontainers.image.title=kalilinux-2025-5
 org.opencontainers.image.description=Mirror container image for freezing unversioned sources
