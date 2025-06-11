@@ -63,13 +63,19 @@
 | Image                        | OS          | Base Image                                            |
 | ---------------------------- | ----------- | ----------------------------------------------------- |
 | `base/almalinux-8-base`      | almalinux   | `docker.io/library/almalinux:8`                       |
+| `base/almalinux-9-base`      | almalinux   | `docker.io/library/almalinux:9`                       |
+| `base/almalinux-10-base`     | almalinux   | `docker.io/library/almalinux:10`                      |
 | `base/alpine-3-base`         | alpine      | `docker.io/library/alpine:3.17`                       |
+| `base/alpine-3.18-base`      | alpine      | `docker.io/library/alpine:3.18`                       |
+| `base/alpine-3.19-base`      | alpine      | `docker.io/library/alpine:3.19`                       |
 | `base/alpine-3.20-base`      | alpine      | `docker.io/library/alpine:3.20`                       |
 | `base/alpine-3.21-base`      | alpine      | `docker.io/library/alpine:3.21`                       |
+| `base/alpine-3.22-base`      | alpine      | `docker.io/library/alpine:3.22`                       |
 | `base/amazonlinux-2023-base` | almalinux   | `docker.io/amazonlinux:2023`                          |
 | `base/centos-7-base`         | centos      | `quay.io/centos/centos:centos7`                       |
 | `base/centos-8-base`         | centos      | `quay.io/centos/centos:8`                             |
 | `base/centos-9-base`         | centos      | `quay.io/centos/centos:stream9`                       |
+| `base/centos-10-base`        | centos      | `quay.io/centos/centos:stream10`                      |
 | `base/debian-10-base`        | debian      | `docker.io/library/debian:buster`                     |
 | `base/debian-11-base`        | debian      | `docker.io/library/debian:bullseye`                   |
 | `base/debian-12-base`        | debian      | `docker.io/library/debian:bookworm`                   |
@@ -90,6 +96,7 @@
 | `base/oraclelinux-9-base`    | oraclelinux | `docker.io/library/oraclelinux:9`                     |
 | `base/rhel-8-base`           | rhel        | `docker.io/redhat/ubi8`                               |
 | `base/rhel-9-base`           | rhel        | `docker.io/redhat/ubi9`                               |
+| `base/rhel-10-base`          | rhel        | `docker.io/redhat/ubi10`                              |
 | `base/rockylinux-8-base`     | rockylinux  | `docker.io/rockylinux:8`                              |
 | `base/rockylinux-9-base`     | rockylinux  | `docker.io/rockylinux:9`                              |
 | `base/sles-15-base`          | sles        | `registry.suse.com/bci/bci-base:15`                   |
@@ -107,7 +114,12 @@
 
 | Image                                        | OS          | Base Image                                                  |
 | -------------------------------------------- | ----------- | ----------------------------------------------------------- |
-| `toolbox/oraclelinux-8-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:8`                           |
+| `toolbox/almalinux-10-toolbox`               | oraclelinux | `ghcr.io/automation64/base/almalinux-10-base:latest`        |
+| `toolbox/almalinux-10-toolbox-cloud`         | oraclelinux | `ghcr.io/automation64/toolbox/almalinux-10-toolbox:latest`  |
+| `toolbox/almalinux-10-toolbox-gitops`        | oraclelinux | `ghcr.io/automation64/toolbox/almalinux-10-toolbox:latest`  |
+| `toolbox/almalinux-10-toolbox-k8s`           | oraclelinux | `ghcr.io/automation64/toolbox/almalinux-10-toolbox:latest`  |
+| `toolbox/oraclelinux-8-toolbox`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-8-base`              |
+| `toolbox/oraclelinux-9-toolbox`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-9-base`              |
 | `toolbox/oraclelinux-9-toolbox-ansible`      | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-cloud`        | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
 | `toolbox/oraclelinux-9-toolbox-container`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-toolbox:latest` |
@@ -119,7 +131,6 @@
 | `toolbox/oraclelinux-9-toolbox-mongodbcli-6` | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-psqlcli-13`   | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
 | `toolbox/oraclelinux-9-toolbox-terraform`    | oraclelinux | `ghcr.io/automation64/toolbox/oraclelinux-9-cloud:latest`   |
-| `toolbox/oraclelinux-9-toolbox`              | oraclelinux | `docker.io/library/oraclelinux:9`                           |
 
 #### Container collection: Development environment
 
@@ -128,6 +139,7 @@
 
 | Image                           | OS     | Base Image                                              |
 | ------------------------------- | ------ | ------------------------------------------------------- |
+| `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`     |
 | `dev/ubuntu-22.4-dev-ansible`   | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
 | `dev/ubuntu-22.4-dev-bash`      | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
 | `dev/ubuntu-22.4-dev-cloud`     | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
@@ -144,7 +156,9 @@
 | `dev/ubuntu-22.4-dev-mkdocs`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev:latest`       |
 | `dev/ubuntu-22.4-dev-sql`       | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-dev-cloud:latest` |
 | `dev/ubuntu-22.4-dev-terraform` | Ubuntu | `ghcr.io/automation64/dev/ubuntu-22.4-cloud:latest`     |
-| `dev/ubuntu-22.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-22.4-base:latest`     |
+| `dev/ubuntu-24.4-dev`           | Ubuntu | `ghcr.io/automation64/base/ubuntu-24.4-base:latest`     |
+| `dev/ubuntu-24.4-dev-cloud`     | Ubuntu | `ghcr.io/automation64/dev/ubuntu-24.4-dev:latest`       |
+| `dev/ubuntu-24.4-dev-gitops`    | Ubuntu | `ghcr.io/automation64/dev/ubuntu-24.4-dev-cloud:latest` |
 
 #### Container collection: Bash testing
 
@@ -155,13 +169,18 @@
 | ------------------------------------------------ | ----------- | ---------------------------------------------------------- |
 | `bash-test/almalinux-8-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-8-base:latest`        |
 | `bash-test/almalinux-9-bash-test`                | almalinux   | `ghcr.io/automation64/base/almalinux-9-base:latest`        |
+| `bash-test/almalinux-10-bash-test`               | almalinux   | `ghcr.io/automation64/base/almalinux-10-base:latest`       |
 | `bash-test/alpine-3-bash-test`                   | alpine      | `ghcr.io/automation64/base/alpine-3-base:latest`           |
+| `bash-test/alpine-3.18-bash-test`                | alpine      | `ghcr.io/automation64/base/alpine-3.18-base:latest`        |
+| `bash-test/alpine-3.19-bash-test`                | alpine      | `ghcr.io/automation64/base/alpine-3.19-base:latest`        |
 | `bash-test/alpine-3.20-bash-test`                | alpine      | `ghcr.io/automation64/base/alpine-3.20-base:latest`        |
 | `bash-test/alpine-3.21-bash-test`                | alpine      | `ghcr.io/automation64/base/alpine-3.21-base:latest`        |
+| `bash-test/alpine-3.22-bash-test`                | alpine      | `ghcr.io/automation64/base/alpine-3.22-base:latest`        |
 | `bash-test/amazonlinux-2023-bash-test`           | almalinux   | `ghcr.io/automation64/base/amazonlinux-2023-base:latest`   |
 | `bash-test/centos-7-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-7-base:latest`           |
 | `bash-test/centos-8-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-8-base:latest`           |
 | `bash-test/centos-9-bash-test`                   | centos      | `ghcr.io/automation64/base/centos-9-base:latest`           |
+| `bash-test/centos-10-bash-test`                  | centos      | `ghcr.io/automation64/base/centos-10-base:latest`          |
 | `bash-test/debian-10-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-10-base:latest`          |
 | `bash-test/debian-11-bash-test`                  | debian      | `ghcr.io/automation64/base/debian-11-base:latest`          |
 | `bash-test/debian-9-bash-test`                   | debian      | `ghcr.io/automation64/base/debian-9-base:latest`           |
@@ -188,6 +207,7 @@
 | `bash-test/oraclelinux-9-bash-test`              | oraclelinux | `ghcr.io/automation64/base/oraclelinux-9-base:latest`      |
 | `bash-test/rhel-8-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-8-base:latest`             |
 | `bash-test/rhel-9-bash-test`                     | rhel        | `ghcr.io/automation64/base/rhel-9-base:latest`             |
+| `bash-test/rhel-10-bash-test`                    | rhel        | `ghcr.io/automation64/base/rhel-10-base:latest`            |
 | `bash-test/rockylinux-8-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-8-base:latest`       |
 | `bash-test/rockylinux-9-bash-test`               | rockylinux  | `ghcr.io/automation64/base/rockylinux-9-base:latest`       |
 | `bash-test/sles-15-bash-test`                    | sles        | `ghcr.io/automation64/base/sles-15-base:latest`            |
@@ -322,7 +342,7 @@ Born Shell compatible environment variables exported to be consumed by scripts
 Linux standard set of directories to be used by installers to deploy and publish applications for general usage:
 
 - `CNT64_OPT_ROOT=/opt`
-- `$CNT64_OPT_ROOT/<APPLICATION>`
+- `CNT64_OPT_ROOT/<APPLICATION>`
 - `CNT64_LOCAL_ROOT=/usr/local`
 - `CNT64_LOCAL_BIN=/usr/local/bin`
 
@@ -334,7 +354,7 @@ Installers are maintained separately and downloaded at build time from the [Inst
 - Installers are purpose build for container environments or similar (CICD runners, etc)
 - Installers will consume Container64 global environment variables as needed
 - Installer specific parameters are defined as shell exported variables that must be defined before script execution (i.e.: via Dockerfile, CICD, etc)
-- Default location: `$CNT64_INSTALLER_ROOT`
+- Default location: `CNT64_INSTALLER_ROOT`
 
 #### Global Tools
 

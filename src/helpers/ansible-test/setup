@@ -1,21 +1,11 @@
 #!/usr/bin/env bash
 # Template: 1.5.0
 #######################################
-# Container64 / Setup container image
-#
-# Author: SerDigital64 (https://github.com/serdigital64)
-# Repository: https://github.com/automation64/container64
-# Version: 3.0.1
-#
-#######################################
-# Copyright [2023] [serdigital64@gmail.com]
+# Copyright SerDigital64 - https://github.com/serdigital64
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -249,10 +239,9 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-declare cnt64_setup_installer_description='Setup Container64 image'
-
+bl64_lib_script_version_set '3.0.1'
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$cnt64_setup_installer_description"
+bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_lib_enable
 cnt64_setup_initialize &&
@@ -261,4 +250,4 @@ cnt64_setup_initialize &&
   cnt64_setup_create_users &&
   cnt64_setup_configure_users &&
   cnt64_setup_install_applications
-bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
+bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"

@@ -1,21 +1,11 @@
 #!/usr/bin/env bash
 # Template: 1.1.0
 #######################################
-# Container64 / Setup container image
-#
-# Author: SerDigital64 (https://github.com/serdigital64)
-# Repository: https://github.com/automation64/container64
-# Version: 4.1.0
-#
-#######################################
-# Copyright [2023] [serdigital64@gmail.com]
+# Copyright SerDigital64 - https://github.com/serdigital64
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -49,10 +39,6 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
-# Globals
-#
-
-#
 # Functions
 #
 
@@ -68,7 +54,7 @@ function cnt64_setup_configure_os() {
 function cnt64_setup_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
-  if bl64_os_is_distro "${BL64_OS_UB}"; then
+  if bl64_os_is_distro "${BL64_OS_UB}-22"; then
     # OS dependant tools
     packages+=" apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
     # File management tools
@@ -78,13 +64,32 @@ function cnt64_setup_select_packages() {
     # File transfer tools
     packages+=" ftp wget rsync"
     # Performance tools
-    packages+=" hostname sysstat strace ltrace procps psmisc htop btop glance stress-ng iotop"
+    packages+=" hostname sysstat strace ltrace procps psmisc htop glance stress-ng iotop"
     # Shells
     packages+=" zsh csh bash-completion screen tmux fish direnv"
     # Code management tools
     packages+=" git diffutils patch make"
     # Text utils
     packages+=" ripgrep bat nano less jq gettext gawk readline-common tldr most"
+    # Certificate tools
+    packages+=" dirmngr gnupg2 ca-certificates openssl"
+  elif bl64_os_is_distro "${BL64_OS_UB}-24"; then
+    # OS dependant tools
+    packages+=" apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
+    # File management tools
+    packages+=" tar unzip bzip2 xz-utils mc file lsof"
+    # Networking tools
+    packages+=" tcpdump dnsutils net-tools telnet nmap openssh-client iptraf-ng"
+    # File transfer tools
+    packages+=" ftp wget rsync"
+    # Performance tools
+    packages+=" hostname sysstat strace ltrace procps psmisc htop glance stress-ng iotop"
+    # Shells
+    packages+=" zsh csh bash-completion screen tmux fish direnv"
+    # Code management tools
+    packages+=" git diffutils patch make"
+    # Text utils
+    packages+=" nano less jq gettext gawk readline-common tldr most"
     # Certificate tools
     packages+=" dirmngr gnupg2 ca-certificates openssl"
   fi
@@ -134,7 +139,8 @@ function cnt64_setup_initialize() {
   bl64_dbg_app_show_function
 
   bl64_os_check_version \
-    "${BL64_OS_UB}-22" &&
+    "${BL64_OS_UB}-22" \
+    "${BL64_OS_UB}-24" &&
     bl64_check_export 'CNT64_USER' &&
     bl64_check_privilege_root &&
     bl64_cryp_setup &&
@@ -145,13 +151,12 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-declare cnt64_setup_installer_description='Setup Container64 image'
-
+bl64_lib_script_version_set '4.2.0'
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$cnt64_setup_installer_description"
+bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_setup_initialize &&
   cnt64_setup_install
 
-bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
+bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"
