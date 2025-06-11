@@ -1,21 +1,11 @@
 #!/usr/bin/env bash
 # Template: 1.5.0
 #######################################
-# Container64 / Setup container image
-#
-# Author: SerDigital64 (https://github.com/serdigital64)
-# Repository: https://github.com/automation64/container64
-# Version: 3.1.1
-#
-#######################################
-# Copyright [2023] [serdigital64@gmail.com]
+# Copyright SerDigital64 - https://github.com/serdigital64
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -68,6 +58,9 @@ function cnt64_setup_prepare_os() {
   elif bl64_os_is_distro "${BL64_OS_OL}-9"; then
     bl64_msg_show_task 'Enable EPEL repository'
     bl64_pkg_deploy 'oracle-epel-release-el9'
+  elif bl64_os_is_distro "${BL64_OS_ALM}-10"; then
+    bl64_msg_show_task 'Enable EPEL repository'
+    bl64_pkg_deploy 'epel-release'
   fi
 }
 
@@ -76,7 +69,7 @@ function cnt64_setup_select_packages() {
   local packages=''
 
   # Distro specific
-  if bl64_os_is_distro "${BL64_OS_OL}"; then
+  if bl64_os_is_distro "${BL64_OS_OL}-8"; then
     # File management tools
     packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
@@ -93,10 +86,40 @@ function cnt64_setup_select_packages() {
     packages+=" ripgrep nano less jq gettext gawk tldr most"
     # Certificate tools
     packages+=" dirmngr gnupg2 openssl"
-  fi
-  if bl64_os_is_distro "${BL64_OS_OL}-9"; then
+  elif bl64_os_is_distro "${BL64_OS_OL}-9"; then
+    # File management tools
+    packages+=" tar unzip bzip2 xz mc file lsof"
+    # Networking tools
+    packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
+    # File transfer tools
+    packages+=" ftp wget rsync restic rclone"
+    # Performance tools
+    packages+=" sysstat strace ltrace btop htop stress-ng iotop"
+    # Code management tools
+    packages+=" git diffutils patch"
+    # Shells
+    packages+=" zsh csh bash-completion screen tmux fish"
     # Text utils
-    packages+=" bat"
+    packages+=" ripgrep nano less jq gettext gawk tldr most bat"
+    # Certificate tools
+    packages+=" dirmngr gnupg2 openssl"
+  elif bl64_os_is_distro "${BL64_OS_ALM}-10"; then
+    # File management tools
+    packages+=" tar unzip bzip2 xz mc file lsof"
+    # Networking tools
+    packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
+    # File transfer tools
+    packages+=" ftp wget rsync restic"
+    # Performance tools
+    packages+=" sysstat strace ltrace htop stress-ng iotop"
+    # Code management tools
+    packages+=" git diffutils patch"
+    # Shells
+    packages+=" zsh csh bash-completion screen tmux fish"
+    # Text utils
+    packages+=" nano less jq gettext gawk tldr most"
+    # Certificate tools
+    packages+=" dirmngr gnupg2 openssl"
   fi
 
   [[ -n "$packages" ]] && echo "$packages"
@@ -176,7 +199,8 @@ function cnt64_setup_initialize() {
 
   bl64_os_check_version \
     "${BL64_OS_OL}-8" \
-    "${BL64_OS_OL}-9" &&
+    "${BL64_OS_OL}-9" \
+    "${BL64_OS_ALM}-10" &&
     bl64_check_export 'CNT64_USER' &&
     bl64_check_privilege_root &&
     bl64_cryp_setup &&
@@ -187,10 +211,9 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-declare cnt64_setup_installer_description='Setup Container64 image'
-
+bl64_lib_script_version_set '3.2.0'
 bl64_msg_all_enable_verbose
-bl64_msg_show_batch_start "$cnt64_setup_installer_description"
+bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 
 [[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
 cnt64_setup_initialize &&
@@ -198,4 +221,4 @@ cnt64_setup_initialize &&
   cnt64_setup_install_packages &&
   cnt64_setup_create_users &&
   cnt64_setup_configure_users
-bl64_msg_show_batch_finish $? "$cnt64_setup_installer_description"
+bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"
