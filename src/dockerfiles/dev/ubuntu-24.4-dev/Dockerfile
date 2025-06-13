@@ -54,6 +54,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
+    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     "${CNT64_INSTALLER_ROOT}/install-ripgrep" && \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
@@ -68,7 +69,6 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l
 

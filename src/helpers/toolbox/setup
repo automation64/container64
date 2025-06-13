@@ -104,12 +104,13 @@ function cnt64_setup_select_packages() {
     # Certificate tools
     packages+=" dirmngr gnupg2 openssl"
   elif bl64_os_is_distro "${BL64_OS_ALM}-10"; then
+    bl64_dbg_app_show_comments 'packages no longer available: most restic'
     # File management tools
     packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
     packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
     # File transfer tools
-    packages+=" ftp wget rsync restic"
+    packages+=" ftp wget rsync"
     # Performance tools
     packages+=" sysstat strace ltrace htop stress-ng iotop"
     # Code management tools
@@ -117,7 +118,7 @@ function cnt64_setup_select_packages() {
     # Shells
     packages+=" zsh csh bash-completion screen tmux fish"
     # Text utils
-    packages+=" nano less jq gettext gawk tldr most"
+    packages+=" nano less jq gettext gawk tldr"
     # Certificate tools
     packages+=" dirmngr gnupg2 openssl"
   fi
