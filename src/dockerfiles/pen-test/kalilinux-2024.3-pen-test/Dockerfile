@@ -25,7 +25,6 @@ RUN \
     rm /setup
 
 # Set installer parameters
-ARG INST64_HWATCH_VERSION="0.3.15" # TODO: Remove once package latest release is available
 
 # Install applications
 RUN \

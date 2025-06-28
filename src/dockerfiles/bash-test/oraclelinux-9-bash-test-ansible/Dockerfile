@@ -15,9 +15,7 @@ ARG CNT64_USER="test"
 # Setup image
 #
 
-# Set installer parameters
-ARG INST64_ANSIBLE_PIPX="OFF"
-
 # Install applications
 RUN \
-    "${CNT64_INSTALLER_ROOT}/install-ansible"
+"${CNT64_INSTALLER_ROOT}/install-pipx" && \
+"${CNT64_INSTALLER_ROOT}/install-ansible"
