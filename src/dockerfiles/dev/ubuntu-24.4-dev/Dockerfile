@@ -31,8 +31,7 @@ RUN \
 # Set installer parameters
 ARG INST64_SHELLCHECK_METHOD="BINARY"
 ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
-#ARG INST64_ZOXIDE_VERSION="v0.9.4" # TODO: Remove once package latest release is available
-
+#
 # Install applications
 RUN \
     "${CNT64_INSTALLER_ROOT}/install-python" && \

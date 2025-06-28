@@ -25,8 +25,7 @@ RUN \
     rm /setup
 
 # Set installer parameters
-#ARG INST64_ZOXIDE_VERSION="v0.9.4" # TODO: Remove once package latest release is available
-
+#
 # Install applications
 RUN \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
