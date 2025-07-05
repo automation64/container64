@@ -40,4 +40,5 @@ RUN \
     zypper install --no-confirm tar gzip && \
     /install-installer64 && \
     /bootstrap && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     rm /install-installer64 /bootstrap

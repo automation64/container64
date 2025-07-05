@@ -53,7 +53,6 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-7zip" && \
     "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
-    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l
 
 # Set default user and entrypoint

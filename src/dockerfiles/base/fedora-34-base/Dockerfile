@@ -39,4 +39,5 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 RUN \
     /install-installer64 && \
     /bootstrap && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     rm /install-installer64 /bootstrap
