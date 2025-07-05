@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM docker.io/rockylinux:8
+FROM docker.io/rockylinux/rockylinux:8-ubi
 
 # Prepare package installer
 ENV container="docker"
@@ -39,4 +39,5 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 RUN \
     /install-installer64 && \
     /bootstrap && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     rm /install-installer64 /bootstrap

@@ -40,4 +40,5 @@ RUN \
     apk add --no-cache bash gawk && \
     /install-installer64 && \
     /bootstrap && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     rm /install-installer64 /bootstrap

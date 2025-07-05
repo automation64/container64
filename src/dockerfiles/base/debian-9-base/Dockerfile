@@ -44,4 +44,5 @@ RUN \
     apt-get install --assume-yes curl openssl ca-certificates --no-install-recommends && \
     /install-installer64 && \
     /bootstrap && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     rm /install-installer64 /bootstrap
