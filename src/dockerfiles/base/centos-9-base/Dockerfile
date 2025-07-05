@@ -1,6 +1,6 @@
 # Template: 1.0.0
 # Base image
-FROM quay.io/centos/centos:stream9
+FROM quay.io/centos/centos:9
 
 # Prepare package installer
 ENV container="docker"
