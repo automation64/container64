@@ -15,7 +15,12 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+
+# Install applications
 RUN \
+    sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
@@ -40,4 +45,5 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    "${CNT64_INSTALLER_ROOT}/install-ansiblelint"
+    "${CNT64_INSTALLER_ROOT}/install-ansiblelint" && \
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup

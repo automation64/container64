@@ -31,9 +31,11 @@ RUN \
 # Set installer parameters
 ARG INST64_SHELLCHECK_METHOD="BINARY"
 ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
-#
+ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+
 # Install applications
 RUN \
+    sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
     "${CNT64_INSTALLER_ROOT}/install-gcc" && \
     "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
@@ -68,7 +70,8 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l && \
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
 
 # Set default user and entrypoint
 USER ${CNT64_USER}
