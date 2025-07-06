@@ -14,8 +14,12 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+
 # Install applications
 RUN \
+    sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
@@ -33,4 +37,5 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-krew" && \
     /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
     /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
-    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug"
+    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug" && \
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
