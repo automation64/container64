@@ -17,6 +17,7 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 
 # Set installer parameters
 ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+ARG INST64_KREW_SYSTEM_WIDE="OFF"
 
 # Install applications
 RUN \
