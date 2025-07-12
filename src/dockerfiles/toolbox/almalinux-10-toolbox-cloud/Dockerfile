@@ -20,7 +20,6 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 # Install applications
 RUN \
     sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
     "${CNT64_INSTALLER_ROOT}/install-awsshell" && \
