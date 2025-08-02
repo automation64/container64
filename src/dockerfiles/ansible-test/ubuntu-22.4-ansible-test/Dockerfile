@@ -20,8 +20,19 @@ COPY --chmod=700 helpers/ansible-test/setup /setup
 
 # Setup image
 RUN \
-    sudo -E /setup && \
-    sudo rm /setup
+    /setup && \
+    rm -f /setup
+
+# Set installer parameters
+ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+
+# Install applications
+RUN \
+    /opt/sysop64/linux-repo/linux-repo-refresh && \
+    "${CNT64_INSTALLER_ROOT}/install-go" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
+    /opt/sysop64/linux-repo/linux-repo-cleanup
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]
