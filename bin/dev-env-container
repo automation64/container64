@@ -21,14 +21,14 @@
 
 # shellcheck disable=SC2154
 {
-    # Auth / Container / Registry
-    export DEV_AUTH_CONTAINER_REGISTRY="${DEV_AUTH_CONTAINER_REGISTRY:-}"
-    # Lab / Container / Registry
-    export DEV_LAB_CONTAINER_REGISTRY="${DEV_LAB_CONTAINER_REGISTRY:-ghcr.io/automation64}"
-    # Lab / Container / Default image
-    export DEV_LAB_CONTAINER_IMAGE="${DEV_LAB_CONTAINER_IMAGE:-dev/ubuntu-22.4-dev-container}"
-    # Auth / Docker / Registry Type
-    export DEV_AUTH_CONTAINER_TYPE="${DEV_AUTH_CONTAINER_TYPE:-GITHUB}"
+  # Auth / Container / Registry
+  export DEV_AUTH_CONTAINER_REGISTRY="${DEV_AUTH_CONTAINER_REGISTRY:-}"
+  # Lab / Container / Registry
+  export DEV_LAB_CONTAINER_REGISTRY="${DEV_LAB_CONTAINER_REGISTRY:-ghcr.io/automation64}"
+  # Lab / Container / Default image
+  export DEV_LAB_CONTAINER_IMAGE="${DEV_LAB_CONTAINER_IMAGE:-dev/ubuntu-22.4-dev-container}"
+  # Auth / Docker / Registry Type
+  export DEV_AUTH_CONTAINER_TYPE="${DEV_AUTH_CONTAINER_TYPE:-GITHUB}"
 }
 
 #
@@ -45,7 +45,7 @@
 
 # shellcheck disable=SC2154
 {
-    # Auth / Docker / User
-    export DEV_AUTH_CONTAINER_USER="${DEV_AUTH_CONTAINER_USER:-}"
-    export DEV_AUTH_CONTAINER_PASSWORD="${DEV_AUTH_CONTAINER_PASSWORD:-}"
+  # Auth / Docker / User
+  export DEV_AUTH_CONTAINER_USER="${DEV_AUTH_CONTAINER_USER:-}"
+  export DEV_AUTH_CONTAINER_PASSWORD="${DEV_AUTH_CONTAINER_PASSWORD:-}"
 }
