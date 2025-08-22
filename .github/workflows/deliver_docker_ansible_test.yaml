@@ -46,5 +46,5 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-cntbuild ${{ matrix.scope }} ON"
+        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
 ...
