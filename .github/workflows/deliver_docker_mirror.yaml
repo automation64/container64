@@ -43,5 +43,5 @@ jobs:
         run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
 
       - name: "Build and publish container images"
-        run: "./bin/dev-build-cntbuild MIRROR_${{ github.event.inputs.target }} ON"
+        run: "./bin/dev-build-project MIRROR_${{ github.event.inputs.target }} ON"
 ...
