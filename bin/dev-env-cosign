@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# * Version: 1.1.1
+# template-env: 1.0.2
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -27,14 +27,14 @@
 
 # shellcheck disable=SC2154
 {
-    # Lib / Cosign / Target
-    export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
-    # Lib / Cosign / Command
-    export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_TARGET}/cosign"
-    # Auth / Cosign / Server
-    export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
-    # Auth / Cosign / Server Type
-    export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
+  # Lib / Cosign / Target
+  export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/cosign}"
+  # Lib / Cosign / Command
+  export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_TARGET}/cosign"
+  # Auth / Cosign / Server
+  export DEV_AUTH_COSIGN_SERVER="${DEV_AUTH_COSIGN_SERVER:-}"
+  # Auth / Cosign / Server Type
+  export DEV_AUTH_COSIGN_TYPE="${DEV_AUTH_COSIGN_TYPE:-GITHUB}"
 }
 
 #
@@ -45,7 +45,7 @@
 
 # shellcheck disable=SC2154
 {
-    # Auth / Cosign / Server User
-    export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
-    export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
+  # Auth / Cosign / Server User
+  export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
+  export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
 }
