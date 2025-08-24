@@ -29,6 +29,7 @@
       - [Container collection: Static Site Generator linting](#container-collection-static-site-generator-linting)
       - [Container collection: Go testing](#container-collection-go-testing)
       - [Container collection: Penetration testing](#container-collection-penetration-testing)
+      - [Container collection: Kubernetes CLI](#container-collection-kubernetes-cli)
     - [Container structure](#container-structure)
       - [Global environment variables](#global-environment-variables)
       - [Shared Directories](#shared-directories)
@@ -122,6 +123,11 @@
 
 - Purpose: Penetration testing tools for security compliance checking
 - [Dockerfiles](src/dockerfiles/pen-test)
+
+#### Container collection: Kubernetes CLI
+
+- Purpose: Runtime for kubectl
+- [Dockerfiles](src/dockerfiles/cli/alpine-3-cli-k8s)
 
 ### Container structure
 

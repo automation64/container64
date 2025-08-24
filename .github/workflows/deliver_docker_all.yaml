@@ -90,4 +90,10 @@ jobs:
     permissions: "write-all"
     uses: "./.github/workflows/deliver_docker_yaml_lint.yaml"
     secrets: inherit
+  call_deliver_docker_cli:
+    needs:
+      - "call_deliver_docker_base"
+    permissions: "write-all"
+    uses: "./.github/workflows/deliver_docker_cli.yaml"
+    secrets: inherit
 ...
