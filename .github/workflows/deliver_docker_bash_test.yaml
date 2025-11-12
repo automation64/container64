@@ -37,7 +37,15 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Prepare base tools"
+      - name: "Cache local tools"
+        uses: "actions/cache@v4"
+        with:
+          path: ./lib
+          key: ${{ runner.os }}-lib-cache
+          restore-keys: |
+            ${{ runner.os }}-lib-cache
+
+      - name: "Prepare environment"
         run: "./bin/dev-lib-base"
 
       - name: "Prepare docker tool"
@@ -71,7 +79,15 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Prepare base tools"
+      - name: "Cache local tools"
+        uses: "actions/cache@v4"
+        with:
+          path: ./lib
+          key: ${{ runner.os }}-lib-cache
+          restore-keys: |
+            ${{ runner.os }}-lib-cache
+
+      - name: "Prepare environment"
         run: "./bin/dev-lib-base"
 
       - name: "Prepare docker tool"
@@ -105,7 +121,15 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Prepare base tools"
+      - name: "Cache local tools"
+        uses: "actions/cache@v4"
+        with:
+          path: ./lib
+          key: ${{ runner.os }}-lib-cache
+          restore-keys: |
+            ${{ runner.os }}-lib-cache
+
+      - name: "Prepare environment"
         run: "./bin/dev-lib-base"
 
       - name: "Prepare docker tool"
@@ -139,7 +163,15 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Prepare base tools"
+      - name: "Cache local tools"
+        uses: "actions/cache@v4"
+        with:
+          path: ./lib
+          key: ${{ runner.os }}-lib-cache
+          restore-keys: |
+            ${{ runner.os }}-lib-cache
+
+      - name: "Prepare environment"
         run: "./bin/dev-lib-base"
 
       - name: "Prepare docker tool"

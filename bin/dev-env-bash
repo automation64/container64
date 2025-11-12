@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# * Version: 1.7.0
+# template-env: 1.1.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -16,17 +16,22 @@
 #
 # Globals
 #
-# * Use .env file to override values
+# * Use .dev.env file to override values
 #
 
 # shellcheck disable=SC2154
 {
+  # Env / Bash / Module environment definition version
+  export DEV_ENV_BASH_VERSION='1.10.0'
   # Env / Bash / Registry for lab and testing containers
   export DEV_ENV_BASH_REGISTRY="${DEV_ENV_BASH_REGISTRY:-ghcr.io/automation64}"
   # Env / Bash / Container path for project mounts
   export DEV_ENV_BASH_CONTAINER_PATH_SRC='/source'
   export DEV_ENV_BASH_CONTAINER_PATH_ROOT='/project'
   export DEV_ENV_BASH_CONTAINER_PATH_TEST='/test'
+  # Env / Bash / Local work paths
+  export DEV_ENV_BASH_PATH_LOGS="${DEV_PATH_PROF_LOGS}/bash"
+
   # Build / Bash / Target file name
   export DEV_BUILD_BASH_NAME="${DEV_BUILD_BASH_NAME:-}"
   # Build / Bash / Source full path
@@ -35,8 +40,12 @@
   export DEV_BUILD_BASH_FILE="${DEV_BUILD_BASH_FILE:-${DEV_PATH_BUILD_PREPARE}/${DEV_BUILD_BASH_NAME}}"
   # Build / Bash / Libraries
   export DEV_BUILD_BASH_MODULES="${DEV_BUILD_BASH_MODULES:-/dev/null}"
+
   # Lab / Bash / Default image
   export DEV_LAB_BASH_CONTAINER="${DEV_LAB_BASH_CONTAINER:-bash-test/alpine-3-bash-test}"
+
+  # Test / Bash / Cooldown between tests in seconds
+  export DEV_TEST_BASH_COOLDOWN='2'
   # Test / Bash / Path to test cases. Relative to DEV_PATH_ROOT
   export DEV_TEST_BASH_CASES="${DEV_BASE_TEST}/bash"
   # Test / Bash / Flag for marking container environment
@@ -59,16 +68,11 @@
   export DEV_TEST_BASH_CONTAINER_RHEL="${DEV_TEST_BASH_CONTAINER_RHEL:-bash-test/rhel-9-bash-test}"
   export DEV_TEST_BASH_CONTAINER_SLES="${DEV_TEST_BASH_CONTAINER_SLES:-bash-test/sles-15-bash-test}"
   export DEV_TEST_BASH_CONTAINER_UB="${DEV_TEST_BASH_CONTAINER_UB:-bash-test/ubuntu-22.4-bash-test}"
+
+  # Deploy / OpenTofu / Log file
+  export DEV_DEPLOY_BASH_LOG='deploy.log'
+
+  # Remove / OpenTofu / Log file
+  export DEV_REMOVE_BASH_LOG='remove.log'
 }
 
-#
-# Locals
-#
-# * Use .local.env file or CICD variables to override values
-#
-
-#
-# Secrets
-#
-# * Use .secrets.env file or CICD secrets to override values
-#

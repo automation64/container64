@@ -16,7 +16,7 @@
 #
 # Globals
 #
-# * Use .env file to override values
+# * Use .dev.env file to override values
 #
 
 # shellcheck disable=SC2154
@@ -32,15 +32,9 @@
 }
 
 #
-# Locals
-#
-# * Use .local.env file or CICD variables to override values
-#
-
-#
 # Secrets
 #
-# * Use .secrets.env file or CICD secrets to override values
+# * Declaration only. Use .secrets.env file or CICD secrets to set values
 #
 
 # shellcheck disable=SC2154
