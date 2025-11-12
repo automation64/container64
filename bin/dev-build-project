@@ -45,7 +45,7 @@ function my_build() {
       if bl64_lib_flag_is_enabled "$MY_RESET"; then
         "$DEV_LIB_PROJECT_BIN" -x -c "$container_name"
       fi
-      "$DEV_LIB_PROJECT_BIN" -u -s -c "$container_name" &&
+      "$DEV_LIB_PROJECT_BIN" -u -c "$container_name" &&
         sleep $pause ||
         return $?
     fi
