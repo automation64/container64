@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# template-env: 1.0.2
+# template-env: 1.1.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -16,13 +16,20 @@
 #
 # Globals
 #
-# * Use .env file to override values
+# * Use .dev.env file to override values
 #
 
 # shellcheck disable=SC2154
 {
+  # Env / GIT / Module environment definition version
+  export DEV_ENV_GIT_VERSION='1.1.0'
+
   # Env / GIT / Main branch name
   export DEV_GIT_BRANCH_MAIN="${DEV_GIT_BRANCH_MAIN:-main}"
+  # Env / GIT / Release branch name
+  export DEV_GIT_BRANCH_RELEASE="${DEV_GIT_BRANCH_RELEASE:-release}"
+  # Env / GIT / Feature branch name
+  export DEV_GIT_BRANCH_FEATURE="${DEV_GIT_BRANCH_FEATURE:-feature}"
   # Env / GIT / Origin remote name
   export DEV_GIT_REMOTE_ORIGIN="${DEV_GIT_REMOTE_ORIGIN:-origin}"
   # Env / GIT / Use upstream repository? (ON|OFF)
@@ -44,9 +51,3 @@
   # Lib / RSync / Command
   export DEV_LIB_RSYNC_BIN="${DEV_LIB_RSYNC_BIN:-/usr/bin/rsync}"
 }
-
-#
-# Secrets
-#
-# * Use .secrets.env file or CICD secrets to override values
-#

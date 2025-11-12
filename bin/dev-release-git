@@ -16,7 +16,9 @@
 # shellcheck source=bin/dev-set
 source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
 # shellcheck source-path=/opt/bl64
-source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
+source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-rxtx.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-api.bash" &&
+  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-vcs.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-xsv.bash" &&
@@ -24,35 +26,47 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-bsh.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # shellcheck source-path=bin
-source ./bin/dev-env-bash || exit 1
+source ./bin/dev-env-git || exit 1
 
-declare MY_CONTAINER="${1:-${DEV_LAB_BASH_CONTAINER}}"
+declare MY_VERSION="${1:-}"
 
-function dev_lab_open() {
+function my_release() {
   bl64_dbg_app_show_function
-  local entrypoint='bash'
 
-  bl64_msg_show_task "open sandbox environment (${MY_CONTAINER})"
-  bl64_cnt_run_interactive \
-    --env=DEV_TEST_BASH_CONTAINER_ENVIRONMENT='ON' \
-    --entrypoint="$entrypoint" \
-    --workdir="$DEV_ENV_BASH_CONTAINER_PATH_ROOT" \
-    --mount "type=bind,source=${DEV_PATH_SRC},target=${DEV_ENV_BASH_CONTAINER_PATH_SRC},readonly" \
-    --mount "type=bind,source=${DEV_PATH_ROOT},target=${DEV_ENV_BASH_CONTAINER_PATH_ROOT},readonly" \
-    "${DEV_ENV_BASH_REGISTRY}/${MY_CONTAINER}"
+  if [[ -n "$(bl64_vcs_run_git status --porcelain)" ]]; then
+    bl64_msg_show_error 'Uncommitted changes found, please commit or stash them before creating a release branch.'
+    return $BL64_LIB_ERROR_CHECK_FAILED
+  fi
+
+  bl64_msg_show_task "switch to main branch (${DEV_GIT_BRANCH_MAIN})"
+  bl64_vcs_run_git checkout "$DEV_GIT_BRANCH_MAIN" &&
+    bl64_msg_show_task "create release branch (${DEV_GIT_BRANCH_RELEASE})" &&
+    bl64_vcs_run_git checkout -b "$DEV_GIT_BRANCH_RELEASE" &&
+    bl64_vcs_run_git push --set-upstream "$DEV_GIT_REMOTE_ORIGIN" "$DEV_GIT_BRANCH_RELEASE" &&
+    bl64_msg_show_task "squash feature branch to release (${DEV_GIT_BRANCH_FEATURE} -> ${DEV_GIT_BRANCH_RELEASE})" &&
+    bl64_vcs_run_git merge --squash "$DEV_GIT_BRANCH_FEATURE" &&
+    bl64_vcs_run_git commit -m "real: promote ${MY_VERSION}" &&
+    bl64_msg_show_task 'push release branch to origin' &&
+    bl64_vcs_run_git push
 }
 
 function my_initialize() {
   bl64_dbg_app_show_function
   bl64_msg_show_about
-  bl64_cnt_setup
+  bl64_check_parameter 'MY_VERSION' &&
+    bl64_msg_show_setup "$BL64_VAR_DEFAULT" \
+      'MY_VERSION' \
+      'DEV_GIT_BRANCH_MAIN' \
+      'DEV_GIT_REMOTE_ORIGIN' \
+      'DEV_GIT_BRANCH_FEATURE' \
+      'DEV_GIT_BRANCH_RELEASE'
 }
 
 [[ -n "$DEV_CICD_DEBUG" ]] && bl64_dbg_all_enable
-bl64_lib_script_version_set '1.2.1'
-bl64_msg_help_about_set 'Open a development sandbox environment using a container'
+bl64_lib_script_version_set '1.0.1'
+bl64_msg_help_about_set 'Create and push a squashed release branch from feature branch'
 bl64_msg_set_format "$DEV_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
-dev_lab_open
+my_release
 bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"
