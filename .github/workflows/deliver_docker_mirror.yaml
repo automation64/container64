@@ -17,6 +17,7 @@ on:
         type: choice
         description: Name of the mirror container
         options:
+          - "ARCHLINUX"
           - "KALILINUX"
 
 jobs:
