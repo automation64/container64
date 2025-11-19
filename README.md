@@ -40,6 +40,7 @@
     - [Requirements](#requirements)
     - [Installation](#installation)
   - [Contributing](#contributing)
+  - [Disclaimer](#disclaimer)
   - [License](#license)
   - [Author](#author)
 
@@ -208,8 +209,11 @@ podman pull ghcr.io/automation64/<IMAGE>
 
 Help on implementing new features and maintaining the code base is welcomed.
 
-- [Guidelines](https://github.com/automation64/container64/blob/master/CONTRIBUTING.md)
 - [Contributor Covenant Code of Conduct](https://github.com/automation64/container64/blob/master/CODE_OF_CONDUCT.md)
+
+## Disclaimer
+
+This repository is provided "as is" without any warranties. The author is not responsible for any damages or issues arising from its use. Additionally, this project is not affiliated with or endorsed by any organization or entity. Use at your own risk.
 
 ## License
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# * Version: 2.0.1
+# template-env: 1.2.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -14,29 +14,15 @@
 #######################################
 
 #
-# Globals
+# Module parameters
 #
 # * Use .dev.env file to override values
 #
 
 # shellcheck disable=SC2154
 {
-  # Env / Hadolint / Container Registry for tools
-  export DEV_ENV_HADOLINT_REGISTRY="${DEV_ENV_HADOLINT_REGISTRY:-ghcr.io/automation64}"
-  # Env / Hadolint / Container path for project mounts
-  export DEV_ENV_HADOLINT_CONTAINER_PATH_ROOT='/project'
-  # Lib / Hadolint / Installer
-  export DEV_LIB_HADOLINT_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-hadolint"
-  # Lib / Hadolint / Target
-  export DEV_LIB_HADOLINT_TARGET="${DEV_LIB_HADOLINT_TARGET:-${DEV_PATH_LIB}/hadolint}"
-  # Lint / Hadolint / Configuration
-  export DEV_LIB_HADOLINT_CFG='.hadolint.yaml'
   # Lint / Hadolint / Sources
   export DEV_LINT_HADOLINT_SOURCE="${DEV_LINT_HADOLINT_SOURCE:-$DEV_BASE_SRC}"
-  # Lint / Hadolint / Container with linting tool
-  export DEV_LINT_HADOLINT_CONTAINER="${DEV_LINT_HADOLINT_CONTAINER:-container-lint/alpine-3-container-lint}"
-  # Lint / Hadolint / Container entrypoint
-  export DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT="${DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT:-/usr/local/bin/hadolint}"
 }
 
 #
@@ -47,6 +33,45 @@
 
 # shellcheck disable=SC2154
 {
+  # Lib / Hadolint / Skip installation?
+  export DEV_LIB_HADOLINT_SKIP='YES'
+  # Lib / Hadolint / Target
+  export DEV_LIB_HADOLINT_TARGET="${DEV_PATH_LIB}/hdl}"
   # Lib / Hadolint / Command
-  export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-${DEV_LIB_HADOLINT_TARGET}/hadolint}"
+  export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-}"
+  if [[ -z "$DEV_LIB_HADOLINT_BIN" ]]; then
+    DEV_LIB_HADOLINT_BIN="$(bl64_bsh_command_locate_user 'hadolint')"
+    if [[ -z "$DEV_LIB_HADOLINT_BIN" ]]; then
+      DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_TARGET}/hadolint"
+      if [[ ! -x "${DEV_LIB_HADOLINT_BIN}" ]]; then
+        DEV_LIB_HADOLINT_SKIP='NO'
+      fi
+    fi
+  fi
+}
+
+#
+# Internal variables
+#
+# * Shared internal variables for module tasks
+#
+
+# shellcheck disable=SC2154
+{
+  # Env / Hadolint / Module environment definition version
+  export DEV_ENV_HADOLINT_VERSION='3.0.0'
+  # Env / Hadolint / Container path for project mounts
+  export DEV_ENV_HADOLINT_CONTAINER_PATH_ROOT='/project'
+  # Lib / Hadolint / Installer
+  export DEV_LIB_HADOLINT_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-hadolint"
+  # Lib / Hadolint / Target
+  export DEV_LIB_HADOLINT_TARGET="${DEV_PATH_LIB}/hadolint"
+  # Lint / Hadolint / Configuration
+  export DEV_LIB_HADOLINT_CFG='.hadolint.yaml'
+  # Lint / Hadolint / Container with linting tool
+  export DEV_LINT_HADOLINT_CONTAINER='container-lint/alpine-3-container-lint'
+  # Lint / Hadolint / Container entrypoint
+  export DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT='/usr/local/bin/hadolint'
+  # Env / Hadolint / Container Registry for tools
+  export DEV_ENV_HADOLINT_REGISTRY='ghcr.io/automation64'
 }
