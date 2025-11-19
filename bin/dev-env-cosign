@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# template-env: 1.1.0
+# template-env: 1.2.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -12,22 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #######################################
-
-#
-# Globals
-#
-# * Use .dev.env file to override values
-#
-
-# shellcheck disable=SC2154
-{
-  # Env / Cosign / Module environment definition version
-  export DEV_ENV_COSIGN_VERSION='1.2.0'
-  # Lib / Cosign / Installer
-  export DEV_LIB_COSIGN_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-cosign"
-  # Lib / Cosign / Target
-  export DEV_LIB_COSIGN_TARGET="${DEV_LIB_COSIGN_TARGET:-${DEV_PATH_LIB}/X_DESTINATION_X}"
-}
 
 #
 # Locals
@@ -44,6 +28,8 @@
 
   # Lib / Cosign / Skip installation?
   export DEV_LIB_COSIGN_SKIP='YES'
+  # Lib / Cosign / Target
+  export DEV_LIB_COSIGN_TARGET="${DEV_PATH_LIB}/cosign"
   # Lib / Cosign / Command
   export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-}"
   if [[ -z "$DEV_LIB_COSIGN_BIN" ]]; then
@@ -68,4 +54,18 @@
   # Auth / Cosign / Server User
   export DEV_AUTH_COSIGN_USER="${DEV_AUTH_COSIGN_USER:-}"
   export DEV_AUTH_COSIGN_PASSWORD="${DEV_AUTH_COSIGN_PASSWORD:-}"
+}
+
+#
+# Internal variables
+#
+# * Shared internal variables for module tasks
+#
+
+# shellcheck disable=SC2154
+{
+  # Env / Cosign / Module environment definition version
+  export DEV_ENV_COSIGN_VERSION='1.2.0'
+  # Lib / Cosign / Installer
+  export DEV_LIB_COSIGN_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-cosign"
 }

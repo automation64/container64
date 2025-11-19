@@ -1,0 +1,9 @@
+org.opencontainers.image.authors=serdigital64@gmail.com
+org.opencontainers.image.url=https://github.com/automation64/container64
+org.opencontainers.image.documentation=https://github.com/automation64/container64
+org.opencontainers.image.source=https://github.com/automation64/container64
+org.opencontainers.image.version=2.6.0
+org.opencontainers.image.vendor=https://github.com/automation64/container64
+org.opencontainers.image.licenses=Apache-2.0
+org.opencontainers.image.title=fedora-43-bash-test
+org.opencontainers.image.description=Bash testing environment. Packages: Bash, Bats Core, Bash Core plugins, OS utilities

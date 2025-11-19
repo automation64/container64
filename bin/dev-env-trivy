@@ -29,7 +29,7 @@
   # Lib / Trivy / Installer
   export DEV_LIB_TRIVY_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-trivy"
   # Lib / Trivy / Target
-  export DEV_LIB_TRIVY_TARGET="${DEV_LIB_TRIVY_TARGET:-${DEV_PATH_LIB}/triby}"
+  export DEV_LIB_TRIVY_TARGET="${DEV_PATH_LIB}/triby"
   # SAST / Trivy / Format
   export DEV_SAST_TRIVY_FORMAT="${DEV_SAST_TRIVY_FORMAT:-sarif}"
 }
