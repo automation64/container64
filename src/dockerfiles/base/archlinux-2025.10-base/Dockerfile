@@ -11,7 +11,7 @@ ENV container="docker"
 # * See docs/base-environment.md for details
 #
 
-ARG CNT64_DEBUG=""
+ARG CNT64_DEBUG="NONE"
 ARG CNT64_USER="cnt64"
 ARG CNT64_TMP="/tmp"
 ARG CNT64_OPT_ROOT="/opt"
@@ -37,8 +37,6 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 
 # Bootstrap
 RUN \
-    apt-get update && \
-    apt-get install --assume-yes curl openssl ca-certificates --no-install-recommends && \
     /install-installer64 && \
     /bootstrap && \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \

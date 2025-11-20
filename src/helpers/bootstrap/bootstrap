@@ -32,14 +32,16 @@ source "${CNT64_BASHLIB64}/bashlib64-module-vcs.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+  source "${CNT64_BASHLIB64}/bashlib64-core.bash" ||
+  { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
 
 #
 # Globals
 #
 
 # Environment Definition. See docs/base-environment.md for details
-export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_DEBUG="${CNT64_DEBUG:-NONE}"
+export CNT64_VERBOSE="${CNT64_VERBOSE:-FULL}"
 export CNT64_USER="${CNT64_USER:-}"
 export CNT64_USER_UID="${CNT64_USER_UID:-6464}"
 export CNT64_USER_GID="${CNT64_USER_GID:-6464}"
@@ -52,7 +54,7 @@ export CNT64_OPT_ROOT="${CNT64_OPT_ROOT:-}"
 # Functions
 #
 
-function cnt64_bootstrap_create_users() {
+function my_create_users() {
   bl64_dbg_app_show_function
   local user_home="/home/${CNT64_USER}"
   local user_shell='/bin/bash'
@@ -75,7 +77,7 @@ function cnt64_bootstrap_create_users() {
     bl64_rbac_add_root "${CNT64_USER}"
 }
 
-function cnt64_bootstrap_configure_users() {
+function my_configure_users() {
   bl64_dbg_app_show_function
   local user_mode='0750'
   local user_home="/home/${CNT64_USER}"
@@ -103,7 +105,7 @@ function cnt64_bootstrap_configure_users() {
     bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile"
 }
 
-function cnt64_bootstrap_fix_repository_fedora() {
+function my_fix_repository_fedora() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Ignore unavailable repositories (EOL)'
   bl64_txt_run_sed \
@@ -111,7 +113,7 @@ function cnt64_bootstrap_fix_repository_fedora() {
     /etc/yum.repos.d/fedora*.repo
 }
 
-function cnt64_bootstrap_fix_repository_centos() {
+function my_fix_repository_centos() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix EOL centos repository location to use vault'
   bl64_txt_run_sed \
@@ -122,7 +124,7 @@ function cnt64_bootstrap_fix_repository_centos() {
       /etc/yum.repos.d/CentOS-*
 }
 
-function cnt64_bootstrap_fix_repository_ubuntu() {
+function my_fix_repository_ubuntu() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix EOL ubuntu repository location to use old-release'
   bl64_txt_run_sed \
@@ -130,7 +132,7 @@ function cnt64_bootstrap_fix_repository_ubuntu() {
     /etc/apt/sources.list
 }
 
-function cnt64_bootstrap_fix_repository_debian() {
+function my_fix_repository_debian() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix EOL debian repository location to use archive'
   local sources='/etc/apt/sources.list'
@@ -139,40 +141,20 @@ function cnt64_bootstrap_fix_repository_debian() {
     printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"$sources"
 }
 
-function cnt64_bootstrap_prepare_os() {
+function my_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_is_distro "${BL64_OS_CNT}-8"; then
-    cnt64_bootstrap_fix_repository_centos
+    my_fix_repository_centos
   elif bl64_os_is_distro "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.10"; then
-    cnt64_bootstrap_fix_repository_ubuntu
+    my_fix_repository_ubuntu
   elif bl64_os_is_distro "${BL64_OS_DEB}-9"; then
-    cnt64_bootstrap_fix_repository_debian
+    my_fix_repository_debian
   elif bl64_os_is_distro "${BL64_OS_FD}-36"; then
-    cnt64_bootstrap_fix_repository_fedora
+    my_fix_repository_fedora
   fi
 }
 
-function cnt64_bootstrap_install_packages() {
-  bl64_dbg_app_show_function
-  local packages='sudo'
-  bl64_msg_show_task 'Install sudo'
-  if bl64_os_is_distro "${BL64_OS_SLES}"; then
-    packages+=' gawk'
-  elif bl64_os_is_distro "${BL64_OS_ALP}"; then
-    packages+=' curl'
-  elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
-    packages+=' shadow-utils findutils'
-  elif bl64_os_is_distro "${BL64_OS_FD}"; then
-    packages+=' findutils'
-    packages+=' gawk'
-  elif bl64_os_is_distro "${BL64_OS_RCK}"; then
-    packages+=' findutils'
-  fi
-  # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
-}
-
-function cnt64_bootstrap_configure_os() {
+function my_configure_os() {
   bl64_dbg_app_show_function
   local public_mode='0755'
   local public_owner='root'
@@ -195,12 +177,25 @@ function cnt64_bootstrap_configure_os() {
 #   0: package installed ok
 #   >0: unable to install package
 #######################################
-function cnt64_bootstrap_install() {
+function my_install() {
   bl64_dbg_app_show_function
-  cnt64_bootstrap_install_packages ||
-    return $?
-  bl64_msg_show_task 'cleanup temporary files'
-  return 0
+  local packages='sudo'
+
+  bl64_msg_show_task 'Install required packages'
+  if bl64_os_is_distro "${BL64_OS_SLES}"; then
+    packages+=' gawk'
+  elif bl64_os_is_distro "${BL64_OS_ALP}"; then
+    packages+=' curl'
+  elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
+    packages+=' shadow-utils findutils'
+  elif bl64_os_is_distro "${BL64_OS_FD}"; then
+    packages+=' findutils'
+    packages+=' gawk'
+  elif bl64_os_is_distro "${BL64_OS_RCK}"; then
+    packages+=' findutils'
+  fi
+  # shellcheck disable=SC2086
+  bl64_pkg_deploy $packages
 }
 
 #######################################
@@ -214,9 +209,11 @@ function cnt64_bootstrap_install() {
 #   0: initialization ok
 #   >: failed to initialize
 #######################################
-function cnt64_bootstrap_initialize() {
+function my_initialize() {
   bl64_dbg_app_show_function
+  bl64_msg_show_about
   bl64_os_check_compatibility \
+    "${BL64_OS_ARC}" \
     "${BL64_OS_ALM}" \
     "${BL64_OS_AMZ}" \
     "${BL64_OS_ALP}" \
@@ -235,22 +232,25 @@ function cnt64_bootstrap_initialize() {
     bl64_check_export 'CNT64_OPT_ROOT' &&
     bl64_cryp_setup &&
     bl64_pkg_setup &&
-    bl64_check_privilege_root
+    bl64_check_privilege_root &&
+    bl64_msg_show_setup "$BL64_VAR_DEFAULT" \
+      'CNT64_INSTALLER_ROOT' \
+      'CNT64_LOCAL_ROOT' \
+      'CNT64_LOCAL_BIN' \
+      'CNT64_OPT_ROOT'
 }
 
 #
 # Main
 #
 
-bl64_lib_script_version_set '2.12.2'
-bl64_msg_all_enable_verbose
+bl64_lib_script_version_set '2.13.0'
+bl64_msg_help_about_set 'Deploy and configure the base container environment'
+bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
-
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
-cnt64_bootstrap_initialize &&
-  cnt64_bootstrap_prepare_os &&
-  cnt64_bootstrap_install &&
-  cnt64_bootstrap_configure_os &&
-  cnt64_bootstrap_create_users &&
-  cnt64_bootstrap_configure_users
+my_prepare_os &&
+  my_install &&
+  my_configure_os &&
+  my_create_users &&
+  my_configure_users
 bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"
