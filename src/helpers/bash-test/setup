@@ -39,7 +39,8 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
 #
 
 # Environment Definition. See docs/base-environment.md for details
-export CNT64_DEBUG="${CNT64_DEBUG:-}"
+export CNT64_DEBUG="${CNT64_DEBUG:-NONE}"
+export CNT64_VERBOSE="${CNT64_VERBOSE:-FULL}"
 export CNT64_USER
 export CNT64_USER_UID="${CNT64_USER_UID:-6466}"
 export CNT64_USER_GID="${CNT64_USER_GID:-6466}"
@@ -48,7 +49,7 @@ export CNT64_USER_GID="${CNT64_USER_GID:-6466}"
 # Functions
 #
 
-function cnt64_setup_select_packages() {
+function my_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_is_distro "${BL64_OS_ALP}"; then
@@ -73,7 +74,7 @@ function cnt64_setup_select_packages() {
   [[ -n "$packages" ]] && echo "$packages"
 }
 
-function cnt64_setup_create_users() {
+function my_create_users() {
   bl64_dbg_app_show_function
   local user_home="/home/${CNT64_USER}"
   local user_shell='/bin/bash'
@@ -93,7 +94,7 @@ function cnt64_setup_create_users() {
     bl64_rbac_add_root "${CNT64_USER}"
 }
 
-function cnt64_setup_configure_users() {
+function my_configure_users() {
   bl64_dbg_app_show_function
   local user_mode='0750'
   local user_home="/home/${CNT64_USER}"
@@ -121,11 +122,11 @@ function cnt64_setup_configure_users() {
     bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile"
 }
 
-function cnt64_setup_install_packages() {
+function my_install_packages() {
   bl64_dbg_app_show_function
   local packages=''
   bl64_msg_show_task 'deploy packages'
-  packages="$(cnt64_setup_select_packages)" ||
+  packages="$(my_select_packages)" ||
     return $?
   # shellcheck disable=SC2086
   bl64_pkg_deploy $packages
@@ -142,11 +143,11 @@ function cnt64_setup_install_packages() {
 #   0: initialization ok
 #   >: failed to initialize
 #######################################
-function cnt64_setup_initialize() {
+function my_initialize() {
   bl64_dbg_app_show_function
 
-  bl64_dbg_app_show_comments 'no need to specify versions, rely on bashlib64 compatibility check'
-  bl64_os_check_version \
+  bl64_msg_show_about
+  bl64_os_check_compatibility \
     "${BL64_OS_ALM}" \
     "${BL64_OS_ALP}" \
     "${BL64_OS_AMZ}" \
@@ -169,13 +170,11 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '2.2.1'
-bl64_msg_all_enable_verbose
+bl64_lib_script_version_set '2.2.2'
+bl64_msg_help_about_set 'Deploy and configure the base container environment'
+bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
-
-[[ -n "$CNT64_DEBUG" ]] && bl64_dbg_all_enable
-cnt64_setup_initialize &&
-  cnt64_setup_install_packages &&
-  cnt64_setup_create_users &&
-  cnt64_setup_configure_users
+my_install_packages &&
+  my_create_users &&
+  my_configure_users
 bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"

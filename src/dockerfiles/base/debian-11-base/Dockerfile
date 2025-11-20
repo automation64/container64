@@ -11,7 +11,7 @@ ENV container="docker"
 # * See docs/base-environment.md for details
 #
 
-ARG CNT64_DEBUG=""
+ARG CNT64_DEBUG="NONE"
 ARG CNT64_USER="cnt64"
 ARG CNT64_TMP="/tmp"
 ARG CNT64_OPT_ROOT="/opt"
