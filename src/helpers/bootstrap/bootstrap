@@ -183,6 +183,7 @@ function my_install() {
 
   bl64_msg_show_task 'Install required packages'
   if bl64_os_is_distro "${BL64_OS_SLES}"; then
+    packages+=' findutils'
     packages+=' gawk'
   elif bl64_os_is_distro "${BL64_OS_ALP}"; then
     packages+=' curl'
@@ -244,7 +245,7 @@ function my_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '2.13.0'
+bl64_lib_script_version_set '2.14.0'
 bl64_msg_help_about_set 'Deploy and configure the base container environment'
 bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
