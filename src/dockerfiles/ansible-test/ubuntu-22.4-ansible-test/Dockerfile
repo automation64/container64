@@ -32,7 +32,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-go" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    /opt/sysop64/linux-repo/linux-repo-cleanup
+    /opt/sysop64/linux-package/linux-package-cleanup
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]

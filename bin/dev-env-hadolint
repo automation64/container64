@@ -14,6 +14,37 @@
 #######################################
 
 #
+# Module variables
+#
+# * Shared internal variables for module tasks
+#
+
+# shellcheck disable=SC2154
+{
+  # Env / Hadolint / Module environment definition version
+  export DEV_ENV_HADOLINT_ID='hadolint'
+  export DEV_ENV_HADOLINT_VERSION='3.0.0'
+  # Env / Hadolint / Container path for project mounts
+  export DEV_ENV_HADOLINT_CONTAINER_PATH_ROOT='/project'
+  # Env / Hadolint / Container Registry for tools
+  export DEV_ENV_HADOLINT_REGISTRY='ghcr.io/automation64'
+
+  # Lib / Hadolint / Installer
+  export DEV_LIB_HADOLINT_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-hadolint"
+  # Lib / Hadolint / Skip installation?
+  export DEV_LIB_HADOLINT_SKIP='YES'
+  # Lib / Hadolint / Target
+  export DEV_LIB_HADOLINT_TARGET="${DEV_PATH_LIB}/${DEV_ENV_HADOLINT_ID}"
+
+  # Lint / Hadolint / Configuration
+  export DEV_LIB_HADOLINT_CFG='.hadolint.yaml'
+  # Lint / Hadolint / Container with linting tool
+  export DEV_LINT_HADOLINT_CONTAINER='container-lint/alpine-3-container-lint'
+  # Lint / Hadolint / Container entrypoint
+  export DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT='/usr/local/bin/hadolint'
+}
+
+#
 # Module parameters
 #
 # * Use .dev.env file to override values
@@ -33,10 +64,6 @@
 
 # shellcheck disable=SC2154
 {
-  # Lib / Hadolint / Skip installation?
-  export DEV_LIB_HADOLINT_SKIP='YES'
-  # Lib / Hadolint / Target
-  export DEV_LIB_HADOLINT_TARGET="${DEV_PATH_LIB}/hdl}"
   # Lib / Hadolint / Command
   export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-}"
   if [[ -z "$DEV_LIB_HADOLINT_BIN" ]]; then
@@ -46,32 +73,8 @@
       if [[ ! -x "${DEV_LIB_HADOLINT_BIN}" ]]; then
         DEV_LIB_HADOLINT_SKIP='NO'
       fi
+    else
+      DEV_LIB_HADOLINT_TARGET="$(bl64_fmt_path_get_basename "$DEV_LIB_HADOLINT_BIN")"
     fi
   fi
-}
-
-#
-# Internal variables
-#
-# * Shared internal variables for module tasks
-#
-
-# shellcheck disable=SC2154
-{
-  # Env / Hadolint / Module environment definition version
-  export DEV_ENV_HADOLINT_VERSION='3.0.0'
-  # Env / Hadolint / Container path for project mounts
-  export DEV_ENV_HADOLINT_CONTAINER_PATH_ROOT='/project'
-  # Lib / Hadolint / Installer
-  export DEV_LIB_HADOLINT_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-hadolint"
-  # Lib / Hadolint / Target
-  export DEV_LIB_HADOLINT_TARGET="${DEV_PATH_LIB}/hadolint"
-  # Lint / Hadolint / Configuration
-  export DEV_LIB_HADOLINT_CFG='.hadolint.yaml'
-  # Lint / Hadolint / Container with linting tool
-  export DEV_LINT_HADOLINT_CONTAINER='container-lint/alpine-3-container-lint'
-  # Lint / Hadolint / Container entrypoint
-  export DEV_LINT_HADOLINT_CONTAINER_ENTRYPOINT='/usr/local/bin/hadolint'
-  # Env / Hadolint / Container Registry for tools
-  export DEV_ENV_HADOLINT_REGISTRY='ghcr.io/automation64'
 }

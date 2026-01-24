@@ -1,13 +1,14 @@
 ---
-name: "Deliver / Container / Base"
+name: "Deliver/Container/Base"
 
 concurrency:
   group: "deliver-docker-base"
   cancel-in-progress: true
 
 env:
-  DEV_CICD_DEBUG: "NONE"
-  BL64_LIB_CICD: "YES"
+  DEV_CICD_DEBUG: ${{ vars.DEV_CICD_DEBUG || 'NONE' }}
+  DEV_CICD_DEBUG_BASH: ${{ vars.DEV_CICD_DEBUG_BASH || '' }}
+  BL64_LIB_CICD: ${{ vars.BL64_LIB_CICD || 'YES' }}
 
 on:
   workflow_dispatch:
@@ -26,6 +27,7 @@ jobs:
     strategy:
       matrix:
         scope:
+          - "BASE_ALPINE"
           - "BASE_REDHAT"
           - "BASE_FEDORA"
           - "BASE_DEBIAN"
@@ -38,22 +40,24 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Cache local tools"
-        uses: "actions/cache@v4"
+        uses: "actions/cache@v5"
         with:
-          path: ./lib
-          key: ${{ runner.os }}-lib-cache
-          restore-keys: |
-            ${{ runner.os }}-lib-cache
+          path: |
+            ./lib/bl64
+            ./lib/inst64
+            ./lib/cosign
+          key: "dev-tools"
 
-      - name: "Prepare environment"
-        run: "./bin/dev-lib-base"
+      - name: "Download tools"
+        run: |
+          ./bin/dev-lib-base &&
+          ./bin/dev-lib-cosign
 
-      - name: "Prepare docker tool"
-        run: "./bin/dev-auth-container"
+      - name: "Prepare for delivery"
+        run: |
+          ./bin/dev-auth-container &&
+          ./bin/dev-auth-cosign
 
-      - name: "Prepare cosign tool"
-        run: "./bin/dev-lib-cosign && ./bin/dev-auth-cosign"
-
-      - name: "Build and publish container images"
+      - name: "Deliver distributable content"
         run: "./bin/dev-build-project ${{ matrix.scope }} ON"
 ...

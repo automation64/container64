@@ -22,7 +22,6 @@ export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
 export CNT64_DEBUG="${CNT64_DEBUG:-}"
 export CNT64_USER="${CNT64_USER:-}"
 
-# shellcheck source-path=SCRIPTDIR/../../../lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
@@ -36,7 +35,7 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-txt.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fmt.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || exit $?
 
 #
 # Functions
@@ -60,15 +59,15 @@ function cnt64_setup_select_packages() {
     # File management tools
     packages+=" tar unzip bzip2 xz-utils mc file lsof"
     # Networking tools
-    packages+=" tcpdump dnsutils net-tools telnet nmap openssh-client iptraf-ng"
+    packages+=" tcpdump dnsutils net-tools openssh-client"
     # File transfer tools
-    packages+=" ftp wget rsync"
+    packages+=" ftp wget"
     # Performance tools
-    packages+=" hostname sysstat strace ltrace procps psmisc htop glance stress-ng iotop"
+    packages+=" hostname procps psmisc htop glance stress-ng"
     # Shells
-    packages+=" zsh csh bash-completion screen tmux fish direnv"
+    packages+=" bash-completion direnv"
     # Code management tools
-    packages+=" git diffutils patch make"
+    packages+=" diffutils patch make"
     # Text utils
     packages+=" ripgrep bat nano less jq gettext gawk readline-common tldr most"
     # Certificate tools
@@ -79,15 +78,15 @@ function cnt64_setup_select_packages() {
     # File management tools
     packages+=" tar unzip bzip2 xz-utils mc file lsof"
     # Networking tools
-    packages+=" tcpdump dnsutils net-tools telnet nmap openssh-client iptraf-ng"
+    packages+=" tcpdump dnsutils net-tools openssh-client"
     # File transfer tools
-    packages+=" ftp wget rsync"
+    packages+=" ftp wget"
     # Performance tools
-    packages+=" hostname sysstat strace ltrace procps psmisc htop glance stress-ng iotop"
+    packages+=" hostname procps psmisc htop glance stress-ng"
     # Shells
-    packages+=" zsh csh bash-completion screen tmux fish direnv"
+    packages+=" bash-completion direnv"
     # Code management tools
-    packages+=" git diffutils patch make"
+    packages+=" diffutils patch make"
     # Text utils
     packages+=" nano less jq gettext gawk readline-common tldr most"
     # Certificate tools

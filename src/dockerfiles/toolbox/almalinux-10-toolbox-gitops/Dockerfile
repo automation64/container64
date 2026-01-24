@@ -30,4 +30,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
     ${CNT64_INSTALLER_ROOT}/install-ansible && \
-    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
+    sudo /opt/sysop64/linux-package/linux-package-cleanup

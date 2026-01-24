@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# template-task: 1.9.0
+# template-build: 1.0.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -23,10 +23,11 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-bsh.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # shellcheck source-path=bin
-source ./bin/dev-env-container &&
+source ./bin/dev-env-project &&
+  source ./bin/dev-env-container &&
   source ./bin/dev-env-cosign || exit 1
 
-declare MY_TARGET="${1:-}"
+declare MY_CATALOG="${1:-$DEV_BUILD_PROJECT_PATH_SOURCE}"
 declare MY_PUBLISH="${2:-${BL64_VAR_OFF}}"
 declare MY_RESET="${3:-${BL64_VAR_OFF}}"
 
@@ -37,7 +38,7 @@ export CNTBUILD_COSIGN_BIN="$DEV_LIB_COSIGN_BIN"
 function my_build() {
   bl64_dbg_app_show_function
   local container_name=''
-  local image_list="${DEV_BUILD_PROJECT_LIST_PREFIX}${MY_TARGET}"
+  local image_list="${DEV_BUILD_PROJECT_LIST_PREFIX}${MY_CATALOG}"
   local -i pause=5
 
   bl64_msg_show_phase "processing container list (${image_list})"
@@ -59,20 +60,24 @@ function my_build() {
 
 function my_initialize() {
   bl64_dbg_app_show_function
-  bl64_msg_show_about
-  bl64_check_parameter 'MY_TARGET' ||
+  dev_bin64_task_initialize &&
+    dev_bin64_build_setup "$DEV_BUILD_PROJECT_PATH_TARGET" &&
+    bl64_check_parameter 'MY_CATALOG' ||
     return $?
-  if [[ ! -v "${DEV_BUILD_PROJECT_LIST_PREFIX}${MY_TARGET}" ]]; then
-    bl64_msg_show_error "invalid build target. Container list not found (${MY_TARGET} -> ${DEV_BUILD_PROJECT_LIST_PREFIX}${MY_TARGET})"
+
+  if [[ ! -v "${DEV_BUILD_PROJECT_LIST_PREFIX}${MY_CATALOG}" ]]; then
+    bl64_msg_show_error "invalid build target. Container list not found (${MY_CATALOG} -> ${DEV_BUILD_PROJECT_LIST_PREFIX}${MY_CATALOG})"
     return 1
   fi
-  bl64_msg_show_setup "$BL64_VAR_DEFAULT" \
-    'MY_TARGET' \
+
+  dev_bin64_task_show_setup \
+    'DEV_BUILD_PROJECT_PATH_TARGET' \
+    'MY_CATALOG' \
     'MY_PUBLISH' \
     'MY_RESET'
 }
 
-bl64_lib_script_version_set '3.0.1'
+bl64_lib_script_version_set '3.1.0'
 bl64_msg_help_about_set 'Build containers using cntbuild'
 bl64_msg_set_format "$DEV_VERBOSE" && bl64_msg_all_enable_verbose && bl64_dbg_set_level "$DEV_CICD_DEBUG" && my_initialize || exit $?
 

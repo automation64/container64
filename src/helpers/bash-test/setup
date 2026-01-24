@@ -18,7 +18,6 @@
 #
 
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
-# shellcheck source-path=SCRIPTDIR/../../../lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-pkg.bash" &&
@@ -32,7 +31,7 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || exit $?
 
 #
 # Globals
@@ -53,25 +52,25 @@ function my_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_is_distro "${BL64_OS_ARC}"; then
-    packages='git diffutils inetutils wget python3 python-pip tzdata unzip gettext jq gnupg patch'
+    packages='diffutils inetutils wget python3 python-pip tzdata unzip gettext jq gnupg patch'
   elif bl64_os_is_distro "${BL64_OS_ALP}"; then
-    packages='git mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq gnupg patch'
+    packages='mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq gnupg patch'
   elif bl64_os_is_distro "${BL64_OS_ALM}"; then
-    packages='git diffutils python3 python3-pip python3-setuptools unzip wget gettext jq gnupg2 patch'
+    packages='diffutils python3 python3-pip python3-setuptools unzip wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_DEB}" "${BL64_OS_UB}" "${BL64_OS_KL}"; then
-    packages='git wget gawk python3 python3-pip python3-venv unzip gettext jq gnupg2 patch'
+    packages='wget gawk python3 python3-pip python3-venv unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_FD}"; then
-    packages='git diffutils hostname wget python3-pip unzip gettext jq gnupg2 patch'
+    packages='diffutils hostname wget python3-pip unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
-    packages='git diffutils hostname wget python3-pip unzip gettext jq patch'
+    packages='diffutils hostname wget python3-pip unzip gettext jq patch'
   elif bl64_os_is_distro "${BL64_OS_OL}"; then
-    packages='git tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
+    packages='tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
-    packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
+    packages='hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RCK}"; then
-    packages='git hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
+    packages='hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_SLES}"; then
-    packages='git hostname wget gettext-runtime python3 python3-pip unzip tar jq gpg2 patch'
+    packages='hostname wget gettext-runtime python3 python3-pip unzip tar jq gpg2 patch'
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
@@ -173,7 +172,7 @@ function my_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '2.3.0'
+bl64_lib_script_version_set '2.4.0'
 bl64_msg_help_about_set 'Deploy and configure the base container environment'
 bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
