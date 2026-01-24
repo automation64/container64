@@ -36,43 +36,55 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 # Install applications
 RUN \
     sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
-    "${CNT64_INSTALLER_ROOT}/install-python" && \
-    "${CNT64_INSTALLER_ROOT}/install-gcc" && \
-    "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
+    "${CNT64_INSTALLER_ROOT}/install-7zip" && \
     "${CNT64_INSTALLER_ROOT}/install-act" && \
+    "${CNT64_INSTALLER_ROOT}/install-atuin" && \
     "${CNT64_INSTALLER_ROOT}/install-bat" && \
     "${CNT64_INSTALLER_ROOT}/install-btop" && \
     "${CNT64_INSTALLER_ROOT}/install-delta" && \
+    "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
     "${CNT64_INSTALLER_ROOT}/install-duf" && \
     "${CNT64_INSTALLER_ROOT}/install-eza" && \
-    "${CNT64_INSTALLER_ROOT}/install-lsd" && \
     "${CNT64_INSTALLER_ROOT}/install-fd" && \
     "${CNT64_INSTALLER_ROOT}/install-fzf" && \
+    "${CNT64_INSTALLER_ROOT}/install-gcc" && \
     "${CNT64_INSTALLER_ROOT}/install-ghcli" && \
     "${CNT64_INSTALLER_ROOT}/install-gitleaks" && \
     "${CNT64_INSTALLER_ROOT}/install-gitui" && \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
+    "${CNT64_INSTALLER_ROOT}/install-helix" && \
     "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
+    "${CNT64_INSTALLER_ROOT}/install-lsd" && \
+    "${CNT64_INSTALLER_ROOT}/install-mc" && \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
+    "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
     "${CNT64_INSTALLER_ROOT}/install-pipx" && \
+    "${CNT64_INSTALLER_ROOT}/install-python" && \
     "${CNT64_INSTALLER_ROOT}/install-ripgrep" && \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
     "${CNT64_INSTALLER_ROOT}/install-starship" && \
+    "${CNT64_INSTALLER_ROOT}/install-superfile" && \
     "${CNT64_INSTALLER_ROOT}/install-syft" && \
+    "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     "${CNT64_INSTALLER_ROOT}/install-taskfile" && \
     "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zellij" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
-    "${CNT64_INSTALLER_ROOT}/install-7zip" && \
-    "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
-    "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
+    "${CNT64_INSTALLER_ROOT}/install-zsh" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-ohmyzsh" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-powerlevel10k" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-autosuggestions" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-fzf-tab" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-syntax-highlighting" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l && \
-    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
+    sudo /opt/sysop64/linux-package/linux-package-cleanup
 
+
+    
 # Set default user and entrypoint
 USER ${CNT64_USER}
 ENTRYPOINT [ "/bin/zsh", "--login" ]

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# template-test: 1.1.0
+# template-lib-inst64: 1.4.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -23,68 +23,25 @@ source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-bsh.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" || exit 1
 # shellcheck source-path=bin
-source ./bin/dev-env-bash || exit 1
+source ./bin/dev-env-act || exit 1
 
-declare MY_TARGET="${*:-}"
-
-function my_test_run_instance() {
-  local test_file="$1"
-  "${DEV_PATH_ROOT}/${test_file}"
-}
-
-function my_test_run() {
-  bl64_dbg_app_show_function "$@"
-  local test_file="$1"
-
-  bl64_dbg_app_show_comments 'silently ignore .gitkeep file as its not a test script'
-  [[ "$test_file" =~ "$DEV_BASE_GITKEEP" ]] && return 0
-
-  bl64_msg_show_phase "run test target: ${test_file}"
-  my_test_run_instance "$test_file"
-  # shellcheck disable=SC2181
-  if (( $? == 0 )); then
-    bl64_msg_show_info 'test result: PASS'
-  else
-    bl64_msg_show_info 'test result: FAIL'
-    return 1
-  fi
-}
-
-function my_test() {
-  bl64_dbg_app_show_function "$@"
-  local current=''
-  local tests=''
-
-  bl64_dbg_app_show_comments 'define target tests'
-  if [[ -z "$MY_TARGET" ]]; then
-    MY_TARGET="$DEV_TEST_BASH_CASES"
-  fi
-  if [[ -d "$MY_TARGET" ]]; then
-    bl64_dbg_app_show_comments "look for tests (${MY_TARGET})"
-    tests="$(bl64_fs_file_search "$MY_TARGET")" ||
-      return $?
-  else
-    tests="$MY_TARGET"
-  fi
-  for current in $tests; do
-    bl64_dbg_app_show_comments 'skip git dir holder'
-    [[ "$current" == "$DEV_BASE_GITKEEP" ]] && continue
-    my_test_run "$current" ||
-      return $?
-  done
+function my_download() {
+  bl64_dbg_app_show_function
+  bl64_lib_flag_is_enabled "$DEV_LIB_ACT_SKIP" && return 0
+  INST64_ACT_TARGET="$DEV_LIB_ACT_TARGET" \
+    "${DEV_LIB_ACT_INSTALLER}"
 }
 
 function my_initialize() {
   bl64_dbg_app_show_function
-  bl64_msg_show_about
-  bl64_check_directory "$DEV_TEST_BASH_CASES"
+  dev_bin64_task_initialize &&
+  bl64_check_file "$DEV_LIB_ACT_INSTALLER"
 }
 
-
 bl64_lib_script_version_set '1.1.1'
-bl64_msg_set_format "$DEV_VERBOSE" && bl64_msg_all_enable_verbose
+bl64_msg_help_about_set 'Prepare module resources'
+dev_bin64_initialize && my_initialize || exit $?
 
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
-my_initialize &&
-  my_test "$MY_TARGET"
+my_download
 bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"

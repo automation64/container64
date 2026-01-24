@@ -38,4 +38,4 @@ RUN \
     /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
     /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
     /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug" && \
-    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
+    sudo /opt/sysop64/linux-package/linux-package-cleanup

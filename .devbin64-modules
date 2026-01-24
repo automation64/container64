@@ -1,3 +1,4 @@
+act
 bash
 container
 cosign
@@ -5,5 +6,5 @@ git
 github
 gitleaks
 hadolint
-testmansh
+shellcheck
 trivy

@@ -1,22 +1,26 @@
 ---
-# template: 1.4.0
-name: "Lint / Hadolint"
+# template: 1.7.0
+name: "Lint/Hadolint"
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 env:
-  DEV_CICD_DEBUG: "NONE"
-  BL64_LIB_CICD: "YES"
+  DEV_CICD_DEBUG: ${{ vars.DEV_CICD_DEBUG || 'NONE' }}
+  DEV_CICD_DEBUG_BASH: ${{ vars.DEV_CICD_DEBUG_BASH || '' }}
+  BL64_LIB_CICD: ${{ vars.BL64_LIB_CICD || 'YES' }}
 
+# yamllint disable-line rule:truthy
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - "master"
   push:
     branches:
       - "feature/**"
+      - "release/**"
     paths:
       - "src/dockerfiles/*/*"
 
@@ -29,18 +33,18 @@ jobs:
         uses: "actions/checkout@main"
 
       - name: "Cache local tools"
-        uses: "actions/cache@v4"
+        uses: "actions/cache@v5"
         with:
-          path: ./lib
-          key: ${{ runner.os }}-lib-cache
-          restore-keys: |
-            ${{ runner.os }}-lib-cache
-
-      - name: "Prepare environment"
-        run: "./bin/dev-lib-base"
+          path: |
+            ./lib/bl64
+            ./lib/inst64
+            ./lib/hadolint
+          key: "dev-tools"
 
       - name: "Download tools"
-        run: "./bin/dev-lib-hadolint"
+        run: |
+          ./bin/dev-lib-base &&
+          ./bin/dev-lib-hadolint
 
       - name: "Run tests"
         run: "./bin/dev-lint-hadolint"

@@ -21,18 +21,25 @@ ARG CNT64_LOCAL_BIN="${CNT64_LOCAL_ROOT}/bin"
 ARG CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
 
 #
+# Setup image
+#
+
+# Set installer parameters
+ARG INST64_SYSTEM_WIDE="YES"
+
+#
 # Bootstrap image
 #
 
 # Copy image setup scripts
 COPY helpers/bootstrap/bootstrap /bootstrap
-COPY installer/install-installer64 /install-installer64
+ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/src/install-installer64 /install-installer64
 
 # Bootstrap
 RUN \
     # X_PLACEHOLDER_BOOTSTRAP_X
-    chmod 700 /install-installer64 /bootstrap /setup && \
     /install-installer64 && \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
+    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
     rm /install-installer64 /bootstrap

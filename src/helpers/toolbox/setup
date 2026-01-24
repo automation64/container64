@@ -18,7 +18,6 @@
 #
 
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
-# shellcheck source-path=SCRIPTDIR/../../../lib/bl64 disable=SC2015
 source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
@@ -34,7 +33,7 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || { echo "Error: unable to load bashlib64 (${CNT64_BASHLIB64})" && exit 1; }
+  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || exit $?
 
 #
 # Globals
@@ -73,15 +72,15 @@ function cnt64_setup_select_packages() {
     # File management tools
     packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
-    packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
+    packages+=" hostname tcpdump bind-utils net-tools"
     # File transfer tools
-    packages+=" ftp wget rsync restic rclone"
+    packages+=" ftp wget rclone"
     # Performance tools
-    packages+=" sysstat strace ltrace btop htop stress-ng iotop"
+    packages+=" htop stress-ng"
     # Code management tools
-    packages+=" git diffutils patch"
+    packages+=" diffutils patch"
     # Shells
-    packages+=" zsh csh bash-completion screen tmux fish"
+    packages+=" bash-completion"
     # Text utils
     packages+=" ripgrep nano less jq gettext gawk tldr most"
     # Certificate tools
@@ -90,33 +89,33 @@ function cnt64_setup_select_packages() {
     # File management tools
     packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
-    packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
+    packages+=" hostname tcpdump bind-utils net-tools"
     # File transfer tools
-    packages+=" ftp wget rsync restic rclone"
+    packages+=" ftp wget rclone"
     # Performance tools
-    packages+=" sysstat strace ltrace btop htop stress-ng iotop"
+    packages+=" htop stress-ng"
     # Code management tools
-    packages+=" git diffutils patch"
+    packages+=" diffutils patch"
     # Shells
-    packages+=" zsh csh bash-completion screen tmux fish"
+    packages+=" bash-completion"
     # Text utils
     packages+=" ripgrep nano less jq gettext gawk tldr most bat"
     # Certificate tools
     packages+=" dirmngr gnupg2 openssl"
   elif bl64_os_is_distro "${BL64_OS_ALM}-10"; then
-    bl64_dbg_app_show_comments 'packages no longer available: most restic'
+    bl64_dbg_app_show_comments 'packages no longer available: most'
     # File management tools
     packages+=" tar unzip bzip2 xz mc file lsof"
     # Networking tools
-    packages+=" hostname tcpdump bind-utils net-tools telnet nmap iptraf-ng"
+    packages+=" hostname tcpdump bind-utils net-tools"
     # File transfer tools
-    packages+=" ftp wget rsync"
+    packages+=" ftp wget"
     # Performance tools
-    packages+=" sysstat strace ltrace htop stress-ng iotop"
+    packages+=" htop stress-ng"
     # Code management tools
-    packages+=" git diffutils patch"
+    packages+=" diffutils patch"
     # Shells
-    packages+=" zsh csh bash-completion screen tmux fish"
+    packages+=" bash-completion"
     # Text utils
     packages+=" nano less jq gettext gawk tldr"
     # Certificate tools
@@ -212,7 +211,7 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '3.2.0'
+bl64_lib_script_version_set '3.3.0'
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 

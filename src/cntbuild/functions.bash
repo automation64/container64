@@ -145,14 +145,14 @@ function cntbuild_publish() {
   status=$?
   if ((status == 0)) && bl64_lib_flag_is_enabled "$sign"; then
     bl64_msg_show_task "Sign container image (${target})"
-    digest="$(bl64_cnt_cli inspect --format '{{.ID}}' ${target})" &&
+    digest="$(bl64_cnt_cli inspect --format '{{.ID}}' "${target}")" &&
       "$CNTBUILD_COSIGN_BIN" \
         sign \
         --yes \
         "${CNTBUILD_REGISTRY}/${container}@${digest}"
     status=$?
   fi
-  return $status
+  return "$status"
 }
 
 function cntbuild_reset() {
@@ -217,7 +217,7 @@ function cntbuild_initialize() {
   bl64_dbg_app_show_function
 
   bl64_check_parameter 'cntbuild_command' ||
-    { bl64_msg_help_show && return $BL64_LIB_ERROR_PARAMETER_MISSING; }
+    { bl64_msg_help_show && return "$BL64_LIB_ERROR_PARAMETER_MISSING"; }
 
   bl64_cnt_setup || return $?
 
