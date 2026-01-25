@@ -27,8 +27,8 @@ RUN \
 
 # Install applications
 RUN \
-    "${CNT64_INSTALLER_ROOT}/install-batscore" && \
     "${CNT64_INSTALLER_ROOT}/install-git" && \
+    "${CNT64_INSTALLER_ROOT}/install-batscore" && \
     "${CNT64_INSTALLER_ROOT}/install-yq"
 
 

@@ -70,6 +70,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
     "${CNT64_INSTALLER_ROOT}/install-taskfile" && \
     "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
+    "${CNT64_INSTALLER_ROOT}/install-uv" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zellij" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
