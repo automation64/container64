@@ -78,7 +78,7 @@ RUN \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-fzf-tab" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-syntax-highlighting" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l && \
-    sudo /opt/sysop64/linux-package/linux-package-cleanup
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
 
 # Set default user and entrypoint
 USER ${CNT64_USER}

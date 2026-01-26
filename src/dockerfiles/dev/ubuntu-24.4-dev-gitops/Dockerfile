@@ -47,4 +47,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
     "${CNT64_INSTALLER_ROOT}/install-ansiblelint" && \
-    sudo /opt/sysop64/linux-package/linux-package-cleanup
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup

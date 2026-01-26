@@ -52,25 +52,25 @@ function my_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_is_distro "${BL64_OS_ARC}"; then
-    packages='diffutils inetutils wget python3 python-pip tzdata unzip gettext jq gnupg patch'
+    packages='diffutils inetutils wget tzdata unzip gettext jq gnupg patch'
   elif bl64_os_is_distro "${BL64_OS_ALP}"; then
-    packages='mawk python3 py3-pip musl musl-utils musl-locales tzdata gettext jq gnupg patch'
+    packages='mawk musl musl-utils musl-locales tzdata gettext jq gnupg patch'
   elif bl64_os_is_distro "${BL64_OS_ALM}"; then
-    packages='diffutils python3 python3-pip python3-setuptools unzip wget gettext jq gnupg2 patch'
+    packages='diffutils unzip wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_DEB}" "${BL64_OS_UB}" "${BL64_OS_KL}"; then
-    packages='wget gawk python3 python3-pip python3-venv unzip gettext jq gnupg2 patch'
+    packages='wget gawk unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_FD}"; then
-    packages='diffutils hostname wget python3-pip unzip gettext jq gnupg2 patch'
+    packages='diffutils hostname wget unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
-    packages='diffutils hostname wget python3-pip unzip gettext jq patch'
+    packages='diffutils hostname wget unzip gettext jq patch'
   elif bl64_os_is_distro "${BL64_OS_OL}"; then
-    packages='tar hostname wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
+    packages='tar hostname wget unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
-    packages='hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
+    packages='hostname diffutils wget unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RCK}"; then
-    packages='hostname diffutils wget python3 python3-pip python3-setuptools unzip gettext jq gnupg2 patch'
+    packages='hostname diffutils wget unzip gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_SLES}"; then
-    packages='hostname wget gettext-runtime python3 python3-pip unzip tar jq gpg2 patch'
+    packages='hostname wget gettext-runtime unzip tar jq gpg2 patch'
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
@@ -172,7 +172,7 @@ function my_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '2.4.0'
+bl64_lib_script_version_set '3.0.0'
 bl64_msg_help_about_set 'Deploy and configure the base container environment'
 bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"

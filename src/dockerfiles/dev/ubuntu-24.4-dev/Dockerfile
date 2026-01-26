@@ -59,8 +59,8 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-mc" && \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
     "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
-    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
+    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     "${CNT64_INSTALLER_ROOT}/install-ripgrep" && \
     "${CNT64_INSTALLER_ROOT}/install-shellcheck" && \
     "${CNT64_INSTALLER_ROOT}/install-shfmt" && \
@@ -82,7 +82,7 @@ RUN \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-syntax-highlighting" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-precommit" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l && \
-    sudo /opt/sysop64/linux-package/linux-package-cleanup
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
 
 
     
