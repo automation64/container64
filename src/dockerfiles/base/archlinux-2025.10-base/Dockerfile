@@ -41,4 +41,5 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
     /bootstrap && \
     "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
+    /opt/sysop64/linux-repo/linux-repo-key-init && \
     rm /install-installer64 /bootstrap
