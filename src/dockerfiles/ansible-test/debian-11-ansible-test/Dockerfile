@@ -25,14 +25,18 @@ RUN \
 
 # Set installer parameters
 ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+ARG INST64_PYTHON_DEVELOPMENT="YES"
+# Warning: required for Debian 11 only, there is no native pipx package
+ARG INST64_PIPX_METHOD="PIP"
 
 # Install applications
 RUN \
     /opt/sysop64/linux-repo/linux-repo-refresh && \
     "${CNT64_INSTALLER_ROOT}/install-go" && \
+    "${CNT64_INSTALLER_ROOT}/install-python" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    /opt/sysop64/linux-package/linux-package-cleanup
+    /opt/sysop64/linux-repo/linux-repo-cleanup
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]

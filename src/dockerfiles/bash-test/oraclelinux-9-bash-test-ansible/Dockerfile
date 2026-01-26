@@ -15,6 +15,10 @@ ARG CNT64_USER="test"
 # Setup image
 #
 
+# Set installer parameters
+ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+ARG INST64_PYTHON_DEVELOPMENT="YES"
+
 # Install applications
 RUN \
 "${CNT64_INSTALLER_ROOT}/install-pipx" && \

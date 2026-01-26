@@ -24,12 +24,18 @@ RUN \
     /setup && \
     rm /setup
 
+# Set installer parameters
+ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
+ARG INST64_PYTHON_DEVELOPMENT="YES"
+
 # Install applications
 RUN \
+    /opt/sysop64/linux-repo/linux-repo-refresh && \
+    "${CNT64_INSTALLER_ROOT}/install-python" && \
     "${CNT64_INSTALLER_ROOT}/install-git" && \
     "${CNT64_INSTALLER_ROOT}/install-batscore" && \
-    "${CNT64_INSTALLER_ROOT}/install-yq"
-
+    "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    /opt/sysop64/linux-repo/linux-repo-cleanup
 
 # Run bats-core against /test
 CMD [ "/test" ]

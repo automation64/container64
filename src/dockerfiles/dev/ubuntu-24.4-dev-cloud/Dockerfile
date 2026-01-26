@@ -27,4 +27,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-localstack" && \
     "${CNT64_INSTALLER_ROOT}/install-awsshell" && \
-    sudo /opt/sysop64/linux-package/linux-package-cleanup
+    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
