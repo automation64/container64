@@ -55,6 +55,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
     "${CNT64_INSTALLER_ROOT}/install-nmap" && \
     "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
+    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     "${CNT64_INSTALLER_ROOT}/install-uv" && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
     "${CNT64_INSTALLER_ROOT}/install-rclone" && \

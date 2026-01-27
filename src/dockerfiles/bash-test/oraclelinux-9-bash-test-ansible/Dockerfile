@@ -21,5 +21,5 @@ ARG INST64_PYTHON_DEVELOPMENT="YES"
 
 # Install applications
 RUN \
-"${CNT64_INSTALLER_ROOT}/install-pipx" && \
-"${CNT64_INSTALLER_ROOT}/install-ansible"
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-uv" && \
+    "${CNT64_INSTALLER_ROOT}/install-ansible"
