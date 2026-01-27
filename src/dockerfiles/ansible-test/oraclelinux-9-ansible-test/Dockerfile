@@ -32,7 +32,7 @@ RUN \
     /opt/sysop64/linux-repo/linux-repo-refresh && \
     "${CNT64_INSTALLER_ROOT}/install-go" && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
-    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
+    "${CNT64_INSTALLER_ROOT}/install-uv" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
     /opt/sysop64/linux-repo/linux-repo-cleanup
 

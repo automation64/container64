@@ -29,10 +29,10 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
-    ${CNT64_INSTALLER_ROOT}/install-ansible && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-mongodbcli && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-mysqlcli && \
-    sudo -E ${CNT64_INSTALLER_ROOT}/install-psqlcli && \
-    ${CNT64_INSTALLER_ROOT}/install-pgcli && \
-    ${CNT64_INSTALLER_ROOT}/install-pgadmin && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-mongodbcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-mysqlcli" && \
+    sudo -E "${CNT64_INSTALLER_ROOT}/install-psqlcli" && \
+    "${CNT64_INSTALLER_ROOT}/install-ansible" && \
+    "${CNT64_INSTALLER_ROOT}/install-pgcli" && \
+    "${CNT64_INSTALLER_ROOT}/install-pgadmin" && \
     sudo /opt/sysop64/linux-repo/linux-repo-cleanup

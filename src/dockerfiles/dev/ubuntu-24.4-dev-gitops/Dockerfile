@@ -34,7 +34,6 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
-    "${CNT64_INSTALLER_ROOT}/install-krew" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
@@ -45,6 +44,7 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
+    "${CNT64_INSTALLER_ROOT}/install-krew" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
     "${CNT64_INSTALLER_ROOT}/install-ansiblelint" && \
     sudo /opt/sysop64/linux-repo/linux-repo-cleanup
