@@ -4636,6 +4636,7 @@ function _bl64_cnt_docker_build() {
   # shellcheck disable=SC2086
   bl64_cnt_run_docker \
     build \
+    --progress plain \
     $BL64_CNT_SET_TAG "$tag" \
     $BL64_CNT_SET_FILE "$file" \
     "$@" .
