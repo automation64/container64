@@ -31,6 +31,7 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 RUN \
     sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
     "${CNT64_INSTALLER_ROOT}/install-7zip" && \
+    "${CNT64_INSTALLER_ROOT}/install-zip" && \
     "${CNT64_INSTALLER_ROOT}/install-atuin" && \
     "${CNT64_INSTALLER_ROOT}/install-bat" && \
     "${CNT64_INSTALLER_ROOT}/install-btop" && \
@@ -48,6 +49,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
     "${CNT64_INSTALLER_ROOT}/install-iotop" && \
     "${CNT64_INSTALLER_ROOT}/install-iptrafng" && \
+    "${CNT64_INSTALLER_ROOT}/install-lib-atomic" && \
     "${CNT64_INSTALLER_ROOT}/install-lnav" && \
     "${CNT64_INSTALLER_ROOT}/install-lsd" && \
     "${CNT64_INSTALLER_ROOT}/install-ltrace" && \
@@ -55,13 +57,11 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-neovim" && \
     "${CNT64_INSTALLER_ROOT}/install-nmap" && \
     "${CNT64_INSTALLER_ROOT}/install-nodejs" && \
-    "${CNT64_INSTALLER_ROOT}/install-pipx" && \
     "${CNT64_INSTALLER_ROOT}/install-uv" && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
     "${CNT64_INSTALLER_ROOT}/install-rclone" && \
     "${CNT64_INSTALLER_ROOT}/install-ripgrep" && \
     "${CNT64_INSTALLER_ROOT}/install-rsync" && \
-    "${CNT64_INSTALLER_ROOT}/install-screen" && \
     "${CNT64_INSTALLER_ROOT}/install-starship" && \
     "${CNT64_INSTALLER_ROOT}/install-strace" && \
     "${CNT64_INSTALLER_ROOT}/install-superfile" && \
