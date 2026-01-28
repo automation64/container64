@@ -22,5 +22,4 @@ RUN \
     sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
-    "${CNT64_INSTALLER_ROOT}/install-awsshell" && \
     sudo /opt/sysop64/linux-repo/linux-repo-cleanup
