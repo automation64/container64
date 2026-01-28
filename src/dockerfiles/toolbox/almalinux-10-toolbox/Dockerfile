@@ -43,6 +43,7 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-fd" && \
     "${CNT64_INSTALLER_ROOT}/install-fish" && \
     "${CNT64_INSTALLER_ROOT}/install-fzf" && \
+    "${CNT64_INSTALLER_ROOT}/install-git" && \
     "${CNT64_INSTALLER_ROOT}/install-go" && \
     "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
     "${CNT64_INSTALLER_ROOT}/install-helix" && \
