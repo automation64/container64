@@ -33,6 +33,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-mysqlcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-psqlcli" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    "${CNT64_INSTALLER_ROOT}/install-pgcli" && \
-    "${CNT64_INSTALLER_ROOT}/install-pgadmin" && \
     sudo /opt/sysop64/linux-repo/linux-repo-cleanup
