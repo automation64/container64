@@ -32,7 +32,6 @@ RUN \
     sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
     "${CNT64_INSTALLER_ROOT}/install-7zip" && \
     "${CNT64_INSTALLER_ROOT}/install-zip" && \
-    "${CNT64_INSTALLER_ROOT}/install-atuin" && \
     "${CNT64_INSTALLER_ROOT}/install-bat" && \
     "${CNT64_INSTALLER_ROOT}/install-btop" && \
     "${CNT64_INSTALLER_ROOT}/install-csh" && \

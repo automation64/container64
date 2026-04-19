@@ -102,7 +102,7 @@ function cnt64_setup_install_packages() {
   packages="$(cnt64_setup_select_packages)" ||
     return $?
   # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
+  bl64_pkg_install $packages
 }
 
 #######################################
@@ -150,7 +150,7 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '4.2.0'
+bl64_lib_script_version_set '4.2.1'
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 

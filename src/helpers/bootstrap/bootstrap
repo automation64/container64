@@ -104,7 +104,7 @@ function my_configure_users() {
     bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile"
 }
 
-function my_fix_repository_fedora() {
+function my_prepare_os_fedora() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Ignore unavailable repositories (EOL)'
   bl64_txt_run_sed \
@@ -112,7 +112,7 @@ function my_fix_repository_fedora() {
     /etc/yum.repos.d/fedora*.repo
 }
 
-function my_fix_repository_centos() {
+function my_prepare_os_centos() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix EOL centos repository location to use vault'
   bl64_txt_run_sed \
@@ -123,7 +123,7 @@ function my_fix_repository_centos() {
       /etc/yum.repos.d/CentOS-*
 }
 
-function my_fix_repository_ubuntu() {
+function my_prepare_os_ubuntu() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix EOL ubuntu repository location to use old-release'
   bl64_txt_run_sed \
@@ -131,7 +131,7 @@ function my_fix_repository_ubuntu() {
     /etc/apt/sources.list
 }
 
-function my_fix_repository_debian() {
+function my_prepare_os_debian() {
   bl64_dbg_app_show_function
   bl64_msg_show_task 'Fix EOL debian repository location to use archive'
   local sources='/etc/apt/sources.list'
@@ -140,16 +140,38 @@ function my_fix_repository_debian() {
     printf 'deb http://archive.debian.org/debian-security stretch/updates main contrib non-free\n' >>"$sources"
 }
 
+function my_prepare_os_archlinux() {
+  bl64_dbg_app_show_function
+  bl64_msg_show_task 'Upgrade to the latest version to avoid package install issues'
+
+  /usr/sbin/pacman-key \
+    --init &&
+    /usr/sbin/pacman-key \
+      --populate &&
+    bl64_pkg_run_pacman \
+      --sync \
+      --refresh \
+      --noconfirm \
+      --needed 'archlinux-keyring' &&
+    bl64_pkg_run_pacman \
+      --refresh \
+      --sync \
+      --sysupgrade \
+      --noconfirm
+}
+
 function my_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_is_distro "${BL64_OS_CNT}-8"; then
-    my_fix_repository_centos
+    my_prepare_os_centos
   elif bl64_os_is_distro "${BL64_OS_UB}-21.4" "${BL64_OS_UB}-22.10"; then
-    my_fix_repository_ubuntu
+    my_prepare_os_ubuntu
   elif bl64_os_is_distro "${BL64_OS_DEB}-9"; then
-    my_fix_repository_debian
+    my_prepare_os_debian
   elif bl64_os_is_distro "${BL64_OS_FD}-36"; then
-    my_fix_repository_fedora
+    my_prepare_os_fedora
+  elif bl64_os_is_distro "${BL64_OS_ARC}"; then
+    my_prepare_os_archlinux
   fi
 }
 
@@ -195,7 +217,7 @@ function my_install() {
     packages+=' findutils'
   fi
   # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
+  bl64_pkg_install $packages
 }
 
 #######################################
@@ -244,7 +266,7 @@ function my_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '2.14.0'
+bl64_lib_script_version_set '2.14.1'
 bl64_msg_help_about_set 'Deploy and configure the base container environment'
 bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"

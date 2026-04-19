@@ -49,14 +49,14 @@
   # Lib / Cosign / Command
   export DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_BIN:-}"
   if [[ -z "$DEV_LIB_COSIGN_BIN" ]]; then
-    DEV_LIB_COSIGN_BIN="$(bl64_bsh_command_locate_user 'cosign')"
+    DEV_LIB_COSIGN_BIN="$(dev_bin64_lib_locate 'cosign')"
     if [[ -z "$DEV_LIB_COSIGN_BIN" ]]; then
       DEV_LIB_COSIGN_BIN="${DEV_LIB_COSIGN_TARGET}/cosign"
       if [[ ! -x "${DEV_LIB_COSIGN_BIN}" ]]; then
         DEV_LIB_COSIGN_SKIP='NO'
       fi
     else
-      DEV_LIB_COSIGN_TARGET="$(bl64_fmt_path_get_basename "$DEV_LIB_COSIGN_BIN")"
+      DEV_LIB_COSIGN_TARGET="$(dev_bin64_lib_basename "$DEV_LIB_COSIGN_BIN")"
     fi
   fi
 }
