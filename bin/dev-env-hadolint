@@ -67,14 +67,14 @@
   # Lib / Hadolint / Command
   export DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_BIN:-}"
   if [[ -z "$DEV_LIB_HADOLINT_BIN" ]]; then
-    DEV_LIB_HADOLINT_BIN="$(bl64_bsh_command_locate_user 'hadolint')"
+    DEV_LIB_HADOLINT_BIN="$(dev_bin64_lib_locate 'hadolint')"
     if [[ -z "$DEV_LIB_HADOLINT_BIN" ]]; then
       DEV_LIB_HADOLINT_BIN="${DEV_LIB_HADOLINT_TARGET}/hadolint"
       if [[ ! -x "${DEV_LIB_HADOLINT_BIN}" ]]; then
         DEV_LIB_HADOLINT_SKIP='NO'
       fi
     else
-      DEV_LIB_HADOLINT_TARGET="$(bl64_fmt_path_get_basename "$DEV_LIB_HADOLINT_BIN")"
+      DEV_LIB_HADOLINT_TARGET="$(dev_bin64_lib_basename "$DEV_LIB_HADOLINT_BIN")"
     fi
   fi
 }

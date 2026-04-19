@@ -53,13 +53,13 @@ function cnt64_setup_prepare_os() {
   bl64_dbg_app_show_function
   if bl64_os_is_distro "${BL64_OS_OL}-8"; then
     bl64_msg_show_task 'Enable EPEL repository'
-    bl64_pkg_deploy 'oracle-epel-release-el8'
+    bl64_pkg_install 'oracle-epel-release-el8'
   elif bl64_os_is_distro "${BL64_OS_OL}-9"; then
     bl64_msg_show_task 'Enable EPEL repository'
-    bl64_pkg_deploy 'oracle-epel-release-el9'
+    bl64_pkg_install 'oracle-epel-release-el9'
   elif bl64_os_is_distro "${BL64_OS_ALM}-10"; then
     bl64_msg_show_task 'Enable EPEL repository'
-    bl64_pkg_deploy 'epel-release'
+    bl64_pkg_install 'epel-release'
   fi
 }
 
@@ -180,7 +180,7 @@ function cnt64_setup_install_packages() {
   packages="$(cnt64_setup_select_packages)" ||
     return $?
   # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
+  bl64_pkg_install $packages
 }
 
 #######################################
@@ -211,7 +211,7 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '3.3.0'
+bl64_lib_script_version_set '3.3.1'
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 

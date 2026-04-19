@@ -1,5 +1,5 @@
 ---
-# template: 1.7.0
+# template: 1.8.0
 name: "Lint/Hadolint"
 
 concurrency:
@@ -32,14 +32,20 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Cache local tools"
+      - name: "Cache base tools"
         uses: "actions/cache@v5"
         with:
           path: |
             ./lib/bl64
             ./lib/inst64
-            ./lib/hadolint
           key: "dev-tools"
+
+      - name: "Cache module tools"
+        uses: "actions/cache@v5"
+        with:
+          path: |
+            ./lib/hadolint
+          key: "dev-hadolint"
 
       - name: "Download tools"
         run: |

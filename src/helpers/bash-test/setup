@@ -130,7 +130,7 @@ function my_install_packages() {
   packages="$(my_select_packages)" ||
     return $?
   # shellcheck disable=SC2086
-  bl64_pkg_deploy $packages
+  bl64_pkg_install $packages
 }
 
 #######################################
@@ -172,7 +172,7 @@ function my_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '3.0.0'
+bl64_lib_script_version_set '3.0.1'
 bl64_msg_help_about_set 'Deploy and configure the base container environment'
 bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
