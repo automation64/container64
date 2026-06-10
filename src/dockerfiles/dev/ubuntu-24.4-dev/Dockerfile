@@ -34,8 +34,11 @@ ARG INST64_PYTHON_FLAG_DEVELOPMENT="ON"
 ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 
 # Install applications
+# * zip and xz must be the first packages
 RUN \
-    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
+sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
+    "${CNT64_INSTALLER_ROOT}/install-zip" && \
+    "${CNT64_INSTALLER_ROOT}/install-xz" && \
     "${CNT64_INSTALLER_ROOT}/install-7zip" && \
     "${CNT64_INSTALLER_ROOT}/install-act" && \
     "${CNT64_INSTALLER_ROOT}/install-atuin" && \
@@ -78,10 +81,8 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-tcpdump" && \
     "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
     "${CNT64_INSTALLER_ROOT}/install-uv" && \
-    "${CNT64_INSTALLER_ROOT}/install-xz" && \
     "${CNT64_INSTALLER_ROOT}/install-yq" && \
     "${CNT64_INSTALLER_ROOT}/install-zellij" && \
-    "${CNT64_INSTALLER_ROOT}/install-zip" && \
     "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
     "${CNT64_INSTALLER_ROOT}/install-zsh" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-zsh-ohmyzsh" && \
