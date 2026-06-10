@@ -19,8 +19,8 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-mongodbcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-mysqlcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-psqlcli" && \
-    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

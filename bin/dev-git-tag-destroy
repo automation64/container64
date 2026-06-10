@@ -13,7 +13,7 @@
 # limitations under the License.
 #######################################
 
-source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+source ./bin/dev-set || exit 1
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-rxtx.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-api.bash" &&
   source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-vcs.bash" &&
@@ -36,11 +36,11 @@ function my_destroy() {
   bl64_msg_show_task "destroy local tag (${MY_TAG})"
   bl64_vcs_run_git tag -d "$MY_TAG"
 
-  bl64_msg_show_task "destroy MY_TAG in origin (${DEV_GIT_REMOTE_ORIGIN})"
+  bl64_msg_show_task "destroy tag in origin (${DEV_GIT_REMOTE_ORIGIN})"
   bl64_vcs_run_git push -d "$DEV_GIT_REMOTE_ORIGIN" "$MY_TAG"
 
   if bl64_lib_flag_is_enabled "$DEV_GIT_REMOTE_UPSTREAM_ENABLED"; then
-    bl64_msg_show_task "destroy MY_TAG in upstream (${DEV_GIT_REMOTE_UPSTREAM})"
+    bl64_msg_show_task "destroy tag in upstream (${DEV_GIT_REMOTE_UPSTREAM})"
     bl64_vcs_run_git push -d "$DEV_GIT_REMOTE_UPSTREAM" "$MY_TAG"
   fi
 }
@@ -48,6 +48,7 @@ function my_destroy() {
 function my_initialize() {
   bl64_dbg_app_show_function
   dev_bin64_task_initialize &&
+    dev_git_check_repo_root &&
     bl64_check_parameter 'MY_TAG' &&
     dev_bin64_task_show_setup \
       'DEV_GIT_BRANCH_MAIN' \
@@ -57,7 +58,7 @@ function my_initialize() {
       'MY_TAG'
 }
 
-bl64_lib_script_version_set '1.0.2'
+bl64_lib_script_version_set '1.1.1'
 bl64_msg_help_about_set 'Remove GIT Tag from local, origin and upstream'
 dev_bin64_initialize && my_initialize || exit $?
 

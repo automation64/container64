@@ -148,7 +148,7 @@ function cnt64_setup_select_packages() {
   elif bl64_os_is_distro "${BL64_OS_DEB}-10"; then
     packages+=" dbus dmsetup"
     packages+=" systemd systemd-sysv"
-    packages+=" bzip2 file mime-support readline-common xz-utils"
+    packages+=" file mime-support readline-common"
   elif bl64_os_is_distro "${BL64_OS_DEB}-11"; then
     packages+=" dbus dmsetup"
     packages+=" systemd systemd-timesyncd"
@@ -162,7 +162,7 @@ function cnt64_setup_select_packages() {
   elif bl64_os_is_distro "${BL64_OS_UB}-20"; then
     packages+=" dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info tzdata xdg-user-dirs locales"
     packages+=" systemd systemd-timesyncd"
-    packages+=" file mime-support readline-common xz-utils"
+    packages+=" file mime-support readline-common"
   elif bl64_os_is_distro "${BL64_OS_UB}-21" "${BL64_OS_UB}-22"; then
     packages+=" dbus dmsetup gir1.2-glib-2.0 networkd-dispatcher shared-mime-info xdg-user-dirs locales"
     packages+=" systemd systemd-timesyncd"
@@ -226,7 +226,7 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '4.0.1'
+bl64_lib_script_version_set '4.1.0'
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 

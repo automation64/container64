@@ -29,12 +29,14 @@ ARG INST64_PYTHON_DEVELOPMENT="YES"
 
 # Install applications
 RUN \
-    /opt/sysop64/linux-repo/linux-repo-refresh && \
+    /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
+    "${CNT64_INSTALLER_ROOT}/install-bzip2" && \
     "${CNT64_INSTALLER_ROOT}/install-go" && \
     "${CNT64_INSTALLER_ROOT}/install-python" && \
     "${CNT64_INSTALLER_ROOT}/install-uv" && \
+    "${CNT64_INSTALLER_ROOT}/install-xz" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    /opt/sysop64/linux-repo/linux-repo-cleanup
+    /opt/sysop64/mod/linux-repo/linux-repo-cleanup
 
 # Run systemd to allow services
 CMD ["/lib/systemd/systemd"]

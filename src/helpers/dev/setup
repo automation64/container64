@@ -57,32 +57,32 @@ function cnt64_setup_select_packages() {
     # OS dependant tools
     packages+=" apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
     # File management tools
-    packages+=" tar unzip bzip2 xz-utils mc file lsof"
+    packages+=" tar file lsof"
     # Networking tools
-    packages+=" tcpdump dnsutils net-tools openssh-client"
+    packages+=" dnsutils net-tools"
     # File transfer tools
     packages+=" ftp wget"
     # Performance tools
-    packages+=" hostname procps psmisc htop glance stress-ng"
+    packages+=" hostname procps psmisc htop"
     # Shells
     packages+=" bash-completion direnv"
     # Code management tools
     packages+=" diffutils patch make"
     # Text utils
-    packages+=" ripgrep bat nano less jq gettext gawk readline-common tldr most"
+    packages+=" nano less jq gettext gawk readline-common tldr most"
     # Certificate tools
     packages+=" dirmngr gnupg2 ca-certificates openssl"
   elif bl64_os_is_distro "${BL64_OS_UB}-24"; then
     # OS dependant tools
     packages+=" apt-utils apt-transport-https lsb-release tzdata xdg-user-dirs locales"
     # File management tools
-    packages+=" tar unzip bzip2 xz-utils mc file lsof"
+    packages+=" tar file lsof"
     # Networking tools
-    packages+=" tcpdump dnsutils net-tools openssh-client"
+    packages+=" dnsutils net-tools"
     # File transfer tools
     packages+=" ftp wget"
     # Performance tools
-    packages+=" hostname procps psmisc htop glance stress-ng"
+    packages+=" hostname procps psmisc htop"
     # Shells
     packages+=" bash-completion direnv"
     # Code management tools
@@ -150,7 +150,7 @@ function cnt64_setup_initialize() {
 # Main
 #
 
-bl64_lib_script_version_set '4.2.1'
+bl64_lib_script_version_set '4.3.0'
 bl64_msg_all_enable_verbose
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 
