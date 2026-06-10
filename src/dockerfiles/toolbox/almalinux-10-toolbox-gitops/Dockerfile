@@ -19,7 +19,7 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-act" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
@@ -30,4 +30,4 @@ RUN \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

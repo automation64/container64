@@ -30,18 +30,23 @@ jobs:
           - "DEV_L0"
 
     steps:
-
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Cache local tools"
+      - name: "Cache base tools"
         uses: "actions/cache@v5"
         with:
           path: |
             ./lib/bl64
             ./lib/inst64
-            ./lib/cosign
           key: "dev-tools"
+
+      - name: "Cache module tools"
+        uses: "actions/cache@v5"
+        with:
+          path: |
+            ./lib/cosign
+          key: "dev-cosign"
 
       - name: "Download tools"
         run: |
@@ -75,18 +80,23 @@ jobs:
       - "deliver-docker-dev-l0"
 
     steps:
-
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Cache local tools"
+      - name: "Cache base tools"
         uses: "actions/cache@v5"
         with:
           path: |
             ./lib/bl64
             ./lib/inst64
-            ./lib/cosign
           key: "dev-tools"
+
+      - name: "Cache module tools"
+        uses: "actions/cache@v5"
+        with:
+          path: |
+            ./lib/cosign
+          key: "dev-cosign"
 
       - name: "Download tools"
         run: |
@@ -119,18 +129,23 @@ jobs:
       - "deliver-docker-dev-l1"
 
     steps:
-
       - name: "Check out repository code"
         uses: "actions/checkout@main"
 
-      - name: "Cache local tools"
+      - name: "Cache base tools"
         uses: "actions/cache@v5"
         with:
           path: |
             ./lib/bl64
             ./lib/inst64
-            ./lib/cosign
           key: "dev-tools"
+
+      - name: "Cache module tools"
+        uses: "actions/cache@v5"
+        with:
+          path: |
+            ./lib/cosign
+          key: "dev-cosign"
 
       - name: "Download tools"
         run: |

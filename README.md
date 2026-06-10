@@ -40,7 +40,6 @@
     - [Application Installers](#application-installers)
     - [Global Tools](#global-tools)
   - [🛠 Contributing](#-contributing)
-  - [Disclaimer](#disclaimer)
   - [⚠️ Disclaimer](#️-disclaimer)
   - [📜 License](#-license)
   - [👤 Author](#-author)
@@ -49,7 +48,7 @@
 
 ## 📌 Overview
 
-**Container64** is a catalog of purpose build container images for infrastructure management, development and testing.
+**Container64** is a catalog of container images for infrastructure management, development and testing.
 
 ### Container collection: Mirror container image
 
@@ -221,10 +220,6 @@ Set of common tools that are available for all images.
 Contributions are welcome! Help us improve by submitting issues, feature requests, or pull requests.
 
 - [Contributor Covenant Code of Conduct](https://github.com/automation64/container64/blob/master/CODE_OF_CONDUCT.md)
-
-## Disclaimer
-
-This repository is provided "as is" without any warranties. The author is not responsible for any damages or issues arising from its use. Additionally, this project is not affiliated with or endorsed by any organization or entity. Use at your own risk.
 
 ---
 

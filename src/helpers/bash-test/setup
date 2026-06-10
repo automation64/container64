@@ -13,10 +13,6 @@
 # limitations under the License.
 #######################################
 
-#
-# Imports
-#
-
 export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
 source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
@@ -33,10 +29,6 @@ source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
   source "${CNT64_BASHLIB64}/bashlib64-core.bash" || exit $?
 
-#
-# Globals
-#
-
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_DEBUG="${CNT64_DEBUG:-NONE}"
 export CNT64_VERBOSE="${CNT64_VERBOSE:-FULL}"
@@ -44,33 +36,29 @@ export CNT64_USER
 export CNT64_USER_UID="${CNT64_USER_UID:-6466}"
 export CNT64_USER_GID="${CNT64_USER_GID:-6466}"
 
-#
-# Functions
-#
-
 function my_select_packages() {
   bl64_dbg_app_show_function
   local packages=''
   if bl64_os_is_distro "${BL64_OS_ARC}"; then
-    packages='diffutils inetutils wget tzdata unzip gettext jq gnupg patch'
+    packages='diffutils inetutils wget tzdata gettext jq gnupg patch'
   elif bl64_os_is_distro "${BL64_OS_ALP}"; then
     packages='mawk musl musl-utils musl-locales tzdata gettext jq gnupg patch'
   elif bl64_os_is_distro "${BL64_OS_ALM}"; then
-    packages='diffutils unzip wget gettext jq gnupg2 patch'
+    packages='diffutils wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_DEB}" "${BL64_OS_UB}" "${BL64_OS_KL}"; then
-    packages='wget gawk unzip gettext jq gnupg2 patch'
+    packages='wget gawk gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_FD}"; then
-    packages='diffutils hostname wget unzip gettext jq gnupg2 patch'
+    packages='diffutils hostname wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_AMZ}"; then
-    packages='diffutils hostname wget unzip gettext jq patch'
+    packages='diffutils hostname wget gettext jq patch'
   elif bl64_os_is_distro "${BL64_OS_OL}"; then
-    packages='tar hostname wget unzip gettext jq gnupg2 patch'
+    packages='tar hostname wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RHEL}" "${BL64_OS_CNT}"; then
-    packages='hostname diffutils wget unzip gettext jq gnupg2 patch'
+    packages='hostname diffutils wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_RCK}"; then
-    packages='hostname diffutils wget unzip gettext jq gnupg2 patch'
+    packages='hostname diffutils wget gettext jq gnupg2 patch'
   elif bl64_os_is_distro "${BL64_OS_SLES}"; then
-    packages='hostname wget gettext-runtime unzip tar jq gpg2 patch'
+    packages='hostname wget gettext-runtime tar jq gpg2 patch'
   fi
   [[ -n "$packages" ]] && echo "$packages"
 }
@@ -133,17 +121,6 @@ function my_install_packages() {
   bl64_pkg_install $packages
 }
 
-#######################################
-# Initialize environment
-#
-# Arguments:
-#   None
-# Outputs:
-#   Initializacion progress messages
-# Returns:
-#   0: initialization ok
-#   >: failed to initialize
-#######################################
 function my_initialize() {
   bl64_dbg_app_show_function
 
@@ -168,11 +145,7 @@ function my_initialize() {
     bl64_pkg_setup
 }
 
-#
-# Main
-#
-
-bl64_lib_script_version_set '3.0.1'
+bl64_lib_script_version_set '3.1.0'
 bl64_msg_help_about_set 'Deploy and configure the base container environment'
 bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"

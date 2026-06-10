@@ -21,7 +21,7 @@ ARG INST64_KREW_SYSTEM_WIDE="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/linux-repo/linux-repo-refresh && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
     sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
@@ -47,4 +47,4 @@ RUN \
     "${CNT64_INSTALLER_ROOT}/install-krew" && \
     "${CNT64_INSTALLER_ROOT}/install-ansible" && \
     "${CNT64_INSTALLER_ROOT}/install-ansiblelint" && \
-    sudo /opt/sysop64/linux-repo/linux-repo-cleanup
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

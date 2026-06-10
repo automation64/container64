@@ -13,7 +13,7 @@
 # limitations under the License.
 #######################################
 
-source ./bin/dev-set || { echo 'dev-set:Error: unable to load dev environment' 2>&1 && exit 1; }
+source ./bin/dev-set || exit 1
 # shellcheck source=bin/dev-env-hadolint
 source ./bin/dev-env-hadolint || exit 1
 source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-xsv.bash" &&
@@ -73,11 +73,11 @@ function my_lint_local() {
 function my_initialize() {
   bl64_dbg_app_show_function
   dev_bin64_task_initialize &&
-  if [[ -z "$DEV_LINT_HADOLINT_SOURCE" ]]; then
-    bl64_check_export 'DEV_LINT_HADOLINT_SOURCE' &&
-      bl64_check_directory "$DEV_LINT_HADOLINT_SOURCE" ||
-      return $?
-  fi
+    if [[ -z "$DEV_LINT_HADOLINT_SOURCE" ]]; then
+      bl64_check_export 'DEV_LINT_HADOLINT_SOURCE' &&
+        bl64_check_directory "$DEV_LINT_HADOLINT_SOURCE" ||
+        return $?
+    fi
   if ! bl64_bsh_command_is_executable "$DEV_LIB_HADOLINT_BIN"; then
     _DEV_LIB_RUN_IN_CONTAINER='YES'
     bl64_cnt_setup ||
