@@ -30,7 +30,7 @@
   export DEV_ENV_HADOLINT_REGISTRY='ghcr.io/automation64'
 
   # Lib / Hadolint / Installer
-  export DEV_LIB_HADOLINT_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-hadolint"
+  export DEV_LIB_HADOLINT_INSTALLER="hadolint"
   # Lib / Hadolint / Skip installation?
   export DEV_LIB_HADOLINT_SKIP='YES'
   # Lib / Hadolint / Target

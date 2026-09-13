@@ -9,7 +9,7 @@ FROM ghcr.io/automation64/dev/ubuntu-24.4-dev-cloud:latest
 
 ARG CNT64_USER="cnt64"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -21,30 +21,30 @@ ARG INST64_KREW_SYSTEM_WIDE="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-releaser" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubelinter" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeconform" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-yamllint" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform-docs" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-tflint" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-tfsec" && \
-    "${CNT64_INSTALLER_ROOT}/install-krew" && \
-    "${CNT64_INSTALLER_ROOT}/install-ansible" && \
-    "${CNT64_INSTALLER_ROOT}/install-ansiblelint" && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-update-all && \
+    sudo -E "${CNT64_INST64_PATH}/install-eksctl" && \
+    sudo -E "${CNT64_INST64_PATH}/install-helm-chart-releaser" && \
+    sudo -E "${CNT64_INST64_PATH}/install-helm-chart-tester" && \
+    sudo -E "${CNT64_INST64_PATH}/install-helm" && \
+    sudo -E "${CNT64_INST64_PATH}/install-istioctl" && \
+    sudo -E "${CNT64_INST64_PATH}/install-k9s" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubelinter" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubeconform" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubectl" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubescape" && \
+    sudo -E "${CNT64_INST64_PATH}/install-yamllint" && \
+    sudo -E "${CNT64_INST64_PATH}/install-trivy" && \
+    sudo -E "${CNT64_INST64_PATH}/install-argocdcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-fluxcdcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-jenkinsxcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terraform" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terraform-docs" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terraformer" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terragrunt" && \
+    sudo -E "${CNT64_INST64_PATH}/install-packer" && \
+    sudo -E "${CNT64_INST64_PATH}/install-tflint" && \
+    sudo -E "${CNT64_INST64_PATH}/install-tfsec" && \
+    "${CNT64_INST64_PATH}/install-krew" && \
+    "${CNT64_INST64_PATH}/install-ansible" && \
+    "${CNT64_INST64_PATH}/install-ansiblelint" && \
     sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

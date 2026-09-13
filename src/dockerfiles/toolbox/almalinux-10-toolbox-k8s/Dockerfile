@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/toolbox/almalinux-10-toolbox-cloud:latest
 #
 
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -20,22 +20,21 @@ ARG INST64_KREW_SYSTEM_WIDE="OFF"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-eksctl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-istioctl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-k9s" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeconform" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubelinter" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubent" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubeseal" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-pluto" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-popeye" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-trivy" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-vaultcli" && \
-    "${CNT64_INSTALLER_ROOT}/install-krew" && \
-    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-stern" && \
-    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-ksniff" && \
-    /bin/bash --login -c "${CNT64_INSTALLER_ROOT}/install-kubepug" && \
+    sudo -E "${CNT64_INST64_PATH}/install-eksctl" && \
+    sudo -E "${CNT64_INST64_PATH}/install-helm" && \
+    sudo -E "${CNT64_INST64_PATH}/install-istioctl" && \
+    sudo -E "${CNT64_INST64_PATH}/install-k9s" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubeconform" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubectl" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubelinter" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubent" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubescape" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubeseal" && \
+    sudo -E "${CNT64_INST64_PATH}/install-pluto" && \
+    sudo -E "${CNT64_INST64_PATH}/install-popeye" && \
+    sudo -E "${CNT64_INST64_PATH}/install-trivy" && \
+    "${CNT64_INST64_PATH}/install-krew" && \
+    /bin/bash --login -c "${CNT64_INST64_PATH}/install-stern" && \
+    /bin/bash --login -c "${CNT64_INST64_PATH}/install-ksniff" && \
+    /bin/bash --login -c "${CNT64_INST64_PATH}/install-kubepug" && \
     sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

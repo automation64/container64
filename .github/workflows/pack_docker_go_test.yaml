@@ -1,35 +1,32 @@
 ---
-name: "Deliver/Container/Mirror"
+name: "Pack/Container/Go Test"
 
 concurrency:
-  group: "deliver-docker-mirror"
+  group: "pack-docker-go-test"
   cancel-in-progress: true
 
 env:
   DEV_CICD_DEBUG: ${{ vars.DEV_CICD_DEBUG || 'NONE' }}
   DEV_CICD_DEBUG_BASH: ${{ vars.DEV_CICD_DEBUG_BASH || '' }}
-  BL64_LIB_CICD: ${{ vars.BL64_LIB_CICD || 'YES' }}
 
 on:
   workflow_dispatch:
-    inputs:
-      target:
-        required: true
-        type: choice
-        description: Name of the mirror container
-        options:
-          - "ARCHLINUX"
-          - "KALILINUX"
+  workflow_call:
 
 jobs:
-  deliver-docker-mirror:
+  pack-docker-go-test:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "GO_TEST_L0"
 
     steps:
       - name: "Check out repository code"
@@ -57,9 +54,9 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project MIRROR_${{ github.event.inputs.target }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 ...

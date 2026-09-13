@@ -1,33 +1,37 @@
 ---
-name: "Deliver/Container/Dev"
+name: "Pack/Container/Bash Test"
 
 concurrency:
-  group: "deliver-docker-dev"
+  group: "pack-docker-bash-test"
   cancel-in-progress: true
 
 env:
   DEV_CICD_DEBUG: ${{ vars.DEV_CICD_DEBUG || 'NONE' }}
   DEV_CICD_DEBUG_BASH: ${{ vars.DEV_CICD_DEBUG_BASH || '' }}
-  BL64_LIB_CICD: ${{ vars.BL64_LIB_CICD || 'YES' }}
 
 on:
   workflow_dispatch:
   workflow_call:
 
 jobs:
-  deliver-docker-dev-l0:
+  pack-docker-bash-test-l0:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
       matrix:
         scope:
-          - "DEV_L0"
+          - "BASH_TEST_L0_ALPINE"
+          - "BASH_TEST_L0_REDHAT"
+          - "BASH_TEST_L0_FEDORA"
+          - "BASH_TEST_L0_DEBIAN"
+          - "BASH_TEST_L0_UBUNTU"
+          - "BASH_TEST_L0_OTHER"
 
     steps:
       - name: "Check out repository code"
@@ -55,29 +59,28 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 
-  deliver-docker-dev-l1:
+  pack-docker-bash-test-l1:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
       matrix:
         scope:
-          - "DEV_L1_A"
-          - "DEV_L1_B"
+          - "BASH_TEST_L1"
 
     needs:
-      - "deliver-docker-dev-l0"
+      - "pack-docker-bash-test-l0"
 
     steps:
       - name: "Check out repository code"
@@ -105,28 +108,28 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 
-  deliver-docker-dev-l2:
+  pack-docker-bash-test-l2:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
       matrix:
         scope:
-          - "DEV_L2"
+          - "BASH_TEST_L2"
 
     needs:
-      - "deliver-docker-dev-l1"
+      - "pack-docker-bash-test-l1"
 
     steps:
       - name: "Check out repository code"
@@ -154,9 +157,58 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
+
+  pack-docker-bash-test-l3:
+    runs-on: "ubuntu-latest"
+    permissions: "write-all"
+
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
+      DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
+
+    strategy:
+      matrix:
+        scope:
+          - "BASH_TEST_L3"
+
+    needs:
+      - "pack-docker-bash-test-l2"
+
+    steps:
+      - name: "Check out repository code"
+        uses: "actions/checkout@main"
+
+      - name: "Cache base tools"
+        uses: "actions/cache@v5"
+        with:
+          path: |
+            ./lib/bl64
+            ./lib/inst64
+          key: "dev-tools"
+
+      - name: "Cache module tools"
+        uses: "actions/cache@v5"
+        with:
+          path: |
+            ./lib/cosign
+          key: "dev-cosign"
+
+      - name: "Download tools"
+        run: |
+          ./bin/dev-lib-base &&
+          ./bin/dev-lib-cosign
+
+      - name: "Prepare for delivery"
+        run: |
+          ./bin/dev-auth-docker &&
+          ./bin/dev-auth-cosign
+
+      - name: "Deliver distributable content"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 ...

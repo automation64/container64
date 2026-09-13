@@ -11,11 +11,11 @@ declare cntbuild_container=''
 declare cntbuild_tag=''
 declare cntbuild_context=''
 cntbuild_context="$(pwd)/src"
-bl64_lib_script_version_set '3.0.1'
-bl64_msg_help_usage_set '<-b|-u|-l|-n|-x|-r> [-c Container] [-e Tag] [-s] [-o Context] [-V Verbose] [-D Debug] [-h]'
-bl64_msg_help_about_set 'Container build manager'
+bl64_lib_script_version_set '3.0.2'
+bl64_msg_help_set_usage '<-b|-u|-l|-n|-x|-r> [-c Container] [-e Tag] [-s] [-o Context] [-V Verbose] [-D Debug] [-h]'
+bl64_msg_help_set_about 'Container build manager'
 # shellcheck disable=SC2016
-bl64_msg_help_parameters_set \
+bl64_msg_help_set_parameters \
   '-b          : Build container
 -u          : Publish container to public registry
 -l          : List container sources
@@ -32,31 +32,31 @@ bl64_msg_help_parameters_set \
 
 while getopts ':bulnsrxc:e:o:V:D:h' cntbuild_option; do
   case "$cntbuild_option" in
-  b) cntbuild_command='cntbuild_build' ;;
-  u) cntbuild_command='cntbuild_publish' ;;
-  l) cntbuild_command='cntbuild_list' ;;
-  n) cntbuild_command='cntbuild_open' ;;
-  x) cntbuild_command='cntbuild_delete' ;;
-  r) cntbuild_command='cntbuild_reset' ;;
-  c) cntbuild_container="$OPTARG" ;;
-  e) cntbuild_tag="$OPTARG" ;;
-  o) cntbuild_context="$OPTARG" ;;
-  s) cntbuild_sign="$BL64_VAR_ON" ;;
-  V) cntbuild_verbose="$OPTARG" ;;
-  D) cntbuild_debug="$OPTARG" ;;
-  h) bl64_msg_help_show && exit 0 ;;
-  *) bl64_msg_help_show && exit 1 ;;
+    b) cntbuild_command='cntbuild_build' ;;
+    u) cntbuild_command='cntbuild_publish' ;;
+    l) cntbuild_command='cntbuild_list' ;;
+    n) cntbuild_command='cntbuild_open' ;;
+    x) cntbuild_command='cntbuild_delete' ;;
+    r) cntbuild_command='cntbuild_reset' ;;
+    c) cntbuild_container="$OPTARG" ;;
+    e) cntbuild_tag="$OPTARG" ;;
+    o) cntbuild_context="$OPTARG" ;;
+    s) cntbuild_sign="$BL64_VAR_ON" ;;
+    V) cntbuild_verbose="$OPTARG" ;;
+    D) cntbuild_debug="$OPTARG" ;;
+    h) bl64_msg_help_show && exit 0 ;;
+    *) bl64_msg_help_show && exit 1 ;;
   esac
 done
 bl64_dbg_set_level "$cntbuild_debug" && bl64_msg_set_level "$cntbuild_verbose" && cntbuild_initialize || exit $?
 
 bl64_msg_show_batch_start "$cntbuild_command"
 case "$cntbuild_command" in
-'cntbuild_publish') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" "$cntbuild_sign" ;;
-'cntbuild_build' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" ;;
-'cntbuild_list') "$cntbuild_command" "$cntbuild_context" ;;
-'cntbuild_delete') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" ;;
-'cntbuild_reset') "$cntbuild_command" ;;
-*) bl64_check_alert_parameter_invalid "$cntbuild_command" ;;
+  'cntbuild_publish') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" "$cntbuild_sign" ;;
+  'cntbuild_build' | 'cntbuild_open') "$cntbuild_command" "$cntbuild_container" "$cntbuild_context" "$cntbuild_tag" ;;
+  'cntbuild_list') "$cntbuild_command" "$cntbuild_context" ;;
+  'cntbuild_delete') "$cntbuild_command" "$cntbuild_container" "$cntbuild_tag" ;;
+  'cntbuild_reset') "$cntbuild_command" ;;
+  *) bl64_check_rise_parameter_invalid "$cntbuild_command" ;;
 esac
 bl64_msg_show_batch_finish $? "$cntbuild_command"

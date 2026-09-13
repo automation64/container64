@@ -15,10 +15,10 @@ ARG CNT64_DEBUG="NONE"
 ARG CNT64_USER="cnt64"
 ARG CNT64_TMP="/tmp"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 ARG CNT64_LOCAL_ROOT="/usr/local"
 ARG CNT64_LOCAL_BIN="${CNT64_LOCAL_ROOT}/bin"
-ARG CNT64_BASHLIB64="${CNT64_OPT_ROOT}/bl64"
+ARG CNT64_BL64_PATH="${CNT64_OPT_ROOT}/bl64"
 
 #
 # Setup image
@@ -39,7 +39,7 @@ ADD --chmod=700 https://raw.githubusercontent.com/automation64/installer64/main/
 RUN \
     zypper install --no-confirm tar gzip && \
     /install-installer64 && \
-    "${CNT64_INSTALLER_ROOT}/install-bashlib64" && \
+    "${CNT64_INST64_PATH}/install-bashlib64" && \
     /bootstrap && \
-    "${CNT64_INSTALLER_ROOT}/install-sysop64" && \
+    "${CNT64_INST64_PATH}/install-sysop64" && \
     rm /install-installer64 /bootstrap

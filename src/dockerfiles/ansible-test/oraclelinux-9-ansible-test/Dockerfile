@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/base/oraclelinux-9-base:latest
 #
 
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 ARG CNT64_USER="test"
 
 #
@@ -29,13 +29,13 @@ ARG INST64_PYTHON_DEVELOPMENT="YES"
 
 # Install applications
 RUN \
-    /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
-    "${CNT64_INSTALLER_ROOT}/install-bzip2" && \
-    "${CNT64_INSTALLER_ROOT}/install-go" && \
-    "${CNT64_INSTALLER_ROOT}/install-python" && \
-    "${CNT64_INSTALLER_ROOT}/install-uv" && \
-    "${CNT64_INSTALLER_ROOT}/install-xz" && \
-    sudo -E -H -u "${CNT64_USER}" "${CNT64_INSTALLER_ROOT}/install-ansible" && \
+    /opt/sysop64/mod/linux-repo/linux-repo-update-all && \
+    "${CNT64_INST64_PATH}/install-bzip2" && \
+    "${CNT64_INST64_PATH}/install-go" && \
+    "${CNT64_INST64_PATH}/install-python" && \
+    "${CNT64_INST64_PATH}/install-uv" && \
+    "${CNT64_INST64_PATH}/install-xz" && \
+    sudo -E -H -u "${CNT64_USER}" "${CNT64_INST64_PATH}/install-ansible" && \
     /opt/sysop64/mod/linux-repo/linux-repo-cleanup
 
 # Run systemd to allow services

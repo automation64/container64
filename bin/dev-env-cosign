@@ -26,7 +26,7 @@
   export DEV_ENV_COSIGN_VERSION='1.2.0'
 
   # Lib / Cosign / Installer
-  export DEV_LIB_COSIGN_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-cosign"
+  export DEV_LIB_COSIGN_INSTALLER="cosign"
   # Lib / Cosign / Skip installation?
   export DEV_LIB_COSIGN_SKIP='YES'
   # Lib / Cosign / Target

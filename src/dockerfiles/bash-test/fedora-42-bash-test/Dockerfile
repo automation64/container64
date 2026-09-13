@@ -10,7 +10,7 @@ FROM ghcr.io/automation64/base/fedora-42-base:latest
 
 ARG CNT64_USER="test"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -30,12 +30,12 @@ ARG INST64_PYTHON_DEVELOPMENT="YES"
 
 # Install applications
 RUN \
-    /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
-    "${CNT64_INSTALLER_ROOT}/install-python" && \
-    "${CNT64_INSTALLER_ROOT}/install-zip" && \
-    "${CNT64_INSTALLER_ROOT}/install-git" && \
-    "${CNT64_INSTALLER_ROOT}/install-batscore" && \
-    "${CNT64_INSTALLER_ROOT}/install-yq" && \
+    /opt/sysop64/mod/linux-repo/linux-repo-update-all && \
+    "${CNT64_INST64_PATH}/install-python" && \
+    "${CNT64_INST64_PATH}/install-zip" && \
+    "${CNT64_INST64_PATH}/install-git" && \
+    "${CNT64_INST64_PATH}/install-batscore" && \
+    "${CNT64_INST64_PATH}/install-yq" && \
     /opt/sysop64/mod/linux-repo/linux-repo-cleanup
 
 # Run bats-core against /test

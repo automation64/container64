@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-cloud:latest
 #
 
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -19,8 +19,8 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-mongodbcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-mysqlcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-psqlcli" && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-update-all && \
+    sudo -E "${CNT64_INST64_PATH}/install-mongodbcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-mysqlcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-psqlcli" && \
     sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

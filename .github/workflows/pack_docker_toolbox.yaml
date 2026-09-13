@@ -1,27 +1,26 @@
 ---
-name: "Deliver/Container/Toolbox"
+name: "Pack/Container/Toolbox"
 
 concurrency:
-  group: "deliver-docker-toolbox"
+  group: "pack-docker-toolbox"
   cancel-in-progress: true
 
 env:
   DEV_CICD_DEBUG: ${{ vars.DEV_CICD_DEBUG || 'NONE' }}
   DEV_CICD_DEBUG_BASH: ${{ vars.DEV_CICD_DEBUG_BASH || '' }}
-  BL64_LIB_CICD: ${{ vars.BL64_LIB_CICD || 'YES' }}
 
 on:
   workflow_dispatch:
   workflow_call:
 
 jobs:
-  deliver-docker-toolbox-l0:
+  pack-docker-toolbox-l0:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
@@ -55,19 +54,19 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 
-  deliver-docker-toolbox-l1:
+  pack-docker-toolbox-l1:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
@@ -76,7 +75,7 @@ jobs:
           - "TOOLBOX_L1"
 
     needs:
-      - "deliver-docker-toolbox-l0"
+      - "pack-docker-toolbox-l0"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
@@ -103,19 +102,19 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 
-  deliver-docker-toolbox-l2:
+  pack-docker-toolbox-l2:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
@@ -124,7 +123,7 @@ jobs:
           - "TOOLBOX_L2"
 
     needs:
-      - "deliver-docker-toolbox-l1"
+      - "pack-docker-toolbox-l1"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
@@ -151,19 +150,19 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 
-  deliver-docker-toolbox-l3:
+  pack-docker-toolbox-l3:
     runs-on: "ubuntu-latest"
     permissions: "write-all"
 
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      DEV_AUTH_CONTAINER_USER: "${{ secrets.DEV_AUTH_CONTAINER_USER }}"
+      DEV_AUTH_DOCKER_USER: "${{ secrets.DEV_AUTH_DOCKER_USER }}"
       DEV_AUTH_COSIGN_USER: "${{ secrets.DEV_AUTH_COSIGN_USER }}"
 
     strategy:
@@ -172,7 +171,7 @@ jobs:
           - "TOOLBOX_L3"
 
     needs:
-      - "deliver-docker-toolbox-l2"
+      - "pack-docker-toolbox-l2"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@main"
@@ -199,9 +198,9 @@ jobs:
 
       - name: "Prepare for delivery"
         run: |
-          ./bin/dev-auth-container &&
+          ./bin/dev-auth-docker &&
           ./bin/dev-auth-cosign
 
       - name: "Deliver distributable content"
-        run: "./bin/dev-build-project ${{ matrix.scope }} ON"
+        run: "./bin/dev-pack-project ${{ matrix.scope }} ON"
 ...

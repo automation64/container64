@@ -2,6 +2,7 @@ act
 bash
 container
 cosign
+docker
 git
 github
 gitleaks

@@ -13,33 +13,24 @@
 # limitations under the License.
 #######################################
 
-source ./bin/dev-set || exit 1
-# shellcheck source=bin/dev-env-hadolint
-source ./bin/dev-env-hadolint || exit 1
-source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-xsv.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-bsh.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-txt.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-cnt.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fmt.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-module-fs.bash" &&
-  source "${DEV_LIB_BASHLIB64_TARGET}/bashlib64-core.bash" ||
-  exit 1
+source ./bin/dev-set &&
+  source ./bin/dev-source-base &&
+  source ./bin/dev-env-hadolint || exit 1
 
-declare MY_TARGET="${*:-}"
-declare _DEV_LIB_RUN_IN_CONTAINER=''
+declare MY_TARGET="${*:-$DEV_LINT_HADOLINT_SOURCE}"
 
 function my_lint() {
-  bl64_dbg_app_show_function "$@"
-  local target="$*"
+  bl64_dbg_app_show_function
+  local target=''
   local current=''
 
-  if [[ -z "$target" ]]; then
-    target="$(bl64_fs_file_search "$DEV_LINT_HADOLINT_SOURCE" 'Dockerfile')" ||
+  if [[ -d "$MY_TARGET" ]]; then
+    target="$(bl64_fs_file_search "$MY_TARGET" 'Dockerfile')" ||
       return $?
   fi
   for current in $target; do
     bl64_msg_show_phase "lint target: ${current}"
-    if [[ -n "$_DEV_LIB_RUN_IN_CONTAINER" ]]; then
+    if dev_base_lib_is_mode_container; then
       my_lint_container "$current"
     else
       my_lint_local "$current"
@@ -72,23 +63,16 @@ function my_lint_local() {
 
 function my_initialize() {
   bl64_dbg_app_show_function
-  dev_bin64_task_initialize &&
-    if [[ -z "$DEV_LINT_HADOLINT_SOURCE" ]]; then
-      bl64_check_export 'DEV_LINT_HADOLINT_SOURCE' &&
-        bl64_check_directory "$DEV_LINT_HADOLINT_SOURCE" ||
-        return $?
-    fi
-  if ! bl64_bsh_command_is_executable "$DEV_LIB_HADOLINT_BIN"; then
-    _DEV_LIB_RUN_IN_CONTAINER='YES'
-    bl64_cnt_setup ||
-      return $?
-  fi
+  dev_base_task_initialize &&
+    dev_base_lib_setup_container "$DEV_ENV_HADOLINT_ID" "$DEV_LIB_HADOLINT_BIN" &&
+    dev_base_task_show_setup \
+      'MY_TARGET'
 }
 
-bl64_lib_script_version_set '4.0.3'
-bl64_msg_help_about_set 'Lint source code'
-dev_bin64_initialize && my_initialize || exit $?
+bl64_lib_script_version_set '4.1.1'
+bl64_msg_help_set_about 'Lint source code'
+dev_base_initialize && my_initialize || exit $?
 
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
-my_lint "$MY_TARGET"
+my_lint
 bl64_msg_show_batch_finish $? "$BL64_SCRIPT_ID"

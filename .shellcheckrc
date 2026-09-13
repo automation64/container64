@@ -1,10 +1,12 @@
-# Template: 1.0.0
 #
-# Configuration
+# ShellCheck / Configuration
+#
+# * Version: 1.0.0
+# * Template: 1.0.0
 #
 
 external-sources=true
-# Warning: temporary fix to avoid memory but in 0.9 series
+# Warning: temporary fix to avoid memory bug in 0.9 series
 extended-analysis=false
 
 #
@@ -17,7 +19,5 @@ enable=check-unassigned-uppercase
 enable=deprecate-which
 
 #
-# Project
+# Project settings
 #
-
-source-path=lib/bl64

@@ -10,7 +10,7 @@ FROM ghcr.io/automation64/base/alpine-3-base:latest
 
 ARG CNT64_USER="cnt64"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -18,11 +18,11 @@ ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-helm-chart-tester" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubelinter" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubescape" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-kubectl"
+    sudo -E "${CNT64_INST64_PATH}/install-helm" && \
+    sudo -E "${CNT64_INST64_PATH}/install-helm-chart-tester" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubelinter" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubescape" && \
+    sudo -E "${CNT64_INST64_PATH}/install-kubectl"
 
 # Set default user and entrypoint
 USER ${CNT64_USER}

@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/bash-test/oraclelinux-9-bash-test:latest
 #
 
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -20,4 +20,4 @@ ARG INST64_PYTHON_DEVELOPMENT="YES"
 
 # Install applications
 RUN \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-dockercli"
+    sudo -E "${CNT64_INST64_PATH}/install-dockercli"

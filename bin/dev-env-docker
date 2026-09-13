@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# template-env: 1.2.0
+#######################################
+# Copyright SerDigital64 - https://github.com/serdigital64
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################
+
+#
+# Module variables
+#
+# * Shared internal variables for module tasks
+#
+
+# shellcheck disable=SC2154
+{
+  # Env / Docker / Module environment definition version
+  export DEV_ENV_DOCKER_ID='docker'
+  export DEV_ENV_DOCKER_VERSION='2.1.0'
+
+  # Pack / Docker / Paths
+  export DEV_PACK_DOCKER_PATH_STAGING="${DEV_PATH_BUILD_STAGING}/${DEV_ENV_DOCKER_ID}"
+}
+
+#
+# Module parameters
+#
+# * Use .dev.env file to override values
+#
+
+# shellcheck disable=SC2154
+{
+  # Env / Docker / Log path
+  export DEV_ENV_DOCKER_PATH_LOGS="${DEV_ENV_DOCKER_PATH_LOGS:-${DEV_PATH_PROF_LOGS}/${DEV_ENV_DOCKER_ID}}"
+
+  # Auth / Docker / Registry
+  export DEV_AUTH_DOCKER_REGISTRY="${DEV_AUTH_DOCKER_REGISTRY:-}"
+  # Auth / Docker / Registry Type
+  export DEV_AUTH_DOCKER_TYPE="${DEV_AUTH_DOCKER_TYPE:-GITHUB}"
+
+  # Pack / Docker / Baker file name
+  export DEV_PACK_DOCKER_FILE_DOCKERBAKE="${DEV_PACK_DOCKER_FILE_DOCKERBAKE:-docker-bake.hcl}"
+  # Pack / Docker / Baker file path
+  export DEV_PACK_DOCKER_PATH_DOCKERBAKE="${DEV_PACK_DOCKER_PATH_DOCKERBAKE:-${DEV_PATH_ROOT}/${DEV_PACK_DOCKER_FILE_DOCKERBAKE}}"
+  # Pack / Docker / Content Source for Staging
+  export DEV_PACK_DOCKER_PAYLOAD_SOURCE="${DEV_PACK_DOCKER_PAYLOAD_SOURCE:-}"
+}
+
+#
+# Locals
+#
+# * Use .local.env file or CICD variables to override values
+#
+
+# shellcheck disable=SC2154
+{
+  # Lib / Docker / Command
+  export DEV_LIB_DOCKER_BIN="${DEV_LIB_DOCKER_BIN:-/usr/bin/docker}"
+}
+
+#
+# Secrets
+#
+# * Declaration only. Use .secrets.env file or CICD secrets to set values
+#
+
+# shellcheck disable=SC2154
+{
+  # Auth / Docker / User
+  export DEV_AUTH_DOCKER_USER="${DEV_AUTH_DOCKER_USER:-}"
+  export DEV_AUTH_DOCKER_PASSWORD="${DEV_AUTH_DOCKER_PASSWORD:-}"
+}

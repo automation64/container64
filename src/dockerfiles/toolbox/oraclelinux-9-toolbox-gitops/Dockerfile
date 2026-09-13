@@ -8,7 +8,7 @@ FROM ghcr.io/automation64/toolbox/oraclelinux-9-toolbox-k8s:latest
 #
 
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -19,18 +19,18 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-act" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-argocdcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-fluxcdcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-jenkinsxcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-ghcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-packer" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraform" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terraformer" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-terragrunt" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-mongodbcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-mysqlcli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-psqlcli" && \
-    "${CNT64_INSTALLER_ROOT}/install-ansible" && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-update-all && \
+    sudo -E "${CNT64_INST64_PATH}/install-act" && \
+    sudo -E "${CNT64_INST64_PATH}/install-argocdcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-fluxcdcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-jenkinsxcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-ghcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-packer" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terraform" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terraformer" && \
+    sudo -E "${CNT64_INST64_PATH}/install-terragrunt" && \
+    sudo -E "${CNT64_INST64_PATH}/install-mongodbcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-mysqlcli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-psqlcli" && \
+    "${CNT64_INST64_PATH}/install-ansible" && \
     sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup

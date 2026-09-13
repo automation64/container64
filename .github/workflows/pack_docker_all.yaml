@@ -1,5 +1,5 @@
 ---
-name: "Deliver/Container/All"
+name: "Pack/Container/All"
 
 on:
   workflow_dispatch:

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Template: 1.5.0
 #######################################
 # Copyright SerDigital64 - https://github.com/serdigital64
 #
@@ -13,21 +12,23 @@
 # limitations under the License.
 #######################################
 
-export CNT64_BASHLIB64="${CNT64_BASHLIB64:-/opt/bl64}"
-source "${CNT64_BASHLIB64}/bashlib64-module-rnd.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-cryp.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-pkg.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-rxtx.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-vcs.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-api.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-rbac.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-iam.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-txt.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-fmt.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-fs.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-bsh.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-module-xsv.bash" &&
-  source "${CNT64_BASHLIB64}/bashlib64-core.bash" || exit $?
+export CNT64_BL64_PATH="${CNT64_BL64_PATH:-/opt/bl64}"
+source "${CNT64_BL64_PATH}/bashlib64-module-rnd.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-cryp.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-pkg.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-rxtx.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-vcs.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-api.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-rbac.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-iam.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-txt.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-fmt.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-fs.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-bsh.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-module-xsv.bash" &&
+  source "${CNT64_BL64_PATH}/bashlib64-core.bash" || exit $?
+
+export CNT64_BL64_VERSION='23.5.1'
 
 # Environment Definition. See docs/base-environment.md for details
 export CNT64_DEBUG="${CNT64_DEBUG:-NONE}"
@@ -104,11 +105,11 @@ function my_configure_users() {
     bl64_bsh_profile_rc_generate >"$user_profile" &&
     bl64_bsh_profile_path_generate >>"$user_profile" &&
     bl64_bsh_env_store_generate >>"$user_profile" &&
-    bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile" ||
+    bl64_fs_path_set_permissions "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile" ||
     return $?
   user_profile="${user_home}/.bash_profile"
   bl64_bsh_profile_bash_generate >"$user_profile" &&
-    bl64_fs_path_permission_set "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile"
+    bl64_fs_path_set_permissions "$user_mode" "user_mode" "$CNT64_USER" "$CNT64_USER" "$BL64_VAR_OFF" "$user_profile"
 }
 
 function my_install_packages() {
@@ -124,30 +125,37 @@ function my_install_packages() {
 function my_initialize() {
   bl64_dbg_app_show_function
 
-  bl64_msg_show_about
-  bl64_os_check_compatibility \
-    "${BL64_OS_ARC}" \
-    "${BL64_OS_ALM}" \
-    "${BL64_OS_ALP}" \
-    "${BL64_OS_AMZ}" \
-    "${BL64_OS_CNT}" \
-    "${BL64_OS_DEB}" \
-    "${BL64_OS_FD}" \
-    "${BL64_OS_KL}" \
-    "${BL64_OS_OL}" \
-    "${BL64_OS_RCK}" \
-    "${BL64_OS_RHEL}" \
-    "${BL64_OS_SLES}" \
-    "${BL64_OS_UB}" &&
+  bl64_dbg_set_level "$CNT64_DEBUG" &&
+    bl64_msg_set_format "$CNT64_VERBOSE" ||
+    return $?
+
+  bl64_msg_help_show_about
+
+  bl64_lib_script_minver_check "$CNT64_BL64_VERSION" &&
+    bl64_os_check_compatibility \
+      "${BL64_OS_ARC}" \
+      "${BL64_OS_ALM}" \
+      "${BL64_OS_ALP}" \
+      "${BL64_OS_AMZ}" \
+      "${BL64_OS_CNT}" \
+      "${BL64_OS_DEB}" \
+      "${BL64_OS_FD}" \
+      "${BL64_OS_KL}" \
+      "${BL64_OS_OL}" \
+      "${BL64_OS_RCK}" \
+      "${BL64_OS_RHEL}" \
+      "${BL64_OS_SLES}" \
+      "${BL64_OS_UB}" &&
     bl64_check_export 'CNT64_USER' &&
     bl64_check_privilege_root &&
     bl64_cryp_setup &&
     bl64_pkg_setup
 }
 
-bl64_lib_script_version_set '3.1.0'
-bl64_msg_help_about_set 'Deploy and configure the base container environment'
-bl64_dbg_set_level "$CNT64_DEBUG" && bl64_msg_set_format "$CNT64_VERBOSE" && bl64_msg_all_enable_verbose && my_initialize || exit $?
+bl64_lib_script_version_set '4.0.0'
+bl64_msg_help_set_about 'Setup container image'
+my_initialize || exit $?
+
 bl64_msg_show_batch_start "$BL64_SCRIPT_ID"
 my_install_packages &&
   my_create_users &&

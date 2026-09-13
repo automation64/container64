@@ -27,7 +27,7 @@
 # shellcheck disable=SC2154
 {
   # Lib / Trivy / Installer
-  export DEV_LIB_TRIVY_INSTALLER="${DEV_LIB_INSTALLER64_TARGET}/install-trivy"
+  export DEV_LIB_TRIVY_INSTALLER="trivy"
   # Lib / Trivy / Target
   export DEV_LIB_TRIVY_TARGET="${DEV_PATH_LIB}/triby"
   # SAST / Trivy / Format
@@ -45,4 +45,3 @@
   # Lib / Trivy / Command
   export DEV_LIB_TRIVY_BIN="${DEV_LIB_TRIVY_BIN:-${DEV_LIB_TRIVY_TARGET}/trivy}"
 }
-

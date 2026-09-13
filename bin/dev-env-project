@@ -23,15 +23,15 @@
 {
   # Env / Project / Module environment definition version
   export DEV_ENV_PROJECT_ID='project'
-  export DEV_ENV_PROJECT_VERSION='1.0.0'
+  export DEV_ENV_PROJECT_VERSION='2.0.0'
 
   # Lib / Project / Command
   export DEV_LIB_PROJECT_BIN="${DEV_PATH_ROOT}/cntbuild"
 
   # Build / Project / Image list name suffix
-  export DEV_BUILD_PROJECT_LIST_PREFIX='DEV_BUILD_PROJECT_CATALOG_'
+  export DEV_PACK_PROJECT_LIST_PREFIX='DEV_PACK_PROJECT_CATALOG_'
   # Build / Project / Target
-  export DEV_BUILD_PROJECT_PATH_TARGET="${DEV_PATH_BUILD_PREPARE}/${DEV_ENV_PROJECT_ID}"
+  export DEV_PACK_PROJECT_PATH_TARGET="${DEV_PATH_BUILD_PREPARE}/${DEV_ENV_PROJECT_ID}"
 }
 
 #
@@ -43,5 +43,5 @@
 # shellcheck disable=SC2154
 {
   # Build / Project / Target
-  export DEV_BUILD_PROJECT_PATH_SOURCE="${DEV_BUILD_PROJECT_PATH_SOURCE:-}"
+  export DEV_PACK_PROJECT_PATH_SOURCE="${DEV_PACK_PROJECT_PATH_SOURCE:-}"
 }

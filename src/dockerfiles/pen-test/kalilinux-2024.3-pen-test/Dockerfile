@@ -10,7 +10,7 @@ FROM ghcr.io/automation64/base/kalilinux-2024.3-base:latest
 
 ARG CNT64_USER="cnt64"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -28,28 +28,28 @@ RUN \
 
 # Install applications
 RUN \
-    "${CNT64_INSTALLER_ROOT}/install-bat" && \
-    "${CNT64_INSTALLER_ROOT}/install-capa" && \
-    "${CNT64_INSTALLER_ROOT}/install-eza" && \
-    "${CNT64_INSTALLER_ROOT}/install-lsd" && \
-    "${CNT64_INSTALLER_ROOT}/install-fd" && \
-    "${CNT64_INSTALLER_ROOT}/install-gcc" && \
-    "${CNT64_INSTALLER_ROOT}/install-go" && \
-    "${CNT64_INSTALLER_ROOT}/install-gomplate" && \
-    "${CNT64_INSTALLER_ROOT}/install-lynis" && \
-    "${CNT64_INSTALLER_ROOT}/install-neovim" && \
-    "${CNT64_INSTALLER_ROOT}/install-sqlmap" && \
-    "${CNT64_INSTALLER_ROOT}/install-trufflehog" && \
-    "${CNT64_INSTALLER_ROOT}/install-yq" && \
-    "${CNT64_INSTALLER_ROOT}/install-zellij" && \
-    "${CNT64_INSTALLER_ROOT}/install-zoxide" && \
-    "${CNT64_INSTALLER_ROOT}/install-fzf" && \
-    "${CNT64_INSTALLER_ROOT}/install-gitleaks" && \
-    "${CNT64_INSTALLER_ROOT}/install-hwatch" && \
-    "${CNT64_INSTALLER_ROOT}/install-lnav" && \
-    "${CNT64_INSTALLER_ROOT}/install-devbin64" && \
-    "${CNT64_INSTALLER_ROOT}/install-sysden64" && \
-    "${CNT64_INSTALLER_ROOT}/install-testssl" && \
+    "${CNT64_INST64_PATH}/install-bat" && \
+    "${CNT64_INST64_PATH}/install-capa" && \
+    "${CNT64_INST64_PATH}/install-eza" && \
+    "${CNT64_INST64_PATH}/install-lsd" && \
+    "${CNT64_INST64_PATH}/install-fd" && \
+    "${CNT64_INST64_PATH}/install-gcc" && \
+    "${CNT64_INST64_PATH}/install-go" && \
+    "${CNT64_INST64_PATH}/install-gomplate" && \
+    "${CNT64_INST64_PATH}/install-lynis" && \
+    "${CNT64_INST64_PATH}/install-neovim" && \
+    "${CNT64_INST64_PATH}/install-sqlmap" && \
+    "${CNT64_INST64_PATH}/install-trufflehog" && \
+    "${CNT64_INST64_PATH}/install-yq" && \
+    "${CNT64_INST64_PATH}/install-zellij" && \
+    "${CNT64_INST64_PATH}/install-zoxide" && \
+    "${CNT64_INST64_PATH}/install-fzf" && \
+    "${CNT64_INST64_PATH}/install-gitleaks" && \
+    "${CNT64_INST64_PATH}/install-hwatch" && \
+    "${CNT64_INST64_PATH}/install-lnav" && \
+    "${CNT64_INST64_PATH}/install-devbin64" && \
+    "${CNT64_INST64_PATH}/install-sysden64" && \
+    "${CNT64_INST64_PATH}/install-testssl" && \
     sudo -E -H -u "${CNT64_USER}" "${CNT64_OPT_ROOT}/sysden64/bin/sysden64" -l
 
 # Set default user and entrypoint

@@ -9,7 +9,7 @@ FROM ghcr.io/automation64/dev/ubuntu-24.4-dev:latest
 
 ARG CNT64_USER="cnt64"
 ARG CNT64_OPT_ROOT="/opt"
-ARG CNT64_INSTALLER_ROOT="${CNT64_OPT_ROOT}/inst64"
+ARG CNT64_INST64_PATH="${CNT64_OPT_ROOT}/inst64"
 
 #
 # Setup image
@@ -20,11 +20,11 @@ ARG INST64_REFRESH_PACKAGE_MANAGER="OFF"
 
 # Install applications
 RUN \
-    sudo /opt/sysop64/mod/linux-repo/linux-repo-refresh && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-awscli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-azurecli" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-gcloud" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-go" && \
-    sudo -E "${CNT64_INSTALLER_ROOT}/install-localstack" && \
-    "${CNT64_INSTALLER_ROOT}/install-awsshell" && \
+    sudo /opt/sysop64/mod/linux-repo/linux-repo-update-all && \
+    sudo -E "${CNT64_INST64_PATH}/install-awscli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-azurecli" && \
+    sudo -E "${CNT64_INST64_PATH}/install-gcloud" && \
+    sudo -E "${CNT64_INST64_PATH}/install-go" && \
+    sudo -E "${CNT64_INST64_PATH}/install-localstack" && \
+    "${CNT64_INST64_PATH}/install-awsshell" && \
     sudo /opt/sysop64/mod/linux-repo/linux-repo-cleanup
